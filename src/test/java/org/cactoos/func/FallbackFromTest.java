@@ -7,9 +7,9 @@ package org.cactoos.func;
 import java.io.IOException;
 import java.util.IllegalFormatWidthException;
 import org.cactoos.Fallback;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Fallback.From}.
@@ -17,42 +17,42 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"unchecked", "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings("unchecked")
 final class FallbackFromTest {
 
     @Test
     void supportsException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must support exactly exception class",
             new Fallback.From<>(
                 IOException.class,
                 exp -> "IOException fallback"
             ).support(new IOException()),
             new IsEqual<>(0)
-        ).affirm();
+        );
     }
 
     @Test
     void supportsInheritedException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must support inherited exception class",
             new Fallback.From<>(
                 RuntimeException.class,
                 exp -> "RuntimeException fallback #1"
             ).support(new IllegalFormatWidthException(1)),
             new IsEqual<>(3)
-        ).affirm();
+        );
     }
 
     @Test
     void doesNotSupportException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must not support unrelated exception class",
             new Fallback.From<>(
                 RuntimeException.class,
                 exp -> "RuntimeException fallback #2"
             ).support(new ClassNotFoundException()),
             new IsEqual<>(Integer.MIN_VALUE)
-        ).affirm();
+        );
     }
 }

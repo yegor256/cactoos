@@ -82,11 +82,10 @@ public final class NoNulls<X> implements Collection<X> {
     }
 
     @Override
-    @SuppressWarnings("PMD.UseVarargs")
     public <T> T[] toArray(final T[] array) {
-        this.col.toArray((Object[]) array);
-        for (int idx = 0; idx < array.length; ++idx) {
-            if (array[idx] == null) {
+        final T[] result = this.col.toArray(array);
+        for (int idx = 0; idx < result.length; ++idx) {
+            if (result[idx] == null) {
                 throw new IllegalStateException(
                     new UncheckedText(
                         new FormattedText(
@@ -96,7 +95,7 @@ public final class NoNulls<X> implements Collection<X> {
                 );
             }
         }
-        return array;
+        return result;
     }
 
     @Override

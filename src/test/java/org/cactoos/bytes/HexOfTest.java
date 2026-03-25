@@ -7,9 +7,9 @@ package org.cactoos.bytes;
 
 import java.io.IOException;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Satisfies;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -23,20 +23,20 @@ final class HexOfTest {
 
     @Test
     void emptyText() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must represent an empty hexadecimal text",
             new HexOf(new TextOf("")).asBytes(),
             new Satisfies<>(array -> array.length == 0)
-        ).affirm();
+        );
     }
 
     @Test
     void validHex() throws Exception {
         final byte[] bytes = new byte[256];
         for (int index = 0; index < 256; ++index) {
-            bytes[index] = (byte) (index + (int) Byte.MIN_VALUE);
+            bytes[index] = (byte) (index + Byte.MIN_VALUE);
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert hexadecimal text to bytes",
             new HexOf(
                 new org.cactoos.text.HexOf(
@@ -44,30 +44,30 @@ final class HexOfTest {
                 )
             ).asBytes(),
             new IsEqual<>(bytes)
-        ).affirm();
+        );
     }
 
     @Test
     void invalidHexLength() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must invalid hex length",
             () -> new HexOf(new TextOf("ABF")).asBytes(),
             new Throws<>(
                 "Length of hexadecimal text is odd",
                 IOException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void invalidHex() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must invalid hex",
             () -> new HexOf(new TextOf("ABG!")).asBytes(),
             new Throws<>(
                 "Unexpected character 'G'",
                 IOException.class
             )
-        ).affirm();
+        );
     }
 }

@@ -5,9 +5,9 @@
 package org.cactoos.scalar;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -16,46 +16,59 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class BinaryTest {
 
     @Test
-    void conditionTrue() {
-        final AtomicInteger counter = new AtomicInteger(0);
-        final Binary binary = new Binary(
-            new True(),
-            counter::incrementAndGet
-        );
-        new Assertion<>(
+    void conditionTrueReturnsTrue() {
+        MatcherAssert.assertThat(
             "Binary has to return true",
-            binary,
+            new Binary(
+                new True(),
+                () -> { }
+            ),
             new HasValue<>(true)
-        ).affirm();
-        final int expected = 1;
-        new Assertion<>(
-            "Binary has to invoke increment method",
-            counter.get(),
-            new IsEqual<>(expected)
-        ).affirm();
+        );
     }
 
     @Test
-    void conditionFalse() {
+    void conditionTrueInvokesProc() throws Exception {
         final AtomicInteger counter = new AtomicInteger(0);
-        final Binary binary = new Binary(
+        new Binary(
+            new True(),
+            counter::incrementAndGet
+        ).value();
+        MatcherAssert.assertThat(
+            "Binary has to invoke increment method",
+            counter.get(),
+            new IsEqual<>(1)
+        );
+    }
+
+    @Test
+    void conditionFalseReturnsFalse() {
+        MatcherAssert.assertThat(
+            "Binary has to return false",
+            new Binary(
+                new False(),
+                () -> { }
+            ),
+            new HasValue<>(false)
+        );
+    }
+
+    @Test
+    void conditionFalseDoesNotInvokeProc() throws Exception {
+        final AtomicInteger counter = new AtomicInteger(0);
+        new Binary(
             new False(),
             counter::incrementAndGet
-        );
-        new Assertion<>(
-            "Binary has to return false",
-            binary,
-            new HasValue<>(false)
-        ).affirm();
-        final int expected = 0;
-        new Assertion<>(
-            "Binary must not to invoke increment method",
+        ).value();
+        MatcherAssert.assertThat(
+            "Binary must not invoke increment method",
             counter.get(),
-            new IsEqual<>(expected)
-        ).affirm();
+            new IsEqual<>(0)
+        );
     }
 
     @Test
@@ -67,10 +80,10 @@ final class BinaryTest {
                 throw new IllegalArgumentException(msg);
             }
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Binary has to throw exception",
             binary,
             new Throws<>(msg, IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 }

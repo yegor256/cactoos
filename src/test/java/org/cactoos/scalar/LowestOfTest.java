@@ -13,7 +13,6 @@ import org.cactoos.time.DateOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -23,12 +22,12 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings("PMD.TooManyMethods")
 final class LowestOfTest {
 
     @Test
     void failsForEmptyIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "can't iterate in empty collection",
             () -> new LowestOf<>(() -> Collections.emptyIterator()).value(),
             new Throws<>(NoSuchElementException.class)
@@ -36,12 +35,16 @@ final class LowestOfTest {
     }
 
     @Test
-    void singleAtSingleIterable() throws Exception {
+    void singleAtSingleIterableByScalar() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest among one by scalars",
             new LowestOf<Integer>(() -> 10).value(),
             Matchers.equalTo(10)
         );
+    }
+
+    @Test
+    void singleAtSingleIterableByValue() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest among one",
             new LowestOf<>(10).value(),
@@ -50,7 +53,7 @@ final class LowestOfTest {
     }
 
     @Test
-    void lowestIntegerAtIterable() throws Exception {
+    void lowestIntegerByScalars() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest integer among many by scalars",
             new LowestOf<Integer>(
@@ -61,21 +64,37 @@ final class LowestOfTest {
             ).value(),
             Matchers.equalTo(-1)
         );
+    }
+
+    @Test
+    void lowestIntegerByValues() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest integer among many",
             new LowestOf<>(10, 0, -1, 2).value(),
             Matchers.equalTo(-1)
         );
+    }
+
+    @Test
+    void lowestPositiveInteger() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest positive integer among many",
             new LowestOf<>(272, 10, 134, 101).value(),
             Matchers.equalTo(10)
         );
+    }
+
+    @Test
+    void lowestNegativeInteger() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest negative integer among many",
             new LowestOf<>(-272, -10, -134, -101).value(),
             Matchers.equalTo(-272)
         );
+    }
+
+    @Test
+    void lowestMinInteger() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest min integer among many",
             new LowestOf<>(Integer.MIN_VALUE, Integer.MAX_VALUE).value(),
@@ -84,7 +103,7 @@ final class LowestOfTest {
     }
 
     @Test
-    void lowestLongAtIterable() throws Exception {
+    void lowestLongByScalars() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest long among many by scalars",
             new LowestOf<Long>(
@@ -95,21 +114,37 @@ final class LowestOfTest {
             ).value(),
             Matchers.equalTo(-1L)
         );
+    }
+
+    @Test
+    void lowestLongByValues() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest long among many",
             new LowestOf<>(10L, 0L, -1L, 2L).value(),
             Matchers.equalTo(-1L)
         );
+    }
+
+    @Test
+    void lowestPositiveLong() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest positive long among many",
             new LowestOf<>(272L, 10L, 134L, 101L).value(),
             Matchers.equalTo(10L)
         );
+    }
+
+    @Test
+    void lowestNegativeLong() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest negative long among many",
             new LowestOf<>(-272L, -10L, -134L, -101L).value(),
             Matchers.equalTo(-272L)
         );
+    }
+
+    @Test
+    void lowestMinLong() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest mix integer long many",
             new LowestOf<>(Long.MIN_VALUE, Long.MAX_VALUE).value(),
@@ -118,7 +153,7 @@ final class LowestOfTest {
     }
 
     @Test
-    void lowestDoubleAtIterable() throws Exception {
+    void lowestDoubleByScalars() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest double among many by scalars",
             new LowestOf<Double>(
@@ -129,46 +164,82 @@ final class LowestOfTest {
             ).value(),
             Matchers.equalTo(-1.5)
         );
+    }
+
+    @Test
+    void lowestDoubleByValues() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest double among many",
             new LowestOf<>(10., 0., -1., 2.).value(),
             Matchers.equalTo(-1.)
         );
+    }
+
+    @Test
+    void lowestPositiveDouble() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest positive double among many",
             new LowestOf<>(272., 10., 134., 101.).value(),
             Matchers.equalTo(10.)
         );
+    }
+
+    @Test
+    void lowestNegativeDouble() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest negative double among many",
             new LowestOf<>(-272., -10., -134., -101.).value(),
             Matchers.equalTo(-272.)
         );
+    }
+
+    @Test
+    void lowestMixDouble() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest mix double among many",
             new LowestOf<>(Double.MIN_VALUE, Double.MAX_VALUE).value(),
             Matchers.equalTo(Double.MIN_VALUE)
         );
+    }
+
+    @Test
+    void lowestMinDouble() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest min double among many",
             new LowestOf<>(Double.MIN_VALUE, 10.).value(),
             Matchers.equalTo(Double.MIN_VALUE)
         );
+    }
+
+    @Test
+    void lowestNaNWithMinDouble() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest NaN (with min) double among many",
             new LowestOf<>(Double.NaN, Double.MIN_VALUE).value(),
             Matchers.equalTo(Double.MIN_VALUE)
         );
+    }
+
+    @Test
+    void lowestNaNWithMaxDouble() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest NaN (with max) double among many",
             new LowestOf<>(Double.NaN, Double.MAX_VALUE).value(),
             Matchers.equalTo(Double.MAX_VALUE)
         );
+    }
+
+    @Test
+    void lowestPositiveInfinity() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest positive infinity among many",
             new LowestOf<>(Double.POSITIVE_INFINITY, Double.MAX_VALUE).value(),
             Matchers.equalTo(Double.MAX_VALUE)
         );
+    }
+
+    @Test
+    void lowestNegativeInfinity() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest negative infinity among many",
             new LowestOf<>(Double.NEGATIVE_INFINITY, Double.MAX_VALUE).value(),
@@ -177,7 +248,7 @@ final class LowestOfTest {
     }
 
     @Test
-    void lowestStringAtIterable() throws Exception {
+    void lowestStringByScalars() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest string among many by scalars",
             new LowestOf<String>(
@@ -187,6 +258,10 @@ final class LowestOfTest {
             ).value(),
             Matchers.equalTo("Apple")
         );
+    }
+
+    @Test
+    void lowestStringByValues() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest string among many",
             new LowestOf<>("Banana", "Apple", "Orange").value(),
@@ -195,12 +270,16 @@ final class LowestOfTest {
     }
 
     @Test
-    void lowestCharAtIterable() throws Exception {
+    void lowestCharByScalars() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest char among many by scalars",
             new LowestOf<Character>(() -> 'B', () -> 'U', () -> 'G').value(),
             Matchers.equalTo('B')
         );
+    }
+
+    @Test
+    void lowestCharByValues() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the lowest char among many",
             new LowestOf<>('H', 'A', 'N', 'D').value(),
@@ -210,7 +289,7 @@ final class LowestOfTest {
 
     @Test
     void lowestSumAtIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must find the lowest double sum among many",
             new LowestOf<>(
                 new ComparableNumber(new SumOf(1.0d)),
@@ -218,7 +297,7 @@ final class LowestOfTest {
                 new ComparableNumber(new SumOf(1.0d, 2.0d, 3.0d))
             ),
             new HasValue<>(1.0d)
-        ).affirm();
+        );
     }
 
     @Test

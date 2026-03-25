@@ -10,10 +10,10 @@ import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -23,12 +23,11 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class PartitionedTest {
 
     @Test
     void emptyPartitioned() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't generate an empty Partitioned.",
             new LengthOf(
                 new IterableOf<>(
@@ -36,13 +35,13 @@ final class PartitionedTest {
                 )
             ),
             new HasValue<>(0L)
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void partitionedOne() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't generate a Partitioned of partition size 1.",
             new ArrayList<>(
                 new ListOf<>(
@@ -55,13 +54,13 @@ final class PartitionedTest {
                     Collections.singletonList(3)
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void partitionedEqualSize() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't generate a Partitioned of partition size 2.",
             new ArrayList<>(
                 new ListOf<>(
@@ -71,13 +70,13 @@ final class PartitionedTest {
             Matchers.equalTo(
                 new ListOf<>(new ListOf<>(1, 2), new ListOf<>(3, 4))
             )
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void partitionedLastPartitionSmaller() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't generate a Partitioned of size 2 last partition smaller.",
             new ListOf<>(
                 new Partitioned<>(2, new ListOf<>(1, 2, 3).iterator())
@@ -88,21 +87,21 @@ final class PartitionedTest {
                     new ListOf<>(3)
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void partitionedWithPartitionSizeSmallerOne() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected for partition size lower 1",
             () -> new Partitioned<>(0, new ListOf<>(1).iterator()).next(),
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void partitionedListsAreUnmodifiable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected on modification operations",
             () -> {
                 new Partitioned<>(
@@ -111,18 +110,18 @@ final class PartitionedTest {
                 return 1;
             },
             new Throws<>(UnsupportedOperationException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void emptyPartitionedNextThrowsException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected for iteration empty",
             () -> new Partitioned<>(
                 2, Collections.emptyIterator()
             ).next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
 }

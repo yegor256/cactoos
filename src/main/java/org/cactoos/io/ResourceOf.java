@@ -194,7 +194,6 @@ public final class ResourceOf implements Input {
     }
 
     @Override
-    @SuppressWarnings("PMD.CloseResource")
     public InputStream stream() throws Exception {
         if (this.path == null) {
             throw new IllegalArgumentException(

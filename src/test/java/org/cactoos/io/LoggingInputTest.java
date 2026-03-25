@@ -9,10 +9,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
@@ -21,9 +21,7 @@ import org.llorllale.cactoos.matchers.HasString;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.MoreThanOneLogger",
-    "PMD.AvoidDuplicateLiterals",
-    "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.UnnecessaryLocalRule"})
 final class LoggingInputTest {
 
     @Test
@@ -36,11 +34,11 @@ final class LoggingInputTest {
                 logger
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must log zero byte read from dead input",
             new TextOf(logger.toString()),
             new HasString("Read 0 byte(s) from dead input in")
-        ).affirm();
+        );
     }
 
     @Test
@@ -53,11 +51,11 @@ final class LoggingInputTest {
                 logger
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must log one byte read from memory",
             new TextOf(logger.toString()),
             new HasString("Read 1 byte(s) from memory in")
-        ).affirm();
+        );
     }
 
     @Test
@@ -70,11 +68,11 @@ final class LoggingInputTest {
                 logger
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must log 22 bytes read from memory",
             new TextOf(logger.toString()),
             new HasString("Read 22 byte(s) from memory in")
-        ).affirm();
+        );
     }
 
     @Test
@@ -88,7 +86,7 @@ final class LoggingInputTest {
                 logger
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must log 74536 bytes read from text file",
             new TextOf(logger.toString()),
             new AllOf<>(
@@ -98,7 +96,7 @@ final class LoggingInputTest {
                 new HasString("Read 74536 byte(s) from text file in"),
                 new HasString("Closed input stream from text file")
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -112,7 +110,7 @@ final class LoggingInputTest {
                 logger
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must log all read and close operations from text file",
             new TextOf(logger.toString()),
             new AllOf<>(
@@ -123,22 +121,22 @@ final class LoggingInputTest {
                 new HasString("Read 74536 byte(s) from text file"),
                 new HasString("Closed input stream from text file")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void logSkipFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
-        new LoggingInput(
+        final long skipped = new LoggingInput(
             new ResourceOf("org/cactoos/large-text.txt"),
             "text file",
             logger
         ).stream().skip(100L);
-        new Assertion<>(
-            "Must log skip from text file",
+        MatcherAssert.assertThat(
+            String.format("Must log skip of %d bytes from text file", skipped),
             new TextOf(logger.toString()),
             new HasString("Skipped 100 byte(s) from text file.")
-        ).affirm();
+        );
     }
 
     @Test
@@ -149,13 +147,13 @@ final class LoggingInputTest {
             "text file",
             logger
         ).stream().available();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must log available byte(s) from text file",
             new TextOf(logger.toString()),
             new HasString(
                 "There is(are) 74536 byte(s) available from text file"
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -169,14 +167,14 @@ final class LoggingInputTest {
         ).stream()) {
             input.mark(150);
             input.reset();
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must log mark and reset from text file",
                 new TextOf(logger.toString()),
                 new AllOf<>(
                     new HasString("Marked position 150 from text file"),
                     new HasString("Reset input stream from text file")
                 )
-            ).affirm();
+            );
         }
     }
 
@@ -188,13 +186,13 @@ final class LoggingInputTest {
             "text file",
             logger
         ).stream().markSupported();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must log mark and reset are not supported from text file",
             new TextOf(logger.toString()),
             new HasString(
                 "Mark and reset are supported from text file"
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -210,11 +208,11 @@ final class LoggingInputTest {
                     src
                 )
             ).value();
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "",
                 new TextOf(handler.toString()),
                 new HasString("Read 8 byte(s)")
-            ).affirm();
+            );
         } finally {
             logger.removeHandler(handler);
         }

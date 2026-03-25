@@ -4,8 +4,8 @@
  */
 package org.cactoos.iterator;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Satisfies;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -15,15 +15,14 @@ import org.llorllale.cactoos.matchers.Throws;
  * <p>There is no thread-safety guarantee.
  * @since 0.35
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class NoNullsTest {
 
     @Test
     void nextThrowsErrorIfNull() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw exception",
             () -> new NoNulls<>(
-                new IteratorOf<>(new String[]{null})
+                new IteratorOf<>((String) null)
             ).next(),
             new Throws<>(
                 new Satisfies<>(
@@ -31,12 +30,12 @@ final class NoNullsTest {
                 ),
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void nthThrowsErrorIfNull() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw exception",
             () -> new TailOf<>(
                 1,
@@ -50,6 +49,6 @@ final class NoNullsTest {
                 ),
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 }

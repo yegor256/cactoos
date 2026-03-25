@@ -14,6 +14,7 @@ import org.cactoos.Output;
  *
  * @since 0.18
  */
+@SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class SyncOutput implements Output {
 
     /**

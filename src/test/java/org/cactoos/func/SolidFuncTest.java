@@ -7,9 +7,9 @@ package org.cactoos.func;
 import java.security.SecureRandom;
 import org.cactoos.Func;
 import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -18,7 +18,6 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class SolidFuncTest {
 
     @Test
@@ -26,29 +25,29 @@ final class SolidFuncTest {
         final Func<Boolean, Integer> func = new SolidFunc<>(
             input -> new SecureRandom().nextInt()
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must cache results",
             func.apply(true) + func.apply(true),
             new IsEqual<>(func.apply(true) + func.apply(true))
-        ).affirm();
+        );
     }
 
     @Test
     void worksInThreads() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must work well in multiple threads",
             func -> {
-                new Assertion<>(
+                MatcherAssert.assertThat(
                     "Result must be cached",
                     func.apply(true),
                     new IsEqual<>(func.apply(true))
-                ).affirm();
+                );
                 return true;
             },
             new RunsInThreads<>(
                 new SolidFunc<>(x -> new ListOf<>(1, 2))
             )
-        ).affirm();
+        );
     }
 
 }

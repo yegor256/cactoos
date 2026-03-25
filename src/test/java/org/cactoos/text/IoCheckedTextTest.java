@@ -5,13 +5,14 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import java.text.ParseException;
 import org.cactoos.Text;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.StringContains;
 import org.hamcrest.object.HasToString;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -24,43 +25,40 @@ final class IoCheckedTextTest {
 
     @Test
     void rethrowsCheckedIoException() {
-        final String msg = "intended IO error";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw same IO exception",
             new IoCheckedText(
                 () -> {
-                    throw new IOException(msg);
+                    throw new IOException("intended IO error");
                 }
             )::asString,
             new Throws<>(
-                new StringContains(msg),
+                new StringContains("intended IO error"),
                 IOException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     void rethrowsCheckedToUncheckedException() {
-        final String msg = "intended";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw an exception when something goes wrong",
             new IoCheckedText(
                 () -> {
-                    throw new Exception(msg);
+                    throw new ParseException("intended", 0);
                 }
             )::asString,
             new Throws<>(
-                new StringContains(msg),
+                new StringContains("intended"),
                 RuntimeException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void toStringMustReturnSameOfAsString() {
         final String text = "one";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must implement #toString which returns the same of #asString",
             new IoCheckedText(
                 new TextOf(text)
@@ -68,22 +66,22 @@ final class IoCheckedTextTest {
             new HasToString<>(
                 new IsEqual<>(text)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void equalsToTheSameTextObject() {
         final Text text = new TextOf("anything");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must match text representing the same value",
             new IoCheckedText(text),
             new IsEqual<>(text)
-        ).affirm();
+        );
     }
 
     @Test
     void equalsOtherTextRepresentingTheSameValue() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must match another text representing the same value",
             new IoCheckedText(
                 new TextOf("abcdefghijkl")
@@ -91,12 +89,12 @@ final class IoCheckedTextTest {
             new IsEqual<>(
                 new Concatenated("ab", "cde", "fghi", "j", "kl")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void equalsNonTextObject() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must does not match another object which is not a string",
             new IoCheckedText(
                 new TextOf("is not equals to null")
@@ -104,30 +102,29 @@ final class IoCheckedTextTest {
             new IsNot<>(
                 new IsEqual<>(new Object())
             )
-        ).affirm();
+        );
     }
 
     @Test
-    @SuppressWarnings("PMD.EqualsNull")
     void notEqualsWhenAnObjectIsNull() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must match equals null",
             new IoCheckedText(
                 new TextOf("is not equals to not Text object")
-            ).equals(null),
-            new IsEqual<>(false)
-        ).affirm();
+            ),
+            new IsNot<>(new IsEqual<>(null))
+        );
     }
 
     @Test
     void matchTheSameHashCode() {
         final String text = "hashCode";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must match its represented String hashcode",
             new IoCheckedText(
                 new TextOf(text)
             ).hashCode(),
             new IsEqual<>(text.hashCode())
-        ).affirm();
+        );
     }
 }

@@ -61,7 +61,6 @@ public final class NoNulls<T> implements List<T> {
     }
 
     @Override
-    @SuppressWarnings("PMD.UseVarargs")
     public <X> X[] toArray(final X[] array) {
         return new org.cactoos.collection.NoNulls<>(this.list).toArray(array);
     }

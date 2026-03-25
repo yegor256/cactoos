@@ -7,9 +7,9 @@ package org.cactoos.io;
 
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -22,39 +22,37 @@ final class InputWithRetryTest {
     @Test
     void testInputWithRetryShouldRead() throws Exception {
         final AtomicInteger cnt = new AtomicInteger(0);
-        final InputWithRetry iwr = new InputWithRetry(
-            () -> {
-                if (cnt.getAndIncrement() < 2) {
-                    throw new IllegalArgumentException("Test exception");
-                }
-                return new DeadInputStream();
-            },
-            3,
-            Duration.ZERO
-        );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "should read -1 from stream",
-            iwr.stream().read(),
+            new InputWithRetry(
+                () -> {
+                    if (cnt.getAndIncrement() < 2) {
+                        throw new IllegalArgumentException("Test exception");
+                    }
+                    return new DeadInputStream();
+                },
+                3,
+                Duration.ZERO
+            ).stream().read(),
             new IsEqual<>(-1)
-        ).affirm();
+        );
     }
 
     @Test
     void testExceededNumberOfAttempts() {
         final AtomicInteger cnt = new AtomicInteger(0);
-        final InputWithRetry iwr = new InputWithRetry(
-            () -> {
-                if (cnt.getAndIncrement() < 3) {
-                    throw new IllegalArgumentException("Test exception");
-                }
-                return new DeadInputStream();
-            },
-            3
-        );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "should throw same exception",
-            iwr::stream,
+            new InputWithRetry(
+                () -> {
+                    if (cnt.getAndIncrement() < 3) {
+                        throw new IllegalArgumentException("Test exception");
+                    }
+                    return new DeadInputStream();
+                },
+                3
+            )::stream,
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 }

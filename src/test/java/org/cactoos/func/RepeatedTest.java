@@ -8,10 +8,10 @@ import java.security.SecureRandom;
 import java.util.Iterator;
 import org.cactoos.Func;
 import org.cactoos.iterator.IteratorOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -20,34 +20,31 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.13.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class RepeatedTest {
 
     @Test
     void runsFuncMultipleTimes() throws Exception {
         final Iterator<Integer> iter = new IteratorOf<>(1, 2, 5, 6);
-        final Func<Boolean, Integer> func = new Repeated<>(
-            input -> iter.next(),
-            3
-        );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be applied 3 times",
-            func.apply(true),
+            new Repeated<Boolean, Integer>(
+                input -> iter.next(),
+                3
+            ).apply(true),
             new IsEqual<>(5)
-        ).affirm();
+        );
     }
 
     @Test
     void repeatsNullsResults() throws Exception {
-        final Func<Boolean, Integer> func = new Repeated<>(
-            input -> null,
-            2
-        );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must repeat NULL",
-            func.apply(true),
+            new Repeated<Boolean, Integer>(
+                input -> null,
+                2
+            ).apply(true),
             new IsNull<>()
-        ).affirm();
+        );
     }
 
     @Test
@@ -56,12 +53,12 @@ final class RepeatedTest {
             input -> new SecureRandom().nextInt(),
             0
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw if parameter is not correct",
             () -> func.apply(true),
             new Throws<>(
                 IllegalArgumentException.class
             )
-        ).affirm();
+        );
     }
 }

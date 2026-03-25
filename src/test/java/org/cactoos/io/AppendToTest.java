@@ -11,9 +11,9 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.Randomized;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -22,7 +22,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.0
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class AppendToTest {
 
     /**
@@ -35,14 +35,14 @@ final class AppendToTest {
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
             ).asString()
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't throw exception with proper message",
             () -> new AppendTo(source).stream(),
             new Throws<>(
                 source.getPath(),
                 NoSuchFileException.class
             )
-        ).affirm();
+        );
     }
 
     /**
@@ -57,19 +57,19 @@ final class AppendToTest {
         final File source = wdir.resolve("apptest.txt").toFile();
         final String first = "abdcd";
         try (OutputStream out = new OutputTo(source).stream()) {
-            out.write(first.getBytes());
+            out.write(first.getBytes(StandardCharsets.UTF_8));
             out.flush();
         }
         final String second = "efgh";
         try (OutputStream out = new AppendTo(source).stream()) {
-            out.write(second.getBytes());
+            out.write(second.getBytes(StandardCharsets.UTF_8));
             out.flush();
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Does not contain expected text",
             new InputOf(source),
             new HasContent(new Concatenated(first, second))
-        ).affirm();
+        );
     }
 
     /**
@@ -92,10 +92,10 @@ final class AppendToTest {
             out.write(second.getBytes(StandardCharsets.UTF_8));
             out.flush();
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't find expected unicode text content",
             new InputOf(source),
             new HasContent(new Concatenated(first, second))
-        ).affirm();
+        );
     }
 }

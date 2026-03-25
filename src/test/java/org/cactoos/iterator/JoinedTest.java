@@ -6,9 +6,9 @@ package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -21,7 +21,7 @@ final class JoinedTest {
     @Test
     @SuppressWarnings("unchecked")
     void joinsIterators() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must concatenate iterable of iterators together",
             new IterableOf<>(
                 new Joined<>(
@@ -32,34 +32,34 @@ final class JoinedTest {
                 )
             ),
             new IsEqual<>(new IterableOf<>("x", "y"))
-        ).affirm();
+        );
     }
 
     @Test
     void callsNextDirectlyOnNonEmptyIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must call next method directly on non-empty iterator",
             new Joined<Integer>(
                 new IteratorOf<>(1),
                 new IteratorOf<>(2)
             ).next(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
     @Test
     void throwsExceptionWhenCallNextOnEmptyIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw an exception",
             () -> new Joined<Integer>(new IteratorOf<>()).next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void joinItemAndIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must join item and iterable",
             new IterableOf<>(
                 new Joined<>(
@@ -68,13 +68,13 @@ final class JoinedTest {
                 )
             ),
             new IsEqual<>(new IterableOf<>(0, 1, 2, 3))
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void joinIterableAndItem() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must join iterable and item",
             new IterableOf<>(
                 new Joined<>(
@@ -83,6 +83,6 @@ final class JoinedTest {
                 )
             ),
             new IsEqual<>(new IterableOf<>(1, 2, 3, 0))
-        ).affirm();
+        );
     }
 }

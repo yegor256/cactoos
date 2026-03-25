@@ -7,8 +7,8 @@ package org.cactoos.set;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.HasValues;
 
@@ -24,14 +24,14 @@ final class DiffTest {
      */
     @Test
     void computesSetDifference() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the difference of two sets",
             new Diff<>(
                 new SetOf<>(1, 2, 3),
                 new SetOf<>(2, 3, 4)
             ),
             new HasValues<>(1)
-        ).affirm();
+        );
     }
 
     /**
@@ -39,14 +39,14 @@ final class DiffTest {
      */
     @Test
     void computesSetDifferenceWithEmptySecondSet() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the difference with empty second set",
             new Diff<>(
                 new SetOf<>(1, 2, 3),
                 new SetOf<>()
             ),
             new HasValues<>(1, 2, 3)
-        ).affirm();
+        );
     }
 
     /**
@@ -54,14 +54,14 @@ final class DiffTest {
      */
     @Test
     void computesSetDifferenceWithEmptyFirstSet() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the difference with empty first set",
             new Diff<>(
                 new SetOf<Integer>(),
                 new SetOf<>(1, 2, 3)
             ),
             new HasSize(0)
-        ).affirm();
+        );
     }
 
     /**
@@ -77,11 +77,11 @@ final class DiffTest {
         second.add(3);
         second.add(4);
         second.add(5);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the difference of two java.util.Set",
             new Diff<>(first, second),
             new HasValues<>(1, 2)
-        ).affirm();
+        );
     }
 
     /**
@@ -89,14 +89,14 @@ final class DiffTest {
      */
     @Test
     void computesSetDifferenceWithIterables() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the difference of two iterables",
             new Diff<>(
                 Collections.singletonList(1),
                 Collections.singletonList(2)
             ),
             new HasValues<>(1)
-        ).affirm();
+        );
     }
 
     /**
@@ -104,13 +104,13 @@ final class DiffTest {
      */
     @Test
     void computesSetDifferenceWithIterators() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the difference of two iterators",
             new Diff<>(
                 new SetOf<>(1, 2, 3).iterator(),
                 new SetOf<>(3, 4, 5).iterator()
             ),
             new HasValues<>(1, 2)
-        ).affirm();
+        );
     }
 }

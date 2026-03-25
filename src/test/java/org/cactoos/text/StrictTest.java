@@ -5,10 +5,9 @@
 package org.cactoos.text;
 
 import java.util.regex.Pattern;
-import org.cactoos.Func;
 import org.cactoos.func.FuncOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -17,8 +16,6 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.0
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals",
-    "PMD.JUnitTestsShouldIncludeAssert"})
 final class StrictTest {
 
     /**
@@ -26,14 +23,14 @@ final class StrictTest {
      */
     @Test
     void acceptsCharSequencePredicate() {
-        final Func<CharSequence, Boolean> lengthy = new FuncOf<>(
-            seq -> seq.length() > 3
-        );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be equal strings",
-            new Strict(lengthy, new TextOf("sequence")),
+            new Strict(
+                new FuncOf<>(seq -> seq.length() > 3),
+                new TextOf("sequence")
+            ),
             new IsText("sequence")
-        ).affirm();
+        );
     }
 
     /**
@@ -42,14 +39,14 @@ final class StrictTest {
      */
     @Test
     void failsIfPredicateIsNegative() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw IllegalArgumentException",
             () -> new Strict(s -> false, new TextOf("text")).asString(),
             new Throws<>(
                 "String 'text' does not match a given predicate",
                 IllegalArgumentException.class
             )
-        ).affirm();
+        );
     }
 
     /**
@@ -58,11 +55,11 @@ final class StrictTest {
      */
     @Test
     void returnsUnchangedIfPredicateIsPositive() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Given strings are not equal",
             new Strict(s -> true, new TextOf("text")),
             new IsText("text")
-        ).affirm();
+        );
     }
 
     /**
@@ -71,7 +68,7 @@ final class StrictTest {
      */
     @Test
     void failsIfNotMatchedWithPattern() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw IllegalArgumentException",
             () -> new Strict(
                 Pattern.compile("^[a-zA-Z]+$"),
@@ -81,7 +78,7 @@ final class StrictTest {
                 "String 'text12' does not match a given predicate",
                 IllegalArgumentException.class
             )
-        ).affirm();
+        );
     }
 
     /**
@@ -90,13 +87,13 @@ final class StrictTest {
      */
     @Test
     void returnsUnchangedIfMatchedWithPattern() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Given strings are not equal",
             new Strict(
                 Pattern.compile("^[a-zA-Z0-9]+$"),
                 new TextOf("text1")
             ),
             new IsText("text1")
-        ).affirm();
+        );
     }
 }

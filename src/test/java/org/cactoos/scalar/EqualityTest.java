@@ -4,9 +4,10 @@
  */
 package org.cactoos.scalar;
 
+import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -18,68 +19,68 @@ final class EqualityTest {
 
     @Test
     void notEqualLeft() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must compare smaller to greater",
             new Equality<>(
                 new EqualityTest.Letters("A"), new EqualityTest.Letters("AB")
             ),
             new HasValue<>(-1)
-        ).affirm();
+        );
     }
 
     @Test
     void notEqualRight() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must compare greater to smaller",
             new Equality<>(
                 new EqualityTest.Letters("AB"), new EqualityTest.Letters("A")
             ),
             new HasValue<>(1)
-        ).affirm();
+        );
     }
 
     @Test
     void notEqualLeftWithSameSize() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must compare smaller to smaller with same size",
             new Equality<>(
                 new EqualityTest.Letters("A"), new EqualityTest.Letters("B")
             ),
             new HasValue<>(-1)
-        ).affirm();
+        );
     }
 
     @Test
     void notEqualRightWithSameSize() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must compare greater to smaller with same size",
             new Equality<>(
                 new EqualityTest.Letters("B"), new EqualityTest.Letters("A")
             ),
             new HasValue<>(1)
-        ).affirm();
+        );
     }
 
     @Test
     void equal() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must compare equals",
             new Equality<>(
                 new EqualityTest.Letters("A"), new EqualityTest.Letters("A")
             ),
             new HasValue<>(0)
-        ).affirm();
+        );
     }
 
     @Test
     void compareEmptyArrays() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must compare empty",
             new Equality<>(
                 new EqualityTest.Letters(""), new EqualityTest.Letters("")
             ),
             new HasValue<>(0)
-        ).affirm();
+        );
     }
 
     /**
@@ -103,7 +104,7 @@ final class EqualityTest {
 
         @Override
         public byte[] asBytes() {
-            return this.text.getBytes();
+            return this.text.getBytes(StandardCharsets.UTF_8);
         }
     }
 }

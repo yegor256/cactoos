@@ -4,9 +4,9 @@
  */
 package org.cactoos.iterable;
 
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Sliced}.
@@ -16,9 +16,8 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class SlicedTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    void sliceIterable() {
-        new Assertion<>(
+        void sliceIterable() {
+        MatcherAssert.assertThat(
             "Must get sliced iterable of elements",
             new Sliced<>(
                 1,
@@ -30,6 +29,6 @@ final class SlicedTest {
                     "two", "three"
                 )
             )
-        ).affirm();
+        );
     }
 }

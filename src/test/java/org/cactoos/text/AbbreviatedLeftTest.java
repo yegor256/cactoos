@@ -7,7 +7,6 @@ package org.cactoos.text;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link AbbreviatedLeft}.
@@ -31,39 +30,39 @@ final class AbbreviatedLeftTest {
     @Test
     void abbreviatesTextFromLeftWithDefaultWidth() throws Exception {
         final String text = "The quick brown fox jumps over the lazy dog";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't abbreviate a text from the left with default width",
             new AbbreviatedLeft(text).asString(),
             Matchers.equalTo(text)
-        ).affirm();
+        );
     }
 
     @Test
     void doesNotAbbreviateShortText() throws Exception {
         final String text = "Short text";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't preserve a short text",
             new AbbreviatedLeft(text, 20).asString(),
             Matchers.equalTo(text)
-        ).affirm();
+        );
     }
 
     @Test
     void abbreviatesTextWithExactMaxWidth() throws Exception {
         final String text = "Exactly twenty chars";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't handle text with exact max width",
             new AbbreviatedLeft(text, 20).asString(),
             Matchers.equalTo(text)
-        ).affirm();
+        );
     }
 
     @Test
     void handlesEmptyText() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't handle empty text",
             new AbbreviatedLeft("", 20).asString(),
             Matchers.equalTo("")
-        ).affirm();
+        );
     }
 }

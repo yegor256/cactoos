@@ -7,9 +7,9 @@ package org.cactoos.list;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -17,13 +17,13 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 1.0.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+@SuppressWarnings("PMD.TooManyMethods")
 final class JoinedListIteratorTest {
 
     @Test
     @SuppressWarnings("unchecked")
     void joinsListIterators() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must concatenate iterable of listIterators together",
             new IterableOf<>(
                 new JoinedListIterator<String>(
@@ -32,53 +32,88 @@ final class JoinedListIteratorTest {
                 )
             ),
             new IsEqual<>(new IterableOf<>("x", "y"))
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
-    void navigatesInNonEmptyIterator() {
+    void navigatesNextOnNonEmptyIteratorFirstTime() {
+        MatcherAssert.assertThat(
+            "Must call next method directly on non-empty listIterator for the first time",
+            new JoinedListIterator<>(
+                new ListOf<>(1).listIterator(),
+                new ListOf<>(2).listIterator(),
+                new ListOf<>(3).listIterator()
+            ).next(),
+            new IsEqual<>(1)
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void navigatesNextOnNonEmptyIteratorSecondTime() {
         final ListIterator<Integer> joined = new JoinedListIterator<>(
             new ListOf<>(1).listIterator(),
             new ListOf<>(2).listIterator(),
             new ListOf<>(3).listIterator()
         );
-        new Assertion<>(
-            "Must call next method directly on non-empty listIterator for the first time",
-            joined.next(),
-            new IsEqual<>(1)
-        ).affirm();
-        new Assertion<>(
+        joined.next();
+        MatcherAssert.assertThat(
             "Must call next method directly on non-empty listIterator for the second time",
             joined.next(),
             new IsEqual<>(2)
-        ).affirm();
-        new Assertion<>(
-            "Must call previous method directly on non-empty listIterator for the first time",
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void navigatesPreviousOnNonEmptyIterator() {
+        final ListIterator<Integer> joined = new JoinedListIterator<>(
+            new ListOf<>(1).listIterator(),
+            new ListOf<>(2).listIterator(),
+            new ListOf<>(3).listIterator()
+        );
+        joined.next();
+        joined.next();
+        MatcherAssert.assertThat(
+            "Must call previous method directly on non-empty listIterator",
             joined.previous(),
             new IsEqual<>(2)
-        ).affirm();
-        new Assertion<>(
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void navigatesPreviousTwiceOnNonEmptyIterator() {
+        final ListIterator<Integer> joined = new JoinedListIterator<>(
+            new ListOf<>(1).listIterator(),
+            new ListOf<>(2).listIterator(),
+            new ListOf<>(3).listIterator()
+        );
+        joined.next();
+        joined.next();
+        joined.previous();
+        MatcherAssert.assertThat(
             "Must call previous method directly on non-empty listIterator for the second time",
             joined.previous(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void throwsExceptionWhenCallPreviousOnEmptyIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw an exception",
             () -> new JoinedListIterator<Integer>(new ListOf<>()).previous(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void joinItemAndIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must join item and iterable",
             new IterableOf<>(
                 new JoinedListIterator<>(
@@ -87,13 +122,13 @@ final class JoinedListIteratorTest {
                 )
             ),
             new IsEqual<>(new IterableOf<>(0, 1, 2, 3))
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void joinIterableAndItem() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must join iterable and item",
             new IterableOf<>(
                 new JoinedListIterator<>(
@@ -102,32 +137,40 @@ final class JoinedListIteratorTest {
                 )
             ),
             new IsEqual<>(new IterableOf<>(1, 2, 3, 0))
-        ).affirm();
+        );
     }
 
     @Test
-    void nextIndexTest() {
+    void nextIndexReturnsZeroInitially() {
+        MatcherAssert.assertThat(
+            "Must return index of the next element",
+            new JoinedListIterator<>(
+                new ListOf<>(1).listIterator(),
+                new ListOf<>(2).listIterator(),
+                new ListOf<>(3).listIterator()
+            ).nextIndex(),
+            new IsEqual<>(0)
+        );
+    }
+
+    @Test
+    void nextIndexReturnsOneAfterNext() {
         final ListIterator<Integer> joined = new JoinedListIterator<>(
             new ListOf<>(1).listIterator(),
             new ListOf<>(2).listIterator(),
             new ListOf<>(3).listIterator()
         );
-        new Assertion<>(
-            "Must return index of the next element",
-            joined.nextIndex(),
-            new IsEqual<>(0)
-        ).affirm();
         joined.next();
-        new Assertion<>(
-            "Must return index of the next element",
+        MatcherAssert.assertThat(
+            "Must return index of the next element after calling next",
             joined.nextIndex(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
     @Test
     void previousIndexDoesntExistTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return -1 if there is no previous item",
             new JoinedListIterator<>(
                 new ListOf<>(1).listIterator(),
@@ -135,38 +178,48 @@ final class JoinedListIteratorTest {
                 new ListOf<>(3).listIterator()
             ).previousIndex(),
             new IsEqual<>(-1)
-        ).affirm();
+        );
     }
 
     @Test
     void nextThrowsIfThereIsNoNext() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw error if there is no next element",
             () -> new JoinedListIterator<>().next(),
             new Throws<>(
                 NoSuchElementException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
-    void previousIndexTest() {
+    void previousIndexReturnsZeroAfterOneNext() {
         final ListIterator<Integer> joined = new JoinedListIterator<>(
             new ListOf<>(1).listIterator(),
             new ListOf<>(2).listIterator(),
             new ListOf<>(3).listIterator()
         );
         joined.next();
-        new Assertion<>(
-            "Must return index of the previous element",
+        MatcherAssert.assertThat(
+            "Must return index of the previous element after one next",
             joined.previousIndex(),
             new IsEqual<>(0)
-        ).affirm();
+        );
+    }
+
+    @Test
+    void previousIndexReturnsOneAfterTwoNext() {
+        final ListIterator<Integer> joined = new JoinedListIterator<>(
+            new ListOf<>(1).listIterator(),
+            new ListOf<>(2).listIterator(),
+            new ListOf<>(3).listIterator()
+        );
         joined.next();
-        new Assertion<>(
-            "Must return index of the previous element",
+        joined.next();
+        MatcherAssert.assertThat(
+            "Must return index of the previous element after two next",
             joined.previousIndex(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 }

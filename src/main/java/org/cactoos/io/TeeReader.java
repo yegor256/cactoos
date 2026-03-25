@@ -14,6 +14,7 @@ import java.io.Writer;
  * <p>There is no thread-safety guarantee.
  * @since 0.13
  */
+@SuppressWarnings("PMD.UseTryWithResources")
 public final class TeeReader extends Reader {
 
     /**

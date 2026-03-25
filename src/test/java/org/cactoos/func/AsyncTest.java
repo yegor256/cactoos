@@ -9,11 +9,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsApplicable;
 import org.llorllale.cactoos.matchers.Satisfies;
 import org.llorllale.cactoos.matchers.Throws;
@@ -24,11 +23,11 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.CloseResource"})
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class AsyncTest {
     @Test
     void runsInBackground() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must run in the background",
             new Async<>(
                 input -> {
@@ -42,31 +41,31 @@ final class AsyncTest {
                     future -> !future.isDone()
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void runsAsProcInBackground() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must run proc in the background",
             input -> {
-                final CountDownLatch latch = new CountDownLatch(1);
+                final CountDownLatch done = new CountDownLatch(1);
                 new Async<>(
-                    new FuncOf<>(ipt -> latch.countDown(), true)
+                    new FuncOf<>(ipt -> done.countDown(), true)
                 ).exec(input);
-                latch.await();
+                done.await();
                 return true;
             },
             new IsApplicable<>(
                 true, new IsEqual<>(true)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void runsInBackgroundWithoutFuture() {
         final CountDownLatch latch = new CountDownLatch(1);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must run in the background without us touching the Future",
             new Async<>(
                 new FuncOf<>(input -> latch.countDown(), true)
@@ -77,15 +76,13 @@ final class AsyncTest {
                     future -> latch.await(1L, TimeUnit.SECONDS)
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void runsInBackgroundWithThreadFactory() {
-        final String name = "secret name for thread factory";
-        final ThreadFactory factory = r -> new Thread(r, name);
         final CountDownLatch latch = new CountDownLatch(1);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must run in the background with specific thread factory",
             new Async<>(
                 new FuncOf<>(
@@ -99,10 +96,10 @@ final class AsyncTest {
                     },
                     true
                 ),
-                factory
+                r -> new Thread(r, "secret name for thread factory")
             ),
             new IsApplicable<>(
-                name,
+                "secret name for thread factory",
                 new Satisfies<>(
                     future -> {
                         future.get();
@@ -110,15 +107,13 @@ final class AsyncTest {
                     }
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void runsInBackgroundWithExecutorService() {
-        final String name = "secret name for thread executor";
-        final ThreadFactory factory = r -> new Thread(r, name);
         final CountDownLatch latch = new CountDownLatch(1);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must run in the background with specific thread executor",
             new Async<>(
                 new FuncOf<>(
@@ -132,10 +127,12 @@ final class AsyncTest {
                     },
                     true
                 ),
-                Executors.newSingleThreadExecutor(factory)
+                Executors.newSingleThreadExecutor(
+                    r -> new Thread(r, "secret name for thread executor")
+                )
             ),
             new IsApplicable<>(
-                name,
+                "secret name for thread executor",
                 new Satisfies<>(
                     future -> {
                         future.get();
@@ -143,7 +140,7 @@ final class AsyncTest {
                     }
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -159,17 +156,16 @@ final class AsyncTest {
         latch.await(1L, TimeUnit.SECONDS);
         future.get(1L, TimeUnit.SECONDS);
         async.close();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must reject tasks after close shuts down internal executor",
             () -> async.apply(true),
             new Throws<>(RejectedExecutionException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void doesNotShutDownExternalExecutor() throws Exception {
-        final ExecutorService exec = Executors.newSingleThreadExecutor();
-        try {
+        try (ExecutorService exec = Executors.newSingleThreadExecutor()) {
             final CountDownLatch latch = new CountDownLatch(1);
             final Async<Boolean, Boolean> async = new Async<>(
                 input -> {
@@ -181,14 +177,11 @@ final class AsyncTest {
             async.apply(true);
             latch.await(1L, TimeUnit.SECONDS);
             async.close();
-            final Future<Boolean> after = exec.submit(() -> true);
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "must not shut down external executor on close",
-                after.get(1L, TimeUnit.SECONDS),
+                exec.submit(() -> true).get(1L, TimeUnit.SECONDS),
                 new IsEqual<>(true)
-            ).affirm();
-        } finally {
-            exec.shutdownNow();
+            );
         }
     }
 }

@@ -4,8 +4,8 @@
  */
 package org.cactoos.iterable;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
 /**
@@ -19,10 +19,10 @@ final class IterableOfIntsTest {
     @Test
     void convertsIntegerValuesToIterable() {
         final int[] values = {1, 2, 3};
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert integer values to iterable",
             new IterableOfInts(values),
             new HasValues<>(values[0], values[1], values[2])
-        ).affirm();
+        );
     }
 }

@@ -24,6 +24,7 @@ import org.cactoos.Text;
  *
  * @since 0.1
  */
+@SuppressWarnings("PMD.ExcessivePublicCount")
 public final class TeeInput implements Input {
 
     /**

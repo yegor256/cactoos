@@ -11,7 +11,6 @@ import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
 /**
@@ -21,169 +20,167 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings("PMD.TooManyMethods")
 final class ListEnvelopeTest {
 
     @Test
     void returnsListIteratorWithSupportedSet() {
-        final ListEnvelope<String> list = new StringList("one", "two");
+        final List<String> list = new StringList("alpha", "beta");
         final ListIterator<String> iterator = list.listIterator(1);
         iterator.next();
-        iterator.set("zero");
+        iterator.set("gamma");
         iterator.previous();
         MatcherAssert.assertThat(
             "iterator is not equal to expected",
             () -> iterator,
             Matchers.contains(
-                "zero"
+                "gamma"
             )
         );
     }
 
     @Test
     void removeIsDelegated() {
-        final ListEnvelope<String> list = new StringList("one");
+        final List<String> list = new StringList("delta");
         list.remove(0);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must be empty after removal of 0th element",
             list,
             new IsEmptyCollection<>()
-        ).affirm();
+        );
     }
 
     @Test
     void indexOfIsDelegated() {
-        final ListEnvelope<String> list = new StringList("one");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must return correct index of element",
-            list.indexOf("one"),
+            new StringList("epsilon").indexOf("epsilon"),
             new IsEqual<>(0)
-        ).affirm();
+        );
     }
 
     @Test
     void addAllIsDelegated() {
-        final ListEnvelope<String> list = new StringList("one");
-        list.addAll(0, new StringList("two"));
-        new Assertion<>(
+        final List<String> list = new StringList("zeta");
+        list.addAll(0, new StringList("eta"));
+        MatcherAssert.assertThat(
             "element must be added at 0th position",
             list,
-            new IsEqual<>(new ListOf<>("two", "one"))
-        ).affirm();
+            new IsEqual<>(new ListOf<>("eta", "zeta"))
+        );
     }
 
     @Test
     void setIsDelegatedToTheOriginal() {
-        final ListEnvelope<String> list = new StringList("one");
-        list.set(0, "zero");
-        new Assertion<>(
+        final List<String> list = new StringList("theta");
+        list.set(0, "iota");
+        MatcherAssert.assertThat(
             "value must be changed",
             list,
-            new HasValues<>("zero")
-        ).affirm();
+            new HasValues<>("iota")
+        );
     }
 
     @Test
     void addIsDelegated() {
-        final ListEnvelope<String> list = new StringList("one");
-        list.add("two");
-        new Assertion<>(
+        final List<String> list = new StringList("kappa");
+        list.add("lambda");
+        MatcherAssert.assertThat(
             "value must be added",
             list,
-            new HasValues<>("one", "two")
-        ).affirm();
+            new HasValues<>("kappa", "lambda")
+        );
     }
 
     @Test
     void returnsSubListWithRemove() {
-        final ListEnvelope<String> list = new StringList("one");
+        final List<String> list = new StringList("mu");
         list.subList(0, 1).remove(0);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must be empty after removal of 0th element via subList",
             list,
             new IsEmptyCollection<>()
-        ).affirm();
+        );
     }
 
     @Test
     void returnsSubListWithSupportedSet() {
-        final List<String> list = new StringList("one");
-        list.subList(0, 1).set(0, "zero");
-        new Assertion<>(
+        final List<String> list = new StringList("nu");
+        list.subList(0, 1).set(0, "xi");
+        MatcherAssert.assertThat(
             "ListEnvelope().subList(...).set() must change the original list",
             list,
             new HasValues<>(
-                "zero"
+                "xi"
             )
-        ).affirm();
+        );
     }
 
     @Test
     void addsAtGivenIndex() {
-        final ListEnvelope<String> list = new StringList("one");
-        list.add(0, "two");
-        new Assertion<>(
+        final List<String> list = new StringList("omicron");
+        list.add(0, "pi");
+        MatcherAssert.assertThat(
             "must add value at given index",
             list,
-            new HasValues<>("two")
-        ).affirm();
+            new HasValues<>("pi")
+        );
     }
 
     @Test
     void getsAtGivenIndex() {
-        final ListEnvelope<String> list = new StringList("one");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must get 0th value",
-            list.get(0),
-            new IsEqual<>("one")
-        ).affirm();
+            new StringList("rho").get(0),
+            new IsEqual<>("rho")
+        );
     }
 
     @Test
     void getsLastIndexOfValue() {
-        final ListEnvelope<String> list = new StringList("one");
-        list.add(1, "one");
-        new Assertion<>(
+        final List<String> list = new StringList("sigma");
+        list.add(1, "sigma");
+        MatcherAssert.assertThat(
             "must return correct last index of element",
-            list.lastIndexOf("one"),
+            list.lastIndexOf("sigma"),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
     @Test
     void mustReturnPreviousIndex() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "List iterator must return previous index",
             new StringList("1").listIterator().previousIndex(),
             new IsEqual<>(-1)
-        ).affirm();
+        );
     }
 
     @Test
     void mustReturnPreviousElement() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "List iterator must return previous element",
             new StringList("3", "7").listIterator(1).previous(),
             new IsEqual<>("3")
-        ).affirm();
+        );
     }
 
     @Test
     void mustReturnNextIndex() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "List iterator must return next index",
             new StringList("1").listIterator().nextIndex(),
             new IsEqual<>(0)
-        ).affirm();
+        );
     }
 
     @Test
     void mustReturnNextElement() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "List iterator must return next item",
             new  StringList("5", "11", "13").listIterator(1).next(),
             new IsEqual<>("11")
-        ).affirm();
+        );
     }
 
     private static final class StringList extends ListEnvelope<String> {

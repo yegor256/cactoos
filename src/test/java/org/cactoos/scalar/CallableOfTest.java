@@ -4,9 +4,9 @@
  */
 package org.cactoos.scalar;
 
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link CallableOf}.
@@ -17,13 +17,13 @@ import org.llorllale.cactoos.matchers.Assertion;
 final class CallableOfTest {
     @Test
     void convertsScalar() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must return the value of scalar",
             new CallableOf<>(
                 new Constant<>(1)
             ).call(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
 }

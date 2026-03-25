@@ -7,8 +7,8 @@ package org.cactoos.scalar;
 import org.cactoos.Text;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.Upper;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.IsText;
 
@@ -21,13 +21,13 @@ import org.llorllale.cactoos.matchers.IsText;
 final class MappedTest {
     @Test
     void transformsScalar() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must transform scalar",
             new Mapped<Text>(
                 input -> new Upper(new TextOf(input)),
                 () -> "hello"
             ),
             new HasValue<>(new IsText("HELLO"))
-        ).affirm();
+        );
     }
 }

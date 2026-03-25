@@ -6,8 +6,8 @@ package org.cactoos.proc;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
@@ -15,12 +15,12 @@ import org.llorllale.cactoos.matchers.Satisfies;
  *
  * @since 0.50
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class BiProcOfTest {
     @Test
     void worksWithFunc() {
         final AtomicReference<Object> done = new AtomicReference<>();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must execute BiProc with Func",
             new BiProcOf<>(
                 input -> {
@@ -31,18 +31,17 @@ final class BiProcOfTest {
             new Satisfies<>(
                 proc -> {
                     final Object first = new Object();
-                    final Object second = new Object();
-                    proc.exec(first, second);
+                    proc.exec(first, new Object());
                     return done.get().equals(first);
                 }
             )
-        ).affirm();
+        );
     }
 
     @Test
     void worksWithBiFunc() {
         final AtomicReference<Object> done = new AtomicReference<>();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must execute BiProc with BiFunc",
             new BiProcOf<>(
                 (first, second) -> {
@@ -53,18 +52,17 @@ final class BiProcOfTest {
             new Satisfies<>(
                 proc -> {
                     final Object first = new Object();
-                    final Object second = new Object();
-                    proc.exec(first, second);
+                    proc.exec(first, new Object());
                     return done.get().equals(first);
                 }
             )
-        ).affirm();
+        );
     }
 
     @Test
     void worksWithProc() {
         final AtomicReference<Object> done = new AtomicReference<>();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must execute BiProc with Proc",
             new BiProcOf<>(
                 new ProcOf<>(
@@ -74,18 +72,17 @@ final class BiProcOfTest {
             new Satisfies<>(
                 proc -> {
                     final Object first = new Object();
-                    final Object second = new Object();
-                    proc.exec(first, second);
+                    proc.exec(first, new Object());
                     return done.get().equals(first);
                 }
             )
-        ).affirm();
+        );
     }
 
     @Test
     void worksWithBiProc() {
         final AtomicReference<Object> done = new AtomicReference<>();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must execute BiProc with BiProc",
             new BiProcOf<>(
                 (first, second) -> {
@@ -95,19 +92,18 @@ final class BiProcOfTest {
             new Satisfies<>(
                 proc -> {
                     final Object first = new Object();
-                    final Object second = new Object();
-                    proc.exec(first, second);
+                    proc.exec(first, new Object());
                     return done.get().equals(first);
                 }
             )
-        ).affirm();
+        );
     }
 
     @Test
     void worksWithTwoProcs() {
         final AtomicInteger fst = new AtomicInteger();
         final AtomicInteger snd = new AtomicInteger();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must execute BiProc with two Procs",
             new BiProcOf<>(
                 AtomicInteger::incrementAndGet,
@@ -119,6 +115,6 @@ final class BiProcOfTest {
                     return fst.get() == 1 && snd.get() == 1;
                 }
             )
-        ).affirm();
+        );
     }
 }

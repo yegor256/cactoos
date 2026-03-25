@@ -4,8 +4,10 @@
  */
 package org.cactoos.io;
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -13,29 +15,32 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class OutputNoNullsTest {
 
     @Test
     void failForNullOutput() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Doesn't fail for null output",
             () -> new OutputNoNulls(null).stream(),
             new Throws<>(Exception.class)
-        ).affirm();
+        );
     }
 
     @Test
     void failForNullStream() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Doesn't fail for null output stream",
             () -> new OutputNoNulls(() -> null).stream(),
             new Throws<>(Exception.class)
-        ).affirm();
+        );
     }
 
     @Test
     void okForNoNullOutput() throws Exception {
-        new OutputNoNulls(new DeadOutput()).stream();
+        MatcherAssert.assertThat(
+            "Must return stream for valid output",
+            new OutputNoNulls(new DeadOutput()).stream(),
+            new IsNot<>(new IsNull<>())
+        );
     }
 }

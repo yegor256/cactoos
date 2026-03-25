@@ -6,8 +6,8 @@ package org.cactoos.bytes;
 
 import java.io.StringReader;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.IsTrue;
 
@@ -22,7 +22,7 @@ final class ReaderAsBytesTest {
     @Test
     void readsString() {
         final String source = "hello, друг!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read string through a reader",
             new TextOf(
                 new ReaderAsBytes(
@@ -30,17 +30,17 @@ final class ReaderAsBytesTest {
                 )
             ),
             new IsText(source)
-        ).affirm();
+        );
     }
 
     @Test
     void readsAndClosesReader() throws Exception {
         final EmptyClosableReader reader = new EmptyClosableReader();
         new ReaderAsBytes(reader).asBytes();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must close the reader after reading it",
             reader.isClosed(),
             new IsTrue()
-        ).affirm();
+        );
     }
 }

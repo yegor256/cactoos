@@ -4,9 +4,9 @@
  */
 package org.cactoos.scalar;
 
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -19,19 +19,19 @@ final class FalseTest {
 
     @Test
     void asValue() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return false",
             new False().value(),
             new IsEqual<>(false)
-        ).affirm();
+        );
     }
 
     @Test
     void asScalar() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be false",
             new False(),
             new HasValue<>(false)
-        ).affirm();
+        );
     }
 }

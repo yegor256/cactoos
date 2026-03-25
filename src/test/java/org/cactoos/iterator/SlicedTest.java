@@ -11,9 +11,9 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.Constant;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -25,7 +25,7 @@ final class SlicedTest {
 
     @Test
     void sliceTheMiddle() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return sliced iterator",
             new IterableOf<>(
                 new Sliced<>(
@@ -41,12 +41,12 @@ final class SlicedTest {
                     4, 5
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void sliceTheHead() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return iterator with the head elements",
             new IterableOf<>(
                 new Sliced<>(
@@ -62,12 +62,12 @@ final class SlicedTest {
                     1, 2, 3, 4, 5
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void sliceTheWholeTail() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return the iterator of tail elements",
             new IterableOf<>(
                 new Sliced<>(
@@ -82,12 +82,12 @@ final class SlicedTest {
                     6, 7, 8, 9, 0
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void failSlicing() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail on slicing",
             () -> new Constant<>(
                 new Sliced<>(
@@ -101,7 +101,7 @@ final class SlicedTest {
                 "The iterator doesn't have items any more",
                 NoSuchElementException.class
             )
-        ).affirm();
+        );
     }
 
     /**
@@ -112,17 +112,18 @@ final class SlicedTest {
         final List<String> list = new LinkedList<>();
         list.add("1");
         final AtomicInteger counter = new AtomicInteger(0);
-        final Iterator<String> hooked = new HookedIterator<>(
-            counter::incrementAndGet,
-            list.iterator()
-        );
-        final Iterator<String> sliced = new Sliced<>(0, hooked);
-        sliced.hasNext();
-        new Assertion<>(
+        new Sliced<>(
+            0,
+            new HookedIterator<>(
+                counter::incrementAndGet,
+                list.iterator()
+            )
+        ).hasNext();
+        MatcherAssert.assertThat(
             "Must call hasNext on underlying iterator only once",
             counter.get(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
     /**

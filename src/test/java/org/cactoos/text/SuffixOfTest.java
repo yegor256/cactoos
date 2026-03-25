@@ -4,8 +4,8 @@
  */
 package org.cactoos.text;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.IsText;
  *
  * @since 1.0
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class SuffixOfTest {
 
     /**
@@ -22,11 +21,11 @@ final class SuffixOfTest {
      */
     @Test
     void returnsEmptyIfThereIsNoBoundary() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Given string is not empty",
             new SuffixOf("Cactoos with description", "after"),
             new IsText("")
-        ).affirm();
+        );
     }
 
     /**
@@ -35,11 +34,11 @@ final class SuffixOfTest {
      */
     @Test
     void returnsEmptyIfStringIsBoundary() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Given string is not empty",
             new SuffixOf("Boundary", "Boundary"),
             new IsText("")
-        ).affirm();
+        );
     }
 
     /**
@@ -48,10 +47,10 @@ final class SuffixOfTest {
      */
     @Test
     void returnsAfterBoundaryString() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Given strings are not equal",
             new SuffixOf("Anti-pattern", "Anti-"),
             new IsText("pattern")
-        ).affirm();
+        );
     }
 }

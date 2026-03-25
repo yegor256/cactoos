@@ -10,11 +10,11 @@ import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
 import org.cactoos.text.UncheckedText;
 import org.hamcrest.Matcher;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
@@ -22,15 +22,13 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 1.0.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals",
-    "PMD.TooManyMethods",
-    "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings("PMD.TooManyMethods")
 final class SortedTest {
 
     @Test
     @SuppressWarnings("unchecked")
     void mustSortIntegerArrayAsSetInAscendingOrder() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must keep unique integer numbers sorted",
             new Sorted<Integer>(
                 Integer::compareTo,
@@ -43,13 +41,13 @@ final class SortedTest {
                     new IsEqual<>(3)
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void mustSortIntegerIterableAsSetInDescendingOrder() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must keep unique integer numbers sorted in descending order",
             new Sorted<Integer>(
                 Comparator.reverseOrder(),
@@ -62,20 +60,17 @@ final class SortedTest {
                     new IsEqual<>(1)
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void mustSortTextIterableAsSetUsingCustomCOmparator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must keep unique integer numbers sorted in descending order",
             new Sorted<Text>(
-                (first, second) -> {
-                    final String left = new UncheckedText(first).asString();
-                    final String right = new UncheckedText(second).asString();
-                    return left.compareTo(right);
-                },
+                (first, second) -> new UncheckedText(first).asString()
+                    .compareTo(new UncheckedText(second).asString()),
                 new TextOf("cd"),
                 new TextOf("ab"),
                 new TextOf("gh"),
@@ -89,13 +84,13 @@ final class SortedTest {
                     new IsText("gh")
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void mustNotBeEqualToSortedSet() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Sorted set must not be equal to the tested collection",
             new Sorted<Integer>(
                 Integer::compareTo,
@@ -110,22 +105,22 @@ final class SortedTest {
                     )
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void returnsCorrectComparator() {
         final Comparator<Integer> comparator = Integer::compareTo;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Comparator must be the same",
             new Sorted<>(comparator, 1, 2, 3).comparator(),
             new IsEqual<>(comparator)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsSubset() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return sorted subset",
             new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).subSet(3, 9),
             new IsIterableContainingInOrder<>(
@@ -134,12 +129,12 @@ final class SortedTest {
                     new IsEqual<>(6)
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void returnsHeadset() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return sorted headset",
             new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).headSet(9),
             new IsIterableContainingInOrder<>(
@@ -149,12 +144,12 @@ final class SortedTest {
                     new IsEqual<>(6)
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void returnsTailset() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return sorted tailset",
             new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).tailSet(6),
             new IsIterableContainingInOrder<>(
@@ -163,30 +158,30 @@ final class SortedTest {
                     new IsEqual<>(9)
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void returnsFirst() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return first element",
             new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).first(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsLast() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return last element",
             new Sorted<>(Integer::compareTo, 3, 6, 1, 9, 3).last(),
             new IsEqual<>(9)
-        ).affirm();
+        );
     }
 
     @Test
     void mustSortIntegersByNumberComparator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must keep unique integer numbers sorted",
             new Sorted<Number>(
                 Comparator.comparing(Number::intValue),
@@ -199,7 +194,7 @@ final class SortedTest {
                     new IsEqual<>(3)
                 )
             )
-        ).affirm();
+        );
     }
 
 }

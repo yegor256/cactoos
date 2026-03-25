@@ -5,9 +5,9 @@
 package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -17,29 +17,51 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.56
  */
 final class IteratorOfStackTraceTest {
+
     @Test
-    void iteratorOfStackTraceTest() {
-        final Throwable inner = new Throwable();
-        final IteratorOfStackTrace iter =  new IteratorOfStackTrace(new Throwable(inner));
-        new Assertion<>(
-            "First call 'hasNext' should return true.",
-            iter.hasNext(),
+    void hasNextReturnsTrueForFirstCall() {
+        MatcherAssert.assertThat(
+            "First call 'hasNext' should return true",
+            new IteratorOfStackTrace(
+                new Throwable(new Throwable())
+            ).hasNext(),
             new IsTrue()
-        ).affirm();
-        new Assertion<>(
-            "First call 'next' should return inner exception.",
-            iter.next(),
+        );
+    }
+
+    @Test
+    void nextReturnsInnerException() {
+        final Throwable inner = new Throwable();
+        MatcherAssert.assertThat(
+            "First call 'next' should return inner exception",
+            new IteratorOfStackTrace(new Throwable(inner)).next(),
             new IsEqual<>(inner)
-        ).affirm();
-        new Assertion<>(
-            "Second call 'hasNext' should return false.",
+        );
+    }
+
+    @Test
+    void hasNextReturnsFalseAfterTraversal() {
+        final IteratorOfStackTrace iter = new IteratorOfStackTrace(
+            new Throwable(new Throwable())
+        );
+        iter.next();
+        MatcherAssert.assertThat(
+            "Second call 'hasNext' should return false",
             iter.hasNext(),
             new IsEqual<>(false)
-        ).affirm();
-        new Assertion<>(
-            "Third call 'next' should throw NSEE.",
-            () -> iter.next(),
+        );
+    }
+
+    @Test
+    void nextThrowsWhenExhausted() {
+        final IteratorOfStackTrace iter = new IteratorOfStackTrace(
+            new Throwable(new Throwable())
+        );
+        iter.next();
+        MatcherAssert.assertThat(
+            "Call 'next' should throw NoSuchElementException",
+            iter::next,
             new Throws<Throwable>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 }

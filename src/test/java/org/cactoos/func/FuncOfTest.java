@@ -7,8 +7,8 @@ package org.cactoos.func;
 import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.proc.ProcOf;
 import org.cactoos.scalar.Constant;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
@@ -16,13 +16,13 @@ import org.llorllale.cactoos.matchers.Satisfies;
  *
  * @since 0.20
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class FuncOfTest {
     @Test
     void convertsProcIntoFunc() {
         final AtomicReference<Object> done = new AtomicReference<>();
         final Object result = new Object();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert Proc into Func",
             new FuncOf<>(
                 new ProcOf<>(
@@ -33,40 +33,36 @@ final class FuncOfTest {
             new Satisfies<>(
                 func -> {
                     final Object input = new Object();
-                    final Object res = func.apply(input);
-                    return res.equals(result) && done.get().equals(input);
+                    return func.apply(input).equals(result)
+                        && done.get().equals(input);
                 }
             )
-        ).affirm();
+        );
     }
 
     @Test
     void convertsScalarIntoFunc() {
         final Object result = new Object();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert Scalar into Func",
             new FuncOf<>(new Constant<>(result)),
             new Satisfies<>(
-                func -> {
-                    final Object res = func.apply("discarded");
-                    return res.equals(result);
-                }
+                func -> func.apply("discarded").equals(result)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void convertsLambdaIntoFunc() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert Lambda into Func",
             new FuncOf<>(input -> input),
             new Satisfies<>(
                 func -> {
                     final Object input = new Object();
-                    final Object res = func.apply(input);
-                    return res.equals(input);
+                    return func.apply(input).equals(input);
                 }
             )
-        ).affirm();
+        );
     }
 }

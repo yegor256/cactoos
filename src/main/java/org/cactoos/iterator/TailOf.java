@@ -24,10 +24,10 @@ public final class TailOf<T> extends IteratorEnvelope<T> {
      * @param num Number of tail elements
      * @param iterator Decorated iterator
      */
-    @SuppressWarnings({ "unchecked", "cast" })
+    @SuppressWarnings("unchecked")
     public TailOf(final int num, final Iterator<? extends T> iterator) {
         super(
-            (Iterator<T>) new Reversed<>(
+            new Reversed<>(
                 new HeadOf<>(
                     num,
                     new Reversed<>(

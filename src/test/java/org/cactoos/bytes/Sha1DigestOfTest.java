@@ -8,8 +8,8 @@ import org.cactoos.io.InputOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.Sticky;
 import org.cactoos.text.HexOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
@@ -22,7 +22,7 @@ final class Sha1DigestOfTest {
 
     @Test
     void checksumOfEmptyString() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't calculate the empty string's SHA-1 checksum",
             new HexOf(
                 new Sha1DigestOf(
@@ -32,12 +32,12 @@ final class Sha1DigestOfTest {
             new HasString(
                 "da39a3ee5e6b4b0d3255bfef95601890afd80709"
             )
-        ).affirm();
+        );
     }
 
     @Test
     void checksumOfString() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't calculate the string's SHA-1 checksum",
             new HexOf(
                 new Sha1DigestOf(
@@ -47,12 +47,12 @@ final class Sha1DigestOfTest {
             new HasString(
                 "2ef7bde608ce5404e97d5f042f95f89f1c232871"
             )
-        ).affirm();
+        );
     }
 
     @Test
     void checksumFromFile() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't calculate the file's SHA-1 checksum",
             new HexOf(
                 new Sha1DigestOf(
@@ -68,7 +68,7 @@ final class Sha1DigestOfTest {
             new HasString(
                 "1ef83a80a51e14e72c4face0c928951d88b96acc"
             )
-        ).affirm();
+        );
     }
 
 }

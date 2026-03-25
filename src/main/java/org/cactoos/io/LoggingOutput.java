@@ -15,7 +15,6 @@ import org.cactoos.Output;
  *
  * @since 0.29
  */
-@SuppressWarnings("PMD.LoggerIsNotStaticFinal")
 public final class LoggingOutput implements Output {
 
     /**

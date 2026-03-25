@@ -5,9 +5,9 @@
 package org.cactoos.scalar;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -20,20 +20,19 @@ final class RepeatedTest {
 
     @Test
     void runsMultipleTimes() throws Exception {
-        final AtomicInteger atom = new AtomicInteger();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must run scalar 3 times",
             new Repeated<>(
-                atom::incrementAndGet,
+                new AtomicInteger()::incrementAndGet,
                 3
             ).value(),
             new IsEqual<>(3)
-        ).affirm();
+        );
     }
 
     @Test
     void throwsIfZero() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throws an exception if number of repetitions not be at least 1",
             () -> new Repeated<>(
                 new ScalarOf<>(
@@ -48,7 +47,7 @@ final class RepeatedTest {
                 "The number of repetitions must be at least 1",
                 IllegalArgumentException.class
             )
-        ).affirm();
+        );
     }
 
 }

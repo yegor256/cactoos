@@ -15,12 +15,6 @@ import java.util.SortedSet;
  * @since 0.45
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
-@SuppressWarnings(
-    {
-        "PMD.TooManyMethods",
-        "PMD.AbstractNaming"
-    }
-)
 public abstract class SortedSetEnvelope<T> extends SetEnvelope<T> implements
     SortedSet<T> {
 

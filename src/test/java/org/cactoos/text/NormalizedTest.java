@@ -4,8 +4,8 @@
  */
 package org.cactoos.text;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
@@ -17,11 +17,11 @@ final class NormalizedTest {
 
     @Test
     void normalizesText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't normalize a text",
             new Normalized(" \t hello  \t\tworld   \t"),
             new HasString("hello world")
-        ).affirm();
+        );
     }
 
 }

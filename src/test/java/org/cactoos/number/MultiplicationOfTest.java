@@ -6,9 +6,9 @@ package org.cactoos.number;
 
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.49.2
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class MultiplicationOfTest {
 
     /**
@@ -24,11 +23,11 @@ final class MultiplicationOfTest {
      */
     @Test
     void withListOfNumbersInt() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Multiplication of int must return the appropriate value",
             new MultiplicationOf(2, 3).intValue(),
             new IsEqual<>(6)
-        ).affirm();
+        );
     }
 
     /**
@@ -36,11 +35,11 @@ final class MultiplicationOfTest {
      */
     @Test
     void withListOfNumbersDouble() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Multiplication of double numbers must return proper value",
             new MultiplicationOf(2.0d, 2.5d, 3.0d).doubleValue(),
             new IsEqual<>(15.0d)
-        ).affirm();
+        );
     }
 
     /**
@@ -48,11 +47,11 @@ final class MultiplicationOfTest {
      */
     @Test
     void withListOfNumbersFloat() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Multiplication of float numbers must return proper value",
             new MultiplicationOf(3.0f, 3.0f, 3.0f).floatValue(),
             new IsEqual<>(27.0f)
-        ).affirm();
+        );
     }
 
     /**
@@ -60,11 +59,11 @@ final class MultiplicationOfTest {
      */
     @Test
     void withListOfNumbersLong() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Multiplication of long numbers must return proper value",
             new MultiplicationOf(2L, 3L, 2L).longValue(),
             new IsEqual<>(12L)
-        ).affirm();
+        );
     }
 
     /**
@@ -72,13 +71,13 @@ final class MultiplicationOfTest {
      */
     @Test
     void withIterableInt() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Multiplication of int numbers must return proper value",
             new MultiplicationOf(
                 new IterableOf<>(2L, 3L, 3L)
             ).intValue(),
             new IsEqual<>(18)
-        ).affirm();
+        );
     }
 
     /**
@@ -86,13 +85,13 @@ final class MultiplicationOfTest {
      */
     @Test
     void withIterableLong() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Multiplication of long numbers iterable must return proper value",
             new MultiplicationOf(
                 new IterableOf<>(1, 2, 3)
             ).longValue(),
             new IsEqual<>(6L)
-        ).affirm();
+        );
     }
 
     /**
@@ -101,13 +100,13 @@ final class MultiplicationOfTest {
      */
     @Test
     void withIterableFloat() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Multiplication floating numbers must be iterable",
             new MultiplicationOf(
                 new IterableOf<>(0.5f, 2.0f, 10.0f)
             ).floatValue(),
             new IsEqual<>(10.0f)
-        ).affirm();
+        );
     }
 
     /**
@@ -116,13 +115,13 @@ final class MultiplicationOfTest {
      */
     @Test
     void withIterableDouble() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Multiplication double numbers must be iterable",
             new MultiplicationOf(
                 new IterableOf<>(1.5d, 2.0d, 5.0d)
             ).doubleValue(),
             new IsEqual<>(15.0d)
-        ).affirm();
+        );
     }
 
     /**
@@ -130,10 +129,10 @@ final class MultiplicationOfTest {
      */
     @Test
     void rejectsEmptyIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail with empty iterable",
             () -> new MultiplicationOf(new IterableOf<>()).doubleValue(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 }

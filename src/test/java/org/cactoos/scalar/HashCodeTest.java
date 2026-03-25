@@ -6,8 +6,8 @@
 package org.cactoos.scalar;
 
 import java.util.Objects;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -25,13 +25,13 @@ final class HashCodeTest {
         final int initial = 5;
         final int multiplier = 31;
         final Object[] attributes = {5, 31, "abc", 5, 50f, "xyz"};
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Value must be equal to Josh Block's implementation of hashCode()",
             new HashCode(initial, multiplier, attributes),
             new HasValue<>(
                 joshBloch(initial, multiplier, attributes)
             )
-        ).affirm();
+        );
     }
 
     /**
@@ -40,16 +40,14 @@ final class HashCodeTest {
      */
     @Test
     void computeHashCodeWithDefaultValues() {
-        final int initial = 17;
-        final int multiplier = 31;
         final Object[] attributes = {494, 43, "test", 190, 298f, "joshua"};
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Value must be equal to Josh Block's implementation of hashCode() with initial=17 and multiplier=31",
             new HashCode(attributes),
             new HasValue<>(
-                joshBloch(initial, multiplier, attributes)
+                joshBloch(17, 31, attributes)
             )
-        ).affirm();
+        );
     }
 
     /**

@@ -5,8 +5,8 @@
 package org.cactoos.func;
 
 import java.io.IOException;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -14,13 +14,12 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class IoCheckedBiFuncTest {
 
     @Test
     void rethrowsIoException() {
         final IOException exception = new IOException("intended");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must rethrow IOException",
             () -> new IoCheckedBiFunc<>(
                 (fst, scd) -> {
@@ -31,12 +30,12 @@ final class IoCheckedBiFuncTest {
                 exception.getMessage(),
                 exception.getClass()
             )
-        ).affirm();
+        );
     }
 
     @Test
     void rethrowsCheckedToIoException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "IOException should be rethrown",
             () -> new IoCheckedBiFunc<>(
                 (fst, scd) -> {
@@ -44,12 +43,12 @@ final class IoCheckedBiFuncTest {
                 }
             ).apply(1, 2),
             new Throws<>(IOException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void runtimeExceptionGoesOut() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Runtime exception should be rethrown",
             () -> new IoCheckedBiFunc<>(
                 (fst, scd) -> {
@@ -57,6 +56,6 @@ final class IoCheckedBiFuncTest {
                 }
             ).apply(1, 2),
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 }

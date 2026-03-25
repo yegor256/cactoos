@@ -6,8 +6,8 @@ package org.cactoos.func;
 
 import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsApplicable;
 import org.llorllale.cactoos.matchers.IsText;
 
@@ -18,16 +18,15 @@ import org.llorllale.cactoos.matchers.IsText;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class FuncEnvelopeTest {
 
     @Test
     void envelopeDelegatesCalls() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must delegate calls to apply",
             new Append(" stuff"),
             new IsApplicable<>(2, new IsText("2 stuff"))
-        ).affirm();
+        );
     }
 
     private static final class Append extends FuncEnvelope<Integer, Text> {

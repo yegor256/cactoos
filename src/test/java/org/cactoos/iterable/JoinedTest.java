@@ -4,9 +4,9 @@
  */
 package org.cactoos.iterable;
 
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Joined}.
@@ -17,19 +17,19 @@ final class JoinedTest {
 
     @Test
     void joinsIterables() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must concatenate iterables together",
             new Joined<String>(
                 new IterableOf<>("h", "w"),
                 new IterableOf<>("a", "y")
             ),
             new IsEqual<>(new IterableOf<>("h", "w", "a", "y"))
-        ).affirm();
+        );
     }
 
     @Test
     void joinsMappedIterables() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must concatenate mapped iterables together",
             new Joined<String>(
                 new Mapped<>(
@@ -38,20 +38,20 @@ final class JoinedTest {
                 )
             ),
             new IsEqual<>(new IterableOf<>("x", "y"))
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void joinItemAndIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must join item and iterable",
             new Joined<>(
                 0,
                 new IterableOf<>(1, 2, 3)
             ),
             new IsEqual<>(new IterableOf<>(0, 1, 2, 3))
-        ).affirm();
+        );
     }
 
 }

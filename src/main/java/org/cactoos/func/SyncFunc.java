@@ -15,6 +15,7 @@ import org.cactoos.Func;
  * @param <Y> Type of output
  * @since 0.4
  */
+@SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class SyncFunc<X, Y> implements Func<X, Y> {
 
     /**

@@ -15,12 +15,7 @@ import java.util.Iterator;
  * @param <X> Type of source item
  * @since 1.16
  */
-@SuppressWarnings(
-    {
-        "PMD.TooManyMethods",
-        "PMD.AbstractNaming"
-    }
-)
+@SuppressWarnings("PMD.TooManyMethods")
 public final class Immutable<X> implements Collection<X> {
 
     /**
@@ -62,7 +57,6 @@ public final class Immutable<X> implements Collection<X> {
     }
 
     @Override
-    @SuppressWarnings("PMD.UseVarargs")
     public <T> T[] toArray(final T[] array) {
         return this.col.toArray(array);
     }

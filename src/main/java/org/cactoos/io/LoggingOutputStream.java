@@ -21,12 +21,7 @@ import org.cactoos.text.UncheckedText;
  *
  * @since 0.29
  */
-@SuppressWarnings(
-    {
-        "PMD.AvoidDuplicateLiterals",
-        "PMD.LoggerIsNotStaticFinal"
-    }
-)
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 public final class LoggingOutputStream extends OutputStream {
 
     /**
@@ -84,8 +79,7 @@ public final class LoggingOutputStream extends OutputStream {
 
     @Override
     public void write(final int data) throws IOException {
-        final byte[] buf = {(byte) data};
-        this.write(buf, 0, 1);
+        this.write(new byte[]{(byte) data}, 0, 1);
     }
 
     @Override
@@ -98,10 +92,8 @@ public final class LoggingOutputStream extends OutputStream {
         final int len) throws IOException {
         final Instant start = Instant.now();
         this.origin.write(buf, offset, len);
-        final Instant end = Instant.now();
         this.bytes.getAndAdd((long) len);
-        final long millis = Duration.between(start, end).toMillis();
-        this.time.getAndAdd(millis);
+        this.time.getAndAdd(Duration.between(start, Instant.now()).toMillis());
         final Level level = this.logger.getLevel();
         if (!level.equals(Level.INFO)) {
             this.logger.log(

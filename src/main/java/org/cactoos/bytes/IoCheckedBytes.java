@@ -17,6 +17,7 @@ import org.cactoos.scalar.IoChecked;
  *
  * @since 0.52
  */
+@SuppressWarnings("PMD.AvoidCatchingGenericException")
 public final class IoCheckedBytes implements Bytes {
 
     /**
@@ -38,7 +39,7 @@ public final class IoCheckedBytes implements Bytes {
      * @param fbk Fallback
      * @since 0.5
      */
-    @SuppressWarnings({"unchecked", "PMD.AvoidRethrowingException", "PMD.AvoidCatchingThrowable"})
+    @SuppressWarnings("unchecked")
     public IoCheckedBytes(final Bytes bts, final Fallback<byte[]> fbk) {
         this.scalar = new IoChecked<>(
             () -> {

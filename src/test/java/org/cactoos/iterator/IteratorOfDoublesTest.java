@@ -5,9 +5,9 @@
 package org.cactoos.iterator;
 
 import java.util.NoSuchElementException;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -18,43 +18,42 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.34
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class IteratorOfDoublesTest {
 
     @Test
     void emptyIteratorDoesNotHaveNext() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "hasNext is true for empty iterator.",
             new IteratorOfDoubles().hasNext(),
             new IsEqual<>(false)
-        ).affirm();
+        );
     }
 
     @Test
     void emptyIteratorThrowsException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected on iterating empty doubles.",
             () -> new IteratorOfDoubles().next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void nonEmptyIteratorDoesNotHaveNext() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "hasNext is true for fully traversed iterator.",
             this.iteratorWithFetchedElements().hasNext(),
             new IsEqual<>(false)
-        ).affirm();
+        );
     }
 
     @Test
     void nonEmptyIteratorThrowsException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected for fully traversed iterator.",
             () -> this.iteratorWithFetchedElements().next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     private IteratorOfDoubles iteratorWithFetchedElements() {

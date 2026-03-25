@@ -6,8 +6,8 @@ package org.cactoos.scalar;
 
 import java.io.IOException;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -17,60 +17,59 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({ "PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals" })
 final class ItemAtTest {
 
     @Test
     void elementByPosIterableTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must take the item by position from the iterable",
             new ItemAt<>(
                 1, new IterableOf<>(1, 2, 3)
             ),
             new HasValue<>(2)
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void elementByPosFallbackIterableTest() {
         final int fallback = 5;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must fallback to default one",
             new ItemAt<>(
                 1, fallback, new IterableOf<>()
             ),
             new HasValue<>(fallback)
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void elementByPosNoFallbackIterableTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must take the item by position from the iterable",
             new ItemAt<>(
                 1, 5, new IterableOf<>(0, 1)
             ),
             new HasValue<>(1)
-        ).affirm();
+        );
     }
 
     @Test
     void elementByPosTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must take the item by position from the iterator",
             new ItemAt<>(
                 1,
                 new IterableOf<>(1, 2, 3)
             ),
             new HasValue<>(2)
-        ).affirm();
+        );
     }
 
     @Test
     void failForNegativePositionTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail for negative position",
             () -> new ItemAt<>(
                 -1,
@@ -80,12 +79,12 @@ final class ItemAtTest {
                 "The position must be non-negative: -1",
                 IOException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void failForPosMoreLengthTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail for greater than length position",
             () -> new ItemAt<>(
                 3,
@@ -95,7 +94,7 @@ final class ItemAtTest {
                 "The iterable doesn't have the position #3",
                 IOException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -104,10 +103,10 @@ final class ItemAtTest {
             1,
             new IterableOf<>(1, 2, 3)
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Not the same value",
             item,
             new HasValue<>(item.value())
-        ).affirm();
+        );
     }
 }

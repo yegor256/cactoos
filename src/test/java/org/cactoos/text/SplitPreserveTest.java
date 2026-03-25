@@ -7,12 +7,13 @@ package org.cactoos.text;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Testing correctness of SplitPreserveAllTokens.
@@ -22,19 +23,17 @@ import org.llorllale.cactoos.matchers.Assertion;
  */
 final class SplitPreserveTest {
     @Test
-    void checkingSplit() {
-        String txt = "aaa";
-        final String msg = "Adjacent separators must create an empty element";
-        ArrayList<Text> array = new ArrayList<>(4);
+    void splitAdjacentSeparators() {
+        final List<Text> array = new ArrayList<>(4);
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         array.add(new TextOf(""));
-        new Assertion<>(
-            msg,
+        MatcherAssert.assertThat(
+            "Split must not preserve adjacent separators",
             this.getLength(
                 new Split(
-                    new TextOf(txt),
+                    new TextOf("aaa"),
                     new TextOf("a")
                 ).iterator()
             ),
@@ -47,17 +46,20 @@ final class SplitPreserveTest {
                     )
                 )
             )
-        ).affirm();
-        txt = " how ";
-        array = new ArrayList<>(3);
+        );
+    }
+
+    @Test
+    void splitSpaceSeparators() {
+        final List<Text> array = new ArrayList<>(3);
         array.add(new TextOf(""));
         array.add(new TextOf("how"));
         array.add(new TextOf(""));
-        new Assertion<>(
-            msg,
+        MatcherAssert.assertThat(
+            "Split must not preserve space separators",
             this.getLength(
                 new Split(
-                    new TextOf(txt),
+                    new TextOf(" how "),
                     new TextOf(" ")
                 ).iterator()
             ),
@@ -70,7 +72,7 @@ final class SplitPreserveTest {
                     )
                 )
             )
-        ).affirm();
+        );
     }
 
     int getLength(final Iterator<Text> iter) {
@@ -83,19 +85,17 @@ final class SplitPreserveTest {
     }
 
     @Test
-    void checkingSplitPreserveTokens() {
-        String txt = "aaa";
-        final String msg = "Adjacent separators must create an empty element";
-        ArrayList<Text> array = new ArrayList<>(4);
+    void splitPreserveTokensAdjacent() {
+        final List<Text> array = new ArrayList<>(4);
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         array.add(new TextOf(""));
-        new Assertion<>(
-            msg,
+        MatcherAssert.assertThat(
+            "SplitPreserve must create empty elements for adjacent separators",
             this.getLength(
                 new SplitPreserveAllTokens(
-                    new TextOf(txt),
+                    new TextOf("aaa"),
                     new TextOf("a")
                 ).iterator()
             ),
@@ -106,18 +106,21 @@ final class SplitPreserveTest {
                     ).iterator()
                 )
             )
-        ).affirm();
-        txt = "lol\\  / dude";
-        array = new ArrayList<>(4);
+        );
+    }
+
+    @Test
+    void splitPreserveTokensWithBackslash() {
+        final List<Text> array = new ArrayList<>(4);
         array.add(new TextOf("lol\\"));
         array.add(new TextOf(""));
         array.add(new TextOf("/"));
         array.add(new TextOf("dude"));
-        new Assertion<>(
-            msg,
+        MatcherAssert.assertThat(
+            "SplitPreserve must handle backslash and spaces correctly",
             this.getLength(
                 new SplitPreserveAllTokens(
-                    new TextOf(txt),
+                    new TextOf("lol\\  / dude"),
                     new TextOf(" ")
                 ).iterator()
             ),
@@ -128,17 +131,20 @@ final class SplitPreserveTest {
                     ).iterator()
                 )
             )
-        ).affirm();
-        txt = " how ";
-        array = new ArrayList<>(3);
+        );
+    }
+
+    @Test
+    void splitPreserveTokensWithSpaces() {
+        final List<Text> array = new ArrayList<>(3);
         array.add(new TextOf(""));
         array.add(new TextOf("how"));
         array.add(new TextOf(""));
-        new Assertion<>(
-            msg,
+        MatcherAssert.assertThat(
+            "SplitPreserve must preserve leading and trailing spaces",
             this.getLength(
                 new SplitPreserveAllTokens(
-                    new TextOf(txt),
+                    new TextOf(" how "),
                     new TextOf(" ")
                 ).iterator()
             ),
@@ -149,6 +155,6 @@ final class SplitPreserveTest {
                     ).iterator()
                 )
             )
-        ).affirm();
+        );
     }
 }

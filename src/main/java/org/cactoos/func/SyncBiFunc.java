@@ -16,6 +16,7 @@ import org.cactoos.BiFunc;
  * @param <Z> Type of output
  * @since 0.18
  */
+@SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class SyncBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**

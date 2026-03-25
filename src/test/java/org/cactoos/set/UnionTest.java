@@ -7,8 +7,8 @@ package org.cactoos.set;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.HasValues;
 
@@ -24,14 +24,14 @@ final class UnionTest {
      */
     @Test
     void computesSetUnion() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the union of two sets",
             new Union<>(
                 new SetOf<>(1, 2, 3),
                 new SetOf<>(3, 4, 5)
             ),
             new HasValues<>(1, 2, 3, 4, 5)
-        ).affirm();
+        );
     }
 
     /**
@@ -39,14 +39,14 @@ final class UnionTest {
      */
     @Test
     void computesSetUnionWithEmptySecondSet() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the union with empty second set",
             new Union<>(
                 new SetOf<>(1, 2, 3),
                 new SetOf<>()
             ),
             new HasValues<>(1, 2, 3)
-        ).affirm();
+        );
     }
 
     /**
@@ -54,14 +54,14 @@ final class UnionTest {
      */
     @Test
     void computesSetUnionWithEmptyFirstSet() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the union with empty first set",
             new Union<>(
                 new SetOf<Integer>(),
                 new SetOf<>(1, 2, 3)
             ),
             new HasValues<>(1, 2, 3)
-        ).affirm();
+        );
     }
 
     /**
@@ -77,11 +77,11 @@ final class UnionTest {
         second.add(3);
         second.add(4);
         second.add(5);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the union of two java.util.Set",
             new Union<>(first, second),
             new HasValues<>(1, 2, 3, 4, 5)
-        ).affirm();
+        );
     }
 
     /**
@@ -89,14 +89,14 @@ final class UnionTest {
      */
     @Test
     void computesSetUnionWithIterables() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the union of two iterables",
             new Union<>(
                 Collections.singletonList(1),
                 Collections.singletonList(2)
             ),
             new HasValues<>(1, 2)
-        ).affirm();
+        );
     }
 
     /**
@@ -104,14 +104,14 @@ final class UnionTest {
      */
     @Test
     void computesSetUnionWithIterators() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the union of two iterators",
             new Union<>(
                 new SetOf<>(1, 2, 3).iterator(),
                 new SetOf<>(3, 4, 5).iterator()
             ),
             new HasValues<>(1, 2, 3, 4, 5)
-        ).affirm();
+        );
     }
 
     /**
@@ -119,13 +119,13 @@ final class UnionTest {
      */
     @Test
     void computesSetUnionWithIdenticalSets() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't compute the union of identical sets",
             new Union<>(
                 new SetOf<>(1, 2, 3),
                 new SetOf<>(1, 2, 3)
             ),
             new HasSize(3)
-        ).affirm();
+        );
     }
 }

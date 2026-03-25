@@ -20,7 +20,6 @@ import org.cactoos.Input;
  * @checkstyle AbstractClassNameCheck (500 lines)
  * @checkstyle DesignForExtensionCheck (500 lines)
  */
-@SuppressWarnings("PMD.AbstractNaming")
 public abstract class DigestEnvelope implements Bytes {
 
     /**

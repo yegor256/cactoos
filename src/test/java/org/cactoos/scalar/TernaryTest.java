@@ -5,12 +5,10 @@
 package org.cactoos.scalar;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import org.cactoos.Scalar;
-import org.cactoos.Text;
 import org.cactoos.text.FormattedText;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.IsText;
 
@@ -23,7 +21,7 @@ final class TernaryTest {
 
     @Test
     void conditionTrueScalar() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must work with true scalar condition",
             new Ternary<>(
                 new True(),
@@ -31,12 +29,12 @@ final class TernaryTest {
                 16
             ),
             new HasValue<>(6)
-        ).affirm();
+        );
     }
 
     @Test
     void conditionFalseScalar() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must work with false scalar condition",
             new Ternary<>(
                 new False(),
@@ -44,12 +42,12 @@ final class TernaryTest {
                 16
             ),
             new HasValue<>(16)
-        ).affirm();
+        );
     }
 
     @Test
     void conditionStatic() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must work with primitive static condition",
             new Ternary<>(
                 true,
@@ -57,12 +55,12 @@ final class TernaryTest {
                 16
             ),
             new HasValue<>(6)
-        ).affirm();
+        );
     }
 
     @Test
     void consequentScalar() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must work with scalar consequent and alternative",
             new Ternary<>(
                 true,
@@ -70,12 +68,12 @@ final class TernaryTest {
                 new Constant<>(16)
             ),
             new HasValue<>(6)
-        ).affirm();
+        );
     }
 
     @Test
     void inputStatic() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must call the functions with the input",
             new Ternary<>(
                 5,
@@ -84,12 +82,12 @@ final class TernaryTest {
                 input -> input + 2
             ),
             new HasValue<>(6)
-        ).affirm();
+        );
     }
 
     @Test
     void inputScalar() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must call the functions with the input scalar value",
             new Ternary<>(
                 new Constant<>(5),
@@ -98,13 +96,13 @@ final class TernaryTest {
                 input -> input + 2
             ),
             new HasValue<>(6)
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void inputScalarValueConserved() {
-        new Assertion<Scalar<Text>>(
+        MatcherAssert.assertThat(
             "Must conserve the same scalar value for each whole evaluation",
             new Ternary<>(
                 new ScalarOf<>(new AtomicInteger(0)::incrementAndGet),
@@ -117,6 +115,6 @@ final class TernaryTest {
                 new HasValue<>(new IsText("else: 2")),
                 new HasValue<>(new IsText("else: 3"))
             )
-        ).affirm();
+        );
     }
 }

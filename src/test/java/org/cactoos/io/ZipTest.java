@@ -5,6 +5,7 @@
 
 package org.cactoos.io;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -12,11 +13,11 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Zip}.
@@ -24,13 +25,12 @@ import org.llorllale.cactoos.matchers.Assertion;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class ZipTest {
 
     @Test
     void zip(@TempDir final Path dir) throws Exception {
         dir.resolve("x/y").toFile().mkdirs();
-        Files.write(dir.resolve("x/y/test"), "".getBytes());
+        Files.write(dir.resolve("x/y/test"), "".getBytes(StandardCharsets.UTF_8));
         try (ZipInputStream input = new ZipInputStream(
             new Zip(
                 new Directory(dir)
@@ -42,18 +42,18 @@ final class ZipTest {
                 ++cnt;
                 entry = input.getNextEntry();
             }
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Can't list files in a directory represented by a path",
                 cnt,
                 new IsEqual<>(4)
-            ).affirm();
+            );
         }
     }
 
     @Test
     void zipsArbitraryFileList(@TempDir final Path dir) throws Exception {
         dir.resolve("file0");
-        final ListOf<Path> targets = new ListOf<>(
+        final List<Path> targets = new ListOf<>(
             dir.resolve("dir1/file1.txt"),
             dir.resolve("dir2/file2.txt")
         );
@@ -64,14 +64,14 @@ final class ZipTest {
                 entries.add(entry.getName());
                 entry = input.getNextEntry();
             }
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must zip files in different directories",
                 entries,
                 IsIterableContainingInAnyOrder.containsInAnyOrder(
                     targets.get(0).toString(),
                     targets.get(1).toString()
                 )
-            ).affirm();
+            );
         }
     }
 }

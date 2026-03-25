@@ -12,12 +12,12 @@ import java.nio.charset.StandardCharsets;
 import org.cactoos.io.InputOf;
 import org.cactoos.iterable.IterableOfChars;
 import org.cactoos.iterator.IteratorOfChars;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.HasString;
 import org.llorllale.cactoos.matchers.IsText;
@@ -30,12 +30,12 @@ import org.llorllale.cactoos.matchers.StartsWith;
  * @checkstyle JavadocMethodCheck (1000 lines)
  * @checkstyle StringLiteralsConcatenationCheck (1000 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals", "unchecked"})
+@SuppressWarnings({"unchecked", "PMD.TooManyMethods"})
 final class TextOfTest {
 
     @Test
     void readsInputIntoText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read text from Input",
             new Synced(
                 new TextOf(
@@ -47,12 +47,12 @@ final class TextOfTest {
                 new StartsWith("привет, "),
                 new EndsWith("друг!")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsInputIntoTextWithDefaultCharset() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read text from Input with default charset",
             new TextOf(
                 new InputOf("Hello, друг! with default charset")
@@ -61,12 +61,12 @@ final class TextOfTest {
                 new StartsWith("Hello, "),
                 new EndsWith("друг! with default charset")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsInputIntoTextWithSmallBuffer() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read text with a small reading buffer",
             new TextOf(
                 new InputOf("Hi, товарищ! with small buffer"),
@@ -77,24 +77,23 @@ final class TextOfTest {
                 new StartsWith("Hi,"),
                 new EndsWith("товарищ! with small buffer")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsReaderIntoTextWithSmallBuffer() {
-        final String text = "Hi there! with small buffer";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read text from Reader with a small reading buffer",
             new TextOf(
-                new StringReader(text), 2, StandardCharsets.UTF_8
+                new StringReader("Hi there! with small buffer"), 2, StandardCharsets.UTF_8
             ),
-            new IsText(text)
-        ).affirm();
+            new IsText("Hi there! with small buffer")
+        );
     }
 
     @Test
     void readsInputIntoTextWithSmallBufferAndDefaultCharset() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read text with a small reading buffer and default charset",
             new TextOf(
                 new InputOf("Hello, товарищ! with default charset"),
@@ -104,35 +103,33 @@ final class TextOfTest {
                 new StartsWith("Hello,"),
                 new EndsWith("товарищ! with default charset")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsFromReader() {
-        final String source = "hello, друг!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read string through a reader",
             new TextOf(
-                new StringReader(source),
+                new StringReader("hello, друг!"),
                 StandardCharsets.UTF_8
             ),
-            new IsText(source)
-        ).affirm();
+            new IsText("hello, друг!")
+        );
     }
 
     @Test
     void readsFromReaderWithDefaultEncoding() {
-        final String source = "hello, друг! with default encoding";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read string with default encoding through a reader",
-            new TextOf(new StringReader(source)),
-            new IsText(source)
-        ).affirm();
+            new TextOf(new StringReader("hello, друг! with default encoding")),
+            new IsText("hello, друг! with default encoding")
+        );
     }
 
     @Test
     void readsEncodedArrayOfCharsIntoText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read array of encoded chars into text.",
             new TextOf(
                 'O', ' ', 'q', 'u', 'e', ' ', 's', 'e', 'r', 'a',
@@ -142,26 +139,26 @@ final class TextOfTest {
                 new StartsWith("O que sera"),
                 new EndsWith(" que sera")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsAnArrayOfBytes() {
         final byte[] bytes = {(byte) 0xCA, (byte) 0xFE};
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read array of bytes",
             new TextOf(
                 bytes
             ),
             new IsText(new String(bytes, StandardCharsets.UTF_8))
-        ).affirm();
+        );
     }
 
     @Test
     void readsStringBuilder() {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't process a string builder",
             new TextOf(
                 new StringBuilder(starts).append(ends)
@@ -170,14 +167,14 @@ final class TextOfTest {
                 new StartsWith(starts),
                 new EndsWith(ends)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsStringBuffer() {
         final String starts = "In our daily life, ";
         final String ends = "we can smile!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't process a string builder hahahaha",
             new TextOf(
                 new StringBuffer(starts).append(ends)
@@ -186,12 +183,12 @@ final class TextOfTest {
                 new StartsWith(starts),
                 new EndsWith(ends)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void printsStackTrace() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't print exception stacktrace",
             new TextOf(
                 new IOException(
@@ -205,48 +202,48 @@ final class TextOfTest {
                     "\tat org.cactoos.text.TextOfTest"
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsFromInputStream() throws Exception {
-        final String content = "line1";
-        final InputStream stream = new ByteArrayInputStream(
-            content.getBytes(StandardCharsets.UTF_8.name())
-        );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read inputStream",
-            new TextOf(stream),
+            new TextOf(
+                new ByteArrayInputStream(
+                    "line1".getBytes(StandardCharsets.UTF_8.name())
+                )
+            ),
             new IsText(
-                new String(content.getBytes(), StandardCharsets.UTF_8)
+                new String("line1".getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsMultilineInputStream() throws Exception {
-        final String content = "line1-\nline2";
-        final InputStream stream = new ByteArrayInputStream(
-            content.getBytes(StandardCharsets.UTF_8.name())
-        );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read multiline inputStream",
-            new TextOf(stream),
-            new IsText(content)
-        ).affirm();
+            new TextOf(
+                new ByteArrayInputStream(
+                    "line1-\nline2".getBytes(StandardCharsets.UTF_8.name())
+                )
+            ),
+            new IsText("line1-\nline2")
+        );
     }
 
     @Test
     void readsMultilineInputStreamWithCarriageReturn() throws Exception {
-        final String content = "line1-\rline2";
-        final InputStream stream = new ByteArrayInputStream(
-            content.getBytes(StandardCharsets.UTF_8.name())
-        );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read multiline inputStream with carriage return",
-            new TextOf(stream),
-            new IsText(content)
-        ).affirm();
+            new TextOf(
+                new ByteArrayInputStream(
+                    "line1-\rline2".getBytes(StandardCharsets.UTF_8.name())
+                )
+            ),
+            new IsText("line1-\rline2")
+        );
     }
 
     @Test
@@ -256,57 +253,57 @@ final class TextOfTest {
             content.getBytes(StandardCharsets.UTF_8.name())
         );
         stream.close();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read closed input stream",
             new TextOf(stream),
             new IsText(content)
-        ).affirm();
+        );
     }
 
     @Test
     void readsEmptyInputStream() throws Exception {
-        final String content = "";
-        final InputStream stream = new ByteArrayInputStream(
-            content.getBytes(StandardCharsets.UTF_8.name())
-        );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read empty input stream",
-            new TextOf(stream),
-            new IsText(content)
-        ).affirm();
+            new TextOf(
+                new ByteArrayInputStream(
+                    "".getBytes(StandardCharsets.UTF_8.name())
+                )
+            ),
+            new IsText("")
+        );
     }
 
     @Test
     void printsStackTraceFromArray() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't print exception stacktrace from array",
             new TextOf(
                 new IOException("").getStackTrace()
             ),
             new HasString("org.cactoos.text.TextOfTest")
-        ).affirm();
+        );
     }
 
     @Test
     void readsIterableToText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read Iterable to Text",
             new TextOf(
                 new IterableOfChars("hello")
             ),
             new IsText("hello")
-        ).affirm();
+        );
     }
 
     @Test
     void readsIteratorToText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read Iterator to Text",
             new TextOf(
                 new IteratorOfChars("qwer")
             ),
             new IsText("qwer")
-        ).affirm();
+        );
     }
 
     /**
@@ -317,11 +314,11 @@ final class TextOfTest {
     @Test
     void testEquals() {
         final String text = "equals";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must match text representing the same value",
             new TextOf(text),
             new IsEqual<>(new TextOf(text))
-        ).affirm();
+        );
     }
 
     /**
@@ -331,13 +328,13 @@ final class TextOfTest {
      */
     @Test
     void testEqualsOtherText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must match another text representing the same value",
             new TextOf("isequaltoanothertext"),
             new IsEqual<>(
                 new Concatenated("is", "equal", "to", "another", "text")
             )
-        ).affirm();
+        );
     }
 
     /**
@@ -347,13 +344,13 @@ final class TextOfTest {
      */
     @Test
     void testDoesNotEqualsNonTextObject() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must match another object which is not a string",
             new TextOf("is not equals to null"),
             new IsNot<>(
                 new IsEqual<>(new Object())
             )
-        ).affirm();
+        );
     }
 
     /**
@@ -361,13 +358,12 @@ final class TextOfTest {
      * that the envelope value is not equal to null without failing
      */
     @Test
-    @SuppressWarnings("PMD.EqualsNull")
     void testDoesNotEqualsFalse() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must not equals null",
             new TextOf("is not equals to not Text object"),
             new IsNot<>(new IsNull<>())
-        ).affirm();
+        );
     }
 
     /**
@@ -378,10 +374,10 @@ final class TextOfTest {
     @Test
     void testHashCode() {
         final String hash = "hashCode";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must match its represented String hashcode",
             new TextOf(hash).hashCode(),
             new IsEqual<>(hash.hashCode())
-        ).affirm();
+        );
     }
 }

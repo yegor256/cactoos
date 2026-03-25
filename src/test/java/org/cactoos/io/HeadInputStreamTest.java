@@ -5,9 +5,9 @@
 package org.cactoos.io;
 
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.IsText;
 
@@ -17,69 +17,103 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals",
-    "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class HeadInputStreamTest {
 
     @Test
-    void testSkippingLessThanTotal() throws Exception {
+    void skipsLessThanTotal() throws Exception {
+        try (HeadInputStream stream = new HeadInputStream(
+            new InputOf("testSkippingLessThanTotal").stream(),
+            5
+        )) {
+            MatcherAssert.assertThat(
+                "Incorrect number of bytes skipped",
+                stream.skip(3L),
+                new IsEqual<>(3L)
+            );
+        }
+    }
+
+    @Test
+    void readsHeadAfterSkip() throws Exception {
         try (HeadInputStream stream = new HeadInputStream(
             new InputOf("testSkippingLessThanTotal").stream(),
             5
         )) {
             final long skipped = stream.skip(3L);
-            new Assertion<>(
-                "Incorrect number of bytes skipped",
-                skipped,
-                new IsEqual<>(3L)
-            ).affirm();
-            new Assertion<>(
-                "Incorrect head of the input stream has been read",
+            MatcherAssert.assertThat(
+                String.format(
+                    "Incorrect head after skipping %d bytes",
+                    skipped
+                ),
                 new InputOf(stream),
                 new HasContent("tS")
-            ).affirm();
+            );
         }
     }
 
     @Test
-    void testSkippingMoreThanTotal() throws Exception {
+    void skipsMoreThanTotal() throws Exception {
+        try (HeadInputStream stream = new HeadInputStream(
+            new InputOf("testSkippingMoreThanTotal").stream(),
+            5
+        )) {
+            MatcherAssert.assertThat(
+                "Incorrect number of bytes skipped",
+                stream.skip(7L),
+                new IsEqual<>(5L)
+            );
+        }
+    }
+
+    @Test
+    void readsEmptyAfterSkipMoreThanTotal() throws Exception {
         try (HeadInputStream stream = new HeadInputStream(
             new InputOf("testSkippingMoreThanTotal").stream(),
             5
         )) {
             final long skipped = stream.skip(7L);
-            new Assertion<>(
-                "Incorrect number of bytes skipped",
-                skipped,
-                new IsEqual<>(5L)
-            ).affirm();
-            final String input = new TextOf(stream).asString();
-            new Assertion<>(
-                "The result text wasn't empty",
-                new TextOf(input),
+            MatcherAssert.assertThat(
+                String.format(
+                    "The result text wasn't empty after skipping %d bytes",
+                    skipped
+                ),
+                new TextOf(new TextOf(stream).asString()),
                 new IsText("")
-            ).affirm();
+            );
         }
     }
 
     @Test
-    void testResetting() throws Exception {
+    void skipsBeforeReset() throws Exception {
+        try (HeadInputStream stream = new HeadInputStream(
+            new InputOf("testResetting").stream(),
+            5
+        )) {
+            MatcherAssert.assertThat(
+                "Incorrect number of bytes skipped",
+                stream.skip(7L),
+                new IsEqual<>(5L)
+            );
+        }
+    }
+
+    @Test
+    void resetRestoresStream() throws Exception {
         try (HeadInputStream stream = new HeadInputStream(
             new InputOf("testResetting").stream(),
             5
         )) {
             final long skipped = stream.skip(7L);
-            new Assertion<>(
-                "Incorrect number of bytes skipped",
-                skipped,
-                new IsEqual<>(5L)
-            ).affirm();
             stream.reset();
-            new Assertion<>(
-                "Reset didn't change the state",
+            MatcherAssert.assertThat(
+                String.format(
+                    "Reset didn't change the state after skipping %d bytes",
+                    skipped
+                ),
                 new InputOf(stream),
                 new HasContent("testR")
-            ).affirm();
+            );
         }
     }
 
@@ -89,11 +123,11 @@ final class HeadInputStreamTest {
             new InputOf("testAvailableLessThanTotal").stream(),
             5
         )) {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "must count available bytes",
                 stream.available(),
                 new IsEqual<>(5)
-            ).affirm();
+            );
         }
     }
 }

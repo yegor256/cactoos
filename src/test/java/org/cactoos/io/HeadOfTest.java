@@ -5,8 +5,8 @@
 package org.cactoos.io;
 
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
@@ -15,12 +15,11 @@ import org.llorllale.cactoos.matchers.HasString;
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class HeadOfTest {
 
     @Test
     void readsHeadOfLongerInput() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must limit exactly the number of read bytes",
             new TextOf(
                 new HeadOf(
@@ -29,12 +28,12 @@ final class HeadOfTest {
                 )
             ),
             new HasString("reads")
-        ).affirm();
+        );
     }
 
     @Test
     void readsEmptyHeadOfInput() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must limit to 0 the number of read bytes",
             new TextOf(
                 new HeadOf(
@@ -43,21 +42,20 @@ final class HeadOfTest {
                 )
             ),
             new HasString("")
-        ).affirm();
+        );
     }
 
     @Test
     void readsHeadOfShorterInput() {
-        final String input = "readsHeadOfShorterInput";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must limit to at most the number of available bytes",
             new TextOf(
                 new HeadOf(
-                    new InputOf(input),
+                    new InputOf("readsHeadOfShorterInput"),
                     35
                 )
             ),
-            new HasString(input)
-        ).affirm();
+            new HasString("readsHeadOfShorterInput")
+        );
     }
 }

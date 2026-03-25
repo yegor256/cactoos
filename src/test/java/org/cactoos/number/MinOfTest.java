@@ -5,143 +5,191 @@
 package org.cactoos.number;
 
 import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link MinOf}.
  *
  * @since 0.10
  */
+@SuppressWarnings("PMD.TooManyMethods")
 final class MinOfTest {
 
     @Test
-    void withIntegerCollection() {
-        new Assertion<>(
+    void minIntOfIntegers() {
+        MatcherAssert.assertThat(
             "must select minimum integer of positive integers",
             new MinOf(
-                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
+                new ListOf<>(1, 2, 3, 4).toArray(new Integer[0])
             ).intValue(),
             Matchers.equalTo(1)
-        ).affirm();
-        new Assertion<>(
+        );
+    }
+
+    @Test
+    void minLongOfIntegers() {
+        MatcherAssert.assertThat(
             "must select minimum long of positive integers",
             new MinOf(
-                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
+                new ListOf<>(1, 2, 3, 4).toArray(new Integer[0])
             ).longValue(),
             Matchers.equalTo(1L)
-        ).affirm();
-        new Assertion<>(
+        );
+    }
+
+    @Test
+    void minDoubleOfIntegers() {
+        MatcherAssert.assertThat(
             "must select minimum double of positive integers",
             new MinOf(
-                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
+                new ListOf<>(1, 2, 3, 4).toArray(new Integer[0])
             ).doubleValue(),
             Matchers.equalTo(1.0d)
-        ).affirm();
-        new Assertion<>(
+        );
+    }
+
+    @Test
+    void minFloatOfIntegers() {
+        MatcherAssert.assertThat(
             "must select minimum float of positive integers",
             new MinOf(
-                new ListOf<>(1, 2, 3, 4).toArray(new Integer[4])
+                new ListOf<>(1, 2, 3, 4).toArray(new Integer[0])
             ).floatValue(),
             Matchers.equalTo(1.0f)
-        ).affirm();
+        );
     }
 
     @Test
-    void withLongCollection() {
-        new Assertion<>(
+    void minIntOfLongs() {
+        MatcherAssert.assertThat(
             "must select minimum integer of positive longs",
             new MinOf(
-                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
+                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[0])
             ).intValue(),
             Matchers.equalTo(1)
-        ).affirm();
-        new Assertion<>(
+        );
+    }
+
+    @Test
+    void minLongOfLongs() {
+        MatcherAssert.assertThat(
             "must select minimum long of positive longs",
             new MinOf(
-                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
+                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[0])
             ).longValue(),
             Matchers.equalTo(1L)
-        ).affirm();
-        new Assertion<>(
+        );
+    }
+
+    @Test
+    void minDoubleOfLongs() {
+        MatcherAssert.assertThat(
             "must select minimum double of positive longs",
             new MinOf(
-                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
+                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[0])
             ).doubleValue(),
             Matchers.equalTo(1.0d)
-        ).affirm();
-        new Assertion<>(
+        );
+    }
+
+    @Test
+    void minFloatOfLongs() {
+        MatcherAssert.assertThat(
             "must select minimum float of positive longs",
             new MinOf(
-                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[4])
+                new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[0])
             ).floatValue(),
             Matchers.equalTo(1.0f)
-        ).affirm();
+        );
     }
 
     @Test
-    void withDoubleCollection() {
-        new Assertion<>(
+    void minIntOfDoubles() {
+        MatcherAssert.assertThat(
             "must select minimum integer of positive doubles",
             new MinOf(
-                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
+                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[0])
             ).intValue(),
             Matchers.equalTo(1)
-        ).affirm();
-        new Assertion<>(
-            "must select minimum long of positive doubles",
-            new MinOf(
-                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
-            ).longValue(),
-            Matchers.equalTo(1L)
-        ).affirm();
-        new Assertion<>(
-            "must select minimum double of positive doubles",
-            new MinOf(
-                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
-            ).doubleValue(),
-            Matchers.equalTo(1.0d)
-        ).affirm();
-        new Assertion<>(
-            "must select minimum float of positive doubles",
-            new MinOf(
-                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[4])
-            ).floatValue(),
-            Matchers.equalTo(1.0f)
-        ).affirm();
+        );
     }
 
     @Test
-    void withFloatCollection() {
-        new Assertion<>(
-            "must select minimum integer of positive floats",
+    void minLongOfDoubles() {
+        MatcherAssert.assertThat(
+            "must select minimum long of positive doubles",
             new MinOf(
-                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
-            ).intValue(),
-            Matchers.equalTo(1)
-        ).affirm();
-        new Assertion<>(
-            "must select minimum long of positive floats",
-            new MinOf(
-                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
+                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[0])
             ).longValue(),
             Matchers.equalTo(1L)
-        ).affirm();
-        new Assertion<>(
-            "must select minimum float of positive floats",
-            new MinOf(
-                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
-            ).doubleValue(),
-            Matchers.equalTo(1.0d)
-        ).affirm();
-        new Assertion<>(
-            "must select minimum float of positive floats",
-            new MinOf(
-                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[4])
-            ).floatValue(),
-            Matchers.equalTo(1.0f)
-        ).affirm();
+        );
     }
 
+    @Test
+    void minDoubleOfDoubles() {
+        MatcherAssert.assertThat(
+            "must select minimum double of positive doubles",
+            new MinOf(
+                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[0])
+            ).doubleValue(),
+            Matchers.equalTo(1.0d)
+        );
+    }
+
+    @Test
+    void minFloatOfDoubles() {
+        MatcherAssert.assertThat(
+            "must select minimum float of positive doubles",
+            new MinOf(
+                new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[0])
+            ).floatValue(),
+            Matchers.equalTo(1.0f)
+        );
+    }
+
+    @Test
+    void minIntOfFloats() {
+        MatcherAssert.assertThat(
+            "must select minimum integer of positive floats",
+            new MinOf(
+                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[0])
+            ).intValue(),
+            Matchers.equalTo(1)
+        );
+    }
+
+    @Test
+    void minLongOfFloats() {
+        MatcherAssert.assertThat(
+            "must select minimum long of positive floats",
+            new MinOf(
+                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[0])
+            ).longValue(),
+            Matchers.equalTo(1L)
+        );
+    }
+
+    @Test
+    void minDoubleOfFloats() {
+        MatcherAssert.assertThat(
+            "must select minimum double of positive floats",
+            new MinOf(
+                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[0])
+            ).doubleValue(),
+            Matchers.equalTo(1.0d)
+        );
+    }
+
+    @Test
+    void minFloatOfFloats() {
+        MatcherAssert.assertThat(
+            "must select minimum float of positive floats",
+            new MinOf(
+                new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[0])
+            ).floatValue(),
+            Matchers.equalTo(1.0f)
+        );
+    }
 }

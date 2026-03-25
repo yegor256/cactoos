@@ -4,9 +4,9 @@
  */
 package org.cactoos.iterable;
 
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link IterableOfStackTrace}.
@@ -17,10 +17,10 @@ final class IterableOfStackTraceTest {
     @Test
     void exceptionIterableTest() {
         final Throwable expected = new Throwable();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must get the expected exception.",
             new IterableOfStackTrace(new Throwable(expected)),
             Matchers.hasItem(expected)
-        ).affirm();
+        );
     }
 }

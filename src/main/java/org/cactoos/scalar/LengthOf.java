@@ -19,6 +19,7 @@ import org.cactoos.Text;
  *
  * @since 0.1
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 public final class LengthOf extends ScalarEnvelope<Long> {
 
     /**
@@ -60,7 +61,6 @@ public final class LengthOf extends ScalarEnvelope<Long> {
      * @param input The input
      * @param max Buffer size
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public LengthOf(final Input input, final int max) {
         this(() -> {
             if (max == 0) {
@@ -74,7 +74,7 @@ public final class LengthOf extends ScalarEnvelope<Long> {
                 while (true) {
                     final int len = stream.read(buf);
                     if (len > 0) {
-                        length += (long) len;
+                        length += len;
                     }
                     if (len < 0) {
                         break;

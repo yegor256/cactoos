@@ -5,9 +5,9 @@
 package org.cactoos.io;
 
 import java.io.IOException;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -16,12 +16,12 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+@SuppressWarnings("PMD.ExceptionAsFlowControl")
 final class CheckedInputTest {
 
     @Test
     void runtimeExceptionIsNotWrapped() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must not wrap runtime exception",
             new CheckedInput<>(
                 () -> {
@@ -30,12 +30,12 @@ final class CheckedInputTest {
                 IOException::new
             )::stream,
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void checkedExceptionIsWrapped() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must wrap checked exception",
             new CheckedInput<>(
                 () -> {
@@ -44,7 +44,7 @@ final class CheckedInputTest {
                 IOException::new
             )::stream,
             new Throws<>(IOException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -57,11 +57,11 @@ final class CheckedInputTest {
                 IOException::new
             ).stream();
         } catch (final IOException exp) {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "must not add extra wrapping of IOException",
                 exp.getCause(),
                 new IsNull<>()
-            ).affirm();
+            );
         }
     }
 }

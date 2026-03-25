@@ -10,10 +10,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Scalar;
 import org.cactoos.experimental.Threads;
 import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
@@ -23,29 +23,30 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class SolidTest {
     @Test
     void cachesScalarResults() throws Exception {
         final Scalar<Integer> scalar = new Solid<>(
             () -> new SecureRandom().nextInt()
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must compute value only once",
             scalar.value() + scalar.value(),
             new IsEqual<>(scalar.value() + scalar.value())
-        ).affirm();
+        );
     }
 
     @Test
     void worksInThreads() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must work well in multiple threads",
             scalar -> {
-                new Assertion<>(
+                MatcherAssert.assertThat(
                     "must compute value once",
                     scalar,
                     new HasValue<>(scalar.value())
-                ).affirm();
+                );
                 return true;
             },
             new RunsInThreads<>(
@@ -53,7 +54,7 @@ final class SolidTest {
                     new Solid<>(() -> new ListOf<>(1, 2))
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -67,24 +68,35 @@ final class SolidTest {
         );
         scalar.value();
         scalar.value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must compute null value only once",
             calls.get(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsNullValue() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must return cached null value",
             new Solid<>(() -> null).value(),
             new IsNull<>()
-        ).affirm();
+        );
     }
 
     @Test
-    void cachesNullValueInThreads() throws Exception {
+    void cachesNullValueInThreads() {
+        final Scalar<Object> solid = new Solid<>(() -> null);
+        MatcherAssert.assertThat(
+            "must return null value in multiple threads",
+            scalar -> solid.value() == null,
+            new RunsInThreads<>(new Unchecked<>(solid::value))
+        );
+    }
+
+    @Test
+    void computesNullValueOnlyOnceInThreads() throws Exception {
+        final int threads = 100;
         final AtomicInteger calls = new AtomicInteger(0);
         final Scalar<Object> solid = new Solid<>(
             () -> {
@@ -92,16 +104,16 @@ final class SolidTest {
                 return null;
             }
         );
-        new Assertion<>(
-            "not compute null value only once in multiple threads",
-            scalar -> solid.value() == null,
-            new RunsInThreads<>(new Unchecked<>(solid::value))
-        ).affirm();
-        new Assertion<>(
+        final List<Scalar<Object>> tasks = new ListOf<>();
+        for (int idx = 0; idx < threads; ++idx) {
+            tasks.add(solid::value);
+        }
+        new LengthOf(new Threads<>(threads, tasks)).value();
+        MatcherAssert.assertThat(
             "must compute null value only once",
             calls.get(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
     @Test
@@ -126,10 +138,10 @@ final class SolidTest {
         new LengthOf(
             new Threads<>(threads, tasks)
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must cache null value in multiple threads",
             calls.get(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 }

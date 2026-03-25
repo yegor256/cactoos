@@ -44,13 +44,7 @@ public final class Checked<T, E extends Exception> implements Scalar<T> {
     }
 
     @Override
-    @SuppressWarnings(
-        {
-            "PMD.AvoidCatchingGenericException",
-            "PMD.AvoidRethrowingException",
-            "PMD.PreserveStackTrace"
-        }
-    )
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public T value() throws E {
         try {
             return this.origin.value();
@@ -78,9 +72,6 @@ public final class Checked<T, E extends Exception> implements Scalar<T> {
     @SuppressWarnings("unchecked")
     private E wrappedException(final Exception exp) {
         E wrapped = new UncheckedFunc<>(this.func).apply(exp);
-        final int level = new InheritanceLevel(
-            exp.getClass(), wrapped.getClass()
-        ).value();
         final String message = wrapped.getMessage()
             .replaceFirst(
                 new UncheckedText(
@@ -91,7 +82,8 @@ public final class Checked<T, E extends Exception> implements Scalar<T> {
                 ).asString(),
                 ""
             );
-        if (level >= 0 && message.equals(exp.getMessage())) {
+        if (new InheritanceLevel(exp.getClass(), wrapped.getClass()).value() >= 0
+            && message.equals(exp.getMessage())) {
             wrapped = (E) exp;
         }
         return wrapped;

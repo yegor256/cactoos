@@ -4,8 +4,8 @@
  */
 package org.cactoos.io;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
 /**
@@ -14,16 +14,15 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class DeadInputTest {
 
     @Test
     void readsEmptyContent() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read empty content",
             new DeadInput(),
             new HasContent("")
-        ).affirm();
+        );
     }
 
 }

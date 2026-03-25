@@ -9,9 +9,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
 /**
@@ -20,7 +20,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (120 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class TeeInputFromUriTest {
 
     @Test
@@ -38,11 +37,11 @@ final class TeeInputFromUriTest {
                 output
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from URI to path.",
             new InputOf(output),
             new HasContent(message)
-        ).affirm();
+        );
     }
 
     @Test
@@ -60,11 +59,11 @@ final class TeeInputFromUriTest {
                 output
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from URI to file.",
             new InputOf(output),
             new HasContent(message)
-        ).affirm();
+        );
     }
 
     @Test
@@ -82,10 +81,10 @@ final class TeeInputFromUriTest {
                 new OutputTo(output)
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from URI to output.",
             new InputOf(output),
             new HasContent(message)
-        ).affirm();
+        );
     }
 }

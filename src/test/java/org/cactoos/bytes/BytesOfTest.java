@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
-import org.cactoos.Text;
 import org.cactoos.io.InputOf;
 import org.cactoos.io.Sticky;
 import org.cactoos.iterable.Endless;
@@ -20,10 +19,10 @@ import org.cactoos.iterator.IteratorOfBytes;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.HasString;
 import org.llorllale.cactoos.matchers.IsText;
@@ -36,31 +35,30 @@ import org.llorllale.cactoos.matchers.StartsWith;
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class BytesOfTest {
 
     @Test
     void readsLargeInMemoryContent() throws Exception {
-        final int multiplier = 5_000;
-        final String body = "1234567890";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read large content from in-memory Input",
             new BytesOf(
                 new InputOf(
                     new Concatenated(
                         new HeadOf<>(
-                            multiplier, new Endless<>(new TextOf(body))
+                            5_000, new Endless<>(new TextOf("1234567890"))
                         )
                     )
                 )
             ).asBytes().length,
-            new IsEqual<>(body.length() * multiplier)
-        ).affirm();
+            new IsEqual<>("1234567890".length() * 5_000)
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void readsInputIntoBytes() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read bytes from Input",
             new TextOf(
                 new BytesOf(
@@ -71,33 +69,32 @@ final class BytesOfTest {
                 new StartsWith("Hello, "),
                 new EndsWith("друг!")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsFromReader() {
-        final String source = "hello, друг!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read string through a reader",
             new TextOf(
                 new Sticky(
                     new InputOf(
                         new BytesOf(
-                            new StringReader(source),
+                            new StringReader("hello, друг!"),
                             StandardCharsets.UTF_8,
                             16 << 10
                         )
                     )
                 )
             ),
-            new IsText(source)
-        ).affirm();
+            new IsText("hello, друг!")
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void readsInputIntoBytesWithSmallBuffer() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must read bytes from Input with a small reading buffer",
             new TextOf(
                 new BytesOf(
@@ -109,14 +106,14 @@ final class BytesOfTest {
                 new StartsWith("Hello,"),
                 new EndsWith("товарищ!")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void closesInputStream() throws Exception {
         final AtomicBoolean closed = new AtomicBoolean();
         final InputStream input = new ByteArrayInputStream(
-            "how are you?".getBytes()
+            "how are you?".getBytes(StandardCharsets.UTF_8)
         );
         new TextOf(
             new InputOf(
@@ -135,56 +132,53 @@ final class BytesOfTest {
             ),
             StandardCharsets.UTF_8
         ).asString();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must close InputStream correctly",
             closed.get(),
             new IsTrue()
-        ).affirm();
+        );
     }
 
     @Test
     void asBytes() throws Exception {
-        final Text text = new TextOf("Hello!");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't convert text into bytes",
             new BytesOf(
-                new InputOf(text)
+                new InputOf(new TextOf("Hello!"))
             ).asBytes(),
             new IsEqual<>(
-                new BytesOf(text.asString()).asBytes()
+                new BytesOf(new TextOf("Hello!").asString()).asBytes()
             )
-        ).affirm();
+        );
     }
 
     @Test
     void asBytesFromIterator() throws Exception {
-        final Text text = new TextOf("Good bye!");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't convert iterator into bytes",
             new BytesOf(
-                new IteratorOfBytes(text)
+                new IteratorOfBytes(new TextOf("Good bye!"))
             ).asBytes(),
             new IsEqual<>(
-                new BytesOf(text).asBytes()
+                new BytesOf(new TextOf("Good bye!")).asBytes()
             )
-        ).affirm();
+        );
     }
 
     @Test
     void asBytesFromIterable() throws Exception {
-        final Text text = new TextOf("Good bye");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert iterable into bytes",
             new BytesOf(
-                new IterableOfBytes(text)
+                new IterableOfBytes(new TextOf("Good bye"))
             ).asBytes(),
-            new IsEqual<>(new BytesOf(text).asBytes())
-        ).affirm();
+            new IsEqual<>(new BytesOf(new TextOf("Good bye")).asBytes())
+        );
     }
 
     @Test
     void printsStackTrace() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't print exception stacktrace",
             new TextOf(
                 new BytesOf(
@@ -200,12 +194,12 @@ final class BytesOfTest {
                     "\tat org.cactoos.bytes.BytesOfTest"
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void printsStackTraceFromArray() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't print exception stacktrace from array",
             new TextOf(
                 new BytesOf(
@@ -213,7 +207,7 @@ final class BytesOfTest {
                 )
             ),
             new HasString("org.cactoos.bytes.BytesOfTest")
-        ).affirm();
+        );
     }
 
 }

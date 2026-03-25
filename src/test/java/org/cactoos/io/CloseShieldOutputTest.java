@@ -5,15 +5,15 @@
 package org.cactoos.io;
 
 import java.io.OutputStream;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link CloseShieldOutput}.
  * @since 1.0.0
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class CloseShieldOutputTest {
 
     @Test
@@ -25,11 +25,11 @@ final class CloseShieldOutputTest {
                 OutputStream ignored = new CloseShieldOutput(() -> origin).stream()
             ) {
             }
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must not close origin stream",
                 origin.isClosed(),
                 new IsEqual<>(false)
-            ).affirm();
+            );
         }
     }
 }

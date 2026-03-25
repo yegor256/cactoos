@@ -7,15 +7,14 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.Fallback;
-import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.ScalarOf;
 import org.cactoos.scalar.ScalarWithFallback;
 import org.cactoos.scalar.Ternary;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -24,7 +23,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.47
  * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class PagedTest {
 
     @Test
@@ -35,15 +34,7 @@ final class PagedTest {
             new IteratorOf<>("three", "four"),
             new IteratorOf<>("five")
         );
-        final Paged<String> paged = new Paged<>(
-            pages.next(),
-            page -> new Ternary<>(
-                pages::hasNext,
-                pages::next,
-                () -> new IteratorOf<String>()
-            ).value()
-        );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must have all page values in order",
             new ScalarWithFallback<>(
                 new And(
@@ -53,7 +44,14 @@ final class PagedTest {
                     },
                     new Matched<>(
                         String::equals,
-                        paged,
+                        new Paged<>(
+                            pages.next(),
+                            page -> new Ternary<>(
+                                pages::hasNext,
+                                pages::next,
+                                () -> new IteratorOf<String>()
+                            ).value()
+                        ),
                         new IteratorOf<>("one", "two", "three", "four", "five")
                     )
                 ),
@@ -65,17 +63,16 @@ final class PagedTest {
                 )
             ).value(),
             new IsTrue()
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void reportTotalPagedLength() {
-        final Iterator<String> first = new IteratorOf<>("A", "six");
-        final Iterator<String> second = new IteratorOf<>("word", "long");
-        final Iterator<String> third = new IteratorOf<>("sentence");
         final Iterator<Iterator<String>> pages = new IteratorOf<>(
-            first, second, third
+            new IteratorOf<>("A", "six"),
+            new IteratorOf<>("word", "long"),
+            new IteratorOf<>("sentence")
         );
         final Paged<String> paged = new Paged<>(
             pages.next(),
@@ -90,18 +87,18 @@ final class PagedTest {
             size += 1;
             paged.next();
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "length must be equal to total number of elements",
             size,
             new IsEqual<>(5)
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void throwsNoSuchElement() {
         final Iterator<Iterator<String>> pages = new IteratorOf<>();
-        new Assertion<Scalar<String>>(
+        MatcherAssert.assertThat(
             "must throw an exception when first iterator is empty",
             new ScalarOf<>(
                 () -> new Paged<>(
@@ -114,6 +111,6 @@ final class PagedTest {
                 ).next()
             ),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 }

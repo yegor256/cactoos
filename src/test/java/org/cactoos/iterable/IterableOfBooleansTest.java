@@ -4,8 +4,8 @@
  */
 package org.cactoos.iterable;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
 /**
@@ -18,10 +18,10 @@ final class IterableOfBooleansTest {
 
     @Test
     void convertsBooleanValuesToIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert boolean values to iterable",
             new IterableOfBooleans(true, false),
             new HasValues<>(true, false)
-        ).affirm();
+        );
     }
 }

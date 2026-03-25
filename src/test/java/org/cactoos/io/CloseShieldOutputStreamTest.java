@@ -9,17 +9,17 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link CloseShieldOutputStream}.
  * @since 1.0.0
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class CloseShieldOutputStreamTest {
 
     @Test
@@ -28,7 +28,7 @@ final class CloseShieldOutputStreamTest {
         file.createNewFile();
         final Path temp = file.toPath();
         try (OutputStream out = new OutputStreamTo(temp)) {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must copy Input to Output and return Input",
                 new TextOf(
                     new Sticky(
@@ -41,7 +41,7 @@ final class CloseShieldOutputStreamTest {
                 new IsText(
                     new TextOf(temp)
                 )
-            ).affirm();
+            );
         }
     }
 
@@ -52,11 +52,11 @@ final class CloseShieldOutputStreamTest {
             // @checkstyle EmptyBlockCheck (2 lines)
             try (OutputStream ignored = new CloseShieldOutputStream(origin)) {
             }
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must not close origin stream",
                 origin.isClosed(),
                 new IsEqual<>(false)
-            ).affirm();
+            );
         }
     }
 }

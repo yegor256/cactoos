@@ -4,8 +4,8 @@
  */
 package org.cactoos.text;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
@@ -18,24 +18,24 @@ final class SwappedCaseTest {
 
     @Test
     void swapText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't swap a text",
             new SwappedCase(
                 new TextOf("HellO!")
             ),
             new HasString("hELLo!")
-        ).affirm();
+        );
     }
 
     @Test
     void swapEmptyText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Empty swapped text should be the same as original",
             new SwappedCase(
                 new TextOf("")
             ),
             new HasString("")
-        ).affirm();
+        );
     }
 
 }

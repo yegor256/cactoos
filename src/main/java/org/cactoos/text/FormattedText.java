@@ -17,6 +17,7 @@ import org.cactoos.list.ListOf;
  *
  * @since 0.1
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 public final class FormattedText extends TextEnvelope {
 
     /**
@@ -111,7 +112,6 @@ public final class FormattedText extends TextEnvelope {
      * @param locale Format locale
      * @param args Arguments
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public FormattedText(
         final Text ptn,
         final Locale locale,

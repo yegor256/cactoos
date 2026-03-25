@@ -8,9 +8,9 @@ import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
 /**
@@ -19,7 +19,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 0.15
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class OutputToTest {
 
     @Test
@@ -27,11 +26,11 @@ final class OutputToTest {
         final Path path = wdir.resolve("one/two/three/file.txt");
         final String content = "Hello, товарищ!";
         new LengthOf(new TeeInput(content, new OutputTo(path))).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must write into path",
             new InputOf(path),
             new HasContent(content)
-        ).affirm();
+        );
     }
 
     @Test
@@ -41,11 +40,11 @@ final class OutputToTest {
         new LengthOf(
             new TeeInput(txt, new SyncOutput(new OutputTo(path.toFile())))
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must write into file",
             new InputOf(path.toFile()),
             new HasContent(txt)
-        ).affirm();
+        );
     }
 
     @Test
@@ -53,11 +52,11 @@ final class OutputToTest {
         final String txt = "Hello, writer!";
         final StringWriter output = new StringWriter();
         new LengthOf(new TeeInput(txt, new OutputTo(output))).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must write into writer",
             new InputOf(output.getBuffer()),
             new HasContent(txt)
-        ).affirm();
+        );
     }
 
     @Test
@@ -67,11 +66,11 @@ final class OutputToTest {
         new LengthOf(
             new TeeInput(txt, new OutputTo(output, StandardCharsets.UTF_8))
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must write into writer with charset",
             new InputOf(output.getBuffer()),
             new HasContent(txt)
-        ).affirm();
+        );
     }
 
     @Test
@@ -81,11 +80,11 @@ final class OutputToTest {
         new LengthOf(
             new TeeInput(txt, new OutputTo(output, StandardCharsets.UTF_8))
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must write into writer with charset by name",
             new InputOf(output.getBuffer()),
             new HasContent(txt)
-        ).affirm();
+        );
     }
 
     @Test
@@ -98,11 +97,11 @@ final class OutputToTest {
                 new OutputTo(output, StandardCharsets.UTF_8, 1)
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must write into writer with charset and size",
             new InputOf(output.getBuffer()),
             new HasContent(txt)
-        ).affirm();
+        );
     }
 
     @Test
@@ -115,11 +114,11 @@ final class OutputToTest {
                 new OutputTo(output, 1)
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must write into writer with size",
             new InputOf(output.getBuffer()),
             new HasContent(txt)
-        ).affirm();
+        );
     }
 
     @Test
@@ -132,11 +131,11 @@ final class OutputToTest {
                 new OutputTo(output, StandardCharsets.UTF_8.name(), 1)
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must write into writer with charset by name and size",
             new InputOf(output.getBuffer()),
             new HasContent(txt)
-        ).affirm();
+        );
     }
 
     @Test
@@ -149,10 +148,10 @@ final class OutputToTest {
                 new OutputTo(output, StandardCharsets.UTF_8.newDecoder(), 1)
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must write into writer with decoder and size",
             new InputOf(output.getBuffer()),
             new HasContent(txt)
-        ).affirm();
+        );
     }
 }

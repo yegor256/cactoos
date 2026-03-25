@@ -4,8 +4,10 @@
  */
 package org.cactoos.func;
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -13,55 +15,58 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.11
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class BiFuncNoNullsTest {
 
     @Test
     void failForNullFunc() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail if function is null.",
             () -> new BiFuncNoNulls<>(null).apply(new Object(), new Object()),
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void failForNullFirstArg() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail if first arg is null.",
             () -> new BiFuncNoNulls<>(
                 (first, second) -> first
                 ).apply(null, new Object()),
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void failForNullSecondArg() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail if second arg is null.",
             () -> new BiFuncNoNulls<>(
                 (first, second) -> first
             ).apply(new Object(), null),
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void failForNullResult() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail if function is null.",
             () -> new BiFuncNoNulls<>(
                 (first, second) -> null
             ).apply(new Object(), new Object()),
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void okForNoNulls() throws Exception {
-        new BiFuncNoNulls<>(
-            (first, second) -> first
-        ).apply(new Object(), new Object());
+        MatcherAssert.assertThat(
+            "Must return value for valid arguments",
+            new BiFuncNoNulls<>(
+                (first, second) -> first
+            ).apply(new Object(), new Object()),
+            new IsNot<>(new IsNull<>())
+        );
     }
 }

@@ -6,9 +6,9 @@ package org.cactoos.io;
 
 import java.nio.file.Path;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
@@ -17,13 +17,12 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class OutputStreamToTest {
 
     @Test
     void writesLargeContentToFile(@TempDir final Path wdir) {
         final Path temp = wdir.resolve("cactoos-1.txt-1");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy Input to Output and return Input",
             new TextOf(
                 new Sticky(
@@ -36,7 +35,7 @@ final class OutputStreamToTest {
             new IsText(
                 new TextOf(temp)
             )
-        ).affirm();
+        );
     }
 
 }

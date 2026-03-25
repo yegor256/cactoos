@@ -6,8 +6,8 @@ package org.cactoos.scalar;
 
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.IterableOfInts;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -22,7 +22,7 @@ final class FirstOfTest {
     @Test
     void returnsMatchingValue() {
         final int value = 1;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return the only matching element",
             new FirstOf<>(
                 i -> i >= value,
@@ -30,13 +30,13 @@ final class FirstOfTest {
                 () -> -1
             ),
             new HasValue<>(value)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsMatchingValueWithExceptionalFallback() {
         final int value = 2;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception was not thrown",
             new FirstOf<>(
                 i -> i >= value,
@@ -48,40 +48,38 @@ final class FirstOfTest {
                 }
             ),
             new HasValue<>(value)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsFirstValueForMultipleMatchingOnes() {
-        final String value = "1";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return first matching element",
             new FirstOf<>(
                 i -> !i.isEmpty(),
                 new IterableOf<>("1", "2"),
                 () -> ""
             ),
-            new HasValue<>(value)
-        ).affirm();
+            new HasValue<>("1")
+        );
     }
 
     @Test
     void returnsFallbackIfNothingMatches() {
-        final String value = "abc";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return fallback",
             new FirstOf<>(
                 i -> i.length() > 2,
                 new IterableOf<>("ab", "cd"),
-                () -> value
+                () -> "abc"
             ),
-            new HasValue<>(value)
-        ).affirm();
+            new HasValue<>("abc")
+        );
     }
 
     @Test
     void throwsFallbackIfNothingMatches() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Fallback was not thrown",
             new FirstOf<>(
                 num -> num.equals(0),
@@ -95,42 +93,42 @@ final class FirstOfTest {
                 }
             ),
             new Throws<>(IllegalArgumentException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsFirstValueWithScalarFallback() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Returns first value with scalar fallback",
             new FirstOf<>(
                 new IterableOfInts(2, 1, 0),
                 () -> -1
             ),
             new HasValue<>(2)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsFirstValueWithIntegerFallback() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Returns first value with Integer fallback",
             new FirstOf<>(
                 new IterableOfInts(2, 1, 0),
                 -1
             ),
             new HasValue<>(2)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsFallbackWhenIterableEmpty() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Returns fallback when iterable empty",
             new FirstOf<>(
                 new IterableOf<>(),
                 () -> -1
             ),
             new HasValue<>(-1)
-        ).affirm();
+        );
     }
 }

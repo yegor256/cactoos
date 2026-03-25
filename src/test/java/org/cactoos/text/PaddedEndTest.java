@@ -4,8 +4,8 @@
  */
 package org.cactoos.text;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
@@ -18,7 +18,7 @@ final class PaddedEndTest {
 
     @Test
     void noPaddingIfOrigTextIsAsLongAsRequestedLength() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Shouldn't pad the text",
             new PaddedEnd(
                 new TextOf("x"),
@@ -26,12 +26,12 @@ final class PaddedEndTest {
                 '-'
             ),
             new HasString("x")
-        ).affirm();
+        );
     }
 
     @Test
     void somePaddingIfOrigTextIsShorterThanRequestedLength() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Should pad chars at end",
             new PaddedEnd(
                 new TextOf("x"),
@@ -39,12 +39,12 @@ final class PaddedEndTest {
                 '-'
             ),
             new HasString("x-")
-        ).affirm();
+        );
     }
 
     @Test
     void noPaddingIfRequestedLengthIsNegative() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Shouldn't consider negative min length",
             new PaddedEnd(
                 new TextOf("x"),
@@ -52,6 +52,6 @@ final class PaddedEndTest {
                 '-'
             ),
             new HasString("x")
-        ).affirm();
+        );
     }
 }

@@ -11,14 +11,15 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.zip.GZIPOutputStream;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -27,8 +28,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals",
-    "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class GzipOutputTest {
 
     @Test
@@ -38,7 +38,8 @@ final class GzipOutputTest {
         try (
             Writer writer = new BufferedWriter(
                 new OutputStreamWriter(
-                    new GZIPOutputStream(expected)
+                    new GZIPOutputStream(expected),
+                    StandardCharsets.UTF_8
                 )
             )
         ) {
@@ -56,22 +57,23 @@ final class GzipOutputTest {
                 )
             ).value();
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't write to a gzip output",
             baos.toByteArray(),
             new IsEqual<>(expected.toByteArray())
-        ).affirm();
+        );
     }
 
     @Test
     @SuppressWarnings("PMD.CloseResource")
     void writeToClosedGzipOutput(@TempDir final Path wdir) throws Exception {
-        final OutputStream stream =
-            Files.newOutputStream(
-                wdir.resolve("cactoos.txt")
-            );
-        stream.close();
-        new Assertion<>(
+        final OutputStream stream;
+        try (OutputStream out = Files.newOutputStream(
+            wdir.resolve("cactoos.txt")
+        )) {
+            stream = out;
+        }
+        MatcherAssert.assertThat(
             "can't write to closed stream",
             () -> new LengthOf(
                 new TeeInput(
@@ -80,6 +82,6 @@ final class GzipOutputTest {
                 )
             ).value(),
             new Throws<>(IOException.class)
-        ).affirm();
+        );
     }
 }

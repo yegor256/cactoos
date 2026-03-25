@@ -8,8 +8,8 @@ import org.cactoos.io.InputOf;
 import org.cactoos.io.ResourceOf;
 import org.cactoos.io.Sticky;
 import org.cactoos.text.HexOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
@@ -22,7 +22,7 @@ final class Md5DigestOfTest {
 
     @Test
     void checksumOfEmptyString() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't calculate the empty string's MD5 checksum",
             new HexOf(
                 new Md5DigestOf(
@@ -32,12 +32,12 @@ final class Md5DigestOfTest {
             new HasString(
                 "d41d8cd98f00b204e9800998ecf8427e"
             )
-        ).affirm();
+        );
     }
 
     @Test
     void checksumOfString() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't calculate the string's MD5 checksum",
             new HexOf(
                 new Md5DigestOf(
@@ -47,12 +47,12 @@ final class Md5DigestOfTest {
             new HasString(
                 "ed076287532e86365e841e92bfc50d8c"
             )
-        ).affirm();
+        );
     }
 
     @Test
     void checksumFromFile() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't calculate the file's MD5 checksum",
             new HexOf(
                 new Md5DigestOf(
@@ -68,7 +68,7 @@ final class Md5DigestOfTest {
             new HasString(
                 "e41bf9d7cd310eabd8e1c03fc4a52d32"
             )
-        ).affirm();
+        );
     }
 
 }

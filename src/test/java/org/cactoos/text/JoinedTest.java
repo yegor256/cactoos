@@ -4,8 +4,8 @@
  */
 package org.cactoos.text;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
@@ -17,16 +17,16 @@ final class JoinedTest {
 
     @Test
     void joinsStrings() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't join strings",
             new Joined(" ", "hello", "world"),
             new HasString("hello world")
-        ).affirm();
+        );
     }
 
     @Test
     void joinsTexts() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't join texts",
             new Joined(
                 new TextOf(" "),
@@ -34,12 +34,12 @@ final class JoinedTest {
                 new TextOf("bar")
             ),
             new HasString("foo bar")
-        ).affirm();
+        );
     }
 
     @Test
     void joinsTextsWitjStringDelimit() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't join texts with String delimit",
             new Joined(
                 " ",
@@ -47,6 +47,6 @@ final class JoinedTest {
                 new TextOf("two")
             ),
             new HasString("one two")
-        ).affirm();
+        );
     }
 }

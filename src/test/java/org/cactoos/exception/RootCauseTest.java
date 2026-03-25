@@ -4,9 +4,9 @@
  */
 package org.cactoos.exception;
 
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link RootCause}.
@@ -18,11 +18,10 @@ final class RootCauseTest {
     @Test
     void rootCauseTest() throws Exception {
         final Throwable inner = new Throwable();
-        final RootCause exc = new RootCause(new Throwable(new Throwable(inner)));
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Should return inner exception.",
-            exc.value(),
+            new RootCause(new Throwable(new Throwable(inner))).value(),
             new IsEqual<>(inner)
-        ).affirm();
+        );
     }
 }

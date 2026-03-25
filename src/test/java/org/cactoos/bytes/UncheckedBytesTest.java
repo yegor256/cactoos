@@ -8,9 +8,9 @@ import java.io.IOException;
 import org.cactoos.Fallback;
 import org.cactoos.Text;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -23,7 +23,7 @@ final class UncheckedBytesTest {
 
     @Test
     void rethrowsCheckedToUncheckedException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must rethrow checked to unchecked exception",
             () -> new UncheckedBytes(
                 () -> {
@@ -31,25 +31,24 @@ final class UncheckedBytesTest {
                 }
             ).asBytes(),
             new Throws<>(RuntimeException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void worksNormallyWhenNoExceptionIsThrown() throws Exception {
         final Text source = new TextOf("hello, cactoos!");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must work normally when no exception is thrown",
             new UncheckedBytes(
                 new BytesOf(source)
             ).asBytes(),
             new IsEqual<>(new BytesOf(source).asBytes())
-        ).affirm();
+        );
     }
 
     @Test
     void worksWithFallback() {
-        final byte[] empty = {};
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must work with fallback",
             new UncheckedBytes(
                 () -> {
@@ -57,10 +56,10 @@ final class UncheckedBytesTest {
                 },
                 new Fallback.From<>(
                     IOException.class,
-                    ex -> empty
+                    ex -> new byte[] {}
                 )
             ).asBytes(),
-            new IsEqual<>(empty)
-        ).affirm();
+            new IsEqual<>(new byte[] {})
+        );
     }
 }

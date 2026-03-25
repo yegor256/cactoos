@@ -48,10 +48,9 @@ public final class Paged<X> implements Iterator<X> {
     @Override
     public boolean hasNext() {
         if (!this.current.get().hasNext()) {
-            final Iterator<? extends X> next = new UncheckedFunc<>(this.subsequent).apply(
-                this.current.get()
+            this.current.set(
+                new UncheckedFunc<>(this.subsequent).apply(this.current.get())
             );
-            this.current.set(next);
         }
         return this.current.get().hasNext();
     }

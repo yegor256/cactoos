@@ -12,10 +12,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.IsTrue;
 
@@ -25,17 +25,16 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class WriterAsOutputStreamTest {
 
     @Test
     void writesToByteArray() {
-        final String content = "Hello, товарищ! How are you?";
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't copy Input to Writer",
             new TeeInput(
-                new InputOf(content),
+                new InputOf("Hello, товарищ! How are you?"),
                 new OutputTo(
                     new WriterAsOutputStream(
                         new OutputStreamWriter(
@@ -49,7 +48,7 @@ final class WriterAsOutputStreamTest {
             new HasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -59,7 +58,7 @@ final class WriterAsOutputStreamTest {
             Files.newOutputStream(temp.toAbsolutePath()),
             StandardCharsets.UTF_8
         )) {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Can't copy Input to Output and return Input",
                 new TeeInput(
                     new ResourceOf("org/cactoos/large-text.txt"),
@@ -74,7 +73,7 @@ final class WriterAsOutputStreamTest {
                 new HasContent(
                     new TextOf(temp)
                 )
-            ).affirm();
+            );
         }
     }
 
@@ -85,10 +84,9 @@ final class WriterAsOutputStreamTest {
             Files.newOutputStream(temp.toAbsolutePath()),
             StandardCharsets.UTF_8
         )) {
-            final String content = "Hello, товарищ! How are you?";
             new LengthOf(
                 new TeeInput(
-                    new InputOf(content),
+                    new InputOf("Hello, товарищ! How are you?"),
                     new OutputTo(
                         new WriterAsOutputStream(
                             writer,
@@ -100,10 +98,10 @@ final class WriterAsOutputStreamTest {
             ).value();
         }
         Files.delete(temp);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "file must not exist anymore",
             Files.exists(temp),
             new IsNot<>(new IsTrue())
-        ).affirm();
+        );
     }
 }

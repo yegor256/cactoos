@@ -6,8 +6,8 @@ package org.cactoos.proc;
 
 import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.func.FuncOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
@@ -15,11 +15,12 @@ import org.llorllale.cactoos.matchers.Satisfies;
  *
  * @since 0.3
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class ProcOfTest {
     @Test
     void worksWithFunc() {
         final AtomicReference<Object> done = new AtomicReference<>();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must execute Proc with Func",
             new ProcOf<>(
                 new FuncOf<>(
@@ -36,13 +37,13 @@ final class ProcOfTest {
                     return done.get().equals(input);
                 }
             )
-        ).affirm();
+        );
     }
 
     @Test
     void worksWithLambda() {
         final AtomicReference<Object> done = new AtomicReference<>();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must execute Proc with Lambda",
             new ProcOf<>(
                 done::set
@@ -54,6 +55,6 @@ final class ProcOfTest {
                     return done.get().equals(input);
                 }
             )
-        ).affirm();
+        );
     }
 }

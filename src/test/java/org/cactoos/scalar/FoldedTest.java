@@ -6,9 +6,9 @@ package org.cactoos.scalar;
 
 import org.cactoos.iterable.HeadOf;
 import org.cactoos.iterable.RangeOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -20,7 +20,7 @@ final class FoldedTest {
 
     @Test
     void skipIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fold elements in iterable",
             new Folded<>(
                 0L, Long::sum,
@@ -30,12 +30,12 @@ final class FoldedTest {
                 )
             ),
             new HasValue<>(45L)
-        ).affirm();
+        );
     }
 
     @Test
     void constructedFromVarargs() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fold elements in vararg array",
             new Folded<>(
                 0L,
@@ -43,6 +43,6 @@ final class FoldedTest {
                 1, 2, 3, 4, 5
             ).value(),
             new IsEqual<>(15L)
-        ).affirm();
+        );
     }
 }

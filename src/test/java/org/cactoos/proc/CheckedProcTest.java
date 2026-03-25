@@ -7,10 +7,10 @@ package org.cactoos.proc;
 import java.io.EOFException;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -19,11 +19,12 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings({"PMD.ExceptionAsFlowControl", "PMD.UnnecessaryLocalRule"})
 final class CheckedProcTest {
 
     @Test
     void runtimeExceptionIsNotWrapped() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Runtime exception is wrapped",
             () -> {
                 new CheckedProc<>(
@@ -35,12 +36,12 @@ final class CheckedProcTest {
                 return 1;
             },
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void checkedExceptionIsWrapped() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Checked exception is not wrapped",
             () -> {
                 new CheckedProc<>(
@@ -52,7 +53,7 @@ final class CheckedProcTest {
                 return 1;
             },
             new Throws<>(IOException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -65,11 +66,11 @@ final class CheckedProcTest {
                 IOException::new
             ).exec(true);
         } catch (final IOException exp) {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Extra wrapping of IOException has been added",
                 exp.getCause(),
                 new IsNull<>()
-            ).affirm();
+            );
         }
     }
 
@@ -80,10 +81,10 @@ final class CheckedProcTest {
             input -> counter.incrementAndGet(),
             exp -> exp
         ).exec(false);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must not throw an exception",
             counter.get(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 }

@@ -8,8 +8,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.func.FuncOf;
 import org.cactoos.proc.ProcOf;
 import org.cactoos.proc.RunnableOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Satisfies;
 
@@ -18,82 +18,65 @@ import org.llorllale.cactoos.matchers.Satisfies;
  *
  * @since 0.48
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class ScalarOfTest {
     @Test
     void worksWithCallable() {
-        final Object obj = new Object();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert Callable into Scalar",
-            new ScalarOf<>(new CallableOf<>(new Constant<>(obj))),
-            new HasValue<>(obj)
-        ).affirm();
+            new ScalarOf<>(new CallableOf<>(new Constant<>(1))),
+            new HasValue<>(1)
+        );
     }
 
     @Test
     void worksWithRunnable() {
-        final Object obj = new Object();
-        final Object result = new Object();
         final AtomicReference<Object> done = new AtomicReference<>();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert Runnable into Scalar",
             new ScalarOf<>(
                 new RunnableOf(
-                    () -> {
-                        done.set(result);
-                    }
+                    () -> done.set(true)
                 ),
-                obj
+                1
             ),
             new Satisfies<>(
-                scalar -> {
-                    final Object res = scalar.value();
-                    return res.equals(obj) && done.get().equals(result);
-                }
+                scalar -> scalar.value().equals(1) && done.get().equals(true)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void worksWithFunc() {
-        final Object ipt = new Object();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert Func into Scalar",
-            new ScalarOf<>(new FuncOf<>(input -> input), ipt),
-            new HasValue<>(ipt)
-        ).affirm();
+            new ScalarOf<>(new FuncOf<>(input -> input), 1),
+            new HasValue<>(1)
+        );
     }
 
     @Test
     void worksWithProc() {
-        final Object ipt = new Object();
-        final Object result = new Object();
         final AtomicReference<Object> done = new AtomicReference<>();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert Proc into Scalar",
             new ScalarOf<>(
-                new ProcOf<>(
-                    done::set
-                ),
-                ipt,
-                result
+                new ProcOf<>(done::set),
+                1,
+                2
             ),
             new Satisfies<>(
-                scalar -> {
-                    final Object res = scalar.value();
-                    return res.equals(result) && done.get().equals(ipt);
-                }
+                scalar -> scalar.value().equals(2) && done.get().equals(1)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void worksWithLambda() {
-        final Object obj = new Object();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert Lambda into Scalar",
-            new ScalarOf<>(() -> obj),
-            new HasValue<>(obj)
-        ).affirm();
+            new ScalarOf<>(() -> 1),
+            new HasValue<>(1)
+        );
     }
 }

@@ -12,7 +12,6 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasEntry;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
@@ -22,7 +21,7 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.56
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({ "PMD.JUnitTestsShouldIncludeAssert", "PMD.TooManyMethods" })
+@SuppressWarnings("PMD.TooManyMethods")
 final class StickyTest {
 
     @Test
@@ -49,11 +48,11 @@ final class StickyTest {
                 new ListOf<>("ключ", "κλειδί", "鍵")
             )
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must cache entries and return same values on repeated access",
             map.get("ключ"),
             new IsEqual<>(map.get("ключ"))
-        ).affirm();
+        );
     }
 
     @Test
@@ -227,12 +226,11 @@ final class StickyTest {
                 ).iterator()
             )
         );
-        final int initial = map.size();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must ignore changes to underlying collection after caching",
             map.size(),
-            new IsEqual<>(initial)
-        ).affirm();
+            new IsEqual<>(map.size())
+        );
     }
 
     @Test

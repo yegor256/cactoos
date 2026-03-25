@@ -118,9 +118,8 @@ public final class Randomized extends TextEnvelope {
                     final List<Character> chrs = new ListOf<>(itr);
                     final int length = len.value();
                     final StringBuilder builder = new StringBuilder(length);
-                    final int bound = chrs.size();
                     for (int index = 0; index < length; index += 1) {
-                        builder.append(chrs.get(rnd.nextInt(bound)));
+                        builder.append(chrs.get(rnd.nextInt(chrs.size())));
                     }
                     return builder.toString();
                 }

@@ -8,10 +8,10 @@ import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Sticky}.
@@ -29,28 +29,28 @@ final class StickyTest {
                 () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
             )
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must ignore the changes in the underlying iterable",
             new LengthOf(list).value(),
             new IsEqual<>(new LengthOf(list).value())
-        ).affirm();
+        );
     }
 
     @Test
     void testEmpty() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be empty",
             new Sticky<>(),
             new IsEmptyIterable<>()
-        ).affirm();
+        );
     }
 
     @Test
     void testEqualsIterable() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be equals to equivalent iterable",
             new Sticky<>(1, 2),
             new IsEqual<>(new IterableOf<>(1, 2))
-        ).affirm();
+        );
     }
 }

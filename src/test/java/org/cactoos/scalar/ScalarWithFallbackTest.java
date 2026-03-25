@@ -9,8 +9,8 @@ import java.util.IllegalFormatException;
 import java.util.IllegalFormatWidthException;
 import org.cactoos.Fallback;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -20,17 +20,15 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"unchecked",
-    "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings("unchecked")
 final class ScalarWithFallbackTest {
 
     @Test
     void usesMainFunc() {
-        final String message = "Main function's result #1";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must use the main function if no exception",
             new ScalarWithFallback<>(
-                () -> message,
+                () -> "Main function's result #1",
                 new IterableOf<>(
                     new Fallback.From<>(
                         new IterableOf<>(IOException.class),
@@ -38,46 +36,43 @@ final class ScalarWithFallbackTest {
                     )
                 )
             ),
-            new HasValue<>(message)
-        ).affirm();
+            new HasValue<>("Main function's result #1")
+        );
     }
 
     @Test
     void usesMainFuncFromExceptionAndFallback() {
-        final String message = "Main function's result #1 (exp & flbck)";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Using the main function if no exception (exp & flbck)",
             new ScalarWithFallback<>(
-                () -> message,
+                () -> "Main function's result #1 (exp & flbck)",
                 new Fallback.From<>(
                     IOException.class,
                     Throwable::getMessage
                 )
             ),
-            new HasValue<>(message)
-        ).affirm();
+            new HasValue<>("Main function's result #1 (exp & flbck)")
+        );
     }
 
     @Test
     void usesMainFuncFromIterableExceptionAndFallback() {
-        final String message = "Main function's result #1 (exp iterable & flbck)";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Using the main function if no exception (exp iterable & flbck)",
             new ScalarWithFallback<>(
-                () -> message,
+                () -> "Main function's result #1 (exp iterable & flbck)",
                 new Fallback.From<>(
                     new IterableOf<>(IOException.class),
                     Throwable::getMessage
                 )
             ),
-            new HasValue<>(message)
-        ).affirm();
+            new HasValue<>("Main function's result #1 (exp iterable & flbck)")
+        );
     }
 
     @Test
     void usesFallback() {
-        final String message = "Fallback from IOException";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must use a single fallback in case of exception",
             new ScalarWithFallback<>(
                 () -> {
@@ -88,19 +83,18 @@ final class ScalarWithFallbackTest {
                         new IterableOf<>(IOException.class),
                         new Fallback.From<>(
                             IOException.class,
-                            exp -> message
+                            exp -> "Fallback from IOException"
                         )
                     )
                 )
             ),
-            new HasValue<>(message)
-        ).affirm();
+            new HasValue<>("Fallback from IOException")
+        );
     }
 
     @Test
     void usesFallbackFromExceptionAndFallback() {
-        final String message = "Fallback from IOException (exp & flbck)";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Using a single fallback in case of exception (exp & flbck)",
             new ScalarWithFallback<>(
                 () -> {
@@ -108,17 +102,16 @@ final class ScalarWithFallbackTest {
                 },
                 new Fallback.From<>(
                     IOException.class,
-                    exp -> message
+                    exp -> "Fallback from IOException (exp & flbck)"
                 )
             ),
-            new HasValue<>(message)
-        ).affirm();
+            new HasValue<>("Fallback from IOException (exp & flbck)")
+        );
     }
 
     @Test
     void usesFallbackFromIterableExceptionAndFallback() {
-        final String message = "Fallback from IOException (exp iterable & flbck)";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Using a single fallback in case of exception (exp iterable & flbck)",
             new ScalarWithFallback<>(
                 () -> {
@@ -126,17 +119,16 @@ final class ScalarWithFallbackTest {
                 },
                 new Fallback.From<>(
                     new IterableOf<>(IOException.class),
-                    exp -> message
+                    exp -> "Fallback from IOException (exp iterable & flbck)"
                 )
             ),
-            new HasValue<>(message)
-        ).affirm();
+            new HasValue<>("Fallback from IOException (exp iterable & flbck)")
+        );
     }
 
     @Test
     void usesFallbackOfInterruptedException() {
-        final String message = "Fallback from InterruptedException";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must use a fallback from Interrupted in case of exception",
             new ScalarWithFallback<>(
                 () -> {
@@ -147,18 +139,17 @@ final class ScalarWithFallbackTest {
                 new IterableOf<>(
                     new Fallback.From<>(
                         new IterableOf<>(InterruptedException.class),
-                        exp -> message
+                        exp -> "Fallback from InterruptedException"
                     )
                 )
             ),
-            new HasValue<>(message)
-        ).affirm();
+            new HasValue<>("Fallback from InterruptedException")
+        );
     }
 
     @Test
     void usesTheClosestFallback() {
-        final String expected = "Fallback from IllegalFormatException";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must find the closest fallback",
             new ScalarWithFallback<>(
                 () -> {
@@ -171,17 +162,17 @@ final class ScalarWithFallbackTest {
                     ),
                     new Fallback.From<>(
                         new IterableOf<>(IllegalFormatException.class),
-                        exp -> expected
+                        exp -> "Fallback from IllegalFormatException"
                     )
                 )
             ),
-            new HasValue<>(expected)
-        ).affirm();
+            new HasValue<>("Fallback from IllegalFormatException")
+        );
     }
 
     @Test
     void noFallbackIsProvided() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected if there is no fallback",
             () -> new ScalarWithFallback<>(
                 () -> {
@@ -190,6 +181,6 @@ final class ScalarWithFallbackTest {
                 new IterableOf<>()
             ).value(),
             new Throws<>(Exception.class)
-        ).affirm();
+        );
     }
 }

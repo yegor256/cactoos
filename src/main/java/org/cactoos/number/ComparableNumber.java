@@ -12,6 +12,7 @@ package org.cactoos.number;
  *
  * @since 1.0.0
  */
+@SuppressWarnings("PMD.OverrideBothEqualsAndHashCodeOnComparable")
 public final class ComparableNumber extends NumberEnvelope
     implements Comparable<Number> {
 

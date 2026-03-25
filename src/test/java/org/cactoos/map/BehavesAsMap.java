@@ -6,8 +6,8 @@ package org.cactoos.map;
 
 import java.util.Map;
 import org.hamcrest.Description;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.TypeSafeMatcher;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasEntry;
 import org.llorllale.cactoos.matchers.HasValues;
 
@@ -44,21 +44,21 @@ public final class BehavesAsMap<K, V> extends TypeSafeMatcher<Map<K, V>>  {
     @Override
     @SuppressWarnings("unchecked")
     public boolean matchesSafely(final Map<K, V> map) {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must contain the key/value entry",
             map,
             new HasEntry<>(this.key, this.value)
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Must contain the key in #keySet()",
             map.keySet(),
             new HasValues<>(this.key)
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Must contain the value in #values()",
             map.values(),
             new HasValues<>(this.value)
-        ).affirm();
+        );
         return true;
     }
 

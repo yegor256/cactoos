@@ -18,6 +18,7 @@ merge:
     mvn clean install -Pqulice --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
 release:
+  pre: false
   sensitive:
     - settings.xml
   script: |-

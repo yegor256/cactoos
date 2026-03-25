@@ -8,9 +8,9 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
 /**
@@ -19,7 +19,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (200 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class TeeInputFromInputTest {
 
     @Test
@@ -32,11 +31,11 @@ final class TeeInputFromInputTest {
                 output.toPath()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from input to the output path",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -49,11 +48,11 @@ final class TeeInputFromInputTest {
                 output
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from input to the output file",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -66,11 +65,11 @@ final class TeeInputFromInputTest {
                 new WriterTo(output)
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from input to the output",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -84,11 +83,11 @@ final class TeeInputFromInputTest {
                 input.length()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from input with size to the output",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -102,11 +101,11 @@ final class TeeInputFromInputTest {
                 StandardCharsets.UTF_8
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from input with charset to output",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -121,11 +120,11 @@ final class TeeInputFromInputTest {
                 input.length()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from input with charset and size to output",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -139,11 +138,11 @@ final class TeeInputFromInputTest {
                 StandardCharsets.UTF_8.name()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from input with charset by name to output",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 
     @Test
@@ -159,10 +158,10 @@ final class TeeInputFromInputTest {
                 input.length()
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from input with charset by name and size to output",
             new InputOf(output),
             new HasContent(input)
-        ).affirm();
+        );
     }
 }

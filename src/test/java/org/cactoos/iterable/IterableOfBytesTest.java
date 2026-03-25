@@ -4,9 +4,10 @@
  */
 package org.cactoos.iterable;
 
+import java.nio.charset.StandardCharsets;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 
 /**
@@ -18,7 +19,7 @@ import org.llorllale.cactoos.matchers.HasValues;
 final class IterableOfBytesTest {
     @Test
     void convertsTextToIterableOfBytes() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must create Iterable from Text",
             new IterableOfBytes(
                 new TextOf("ABC")
@@ -26,25 +27,25 @@ final class IterableOfBytesTest {
             new HasValues<>(
                 (byte) 'A', (byte) 'B', (byte) 'C'
             )
-        ).affirm();
+        );
     }
 
     @Test
     void convertsBytesToIterable() {
-        final byte[] bytes = "txt".getBytes();
-        new Assertion<>(
+        final byte[] bytes = "txt".getBytes(StandardCharsets.UTF_8);
+        MatcherAssert.assertThat(
             "Must create Iterable from bytes",
             new IterableOfBytes(bytes),
             new HasValues<>(bytes[0], bytes[1], bytes[2])
-        ).affirm();
+        );
     }
 
     @Test
     void convertsStringToIterableOfBytes() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must create Iterable from String",
             new IterableOfBytes("TEST"),
             new HasValues<>((byte) 'T', (byte) 'E', (byte) 'S', (byte) 'T')
-        ).affirm();
+        );
     }
 }

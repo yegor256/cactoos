@@ -7,9 +7,9 @@ package org.cactoos.iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -23,7 +23,7 @@ final class IteratorOfCharsTest {
 
     @Test
     void canBeConstructedFromText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Iterator must contain all characters of the string",
             new IterableOf<>(
                 new IteratorOfChars(
@@ -31,25 +31,25 @@ final class IteratorOfCharsTest {
                 )
             ),
             new HasValues<>('a', 'b', 'c')
-        ).affirm();
+        );
     }
 
     @Test
     void emptyIteratorDoesNotHaveNext() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "hasNext is true for empty iterator",
             new IteratorOfChars().hasNext(),
             new IsEqual<>(false)
-        ).affirm();
+        );
     }
 
     @Test
     void emptyIteratorThrowsException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected on iterating empty string",
             () -> new IteratorOfChars().next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -60,11 +60,11 @@ final class IteratorOfCharsTest {
         iterator.next();
         iterator.next();
         iterator.next();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "hasNext is true for already traversed iterator",
             iterator.hasNext(),
             new IsEqual<>(false)
-        ).affirm();
+        );
     }
 
     @Test
@@ -73,10 +73,10 @@ final class IteratorOfCharsTest {
             'a'
         );
         iterator.next();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "can't move to second character",
             () -> iterator.next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 }

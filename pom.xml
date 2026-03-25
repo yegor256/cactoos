@@ -137,6 +137,42 @@
                   <old>class org.cactoos.text.Abbreviated</old>
                   <justification>Class removed as part of 1.0 release cleanup</justification>
                 </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Diff&lt;T&gt;::&lt;init&gt;(===org.cactoos.set.SetOf&lt;T&gt;===, org.cactoos.set.SetOf&lt;T&gt;)</old>
+                  <new>parameter void org.cactoos.set.Diff&lt;T&gt;::&lt;init&gt;(===java.util.Set&lt;T&gt;===, java.util.Set&lt;T&gt;)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Diff&lt;T&gt;::&lt;init&gt;(org.cactoos.set.SetOf&lt;T&gt;, ===org.cactoos.set.SetOf&lt;T&gt;===)</old>
+                  <new>parameter void org.cactoos.set.Diff&lt;T&gt;::&lt;init&gt;(java.util.Set&lt;T&gt;, ===java.util.Set&lt;T&gt;===)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Intersection&lt;T&gt;::&lt;init&gt;(===org.cactoos.set.SetOf&lt;T&gt;===, org.cactoos.set.SetOf&lt;T&gt;)</old>
+                  <new>parameter void org.cactoos.set.Intersection&lt;T&gt;::&lt;init&gt;(===java.util.Set&lt;T&gt;===, java.util.Set&lt;T&gt;)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Intersection&lt;T&gt;::&lt;init&gt;(org.cactoos.set.SetOf&lt;T&gt;, ===org.cactoos.set.SetOf&lt;T&gt;===)</old>
+                  <new>parameter void org.cactoos.set.Intersection&lt;T&gt;::&lt;init&gt;(java.util.Set&lt;T&gt;, ===java.util.Set&lt;T&gt;===)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Union&lt;T&gt;::&lt;init&gt;(===org.cactoos.set.SetOf&lt;T&gt;===, org.cactoos.set.SetOf&lt;T&gt;)</old>
+                  <new>parameter void org.cactoos.set.Union&lt;T&gt;::&lt;init&gt;(===java.util.Set&lt;T&gt;===, java.util.Set&lt;T&gt;)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Union&lt;T&gt;::&lt;init&gt;(org.cactoos.set.SetOf&lt;T&gt;, ===org.cactoos.set.SetOf&lt;T&gt;===)</old>
+                  <new>parameter void org.cactoos.set.Union&lt;T&gt;::&lt;init&gt;(java.util.Set&lt;T&gt;, ===java.util.Set&lt;T&gt;===)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
               </differences>
             </revapi.differences>
           </analysisConfiguration>
@@ -154,7 +190,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.15.0</version>
         <configuration>
-          <release>17</release>
+          <release>19</release>
         </configuration>
       </plugin>
       <plugin>
@@ -267,7 +303,7 @@
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.25.0</version>
+            <version>0.25.1</version>
             <configuration>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/site/resources/.*</exclude>

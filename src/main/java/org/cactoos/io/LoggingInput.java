@@ -15,7 +15,6 @@ import org.cactoos.Input;
  *
  * @since 0.29
  */
-@SuppressWarnings("PMD.LoggerIsNotStaticFinal")
 public final class LoggingInput implements Input {
 
     /**
