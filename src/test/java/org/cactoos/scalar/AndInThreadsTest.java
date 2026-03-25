@@ -25,7 +25,7 @@ import org.llorllale.cactoos.matchers.HasValue;
  * Test case for {@link AndInThreads}.
  * @since 0.25
  */
-@SuppressWarnings({"unchecked", "PMD.TooManyMethods"})
+@SuppressWarnings({"unchecked", "PMD.TooManyMethods", "PMD.UnnecessaryLocalRule"})
 final class AndInThreadsTest {
 
     @Test
