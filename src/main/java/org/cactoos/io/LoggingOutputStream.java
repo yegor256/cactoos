@@ -78,8 +78,7 @@ public final class LoggingOutputStream extends OutputStream {
 
     @Override
     public void write(final int data) throws IOException {
-        final byte[] buf = {(byte) data};
-        this.write(buf, 0, 1);
+        this.write(new byte[]{(byte) data}, 0, 1);
     }
 
     @Override

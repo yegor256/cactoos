@@ -43,15 +43,12 @@ final class LoggingInputStreamTest {
 
     @Test
     void readEmptyStream() throws IOException {
-        final LoggingInputStream stream = new LoggingInputStream(
-            new ByteArrayInputStream(
-                "".getBytes(StandardCharsets.UTF_8)
-            ),
-            this.getClass().getSimpleName()
-        );
         MatcherAssert.assertThat(
             "Empty stream did not return -1",
-            stream.read(),
+            new LoggingInputStream(
+                new ByteArrayInputStream("".getBytes(StandardCharsets.UTF_8)),
+                this.getClass().getSimpleName()
+            ).read(),
             new IsEqual<>(-1)
         );
     }

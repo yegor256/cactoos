@@ -5,7 +5,6 @@
 package org.cactoos.proc;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import org.cactoos.Proc;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -21,11 +20,7 @@ final class RepeatedProcTest {
     @Test
     void runsProcMultipleTimes() throws Exception {
         final AtomicInteger atom = new AtomicInteger();
-        final Proc<AtomicInteger> func = new RepeatedProc<>(
-            AtomicInteger::getAndIncrement,
-            3
-        );
-        func.exec(atom);
+        new RepeatedProc<>(AtomicInteger::getAndIncrement, 3).exec(atom);
         MatcherAssert.assertThat(
             "must run proc 3 times",
             atom.get(),

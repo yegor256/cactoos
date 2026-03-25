@@ -21,11 +21,10 @@ final class FlattenedTest {
     @Test
     void flattens() {
         final Text txt = new TextOf("txt");
-        final Scalar<Text> sclr = new Constant<>(txt);
         MatcherAssert.assertThat(
             "must flatten",
             new Flattened<>(
-                new ScalarOf<>(() -> sclr)
+                new ScalarOf<>(() -> new Constant<>(txt))
             ),
             new HasValue<>(new IsText(txt))
         );

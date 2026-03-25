@@ -209,13 +209,10 @@ final class MapEnvelopeTest {
     @Test
     @SuppressWarnings("unchecked")
     void emptyMapEnvelopeShouldBeEqualToEmptyDerivedMap() {
-        final Map<Integer, String> base = new MapOf<>();
-        final Map<Integer, String> derived =
-            new DerivedMapEnvelope<>(new HashMap<>());
         MatcherAssert.assertThat(
             "EmpBase and derived MapEnvelope which are empty should be equal.",
-            base,
-            new IsEqual<>(derived)
+            new MapOf<Integer, String>(),
+            new IsEqual<>(new DerivedMapEnvelope<>(new HashMap<>()))
         );
     }
 

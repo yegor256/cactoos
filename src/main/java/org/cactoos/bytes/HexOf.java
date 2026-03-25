@@ -58,9 +58,7 @@ public final class HexOf implements Bytes {
         int index = 0;
         while (index < hex.length()) {
             try {
-                final int most = iter.next();
-                final int less = iter.next();
-                result[index >>> 1] = (byte) ((most << 4) + less);
+                result[index >>> 1] = (byte) ((iter.next() << 4) + iter.next());
                 index += 2;
             } catch (final UncheckedIOException ex) {
                 throw ex.getCause();

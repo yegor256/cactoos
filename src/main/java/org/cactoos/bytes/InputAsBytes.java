@@ -58,9 +58,8 @@ public final class InputAsBytes implements Bytes {
                 new OutputTo(baos)
             ).stream()
         ) {
-            final byte[] buf = new byte[this.size];
             while (true) {
-                if (stream.read(buf) < 0) {
+                if (stream.read(new byte[this.size]) < 0) {
                     break;
                 }
             }

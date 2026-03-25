@@ -75,13 +75,12 @@ public final class IterableOf<X> implements Iterable<X> {
                     () -> other != null,
                     () -> Iterable.class.isAssignableFrom(other.getClass()),
                     () -> {
-                        final Iterable<X> compared = (Iterable<X>) other;
                         return new ScalarWithFallback<>(
                             new And(
                                 (X value) -> true,
                                 new Matched<>(
                                     this,
-                                    compared
+                                    (Iterable<X>) other
                                 )
                             ),
                             new IterableOf<>(

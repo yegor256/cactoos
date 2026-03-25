@@ -52,10 +52,7 @@ public final class Zip implements Input {
         try (ZipOutputStream zip = new ZipOutputStream(out)) {
             for (final Path path : this.origin) {
                 final File file = path.toFile();
-                final ZipEntry entry = new ZipEntry(
-                    file.getPath()
-                );
-                zip.putNextEntry(entry);
+                zip.putNextEntry(new ZipEntry(file.getPath()));
                 if (file.isFile()) {
                     try (
                         FileInputStream input = new FileInputStream(file)
