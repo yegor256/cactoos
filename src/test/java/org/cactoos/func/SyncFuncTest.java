@@ -20,21 +20,29 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
 final class SyncFuncTest {
     @Test
     void funcWorksInThreads() {
-        final List<Integer> list = new LinkedList<>();
         MatcherAssert.assertThat(
             "Sync func can't work well in multiple threads",
             func -> func.apply(true),
             new RunsInThreads<>(
                 new SyncFunc<Boolean, Boolean>(
-                    input -> list.add(1)
+                    input -> true
                 ),
                 100
             )
         );
+    }
+
+    @Test
+    void addsAllElementsInThreads() throws Exception {
+        final List<Integer> list = new LinkedList<>();
+        final int threads = 100;
+        for (int idx = 0; idx < threads; ++idx) {
+            new SyncFunc<Boolean, Boolean>(input -> list.add(1)).apply(true);
+        }
         MatcherAssert.assertThat(
             "Must run the expected amount of threads",
             list.size(),
-            new IsEqual<>(100)
+            new IsEqual<>(threads)
         );
     }
 }

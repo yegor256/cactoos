@@ -14,10 +14,11 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.10
  */
+@SuppressWarnings("PMD.TooManyMethods")
 final class MinOfTest {
 
     @Test
-    void withIntegerCollection() {
+    void minIntOfIntegers() {
         MatcherAssert.assertThat(
             "must select minimum integer of positive integers",
             new MinOf(
@@ -25,6 +26,10 @@ final class MinOfTest {
             ).intValue(),
             Matchers.equalTo(1)
         );
+    }
+
+    @Test
+    void minLongOfIntegers() {
         MatcherAssert.assertThat(
             "must select minimum long of positive integers",
             new MinOf(
@@ -32,6 +37,10 @@ final class MinOfTest {
             ).longValue(),
             Matchers.equalTo(1L)
         );
+    }
+
+    @Test
+    void minDoubleOfIntegers() {
         MatcherAssert.assertThat(
             "must select minimum double of positive integers",
             new MinOf(
@@ -39,6 +48,10 @@ final class MinOfTest {
             ).doubleValue(),
             Matchers.equalTo(1.0d)
         );
+    }
+
+    @Test
+    void minFloatOfIntegers() {
         MatcherAssert.assertThat(
             "must select minimum float of positive integers",
             new MinOf(
@@ -49,7 +62,7 @@ final class MinOfTest {
     }
 
     @Test
-    void withLongCollection() {
+    void minIntOfLongs() {
         MatcherAssert.assertThat(
             "must select minimum integer of positive longs",
             new MinOf(
@@ -57,6 +70,10 @@ final class MinOfTest {
             ).intValue(),
             Matchers.equalTo(1)
         );
+    }
+
+    @Test
+    void minLongOfLongs() {
         MatcherAssert.assertThat(
             "must select minimum long of positive longs",
             new MinOf(
@@ -64,6 +81,10 @@ final class MinOfTest {
             ).longValue(),
             Matchers.equalTo(1L)
         );
+    }
+
+    @Test
+    void minDoubleOfLongs() {
         MatcherAssert.assertThat(
             "must select minimum double of positive longs",
             new MinOf(
@@ -71,6 +92,10 @@ final class MinOfTest {
             ).doubleValue(),
             Matchers.equalTo(1.0d)
         );
+    }
+
+    @Test
+    void minFloatOfLongs() {
         MatcherAssert.assertThat(
             "must select minimum float of positive longs",
             new MinOf(
@@ -81,7 +106,7 @@ final class MinOfTest {
     }
 
     @Test
-    void withDoubleCollection() {
+    void minIntOfDoubles() {
         MatcherAssert.assertThat(
             "must select minimum integer of positive doubles",
             new MinOf(
@@ -89,6 +114,10 @@ final class MinOfTest {
             ).intValue(),
             Matchers.equalTo(1)
         );
+    }
+
+    @Test
+    void minLongOfDoubles() {
         MatcherAssert.assertThat(
             "must select minimum long of positive doubles",
             new MinOf(
@@ -96,6 +125,10 @@ final class MinOfTest {
             ).longValue(),
             Matchers.equalTo(1L)
         );
+    }
+
+    @Test
+    void minDoubleOfDoubles() {
         MatcherAssert.assertThat(
             "must select minimum double of positive doubles",
             new MinOf(
@@ -103,6 +136,10 @@ final class MinOfTest {
             ).doubleValue(),
             Matchers.equalTo(1.0d)
         );
+    }
+
+    @Test
+    void minFloatOfDoubles() {
         MatcherAssert.assertThat(
             "must select minimum float of positive doubles",
             new MinOf(
@@ -113,7 +150,7 @@ final class MinOfTest {
     }
 
     @Test
-    void withFloatCollection() {
+    void minIntOfFloats() {
         MatcherAssert.assertThat(
             "must select minimum integer of positive floats",
             new MinOf(
@@ -121,6 +158,10 @@ final class MinOfTest {
             ).intValue(),
             Matchers.equalTo(1)
         );
+    }
+
+    @Test
+    void minLongOfFloats() {
         MatcherAssert.assertThat(
             "must select minimum long of positive floats",
             new MinOf(
@@ -128,13 +169,21 @@ final class MinOfTest {
             ).longValue(),
             Matchers.equalTo(1L)
         );
+    }
+
+    @Test
+    void minDoubleOfFloats() {
         MatcherAssert.assertThat(
-            "must select minimum float of positive floats",
+            "must select minimum double of positive floats",
             new MinOf(
                 new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[0])
             ).doubleValue(),
             Matchers.equalTo(1.0d)
         );
+    }
+
+    @Test
+    void minFloatOfFloats() {
         MatcherAssert.assertThat(
             "must select minimum float of positive floats",
             new MinOf(
@@ -143,5 +192,4 @@ final class MinOfTest {
             Matchers.equalTo(1.0f)
         );
     }
-
 }

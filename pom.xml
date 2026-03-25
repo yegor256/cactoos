@@ -137,6 +137,42 @@
                   <old>class org.cactoos.text.Abbreviated</old>
                   <justification>Class removed as part of 1.0 release cleanup</justification>
                 </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Diff&lt;T&gt;::&lt;init&gt;(===org.cactoos.set.SetOf&lt;T&gt;===, org.cactoos.set.SetOf&lt;T&gt;)</old>
+                  <new>parameter void org.cactoos.set.Diff&lt;T&gt;::&lt;init&gt;(===java.util.Set&lt;T&gt;===, java.util.Set&lt;T&gt;)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Diff&lt;T&gt;::&lt;init&gt;(org.cactoos.set.SetOf&lt;T&gt;, ===org.cactoos.set.SetOf&lt;T&gt;===)</old>
+                  <new>parameter void org.cactoos.set.Diff&lt;T&gt;::&lt;init&gt;(java.util.Set&lt;T&gt;, ===java.util.Set&lt;T&gt;===)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Intersection&lt;T&gt;::&lt;init&gt;(===org.cactoos.set.SetOf&lt;T&gt;===, org.cactoos.set.SetOf&lt;T&gt;)</old>
+                  <new>parameter void org.cactoos.set.Intersection&lt;T&gt;::&lt;init&gt;(===java.util.Set&lt;T&gt;===, java.util.Set&lt;T&gt;)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Intersection&lt;T&gt;::&lt;init&gt;(org.cactoos.set.SetOf&lt;T&gt;, ===org.cactoos.set.SetOf&lt;T&gt;===)</old>
+                  <new>parameter void org.cactoos.set.Intersection&lt;T&gt;::&lt;init&gt;(java.util.Set&lt;T&gt;, ===java.util.Set&lt;T&gt;===)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Union&lt;T&gt;::&lt;init&gt;(===org.cactoos.set.SetOf&lt;T&gt;===, org.cactoos.set.SetOf&lt;T&gt;)</old>
+                  <new>parameter void org.cactoos.set.Union&lt;T&gt;::&lt;init&gt;(===java.util.Set&lt;T&gt;===, java.util.Set&lt;T&gt;)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Union&lt;T&gt;::&lt;init&gt;(org.cactoos.set.SetOf&lt;T&gt;, ===org.cactoos.set.SetOf&lt;T&gt;===)</old>
+                  <new>parameter void org.cactoos.set.Union&lt;T&gt;::&lt;init&gt;(java.util.Set&lt;T&gt;, ===java.util.Set&lt;T&gt;===)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
               </differences>
             </revapi.differences>
           </analysisConfiguration>

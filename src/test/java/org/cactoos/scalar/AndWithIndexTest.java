@@ -35,8 +35,20 @@ final class AndWithIndexTest {
             ),
             new HasValue<>(true)
         );
+    }
+
+    @Test
+    void populatesListWithIndexFromBiFunc() throws Exception {
+        final List<String> list = new LinkedList<>();
+        new AndWithIndex(
+            new BiFuncOf<>(
+                (text, index) -> list.add(index, text),
+                true
+            ),
+            "hello", "world"
+        ).value();
         MatcherAssert.assertThat(
-            "Must have populated the list",
+            "Must have populated the list via BiFuncOf",
             list,
             new HasSize(2)
         );
@@ -57,8 +69,21 @@ final class AndWithIndexTest {
             ),
             new HasValue<>(true)
         );
+    }
+
+    @Test
+    void populatesListWithIndexFromBiProc() throws Exception {
+        final List<String> list = new LinkedList<>();
+        new AndWithIndex(
+            new BiProcOf<>(
+                (text, index) -> {
+                    list.add(index, text);
+                }
+            ),
+            new IterableOf<>("hello", "world")
+        ).value();
         MatcherAssert.assertThat(
-            "Must have populated the list",
+            "Must have populated the list via BiProcOf",
             list,
             new HasSize(2)
         );

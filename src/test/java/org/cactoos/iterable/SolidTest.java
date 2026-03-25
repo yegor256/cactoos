@@ -19,19 +19,31 @@ final class SolidTest {
 
     @Test
     void makesListFromMappedIterable() {
+        MatcherAssert.assertThat(
+            "Can't turn a mapped iterable into a list",
+            new Solid<>(
+                new Mapped<>(
+                    i -> i + 1,
+                    new IterableOf<>(1, -1, 0, 1)
+                )
+            ),
+            Matchers.iterableWithSize(4)
+        );
+    }
+
+    @Test
+    void returnsListOnSecondTraversal() {
         final Iterable<Integer> list = new Solid<>(
             new Mapped<>(
                 i -> i + 1,
                 new IterableOf<>(1, -1, 0, 1)
             )
         );
-        MatcherAssert.assertThat(
-            "Can't turn a mapped iterable into a list",
-            list, Matchers.iterableWithSize(4)
-        );
+        list.iterator().next();
         MatcherAssert.assertThat(
             "Can't turn a mapped iterable into a list, again",
-            list, Matchers.iterableWithSize(4)
+            list,
+            Matchers.iterableWithSize(4)
         );
     }
 

@@ -26,12 +26,16 @@ final class SyncedTest {
     }
 
     @Test
-    void worksInThreads() {
+    void worksInThreadsWithEmptyList() {
         MatcherAssert.assertThat(
             "should be run in threads",
             list -> !list.iterator().hasNext(),
             new RunsInThreads<>(new Synced<>(Collections.emptyList()))
         );
+    }
+
+    @Test
+    void behavesAsListInThreads() {
         MatcherAssert.assertThat(
             "should work as list",
             list -> {

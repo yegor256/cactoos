@@ -276,15 +276,20 @@ final class NoNullsTest {
     }
 
     @Test
-    void addAllTest() {
+    void addAllReturnsTrue() {
+        MatcherAssert.assertThat(
+            "must return true on success",
+            new NoNulls<>(new ListOf<>(1, 2, 3)).addAll(new ListOf<>(4, 5, 6)),
+            new IsTrue()
+        );
+    }
+
+    @Test
+    void addAllAddsItemsToEnd() {
         final List<Integer> list = new NoNulls<>(
             new ListOf<>(1, 2, 3)
         );
-        MatcherAssert.assertThat(
-            "must return true on success",
-            list.addAll(new ListOf<>(4, 5, 6)),
-            new IsTrue()
-        );
+        list.addAll(new ListOf<>(4, 5, 6));
         MatcherAssert.assertThat(
             "must add items to the end of the list",
             list,
@@ -293,15 +298,20 @@ final class NoNullsTest {
     }
 
     @Test
-    void addAllWithIndexTest() {
+    void addAllWithIndexReturnsTrue() {
+        MatcherAssert.assertThat(
+            "must return true on success",
+            new NoNulls<>(new ListOf<>(1, 2, 3)).addAll(1, new ListOf<>(4, 5, 6)),
+            new IsTrue()
+        );
+    }
+
+    @Test
+    void addAllWithIndexAddsAtIndex() {
         final List<Integer> list = new NoNulls<>(
             new ListOf<>(1, 2, 3)
         );
-        MatcherAssert.assertThat(
-            "must return true on success",
-            list.addAll(1, new ListOf<>(4, 5, 6)),
-            new IsTrue()
-        );
+        list.addAll(1, new ListOf<>(4, 5, 6));
         MatcherAssert.assertThat(
             "must add items to list at specified index",
             list,
@@ -310,15 +320,21 @@ final class NoNullsTest {
     }
 
     @Test
-    void removeAllChangedTest() {
+    void removeAllReturnsTrueWhenChanged() {
+        MatcherAssert.assertThat(
+            "must return true if list changed",
+            new NoNulls<>(new ListOf<>(1, 2, 3, 4, 5, 6))
+                .removeAll(new ListOf<>(10, 4, 2, 9, -3)),
+            new IsTrue()
+        );
+    }
+
+    @Test
+    void removeAllRemovesItems() {
         final List<Integer> list = new NoNulls<>(
             new ListOf<>(1, 2, 3, 4, 5, 6)
         );
-        MatcherAssert.assertThat(
-            "must return true if list changed",
-            list.removeAll(new ListOf<>(10, 4, 2, 9, -3)),
-            new IsTrue()
-        );
+        list.removeAll(new ListOf<>(10, 4, 2, 9, -3));
         MatcherAssert.assertThat(
             "must remove specified items",
             list,
@@ -327,15 +343,21 @@ final class NoNullsTest {
     }
 
     @Test
-    void removeAllDidNotChangeTest() {
+    void removeAllReturnsFalseWhenUnchanged() {
+        MatcherAssert.assertThat(
+            "must return false if list did not change",
+            new NoNulls<>(new ListOf<>(1, 2, 3, 4, 5, 6))
+                .removeAll(new ListOf<>(10, 0, 7, 9, -3)),
+            new IsEqual<>(false)
+        );
+    }
+
+    @Test
+    void removeAllKeepsListUnchanged() {
         final List<Integer> list = new NoNulls<>(
             new ListOf<>(1, 2, 3, 4, 5, 6)
         );
-        MatcherAssert.assertThat(
-            "must return false if list did not change",
-            list.removeAll(new ListOf<>(10, 0, 7, 9, -3)),
-            new IsEqual<>(false)
-        );
+        list.removeAll(new ListOf<>(10, 0, 7, 9, -3));
         MatcherAssert.assertThat(
             "list must be the same",
             list,

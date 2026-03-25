@@ -19,17 +19,24 @@ import org.llorllale.cactoos.matchers.Throws;
 final class BinaryTest {
 
     @Test
-    void conditionTrue() {
-        final AtomicInteger counter = new AtomicInteger(0);
-        final Binary binary = new Binary(
-            new True(),
-            counter::incrementAndGet
-        );
+    void conditionTrueReturnsTrue() {
         MatcherAssert.assertThat(
             "Binary has to return true",
-            binary,
+            new Binary(
+                new True(),
+                () -> { }
+            ),
             new HasValue<>(true)
         );
+    }
+
+    @Test
+    void conditionTrueInvokesProc() throws Exception {
+        final AtomicInteger counter = new AtomicInteger(0);
+        new Binary(
+            new True(),
+            counter::incrementAndGet
+        ).value();
         MatcherAssert.assertThat(
             "Binary has to invoke increment method",
             counter.get(),
@@ -38,19 +45,26 @@ final class BinaryTest {
     }
 
     @Test
-    void conditionFalse() {
-        final AtomicInteger counter = new AtomicInteger(0);
-        final Binary binary = new Binary(
-            new False(),
-            counter::incrementAndGet
-        );
+    void conditionFalseReturnsFalse() {
         MatcherAssert.assertThat(
             "Binary has to return false",
-            binary,
+            new Binary(
+                new False(),
+                () -> { }
+            ),
             new HasValue<>(false)
         );
+    }
+
+    @Test
+    void conditionFalseDoesNotInvokeProc() throws Exception {
+        final AtomicInteger counter = new AtomicInteger(0);
+        new Binary(
+            new False(),
+            counter::incrementAndGet
+        ).value();
         MatcherAssert.assertThat(
-            "Binary must not to invoke increment method",
+            "Binary must not invoke increment method",
             counter.get(),
             new IsEqual<>(0)
         );

@@ -63,50 +63,56 @@ final class ComparableTextTest {
     }
 
     @Test
-    void equalsAndHashCodeOfComparableOfTheSameText() {
+    void equalsOfComparableOfTheSameText() {
         final Text text = new TextOf("my text");
-        final Text actual = new ComparableText(text);
-        final Text expected = new ComparableText(text);
         MatcherAssert.assertThat(
             "Does not equal to a comparable text made from the same Text",
-            actual,
-            new IsEqual<>(expected)
-        );
-        MatcherAssert.assertThat(
-            "Hash codes of the equal objects are not equal",
-            actual.hashCode(),
-            new IsEqual<>(
-                expected.hashCode()
-            )
+            new ComparableText(text),
+            new IsEqual<>(new ComparableText(text))
         );
     }
 
     @Test
-    void equalsOfDifferentText() {
-        final Text text = new ComparableText(
-            new TextOf("my value")
+    void hashCodeOfComparableOfTheSameText() {
+        final Text text = new TextOf("my text");
+        MatcherAssert.assertThat(
+            "Hash codes of the equal objects are not equal",
+            new ComparableText(text).hashCode(),
+            new IsEqual<>(new ComparableText(text).hashCode())
         );
+    }
+
+    @Test
+    void notEqualsToString() {
         MatcherAssert.assertThat(
             "Is equal to the completely different object",
-            text,
+            new ComparableText(new TextOf("my value")),
             new IsNot<>(
                 new IsEqual<>(
                     "The string is ignored"
                 )
             )
         );
+    }
+
+    @Test
+    void notEqualsToCompletelyDifferentText() {
         MatcherAssert.assertThat(
             "Is equal to the completely different text",
-            text,
+            new ComparableText(new TextOf("my value")),
             new IsNot<>(
                 new IsText(
                     "The text is ignored"
                 )
             )
         );
+    }
+
+    @Test
+    void notEqualsToDifferentComparableText() {
         MatcherAssert.assertThat(
             "Is equal to the different ComparableText",
-            text,
+            new ComparableText(new TextOf("my value")),
             new IsNot<>(
                 new IsEqual<>(
                     new ComparableText(
@@ -115,9 +121,13 @@ final class ComparableTextTest {
                 )
             )
         );
+    }
+
+    @Test
+    void notEqualsToDifferentComparableTextValue() {
         MatcherAssert.assertThat(
             "The string is equal to the different ComparableText",
-            text,
+            new ComparableText(new TextOf("my value")),
             new IsNot<>(
                 new IsText(
                     new ComparableText(

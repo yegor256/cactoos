@@ -23,19 +23,17 @@ import org.junit.jupiter.api.Test;
  */
 final class SplitPreserveTest {
     @Test
-    void checkingSplit() {
-        String txt = "aaa";
-        final String msg = "Adjacent separators must create an empty element";
-        List<Text> array = new ArrayList<>(4);
+    void splitAdjacentSeparators() {
+        final List<Text> array = new ArrayList<>(4);
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         MatcherAssert.assertThat(
-            msg,
+            "Adjacent separators must create an empty element",
             this.getLength(
                 new Split(
-                    new TextOf(txt),
+                    new TextOf("aaa"),
                     new TextOf("a")
                 ).iterator()
             ),
@@ -49,16 +47,19 @@ final class SplitPreserveTest {
                 )
             )
         );
-        txt = " how ";
-        array = new ArrayList<>(3);
+    }
+
+    @Test
+    void splitSpaceSeparators() {
+        final List<Text> array = new ArrayList<>(3);
         array.add(new TextOf(""));
         array.add(new TextOf("how"));
         array.add(new TextOf(""));
         MatcherAssert.assertThat(
-            msg,
+            "Adjacent separators must create an empty element",
             this.getLength(
                 new Split(
-                    new TextOf(txt),
+                    new TextOf(" how "),
                     new TextOf(" ")
                 ).iterator()
             ),
@@ -84,19 +85,17 @@ final class SplitPreserveTest {
     }
 
     @Test
-    void checkingSplitPreserveTokens() {
-        String txt = "aaa";
-        final String msg = "Adjacent separators must create an empty element";
-        List<Text> array = new ArrayList<>(4);
+    void splitPreserveTokensAdjacent() {
+        final List<Text> array = new ArrayList<>(4);
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         array.add(new TextOf(""));
         MatcherAssert.assertThat(
-            msg,
+            "Adjacent separators must create an empty element",
             this.getLength(
                 new SplitPreserveAllTokens(
-                    new TextOf(txt),
+                    new TextOf("aaa"),
                     new TextOf("a")
                 ).iterator()
             ),
@@ -108,17 +107,20 @@ final class SplitPreserveTest {
                 )
             )
         );
-        txt = "lol\\  / dude";
-        array = new ArrayList<>(4);
+    }
+
+    @Test
+    void splitPreserveTokensWithBackslash() {
+        final List<Text> array = new ArrayList<>(4);
         array.add(new TextOf("lol\\"));
         array.add(new TextOf(""));
         array.add(new TextOf("/"));
         array.add(new TextOf("dude"));
         MatcherAssert.assertThat(
-            msg,
+            "Adjacent separators must create an empty element",
             this.getLength(
                 new SplitPreserveAllTokens(
-                    new TextOf(txt),
+                    new TextOf("lol\\  / dude"),
                     new TextOf(" ")
                 ).iterator()
             ),
@@ -130,16 +132,19 @@ final class SplitPreserveTest {
                 )
             )
         );
-        txt = " how ";
-        array = new ArrayList<>(3);
+    }
+
+    @Test
+    void splitPreserveTokensWithSpaces() {
+        final List<Text> array = new ArrayList<>(3);
         array.add(new TextOf(""));
         array.add(new TextOf("how"));
         array.add(new TextOf(""));
         MatcherAssert.assertThat(
-            msg,
+            "Adjacent separators must create an empty element",
             this.getLength(
                 new SplitPreserveAllTokens(
-                    new TextOf(txt),
+                    new TextOf(" how "),
                     new TextOf(" ")
                 ).iterator()
             ),

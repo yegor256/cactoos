@@ -20,7 +20,7 @@ import org.llorllale.cactoos.matchers.IsText;
 final class HeadInputStreamTest {
 
     @Test
-    void testSkippingLessThanTotal() throws Exception {
+    void skipsLessThanTotal() throws Exception {
         try (HeadInputStream stream = new HeadInputStream(
             new InputOf("testSkippingLessThanTotal").stream(),
             5
@@ -30,6 +30,16 @@ final class HeadInputStreamTest {
                 stream.skip(3L),
                 new IsEqual<>(3L)
             );
+        }
+    }
+
+    @Test
+    void readsHeadAfterSkip() throws Exception {
+        try (HeadInputStream stream = new HeadInputStream(
+            new InputOf("testSkippingLessThanTotal").stream(),
+            5
+        )) {
+            stream.skip(3L);
             MatcherAssert.assertThat(
                 "Incorrect head of the input stream has been read",
                 new InputOf(stream),
@@ -39,7 +49,7 @@ final class HeadInputStreamTest {
     }
 
     @Test
-    void testSkippingMoreThanTotal() throws Exception {
+    void skipsMoreThanTotal() throws Exception {
         try (HeadInputStream stream = new HeadInputStream(
             new InputOf("testSkippingMoreThanTotal").stream(),
             5
@@ -49,6 +59,16 @@ final class HeadInputStreamTest {
                 stream.skip(7L),
                 new IsEqual<>(5L)
             );
+        }
+    }
+
+    @Test
+    void readsEmptyAfterSkipMoreThanTotal() throws Exception {
+        try (HeadInputStream stream = new HeadInputStream(
+            new InputOf("testSkippingMoreThanTotal").stream(),
+            5
+        )) {
+            stream.skip(7L);
             MatcherAssert.assertThat(
                 "The result text wasn't empty",
                 new TextOf(new TextOf(stream).asString()),
@@ -58,7 +78,7 @@ final class HeadInputStreamTest {
     }
 
     @Test
-    void testResetting() throws Exception {
+    void skipsBeforeReset() throws Exception {
         try (HeadInputStream stream = new HeadInputStream(
             new InputOf("testResetting").stream(),
             5
@@ -68,6 +88,16 @@ final class HeadInputStreamTest {
                 stream.skip(7L),
                 new IsEqual<>(5L)
             );
+        }
+    }
+
+    @Test
+    void resetRestoresStream() throws Exception {
+        try (HeadInputStream stream = new HeadInputStream(
+            new InputOf("testResetting").stream(),
+            5
+        )) {
+            stream.skip(7L);
             stream.reset();
             MatcherAssert.assertThat(
                 "Reset didn't change the state",

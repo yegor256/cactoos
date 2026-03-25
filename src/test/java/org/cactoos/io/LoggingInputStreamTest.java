@@ -54,30 +54,51 @@ final class LoggingInputStreamTest {
     }
 
     @Test
-    void readByteByByte() throws IOException {
-        final LoggingInputStream stream = new LoggingInputStream(
-            new ByteArrayInputStream(
-                new byte[] {
-                    (byte) 20,
-                    (byte) 10,
-                }
-            ),
-            this.getClass().getSimpleName()
-        );
+    void readsFirstByte() throws IOException {
         MatcherAssert.assertThat(
             "First byte was not 20",
-            stream.read(),
+            new LoggingInputStream(
+                new ByteArrayInputStream(
+                    new byte[] {(byte) 20, (byte) 10}
+                ),
+                this.getClass().getSimpleName()
+            ).read(),
             new IsEqual<>(20)
         );
-        MatcherAssert.assertThat(
-            "Second byte was not 10",
-            stream.read(),
-            new IsEqual<>(10)
-        );
-        MatcherAssert.assertThat(
-            "When stream is exhausted it didn't return -1",
-            stream.read(),
-            new IsEqual<>(-1)
-        );
+    }
+
+    @Test
+    void readsSecondByte() throws IOException {
+        try (LoggingInputStream stream = new LoggingInputStream(
+            new ByteArrayInputStream(
+                new byte[] {(byte) 20, (byte) 10}
+            ),
+            this.getClass().getSimpleName()
+        )) {
+            stream.read();
+            MatcherAssert.assertThat(
+                "Second byte was not 10",
+                stream.read(),
+                new IsEqual<>(10)
+            );
+        }
+    }
+
+    @Test
+    void returnsMinusOneWhenExhausted() throws IOException {
+        try (LoggingInputStream stream = new LoggingInputStream(
+            new ByteArrayInputStream(
+                new byte[] {(byte) 20, (byte) 10}
+            ),
+            this.getClass().getSimpleName()
+        )) {
+            stream.read();
+            stream.read();
+            MatcherAssert.assertThat(
+                "When stream is exhausted it didn't return -1",
+                stream.read(),
+                new IsEqual<>(-1)
+            );
+        }
     }
 }

@@ -34,7 +34,7 @@ final class StickyFuncTest {
     }
 
     @Test
-    void cachesWithLimitedBuffer() throws Exception {
+    void cachesTwoResults() throws Exception {
         final Func<Integer, Integer> func = new StickyFunc<>(
             input -> new SecureRandom().nextInt(), 2
         );
@@ -45,6 +45,15 @@ final class StickyFuncTest {
             first + second,
             new IsEqual<>(func.apply(0) + func.apply(1))
         );
+    }
+
+    @Test
+    void cachesNextTwoResults() throws Exception {
+        final Func<Integer, Integer> func = new StickyFunc<>(
+            input -> new SecureRandom().nextInt(), 2
+        );
+        func.apply(0);
+        final int second = func.apply(1);
         final int third = func.apply(-1);
         MatcherAssert.assertThat(
             "Must cache next two results",

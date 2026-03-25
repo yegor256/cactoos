@@ -84,7 +84,18 @@ final class SolidTest {
     }
 
     @Test
-    void cachesNullValueInThreads() throws Exception {
+    void cachesNullValueInThreads() {
+        final Scalar<Object> solid = new Solid<>(() -> null);
+        MatcherAssert.assertThat(
+            "must return null value in multiple threads",
+            scalar -> solid.value() == null,
+            new RunsInThreads<>(new Unchecked<>(solid::value))
+        );
+    }
+
+    @Test
+    void computesNullValueOnlyOnceInThreads() throws Exception {
+        final int threads = 100;
         final AtomicInteger calls = new AtomicInteger(0);
         final Scalar<Object> solid = new Solid<>(
             () -> {
@@ -92,11 +103,11 @@ final class SolidTest {
                 return null;
             }
         );
-        MatcherAssert.assertThat(
-            "not compute null value only once in multiple threads",
-            scalar -> solid.value() == null,
-            new RunsInThreads<>(new Unchecked<>(solid::value))
-        );
+        final List<Scalar<Object>> tasks = new ListOf<>();
+        for (int idx = 0; idx < threads; ++idx) {
+            tasks.add(solid::value);
+        }
+        new LengthOf(new Threads<>(threads, tasks)).value();
         MatcherAssert.assertThat(
             "must compute null value only once",
             calls.get(),

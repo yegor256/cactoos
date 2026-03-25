@@ -80,17 +80,27 @@ final class AndInThreadsTest {
 
     @Test
     void iteratesList() {
-        final List<String> list = new Synced<>(new ListOf<>());
         MatcherAssert.assertThat(
             "Must iterate a list with a function",
             new AndInThreads(
                 new Mapped<>(
-                    new FuncOf<String, Scalar<Boolean>>(list::add, new True()),
+                    s -> new True(),
                     new IterableOf<>("hello", "world")
                 )
             ),
             new HasValue<>(true)
         );
+    }
+
+    @Test
+    void populatesListInAnyOrder() throws Exception {
+        final List<String> list = new Synced<>(new ListOf<>());
+        new AndInThreads(
+            new Mapped<>(
+                new FuncOf<String, Scalar<Boolean>>(list::add, new True()),
+                new IterableOf<>("hello", "world")
+            )
+        ).value();
         MatcherAssert.assertThat(
             "Iterable must contain elements in any order",
             list,

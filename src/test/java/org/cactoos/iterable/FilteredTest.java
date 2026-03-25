@@ -55,17 +55,27 @@ final class FilteredTest {
 
     @Test
     void filtersIterablesWithSize() {
+        MatcherAssert.assertThat(
+            "Must filter the iterable",
+            new Filtered<>(
+                i -> i > 0,
+                new IterableOf<>(1, 2, -1, 0, 1)
+            ),
+            Matchers.iterableWithSize(3)
+        );
+    }
+
+    @Test
+    void filtersIterablesWithSizeOnSecondTraversal() {
         final Iterable<Integer> list = new Filtered<>(
             i -> i > 0,
             new IterableOf<>(1, 2, -1, 0, 1)
         );
+        list.iterator().next();
         MatcherAssert.assertThat(
-            "Must filter the iterable twice",
-            list, Matchers.iterableWithSize(3)
-        );
-        MatcherAssert.assertThat(
-            "Must filter the iterable twice, again",
-            list, Matchers.iterableWithSize(3)
+            "Must filter the iterable on second traversal",
+            list,
+            Matchers.iterableWithSize(3)
         );
     }
 

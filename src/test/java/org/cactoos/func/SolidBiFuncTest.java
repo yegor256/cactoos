@@ -21,7 +21,21 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  */
 final class SolidBiFuncTest {
     @Test
-    void testThatFuncIsSynchronized() {
+    void funcIsSynchronized() {
+        MatcherAssert.assertThat(
+            "SolidBiFunc can't work properly in concurrent threads",
+            func -> func.apply(true),
+            new RunsInThreads<Func<Boolean, Boolean>>(
+                input -> new SolidBiFunc<Integer, Integer, Boolean>(
+                    (first, second) -> true
+                ).apply(1, 1),
+                100
+            )
+        );
+    }
+
+    @Test
+    void sharedResourceModifiedOnce() throws Exception {
         final int[] shared = {0};
         final BiFunc<Integer, Integer, Boolean> testable =
             new SolidBiFunc<>(
@@ -30,16 +44,11 @@ final class SolidBiFuncTest {
                     return true;
                 }
             );
+        for (int idx = 0; idx < 100; ++idx) {
+            testable.apply(1, 1);
+        }
         MatcherAssert.assertThat(
-            "SolidBiFunc can't work properly in concurrent threads.",
-            func -> func.apply(true),
-            new RunsInThreads<Func<Boolean, Boolean>>(
-                input -> testable.apply(1, 1),
-                100
-            )
-        );
-        MatcherAssert.assertThat(
-            "Shared resource has been modified by multiple threads.",
+            "Shared resource has been modified by multiple threads",
             shared[0],
             new IsEqual<>(1)
         );

@@ -4,7 +4,6 @@
  */
 package org.cactoos.scalar;
 
-import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;

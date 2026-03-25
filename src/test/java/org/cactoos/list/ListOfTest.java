@@ -85,19 +85,29 @@ final class ListOfTest {
 
     @Test
     void makesListFromMappedIterable() {
+        MatcherAssert.assertThat(
+            "Can't turn a mapped iterable into a list",
+            new ListOf<>(
+                new Mapped<>(
+                    i -> i + 1,
+                    new IterableOf<>(1, -1, 0, 1)
+                )
+            ),
+            new HasSize(4)
+        );
+    }
+
+    @Test
+    void makesListFromMappedIterableOnSecondAccess() {
         final List<Integer> list = new ListOf<>(
             new Mapped<>(
                 i -> i + 1,
                 new IterableOf<>(1, -1, 0, 1)
             )
         );
+        list.iterator().next();
         MatcherAssert.assertThat(
-            "Can't turn a mapped iterable into a list",
-            list,
-            new HasSize(4)
-        );
-        MatcherAssert.assertThat(
-            "Can't turn a mapped iterable into a list, again",
+            "Can't turn a mapped iterable into a list on second access",
             list,
             new HasSize(4)
         );

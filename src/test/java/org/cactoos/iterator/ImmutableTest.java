@@ -51,15 +51,18 @@ final class ImmutableTest {
     }
 
     @Test
-    void decoratesHasNext() {
-        final int value = new Random().nextInt();
-        final Iterator<Integer> immutable = new Immutable<>(
-            new IteratorOf<>(value)
-        );
+    void hasNextReturnsTrueForNotTraversedIterator() {
         MatcherAssert.assertThat(
             "hasNext must return true for not traversed iterator",
-            immutable.hasNext(),
+            new Immutable<>(new IteratorOf<>(new Random().nextInt())).hasNext(),
             new IsEqual<>(true)
+        );
+    }
+
+    @Test
+    void hasNextReturnsFalseForTraversedIterator() {
+        final Iterator<Integer> immutable = new Immutable<>(
+            new IteratorOf<>(new Random().nextInt())
         );
         immutable.next();
         MatcherAssert.assertThat(

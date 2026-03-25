@@ -33,20 +33,26 @@ final class ReversedTest {
     }
 
     @Test
-    void iteratesMultipleTimes() {
+    void iteratesOnce() {
+        MatcherAssert.assertThat(
+            "Must iterate once",
+            new Reversed<>(
+                new IterableOf<>("h", "w", "d")
+            ),
+            new IsEqual<>(new IterableOf<>("d", "w", "h"))
+        );
+    }
+
+    @Test
+    void iteratesTwice() {
         final Iterable<String> itr = new Reversed<>(
             new IterableOf<>("h", "w", "d")
         );
-        final Iterable<String> expected = new IterableOf<>("d", "w", "h");
+        itr.iterator().next();
         MatcherAssert.assertThat(
-            "Must iterates once",
+            "Must iterate twice",
             itr,
-            new IsEqual<>(expected)
-        );
-        MatcherAssert.assertThat(
-            "Must iterates twice",
-            itr,
-            new IsEqual<>(expected)
+            new IsEqual<>(new IterableOf<>("d", "w", "h"))
         );
     }
 

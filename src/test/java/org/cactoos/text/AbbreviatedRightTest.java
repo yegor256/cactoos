@@ -5,7 +5,6 @@
 package org.cactoos.text;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import org.cactoos.Text;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
 import org.junit.jupiter.api.Test;

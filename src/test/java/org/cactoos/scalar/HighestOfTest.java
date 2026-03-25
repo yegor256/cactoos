@@ -34,12 +34,16 @@ final class HighestOfTest {
     }
 
     @Test
-    void singleAtSingleIterable() throws Exception {
+    void singleAtSingleIterableByScalar() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest among one by scalars",
             new HighestOf<Integer>(() -> 10).value(),
             Matchers.equalTo(10)
         );
+    }
+
+    @Test
+    void singleAtSingleIterableByValue() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest among one",
             new HighestOf<>(10).value(),
@@ -48,7 +52,7 @@ final class HighestOfTest {
     }
 
     @Test
-    void highestIntegerAtIterable() throws Exception {
+    void highestIntegerByScalars() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest integer among many by scalars",
             new HighestOf<Integer>(
@@ -59,16 +63,28 @@ final class HighestOfTest {
             ).value(),
             Matchers.equalTo(10)
         );
+    }
+
+    @Test
+    void highestIntegerByValues() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest integer among many",
             new HighestOf<>(10, 0, -1, 2).value(),
             Matchers.equalTo(10)
         );
+    }
+
+    @Test
+    void highestNegativeInteger() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest negative integer among many",
             new HighestOf<>(-272, -10, -134, -101).value(),
             Matchers.equalTo(-10)
         );
+    }
+
+    @Test
+    void highestMaxInteger() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest max integer among many",
             new HighestOf<>(Integer.MIN_VALUE, Integer.MAX_VALUE).value(),
@@ -77,7 +93,7 @@ final class HighestOfTest {
     }
 
     @Test
-    void highestLongAtIterable() throws Exception {
+    void highestLongByScalars() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest long among many by scalars",
             new HighestOf<Long>(
@@ -88,16 +104,28 @@ final class HighestOfTest {
             ).value(),
             Matchers.equalTo(10L)
         );
+    }
+
+    @Test
+    void highestLongByValues() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest long among many",
             new HighestOf<>(10L, 0L, -1L, 2L).value(),
             Matchers.equalTo(10L)
         );
+    }
+
+    @Test
+    void highestNegativeLong() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest negative long among many",
             new HighestOf<>(-272L, -10L, -134L, -101L).value(),
             Matchers.equalTo(-10L)
         );
+    }
+
+    @Test
+    void highestMaxLong() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest max integer long many",
             new HighestOf<>(Long.MIN_VALUE, Long.MAX_VALUE).value(),
@@ -106,7 +134,7 @@ final class HighestOfTest {
     }
 
     @Test
-    void highestDoubleAtIterable() throws Exception {
+    void highestDoubleByScalars() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest double among many by scalars",
             new HighestOf<Double>(
@@ -117,36 +145,64 @@ final class HighestOfTest {
             ).value(),
             Matchers.equalTo(10.9)
         );
+    }
+
+    @Test
+    void highestDoubleByValues() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest double among many",
             new HighestOf<>(10., 0., -1., 2.).value(),
             Matchers.equalTo(10.)
         );
+    }
+
+    @Test
+    void highestNegativeDouble() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest negative double among many",
             new HighestOf<>(-272., -10., -134., -101.).value(),
             Matchers.equalTo(-10.)
         );
+    }
+
+    @Test
+    void highestMaxDouble() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest max double among many",
             new HighestOf<>(Double.MIN_VALUE, Double.MAX_VALUE).value(),
             Matchers.equalTo(Double.MAX_VALUE)
         );
+    }
+
+    @Test
+    void highestMinDouble() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest min double among many",
             new HighestOf<>(Double.MIN_VALUE, -10.).value(),
             Matchers.equalTo(Double.MIN_VALUE)
         );
+    }
+
+    @Test
+    void highestNaNDouble() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest NaN double among many",
             new HighestOf<>(Double.NaN, Double.MAX_VALUE).value(),
             Matchers.equalTo(Double.NaN)
         );
+    }
+
+    @Test
+    void highestPositiveInfinity() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest positive infinity among many",
             new HighestOf<>(Double.POSITIVE_INFINITY, Double.MAX_VALUE).value(),
             Matchers.equalTo(Double.POSITIVE_INFINITY)
         );
+    }
+
+    @Test
+    void highestNegativeInfinity() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest negative infinity among many",
             new HighestOf<>(Double.NEGATIVE_INFINITY, Double.MAX_VALUE).value(),
@@ -155,12 +211,16 @@ final class HighestOfTest {
     }
 
     @Test
-    void highestStringAtIterable() throws Exception {
+    void highestStringByScalars() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest string among many by scalars",
             new HighestOf<String>(() -> "Apple", () -> "Orange").value(),
             Matchers.equalTo("Orange")
         );
+    }
+
+    @Test
+    void highestStringByValues() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest string among many",
             new HighestOf<>("Apple", "Orange").value(),
@@ -169,12 +229,16 @@ final class HighestOfTest {
     }
 
     @Test
-    void highestCharAtIterable() throws Exception {
+    void highestCharByScalars() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest char among many by scalars",
             new HighestOf<Character>(() -> 'A', () -> 'B').value(),
             Matchers.equalTo('B')
         );
+    }
+
+    @Test
+    void highestCharByValues() throws Exception {
         MatcherAssert.assertThat(
             "Can't find the highest char among many",
             new HighestOf<>('A', 'B').value(),

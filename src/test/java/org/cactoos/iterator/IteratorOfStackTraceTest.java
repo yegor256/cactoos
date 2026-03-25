@@ -17,28 +17,50 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.56
  */
 final class IteratorOfStackTraceTest {
+
     @Test
-    void iteratorOfStackTraceTest() {
-        final Throwable inner = new Throwable();
-        final IteratorOfStackTrace iter =  new IteratorOfStackTrace(new Throwable(inner));
+    void hasNextReturnsTrueForFirstCall() {
         MatcherAssert.assertThat(
-            "First call 'hasNext' should return true.",
-            iter.hasNext(),
+            "First call 'hasNext' should return true",
+            new IteratorOfStackTrace(
+                new Throwable(new Throwable())
+            ).hasNext(),
             new IsTrue()
         );
+    }
+
+    @Test
+    void nextReturnsInnerException() {
+        final Throwable inner = new Throwable();
         MatcherAssert.assertThat(
-            "First call 'next' should return inner exception.",
-            iter.next(),
+            "First call 'next' should return inner exception",
+            new IteratorOfStackTrace(new Throwable(inner)).next(),
             new IsEqual<>(inner)
         );
+    }
+
+    @Test
+    void hasNextReturnsFalseAfterTraversal() {
+        final IteratorOfStackTrace iter = new IteratorOfStackTrace(
+            new Throwable(new Throwable())
+        );
+        iter.next();
         MatcherAssert.assertThat(
-            "Second call 'hasNext' should return false.",
+            "Second call 'hasNext' should return false",
             iter.hasNext(),
             new IsEqual<>(false)
         );
+    }
+
+    @Test
+    void nextThrowsWhenExhausted() {
+        final IteratorOfStackTrace iter = new IteratorOfStackTrace(
+            new Throwable(new Throwable())
+        );
+        iter.next();
         MatcherAssert.assertThat(
-            "Third call 'next' should throw NSEE.",
-            () -> iter.next(),
+            "Call 'next' should throw NoSuchElementException",
+            iter::next,
             new Throws<Throwable>(NoSuchElementException.class)
         );
     }

@@ -22,15 +22,22 @@ final class SyncedTest {
 
     @Test
     void worksInThreads() {
-        final List<Integer> list = new LinkedList<>();
-        final int threads = 100;
         MatcherAssert.assertThat(
             "must work well in multiple threads",
             Scalar::value,
             new RunsInThreads<>(
-                new Synced<>(() -> list.add(1)), threads
+                new Synced<>(() -> true), 100
             )
         );
+    }
+
+    @Test
+    void addsAllElementsInThreads() throws Exception {
+        final List<Integer> list = new LinkedList<>();
+        final int threads = 100;
+        for (int idx = 0; idx < threads; ++idx) {
+            new Synced<>(() -> list.add(1)).value();
+        }
         MatcherAssert.assertThat(
             "must have correct size",
             list.size(),
