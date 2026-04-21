@@ -23,7 +23,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.0.0
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.UnnecessaryLocalRule"})
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.CloseResource"})
 final class ThreadsTest {
 
     /**
@@ -37,7 +37,8 @@ final class ThreadsTest {
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void containsResults() throws Exception {
-        try (ExecutorService extor = Executors.newFixedThreadPool(3)) {
+        final ExecutorService extor = Executors.newFixedThreadPool(3);
+        try {
             MatcherAssert.assertThat(
                 "Must contain results from callables",
                 new Threads<>(
@@ -62,6 +63,8 @@ final class ThreadsTest {
                     "gamma"
                 )
             );
+        } finally {
+            extor.shutdownNow();
         }
     }
 
@@ -71,7 +74,8 @@ final class ThreadsTest {
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void failsDueToTimeoutWithExternalExecutorService() throws Exception {
-        try (ExecutorService extor = Executors.newFixedThreadPool(2)) {
+        final ExecutorService extor = Executors.newFixedThreadPool(2);
+        try {
             MatcherAssert.assertThat(
                 "Must fail due to timeout",
                 () -> new LengthOf(
@@ -94,6 +98,8 @@ final class ThreadsTest {
                 ).value(),
                 new Throws<>(CancellationException.class)
             );
+        } finally {
+            extor.shutdownNow();
         }
     }
 
@@ -103,7 +109,8 @@ final class ThreadsTest {
      */
     @Test
     void failsDueToException() throws Exception {
-        try (ExecutorService extor = Executors.newSingleThreadExecutor()) {
+        final ExecutorService extor = Executors.newSingleThreadExecutor();
+        try {
             MatcherAssert.assertThat(
                 "Must rethrow error",
                 () -> new LengthOf(
@@ -126,6 +133,8 @@ final class ThreadsTest {
                     UncheckedIOException.class
                 )
             );
+        } finally {
+            extor.shutdownNow();
         }
     }
 
@@ -193,7 +202,8 @@ final class ThreadsTest {
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void containsResultsNoTimeout() throws Exception {
-        try (ExecutorService extor = Executors.newFixedThreadPool(3)) {
+        final ExecutorService extor = Executors.newFixedThreadPool(3);
+        try {
             MatcherAssert.assertThat(
                 "Must contain results from the callables without using timeout",
                 new Threads<>(
@@ -213,6 +223,8 @@ final class ThreadsTest {
                 ),
                 new HasValues<>("alpha", "beta", "gamma")
             );
+        } finally {
+            extor.shutdownNow();
         }
     }
 
@@ -222,7 +234,8 @@ final class ThreadsTest {
      */
     @Test
     void failsDueToExceptionNoTimeout() throws Exception {
-        try (ExecutorService extor = Executors.newSingleThreadExecutor()) {
+        final ExecutorService extor = Executors.newSingleThreadExecutor();
+        try {
             MatcherAssert.assertThat(
                 "Must rethrow error",
                 () -> new LengthOf(
@@ -244,6 +257,8 @@ final class ThreadsTest {
                     UncheckedIOException.class
                 )
             );
+        } finally {
+            extor.shutdownNow();
         }
     }
 

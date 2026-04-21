@@ -23,7 +23,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.10
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
+@SuppressWarnings({"PMD.CloseResource", "PMD.UnnecessaryLocalRule"})
 final class AsyncTest {
     @Test
     void runsInBackground() {
@@ -165,7 +165,8 @@ final class AsyncTest {
 
     @Test
     void doesNotShutDownExternalExecutor() throws Exception {
-        try (ExecutorService exec = Executors.newSingleThreadExecutor()) {
+        final ExecutorService exec = Executors.newSingleThreadExecutor();
+        try {
             final CountDownLatch latch = new CountDownLatch(1);
             final Async<Boolean, Boolean> async = new Async<>(
                 input -> {
@@ -182,6 +183,8 @@ final class AsyncTest {
                 exec.submit(() -> true).get(1L, TimeUnit.SECONDS),
                 new IsEqual<>(true)
             );
+        } finally {
+            exec.shutdownNow();
         }
     }
 }

@@ -25,7 +25,7 @@ import org.llorllale.cactoos.matchers.HasValue;
  * Test case for {@link AndInThreads}.
  * @since 0.25
  */
-@SuppressWarnings({"unchecked", "PMD.TooManyMethods", "PMD.UnnecessaryLocalRule"})
+@SuppressWarnings({"unchecked", "PMD.TooManyMethods", "PMD.CloseResource"})
 final class AndInThreadsTest {
 
     @Test
@@ -142,7 +142,8 @@ final class AndInThreadsTest {
     @Test
     void worksWithExecServiceProcValues() throws Exception {
         final List<Integer> list = new Synced<>(new ListOf<>());
-        try (ExecutorService service = Executors.newSingleThreadExecutor()) {
+        final ExecutorService service = Executors.newSingleThreadExecutor();
+        try {
             new AndInThreads(
                 service,
                 new ProcNoNulls<Integer>(list::add),
@@ -158,13 +159,16 @@ final class AndInThreadsTest {
                     )
                 )
             );
+        } finally {
+            service.shutdownNow();
         }
     }
 
     @Test
     void worksWithExecServiceProcIterable() throws Exception {
         final List<Integer> list = new Synced<>(new ListOf<>());
-        try (ExecutorService service = Executors.newSingleThreadExecutor()) {
+        final ExecutorService service = Executors.newSingleThreadExecutor();
+        try {
             new AndInThreads(
                 service,
                 new ProcNoNulls<Integer>(list::add),
@@ -180,6 +184,8 @@ final class AndInThreadsTest {
                     )
                 )
             );
+        } finally {
+            service.shutdownNow();
         }
     }
 

@@ -49,7 +49,7 @@ dependencies {
 }
 ```
 
-Java version required: 1.8+.
+Java version required: 17+.
 
 StackOverflow tag is
 [cactoos](https://stackoverflow.com/questions/tagged/cactoos).
