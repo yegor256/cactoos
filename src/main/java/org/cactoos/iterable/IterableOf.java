@@ -6,6 +6,7 @@ package org.cactoos.iterable;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.cactoos.Fallback;
 import org.cactoos.Scalar;
 import org.cactoos.iterator.IteratorOf;
@@ -86,6 +87,10 @@ public final class IterableOf<X> implements Iterable<X> {
                             new IterableOf<>(
                                 new Fallback.From<>(
                                     IllegalStateException.class,
+                                    ex -> false
+                                ),
+                                new Fallback.From<>(
+                                    NoSuchElementException.class,
                                     ex -> false
                                 )
                             )
