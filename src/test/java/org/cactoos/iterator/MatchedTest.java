@@ -4,6 +4,7 @@
  */
 package org.cactoos.iterator;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
@@ -50,7 +51,22 @@ final class MatchedTest {
             ),
             new Throws<>(
                 new IsEqual<>("Size mismatch of iterators"),
-                IllegalStateException.class
+                NoSuchElementException.class
+            )
+        );
+    }
+
+    @Test
+    void throwsNoSuchElementWhenExhausted() {
+        MatcherAssert.assertThat(
+            "must throw NoSuchElementException when both iterators are exhausted",
+            () -> new Matched<Integer, Integer>(
+                Objects::equals,
+                new IteratorOf<Integer>(),
+                new IteratorOf<Integer>()
+            ).next(),
+            new Throws<>(
+                NoSuchElementException.class
             )
         );
     }

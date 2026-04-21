@@ -4,6 +4,7 @@
  */
 package org.cactoos.iterable;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import org.cactoos.list.ListOf;
 import org.cactoos.proc.ForEach;
@@ -46,7 +47,7 @@ final class MatchedTest {
                     new IterableOf<>("'A' item", "'B' item", "'C' item")
                 )
             ),
-            new Throws<>(IllegalStateException.class)
+            new Throws<>(NoSuchElementException.class)
         );
     }
 
@@ -61,7 +62,7 @@ final class MatchedTest {
                     new IterableOf<>("`A` entry", "`B` entry")
                 )
             ),
-            new Throws<>(IllegalStateException.class)
+            new Throws<>(NoSuchElementException.class)
         );
     }
 
