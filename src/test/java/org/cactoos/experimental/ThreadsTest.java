@@ -23,7 +23,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.0.0
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.CloseResource"})
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.CloseResource", "PMD.UnnecessaryWarningSuppression"})
 final class ThreadsTest {
 
     /**
