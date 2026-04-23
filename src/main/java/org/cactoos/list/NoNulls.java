@@ -221,4 +221,14 @@ public final class NoNulls<T> implements List<T> {
     public List<T> subList(final int start, final int end) {
         return new NoNulls<>(this.list.subList(start, end));
     }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this.list.equals(other);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.list.hashCode();
+    }
 }

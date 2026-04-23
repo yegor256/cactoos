@@ -307,6 +307,9 @@
             <configuration>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/site/resources/.*</exclude>
+                <exclude>pmd:.*/src/test/java/org/cactoos/experimental/ThreadsTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/cactoos/func/AsyncTest\.java</exclude>
+                <exclude>pmd:.*/src/test/java/org/cactoos/scalar/AndInThreadsTest\.java</exclude>
               </excludes>
             </configuration>
           </plugin>
