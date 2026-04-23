@@ -364,4 +364,52 @@ final class NoNullsTest {
             Matchers.contains(1, 2, 3, 4, 5, 6)
         );
     }
+
+    @Test
+    void equalsReturnsTrueForSameContent() {
+        MatcherAssert.assertThat(
+            "two NoNulls with same content must be equal",
+            new NoNulls<>(new ArrayList<>(new ListOf<>("a", "b"))),
+            new IsEqual<>(
+                new NoNulls<>(new ArrayList<>(new ListOf<>("a", "b")))
+            )
+        );
+    }
+
+    @Test
+    void equalsIsSymmetricWithPlainList() {
+        final List<Integer> plain = new ArrayList<>(new ListOf<>(1, 2, 3));
+        final List<Integer> wrapped = new NoNulls<>(
+            new ArrayList<>(new ListOf<>(1, 2, 3))
+        );
+        MatcherAssert.assertThat(
+            "wrapper.equals(plain) must match plain.equals(wrapper)",
+            wrapped.equals(plain),
+            new IsEqual<>(plain.equals(wrapped))
+        );
+    }
+
+    @Test
+    void hashCodeMatchesPlainList() {
+        MatcherAssert.assertThat(
+            "hashCode() must follow List contract",
+            new NoNulls<>(
+                new ArrayList<>(new ListOf<>(1, 2, 3))
+            ).hashCode(),
+            new IsEqual<>(
+                new ArrayList<>(new ListOf<>(1, 2, 3)).hashCode()
+            )
+        );
+    }
+
+    @Test
+    void equalsReturnsFalseForDifferentContent() {
+        MatcherAssert.assertThat(
+            "two NoNulls with different content must not be equal",
+            new NoNulls<>(new ArrayList<>(new ListOf<>("a", "b"))).equals(
+                new NoNulls<>(new ArrayList<>(new ListOf<>("a", "c")))
+            ),
+            new IsEqual<>(false)
+        );
+    }
 }
