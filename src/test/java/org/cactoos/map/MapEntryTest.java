@@ -61,6 +61,33 @@ final class MapEntryTest {
     }
 
     @Test
+    void equalsWithNullKey() {
+        MatcherAssert.assertThat(
+            "MapEntries with null keys are not equal",
+            new MapEntry<>(null, "v").equals(new MapEntry<>(null, "v")),
+            new IsEqual<>(true)
+        );
+    }
+
+    @Test
+    void equalsWithNullValue() {
+        MatcherAssert.assertThat(
+            "MapEntries with null values are not equal",
+            new MapEntry<>("k", null).equals(new MapEntry<>("k", null)),
+            new IsEqual<>(true)
+        );
+    }
+
+    @Test
+    void notEqualsWhenOneKeyIsNull() {
+        MatcherAssert.assertThat(
+            "MapEntries with different keys must not be equal",
+            new MapEntry<>(null, "v").equals(new MapEntry<>("k", "v")),
+            new IsEqual<>(false)
+        );
+    }
+
+    @Test
     void compareHash() {
         MatcherAssert.assertThat(
             "the hash code are not equals",
