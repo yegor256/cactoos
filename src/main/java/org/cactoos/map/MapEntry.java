@@ -5,6 +5,7 @@
 package org.cactoos.map;
 
 import java.util.Map;
+import java.util.Objects;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.HashCode;
 import org.cactoos.text.FormattedText;
@@ -71,8 +72,8 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
     @Override
     public boolean equals(final Object obj) {
         return obj instanceof Map.Entry
-            && Map.Entry.class.cast(obj).getKey().equals(this.key)
-            && Map.Entry.class.cast(obj).getValue().equals(this.value);
+            && Objects.equals(Map.Entry.class.cast(obj).getKey(), this.key)
+            && Objects.equals(Map.Entry.class.cast(obj).getValue(), this.value);
     }
 
     @Override
