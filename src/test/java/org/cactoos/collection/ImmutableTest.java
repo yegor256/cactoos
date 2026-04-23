@@ -4,6 +4,7 @@
  */
 package org.cactoos.collection;
 
+import java.util.Collection;
 import java.util.List;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
@@ -232,6 +233,19 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>(1, 2, 3).equals(another)
             )
+        );
+    }
+
+    @Test
+    void equalsIsSymmetricWithPlainList() {
+        final List<Integer> plain = new ListOf<>(1, 2, 3);
+        final Collection<Integer> wrapper = new Immutable<>(
+            new ListOf<>(1, 2, 3)
+        );
+        MatcherAssert.assertThat(
+            "equals() must be symmetric between wrapper and plain list",
+            wrapper.equals(plain),
+            new IsEqual<>(plain.equals(wrapper))
         );
     }
 }
