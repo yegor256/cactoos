@@ -326,7 +326,7 @@ final String text = new TextOfDateTime(date).asString();
 
 ## Our Objects vs. Their Static Methods
 
-| Cactoos | Guava | Apache Commons | JDK 8 |
+| Cactoos | Guava | Apache Commons | JDK 17 |
 | ------ | ------ | ------ | ------ |
 | `And` | `Iterables.all()` | - | - |
 | `Filtered` | `Iterables.filter()` | ? | - |
@@ -377,7 +377,7 @@ docker run \
   --volume=${PWD}:/main \
   --volume=cactoos-mvn-cache:/root/.m2 \
   --rm \
-  maven:3-jdk-8 \
+  maven:3-eclipse-temurin-17 \
   bash -c "mvn clean install -Pqulice; chown -R $(id -u):$(id -g) target/"
 ```
 
