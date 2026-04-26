@@ -28,6 +28,7 @@ import org.cactoos.TriFunc;
 public final class TriFuncSplitPreserve
     implements TriFunc
         <String, String, Integer, Collection<String>> {
+
     @Override
     public Collection<String> apply(
         final String str,

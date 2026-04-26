@@ -107,5 +107,4 @@ final class FuncWithFallbackTest {
             new Throws<>(Exception.class)
         );
     }
-
 }

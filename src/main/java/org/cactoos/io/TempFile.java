@@ -145,5 +145,4 @@ public final class TempFile implements Scalar<Path>, Closeable {
     public void close() throws IOException {
         Files.delete(new IoChecked<>(this).value());
     }
-
 }

@@ -41,7 +41,7 @@ final class FakeOutputStream extends OutputStream {
      * If stream is closed.
      * @return Closed or not
      */
-    public boolean isClosed() {
+    boolean isClosed() {
         return this.closed.get();
     }
 }

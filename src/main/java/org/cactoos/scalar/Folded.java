@@ -65,5 +65,4 @@ public final class Folded<X, T> implements Scalar<X> {
         }
         return memo;
     }
-
 }

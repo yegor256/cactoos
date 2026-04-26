@@ -78,5 +78,4 @@ public final class InputWithFallback implements Input {
         }
         return stream;
     }
-
 }

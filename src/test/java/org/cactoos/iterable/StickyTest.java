@@ -30,7 +30,10 @@ final class StickyTest {
             )
         );
         MatcherAssert.assertThat(
-            "Must ignore the changes in the underlying iterable",
+            String.format(
+                "Must ignore the changes in the underlying iterable, size=%d",
+                size.get()
+            ),
             new LengthOf(list).value(),
             new IsEqual<>(new LengthOf(list).value())
         );

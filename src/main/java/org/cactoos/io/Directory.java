@@ -29,7 +29,7 @@ public final class Directory implements Iterable<Path> {
 
     /**
      * Ctor.
-     * @param file File as a path to directory.
+     * @param file File as a path to directory
      */
     public Directory(final File file) {
         this(file.toPath());
@@ -51,5 +51,4 @@ public final class Directory implements Iterable<Path> {
             throw new IllegalStateException(ex);
         }
     }
-
 }

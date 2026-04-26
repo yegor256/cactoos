@@ -4,7 +4,6 @@
  */
 package org.cactoos.io;
 
-import java.io.IOException;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
@@ -15,10 +14,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 0.36
  */
 final class JoinedTest {
-    /**
-     * Must join inputs in the given order.
-     * @throws IOException If an error occurs
-     */
     @Test
     void joinsOk() {
         MatcherAssert.assertThat(

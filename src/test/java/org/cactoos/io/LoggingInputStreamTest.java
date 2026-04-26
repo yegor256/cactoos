@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link LoggingInputStream}.
- *
  * @since 0.39
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -25,15 +24,17 @@ final class LoggingInputStreamTest {
     @Test
     void reThrowsException() throws IOException {
         final String message = "Some read exception.";
-        try (LoggingInputStream stream = new LoggingInputStream(
-            new InputStream() {
-                @Override
-                public int read() throws IOException {
-                    throw new IOException(message);
-                }
-            },
-            this.getClass().getSimpleName()
-        )) {
+        try (
+            LoggingInputStream stream = new LoggingInputStream(
+                new InputStream() {
+                    @Override
+                    public int read() throws IOException {
+                        throw new IOException(message);
+                    }
+                },
+                this.getClass().getSimpleName()
+            )
+        ) {
             MatcherAssert.assertThat(
                 "Read doesn't throw an the exception.",
                 stream::read,
@@ -70,12 +71,14 @@ final class LoggingInputStreamTest {
 
     @Test
     void readsSecondByte() throws IOException {
-        try (LoggingInputStream stream = new LoggingInputStream(
-            new ByteArrayInputStream(
-                new byte[] {(byte) 20, (byte) 10}
-            ),
-            this.getClass().getSimpleName()
-        )) {
+        try (
+            LoggingInputStream stream = new LoggingInputStream(
+                new ByteArrayInputStream(
+                    new byte[] {(byte) 20, (byte) 10}
+                ),
+                this.getClass().getSimpleName()
+            )
+        ) {
             stream.read();
             MatcherAssert.assertThat(
                 "Second byte was not 10",
@@ -87,12 +90,14 @@ final class LoggingInputStreamTest {
 
     @Test
     void returnsMinusOneWhenExhausted() throws IOException {
-        try (LoggingInputStream stream = new LoggingInputStream(
-            new ByteArrayInputStream(
-                new byte[] {(byte) 20, (byte) 10}
-            ),
-            this.getClass().getSimpleName()
-        )) {
+        try (
+            LoggingInputStream stream = new LoggingInputStream(
+                new ByteArrayInputStream(
+                    new byte[] {(byte) 20, (byte) 10}
+                ),
+                this.getClass().getSimpleName()
+            )
+        ) {
             stream.read();
             stream.read();
             MatcherAssert.assertThat(

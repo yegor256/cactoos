@@ -24,7 +24,7 @@ final class PropertiesOfTest {
         MatcherAssert.assertThat(
             "Must read properties from an input string",
             new PropertiesOf(
-                "foo=Hello, world!\nbar=works fine?\n"
+                String.format("foo=Hello, world!%cbar=works fine?%c", (char) 10, (char) 10)
             ),
             new HasValue<>(
                 new HasProperty("foo", "Hello, world!")
@@ -37,7 +37,12 @@ final class PropertiesOfTest {
         MatcherAssert.assertThat(
             "Must read properties from an input",
             new PropertiesOf(
-                new InputOf("greet=Hello, inner world!\nask=works fine?\n")
+                new InputOf(
+                    String.format(
+                        "greet=Hello, inner world!%cask=works fine?%c",
+                        (char) 10, (char) 10
+                    )
+                )
             ),
             new HasValue<>(
                 new HasProperty("greet", "Hello, inner world!")
@@ -74,5 +79,4 @@ final class PropertiesOfTest {
             )
         );
     }
-
 }

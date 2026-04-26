@@ -9,12 +9,12 @@ import org.cactoos.Func;
 
 /**
  * Func check for no nulls.
- *
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.10
  */
 public final class FuncNoNulls<X, Y> implements Func<X, Y> {
+
     /**
      * The function.
      */

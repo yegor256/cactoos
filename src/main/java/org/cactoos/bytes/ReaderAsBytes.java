@@ -37,7 +37,6 @@ final class ReaderAsBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      */
     ReaderAsBytes(final Reader rdr) {
@@ -46,7 +45,6 @@ final class ReaderAsBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param cset Charset
      */
@@ -56,7 +54,6 @@ final class ReaderAsBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param cset Charset
      * @since 0.13.2
@@ -67,7 +64,6 @@ final class ReaderAsBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param cset Charset
      * @param max Buffer size
@@ -88,7 +84,6 @@ final class ReaderAsBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param cset Charset
      * @param max Buffer size
@@ -113,5 +108,4 @@ final class ReaderAsBytes implements Bytes {
         this.reader.close();
         return builder.toString().getBytes(this.charset.toString());
     }
-
 }

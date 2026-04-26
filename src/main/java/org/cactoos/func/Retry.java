@@ -52,7 +52,6 @@ public final class Retry<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param fnc Func original
      * @param attempts Maximum number of attempts
      * @param wait The executions of the function
@@ -64,7 +63,6 @@ public final class Retry<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param fnc Func original
      * @param ext Exit condition, returns TRUE if there is no more reason to try
      */
@@ -74,7 +72,6 @@ public final class Retry<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param fnc Func original
      * @param ext Exit condition, returns TRUE if there is no more reason to try
      * @param wait The executions of the function
@@ -116,5 +113,4 @@ public final class Retry<X, Y> implements Func<X, Y> {
         }
         throw error;
     }
-
 }

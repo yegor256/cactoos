@@ -20,5 +20,4 @@ public final class DeadOutput implements Output {
     public OutputStream stream() {
         return new DeadOutputStream();
     }
-
 }

@@ -82,8 +82,7 @@ public final class ItemAt<T> implements Scalar<T> {
                 if (position < 0) {
                     throw new IOException(
                         new FormattedText(
-                            "The position must be non-negative: %d",
-                            position
+                            "The position must be non-negative: %d", position
                         ).asString()
                     );
                 }
@@ -92,13 +91,13 @@ public final class ItemAt<T> implements Scalar<T> {
                 for (cur = 0; cur < position && src.hasNext(); ++cur) {
                     src.next();
                 }
-                final T ret;
+                final T result;
                 if (cur == position && src.hasNext()) {
-                    ret = src.next();
+                    result = src.next();
                 } else {
-                    ret = fallback.apply(new IterableOf<>(src));
+                    result = fallback.apply(new IterableOf<>(src));
                 }
-                return ret;
+                return result;
             }
         );
     }
@@ -107,5 +106,4 @@ public final class ItemAt<T> implements Scalar<T> {
     public T value() throws Exception {
         return this.saved.value();
     }
-
 }

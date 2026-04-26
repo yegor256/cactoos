@@ -157,5 +157,4 @@ final class ListOfTest {
             new IsEqual<>(new ListOf<>(1, 2).hashCode())
         );
     }
-
 }

@@ -27,12 +27,7 @@ public final class Intersection<T> extends SetEnvelope<T> {
      * @param second Second set
      */
     public Intersection(final Iterable<T> first, final Iterable<T> second) {
-        super(
-            computeIntersection(
-                new SetOf<>(first),
-                new SetOf<>(second)
-            )
-        );
+        this(new SetOf<>(first), new SetOf<>(second));
     }
 
     /**

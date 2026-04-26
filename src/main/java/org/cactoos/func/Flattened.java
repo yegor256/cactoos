@@ -17,6 +17,7 @@ import org.cactoos.Scalar;
  * @since 0.48
  */
 public final class Flattened<X, Y> extends FuncEnvelope<X, Y> {
+
     /**
      * Ctor.
      * @param sclr The func

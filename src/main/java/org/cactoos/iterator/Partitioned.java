@@ -56,5 +56,4 @@ public final class Partitioned<T> implements Iterator<List<T>> {
             new ListOf<>(new Sliced<>(0, this.size, this.decorated))
         );
     }
-
 }

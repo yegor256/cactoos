@@ -69,5 +69,4 @@ final class ZonedDateTimeOfTest {
             )
         );
     }
-
 }

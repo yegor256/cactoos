@@ -219,7 +219,7 @@ public final class NoNulls<T> implements List<T> {
 
     @Override
     public List<T> subList(final int start, final int end) {
-        return new NoNulls<>(this.list.subList(start, end));
+        return new org.cactoos.list.NoNulls<>(this.list.subList(start, end));
     }
 
     @Override

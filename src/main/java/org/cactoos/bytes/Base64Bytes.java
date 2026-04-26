@@ -10,10 +10,14 @@ import org.cactoos.Bytes;
 
 /**
  * Decodes all origin bytes using the Base64 encoding scheme.
- *
  * @since 0.20.2
  */
 public final class Base64Bytes implements Bytes {
+
+    /**
+     * Default RFC4648 decoder.
+     */
+    private static final Base64.Decoder DEFAULT = Base64.getDecoder();
 
     /**
      * Origin bytes.
@@ -27,18 +31,16 @@ public final class Base64Bytes implements Bytes {
 
     /**
      * Ctor uses a RFC4648 {@link Base64.Decoder}.
-     *
      * @param origin Origin bytes
      */
     public Base64Bytes(final Bytes origin) {
-        this(origin, Base64.getDecoder());
+        this(origin, Base64Bytes.DEFAULT);
     }
 
     /**
      * Ctor.
-     *
-     * @param origin Origin bytes.
-     * @param dec Decoder to use.
+     * @param origin Origin bytes
+     * @param dec Decoder to use
      */
     public Base64Bytes(final Bytes origin, final Base64.Decoder dec) {
         this.origin = origin;

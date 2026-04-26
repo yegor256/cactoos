@@ -28,5 +28,4 @@ final class DeadOutputTest {
             new HasContent(new StringEndsWith("друг?"))
         );
     }
-
 }

@@ -58,5 +58,4 @@ final class IoCheckedTest {
             new Throws<>(exception.getMessage(), exception.getClass())
         );
     }
-
 }

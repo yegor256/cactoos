@@ -61,5 +61,4 @@ public final class IoCheckedBytes implements Bytes {
     public byte[] asBytes() throws IOException {
         return this.scalar.value();
     }
-
 }

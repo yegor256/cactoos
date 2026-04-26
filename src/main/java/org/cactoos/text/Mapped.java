@@ -35,5 +35,4 @@ public final class Mapped extends TextEnvelope {
         final Text txt) {
         super(new TextOf(() -> fnc.apply(txt.asString())));
     }
-
 }

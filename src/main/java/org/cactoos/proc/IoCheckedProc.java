@@ -38,5 +38,4 @@ public final class IoCheckedProc<X> implements Proc<X> {
             IOException::new
         ).exec(input);
     }
-
 }

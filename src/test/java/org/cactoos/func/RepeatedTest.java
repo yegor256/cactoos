@@ -30,7 +30,7 @@ final class RepeatedTest {
             new Repeated<Boolean, Integer>(
                 input -> iter.next(),
                 3
-            ).apply(true),
+            ).apply(iter.hasNext()),
             new IsEqual<>(5)
         );
     }
@@ -49,13 +49,12 @@ final class RepeatedTest {
 
     @Test
     void doesntRepeatAny() {
-        final Func<Boolean, Integer> func = new Repeated<>(
-            input -> new SecureRandom().nextInt(),
-            0
-        );
         MatcherAssert.assertThat(
             "Must throw if parameter is not correct",
-            () -> func.apply(true),
+            () -> new Repeated<>(
+                (Func<Boolean, Integer>) input -> new SecureRandom().nextInt(),
+                0
+            ).apply(true),
             new Throws<>(
                 IllegalArgumentException.class
             )

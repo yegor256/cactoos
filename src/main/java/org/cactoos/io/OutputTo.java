@@ -169,5 +169,4 @@ public final class OutputTo implements Output {
     public OutputStream stream() throws Exception {
         return this.origin.stream();
     }
-
 }

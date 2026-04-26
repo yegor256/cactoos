@@ -90,5 +90,4 @@ final class SolidTest {
             new RunsInThreads<>(new Solid<>(1, 0, -1, -1, 2))
         );
     }
-
 }

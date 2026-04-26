@@ -23,7 +23,7 @@ import org.cactoos.bytes.BytesOf;
  *
  * @since 0.29
  */
-@SuppressWarnings({"PMD.UnnecessaryLocalRule", "PMD.AvoidFileStream"})
+@SuppressWarnings("PMD.AvoidFileStream")
 public final class Zip implements Input {
 
     /**

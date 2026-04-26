@@ -78,5 +78,4 @@ final class CheckedBiFuncTest {
             new IsEqual<>(true)
         );
     }
-
 }

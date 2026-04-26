@@ -52,5 +52,4 @@ public final class UncheckedBytes implements Bytes {
     public byte[] asBytes() {
         return this.scalar.value();
     }
-
 }

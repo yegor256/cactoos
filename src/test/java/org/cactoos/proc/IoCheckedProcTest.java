@@ -65,5 +65,4 @@ final class IoCheckedProcTest {
             new Throws<>(IllegalStateException.class)
         );
     }
-
 }

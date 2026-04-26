@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Immutable}.
- *
  * @since 1.16
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.UnnecessaryLocalRule"})
@@ -190,7 +189,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testToArray() {
+    void toArrayTyped() {
         MatcherAssert.assertThat(
             "toArray(T[]) must be equals to original",
             new Immutable<>(
@@ -260,7 +259,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testAddAll() {
+    void addAllAtIndex() {
         MatcherAssert.assertThat(
             "addAll(int, Collection) must throw exception",
             () -> new Immutable<>(
@@ -346,7 +345,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testAdd() {
+    void addAtIndex() {
         MatcherAssert.assertThat(
             "add(int, T) must throw exception",
             () -> {
@@ -363,7 +362,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testRemove() {
+    void removeAtIndex() {
         MatcherAssert.assertThat(
             "remove(int) must throw exception",
             () -> new Immutable<>(
@@ -414,7 +413,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testListIterator() {
+    void listIteratorAtIndex() {
         MatcherAssert.assertThat(
             "listIterator(int) is equal to original",
             () -> new Immutable<>(
@@ -498,7 +497,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testHashCode() {
+    void hashes() {
         MatcherAssert.assertThat(
             "hashCode() must be equal to hashCode of the corresponding List",
             new Immutable<>(new ListOf<>(1, 2)).hashCode(),
@@ -509,7 +508,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testToString() {
+    void stringRepresentation() {
         MatcherAssert.assertThat(
             "toString() must be equal to toString of the corresponding List",
             new Immutable<>(new ListOf<>("a", "b", "c")).toString(),
@@ -524,9 +523,7 @@ final class ImmutableTest {
             () -> {
                 final ListIterator<String> iterator = new Immutable<>(
                     new ListOf<>("nu", "xi", "omicron")
-                )
-                    .subList(0, 2)
-                    .listIterator(0);
+                ).subList(0, 2).listIterator(0);
                 iterator.next();
                 iterator.set("pi");
                 return new Object();
@@ -537,5 +534,4 @@ final class ImmutableTest {
             )
         );
     }
-
 }

@@ -258,5 +258,4 @@ public final class InputStreamOf extends InputStream {
     public boolean markSupported() {
         return this.source.value().markSupported();
     }
-
 }

@@ -208,7 +208,7 @@ final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "EmpBase and derived MapEnvelope which are empty should be equal.",
             new MapOf<Integer, String>(),
-            new IsEqual<>(new DerivedMapEnvelope<>(new HashMap<>()))
+            new IsEqual<>(new MapEnvelopeTest.DerivedMapEnvelope<>(new HashMap<>()))
         );
     }
 
@@ -222,13 +222,13 @@ final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "Base and derived MapEnvelope of same content should be equal.",
             new MapOf<>(new MapEntry<>(key, value)),
-            new IsEqual<>(new DerivedMapEnvelope<>(hashmap))
+            new IsEqual<>(new MapEnvelopeTest.DerivedMapEnvelope<>(hashmap))
         );
     }
 
     @Test
     void putIsDelegated() {
-        final Map<Integer, Integer> map = new DerivedMapEnvelope<>(
+        final Map<Integer, Integer> map = new MapEnvelopeTest.DerivedMapEnvelope<>(
             new HashMap<>()
         );
         map.put(0, 1);
@@ -245,7 +245,7 @@ final class MapEnvelopeTest {
 
     @Test
     void clearIsDelegated() {
-        final Map<Integer, Integer> map = new DerivedMapEnvelope<>(
+        final Map<Integer, Integer> map = new MapEnvelopeTest.DerivedMapEnvelope<>(
             new MapOf<Integer, Integer>(
                 new MapEntry<>(0, 1)
             )
@@ -260,7 +260,7 @@ final class MapEnvelopeTest {
 
     @Test
     void removeIsDelegated() {
-        final Map<Integer, Integer> map = new DerivedMapEnvelope<>(
+        final Map<Integer, Integer> map = new MapEnvelopeTest.DerivedMapEnvelope<>(
             new MapOf<Integer, Integer>(
                 new MapEntry<>(0, 1)
             )
@@ -275,8 +275,8 @@ final class MapEnvelopeTest {
 
     /**
      * Class derived from MapEnvelope to use in some tests.
-     * @param <K> - key type
-     * @param <V> - value type
+     * @param <K> Key type
+     * @param <V> Value type
      * @since 0.4
      */
     private static final class DerivedMapEnvelope<K, V> extends MapEnvelope<K, V> {

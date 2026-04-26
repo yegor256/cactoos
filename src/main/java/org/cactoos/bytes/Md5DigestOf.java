@@ -14,12 +14,13 @@ import org.cactoos.Input;
  * @since 0.29
  */
 public final class Md5DigestOf extends DigestEnvelope {
+
     /**
      * Ctor.
      * @param input The input
      */
     public Md5DigestOf(final Input input) {
-        super(input, "MD5");
+        this(input, 16 << 10);
     }
 
     /**

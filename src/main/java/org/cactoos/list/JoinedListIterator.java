@@ -92,9 +92,11 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
         if (!this.hasNext()) {
             throw new NoSuchElementException();
         }
-        final T next = this.currentListIterator().next();
-        this.cursor.getAndIncrement();
-        return next;
+        try {
+            return this.currentListIterator().next();
+        } finally {
+            this.cursor.getAndIncrement();
+        }
     }
 
     @Override
@@ -110,9 +112,11 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
         if (!this.hasPrevious()) {
             throw new NoSuchElementException();
         }
-        final T previous = this.currentListIterator().previous();
-        this.cursor.getAndDecrement();
-        return previous;
+        try {
+            return this.currentListIterator().previous();
+        } finally {
+            this.cursor.getAndDecrement();
+        }
     }
 
     @Override

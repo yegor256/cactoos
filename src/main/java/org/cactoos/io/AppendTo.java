@@ -27,7 +27,7 @@ public final class AppendTo implements Output {
 
     /**
      * Ctor.
-     * @param path Path as a source of a File.
+     * @param path Path as a source of a File
      */
     public AppendTo(final Path path) {
         this(path.toFile());
@@ -35,7 +35,7 @@ public final class AppendTo implements Output {
 
     /**
      * Ctor.
-     * @param src File to which content will be appended.
+     * @param src File to which content will be appended
      */
     public AppendTo(final File src) {
         this.source = src;

@@ -155,5 +155,4 @@ public final class OutputStreamTo extends OutputStream {
     public void flush() throws IOException {
         this.target.value().flush();
     }
-
 }

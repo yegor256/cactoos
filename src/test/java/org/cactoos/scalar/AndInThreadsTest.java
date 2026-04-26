@@ -227,5 +227,4 @@ final class AndInThreadsTest {
             Matchers.equalTo(true)
         );
     }
-
 }

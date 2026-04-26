@@ -118,5 +118,4 @@ public final class WriterTo extends Writer {
     public void close() throws IOException {
         this.target.value().close();
     }
-
 }

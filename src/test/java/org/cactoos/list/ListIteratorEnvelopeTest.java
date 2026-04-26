@@ -20,7 +20,7 @@ final class ListIteratorEnvelopeTest {
     void mustReturnPreviousIndex() {
         MatcherAssert.assertThat(
             "List Iterator must return previous index",
-            new StringListIterator(
+            new ListIteratorEnvelopeTest.StringListIterator(
                 "1"
             ).previousIndex(),
             new IsEqual<>(-1)
@@ -31,7 +31,7 @@ final class ListIteratorEnvelopeTest {
     void mustReturnPreviousElement() {
         MatcherAssert.assertThat(
             "List Iterator must return previous element",
-            new StringListIterator(
+            new ListIteratorEnvelopeTest.StringListIterator(
                 1,
                 "3", "7"
             ).previous(),
@@ -43,7 +43,7 @@ final class ListIteratorEnvelopeTest {
     void mustReturnNextIndex() {
         MatcherAssert.assertThat(
             "List iterator must return next index",
-            new StringListIterator(
+            new ListIteratorEnvelopeTest.StringListIterator(
                 "1"
             ).nextIndex(),
             new IsEqual<>(0)
@@ -54,7 +54,7 @@ final class ListIteratorEnvelopeTest {
     void mustReturnNextElement() {
         MatcherAssert.assertThat(
             "List iterator must return next item",
-            new StringListIterator(
+            new ListIteratorEnvelopeTest.StringListIterator(
                 1,
                 "5", "11", "13"
             ).next(),
@@ -63,12 +63,12 @@ final class ListIteratorEnvelopeTest {
     }
 
     private static final class StringListIterator extends ListIteratorEnvelope<String> {
-        StringListIterator(final int index, final String... elements) {
-            super(new ListOf<>(elements).listIterator(index));
+        StringListIterator(final String... elements) {
+            this(0, elements);
         }
 
-        StringListIterator(final String... elements) {
-            super(new ListOf<>(elements).listIterator());
+        StringListIterator(final int index, final String... elements) {
+            super(new ListOf<>(elements).listIterator(index));
         }
     }
 }

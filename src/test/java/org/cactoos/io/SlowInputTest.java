@@ -46,5 +46,4 @@ final class SlowInputTest {
             new HasValue<>(size)
         );
     }
-
 }

@@ -5,7 +5,6 @@
 
 /**
  * Collections, tests.
- *
  * @since 0.14
  */
 package org.cactoos.collection;

@@ -9,7 +9,6 @@ import org.cactoos.Func;
 /**
  * Func that repeats its calculation a few times before
  * returning the last result.
- *
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.6
@@ -53,5 +52,4 @@ public final class Repeated<X, Y> implements Func<X, Y> {
         }
         return result;
     }
-
 }

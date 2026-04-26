@@ -27,12 +27,7 @@ public final class Union<T> extends SetEnvelope<T> {
      * @param second Second set
      */
     public Union(final Iterable<T> first, final Iterable<T> second) {
-        super(
-            computeUnion(
-                new SetOf<>(first),
-                new SetOf<>(second)
-            )
-        );
+        this(new SetOf<>(first), new SetOf<>(second));
     }
 
     /**

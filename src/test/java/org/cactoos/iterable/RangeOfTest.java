@@ -20,7 +20,6 @@ import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test of range implementation.
- *
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -28,7 +27,7 @@ import org.llorllale.cactoos.matchers.HasSize;
 final class RangeOfTest {
 
     @Test
-    void testIntegerRange() {
+    void generatesIntegerRange() {
         MatcherAssert.assertThat(
             "Must generate a range of integers",
             new ListOf<>(
@@ -39,7 +38,7 @@ final class RangeOfTest {
     }
 
     @Test
-    void testIntegerFibonacciRange() {
+    void generatesIntegerFibonacciRange() {
         MatcherAssert.assertThat(
             "Must generate a range of fibonacci integers",
             new ListOf<>(
@@ -63,7 +62,7 @@ final class RangeOfTest {
     }
 
     @Test
-    void testLongRange() {
+    void generatesLongRange() {
         MatcherAssert.assertThat(
             "Must generate a range of long",
             new ListOf<>(
@@ -74,7 +73,7 @@ final class RangeOfTest {
     }
 
     @Test
-    void testCharacterRange() {
+    void generatesCharacterRange() {
         MatcherAssert.assertThat(
             "Must generate a range of characters",
             new ListOf<>(
@@ -85,7 +84,7 @@ final class RangeOfTest {
     }
 
     @Test
-    void testLocalDateRange() {
+    void generatesLocalDateRange() {
         MatcherAssert.assertThat(
             "Must generate a range of local dates.",
             new ListOf<>(
@@ -104,7 +103,7 @@ final class RangeOfTest {
     }
 
     @Test
-    void shouldBeTraversableMultipleTimes() throws Exception {
+    void traversesMultipleTimes() throws Exception {
         final Collection<Character> copy = new ArrayList<>(6);
         new RepeatedProc<>(new ForEach<>(copy::add), 2).exec(
             new RangeOf<>('a', 'c', value -> (char) (value + 1))
@@ -117,7 +116,7 @@ final class RangeOfTest {
     }
 
     @Test
-    void shouldNotChangeAfterTraversing() throws Exception {
+    void doesntChangeAfterTraversing() throws Exception {
         final Iterable<Character> range = new RangeOf<>(
             'a', 'c', value -> (char) (value + 1)
         );
@@ -179,5 +178,4 @@ final class RangeOfTest {
             )
         );
     }
-
 }

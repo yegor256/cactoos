@@ -33,10 +33,6 @@ final class StrictTest {
         );
     }
 
-    /**
-     * Ensures that Strict is failing on a negative predicate result.
-     * @throws Exception If fails
-     */
     @Test
     void failsIfPredicateIsNegative() {
         MatcherAssert.assertThat(
@@ -62,10 +58,6 @@ final class StrictTest {
         );
     }
 
-    /**
-     * Ensures that Strict is failing on a text not matching a pattern.
-     * @throws Exception If fails
-     */
     @Test
     void failsIfNotMatchedWithPattern() {
         MatcherAssert.assertThat(

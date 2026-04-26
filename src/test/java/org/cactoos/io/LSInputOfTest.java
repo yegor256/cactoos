@@ -56,5 +56,4 @@ final class LSInputOfTest {
             new IsEqual<>(size)
         );
     }
-
 }

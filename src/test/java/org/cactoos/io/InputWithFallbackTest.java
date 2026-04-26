@@ -50,5 +50,4 @@ final class InputWithFallbackTest {
             new EndsWith("works!")
         );
     }
-
 }

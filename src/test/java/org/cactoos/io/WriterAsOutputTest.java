@@ -43,5 +43,4 @@ final class WriterAsOutputTest {
             );
         }
     }
-
 }

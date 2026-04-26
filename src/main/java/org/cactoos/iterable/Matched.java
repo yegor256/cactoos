@@ -17,10 +17,11 @@ import org.cactoos.BiFunc;
  * @since 0.39
  */
 public final class Matched<X> extends IterableEnvelope<X> {
+
     /**
      * Ctor.
-     * @param fst The first part of duplex iterator.
-     * @param snd The second part of duplex iterator.
+     * @param fst The first part of duplex iterator
+     * @param snd The second part of duplex iterator
      */
     public Matched(
         final Iterable<? extends X> fst,
@@ -31,10 +32,10 @@ public final class Matched<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
-     * @param fnc The function to detect the correlation between elements.
-     * @param fst The first part of duplex iterator.
-     * @param snd The second part of duplex iterator.
-     * @param <Y> Type of item in snd.
+     * @param fnc The function to detect the correlation between elements
+     * @param fst The first part of duplex iterator
+     * @param snd The second part of duplex iterator
+     * @param <Y> Type of item in snd
      */
     public <Y> Matched(
         final BiFunc<? super X, ? super Y, Boolean> fnc,

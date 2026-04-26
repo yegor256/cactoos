@@ -60,5 +60,4 @@ final class ReversedTest {
             new HasSize(7)
         );
     }
-
 }

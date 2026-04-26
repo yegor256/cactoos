@@ -24,5 +24,4 @@ public final class EmptyBytes implements Bytes {
     public byte[] asBytes() {
         return EmptyBytes.EMPTY;
     }
-
 }

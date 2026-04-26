@@ -43,7 +43,7 @@ final class PaddedStartTest {
     }
 
     @Test
-    void noPaddingIfRequestedLengthIsNegative()  {
+    void noPaddingIfRequestedLengthIsNegative() {
         MatcherAssert.assertThat(
             "Shouldn't consider negative min length",
             new PaddedStart(

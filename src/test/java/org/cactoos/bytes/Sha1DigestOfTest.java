@@ -70,5 +70,4 @@ final class Sha1DigestOfTest {
             )
         );
     }
-
 }

@@ -99,10 +99,9 @@ final class NoNullsTest {
 
     @Test
     void throwsErrorIfNullInAddAll() {
-        final Collection<Integer> nonulls = new NoNulls<>(new ArrayList<>(0));
         MatcherAssert.assertThat(
             "Must throw exception for nullable #addAll() parameter collection",
-            () -> nonulls.addAll(new ListOf<>(1, 2, null)),
+            () -> new NoNulls<>(new ArrayList<Integer>(0)).addAll(new ListOf<>(1, 2, null)),
             new Throws<>(
                 "Item #2 of #toArray() is NULL",
                 IllegalStateException.class
@@ -265,5 +264,4 @@ final class NoNullsTest {
             new IsNot<>(new IsTrue())
         );
     }
-
 }

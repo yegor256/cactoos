@@ -37,5 +37,4 @@ public final class Repeated<T> extends IterableEnvelope<T> {
             )
         );
     }
-
 }

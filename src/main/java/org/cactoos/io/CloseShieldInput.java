@@ -34,5 +34,4 @@ public final class CloseShieldInput implements Input {
     public InputStream stream() throws Exception {
         return new CloseShieldInputStream(this.origin.stream());
     }
-
 }

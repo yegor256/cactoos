@@ -27,12 +27,7 @@ public final class Diff<T> extends SetEnvelope<T> {
      * @param second Second set
      */
     public Diff(final Iterable<T> first, final Iterable<T> second) {
-        super(
-            computeDiff(
-                new SetOf<>(first),
-                new SetOf<>(second)
-            )
-        );
+        this(new SetOf<>(first), new SetOf<>(second));
     }
 
     /**

@@ -24,7 +24,7 @@ final class FuncEnvelopeTest {
     void envelopeDelegatesCalls() {
         MatcherAssert.assertThat(
             "must delegate calls to apply",
-            new Append(" stuff"),
+            new FuncEnvelopeTest.Append(" stuff"),
             new IsApplicable<>(2, new IsText("2 stuff"))
         );
     }

@@ -33,8 +33,8 @@ public final class HeadInputStream extends InputStream {
 
     /**
      * Ctor.
-     * @param orig The original input stream.
-     * @param len A number of bytes that can be read from the beginning.
+     * @param orig The original input stream
+     * @param len A number of bytes that can be read from the beginning
      */
     public HeadInputStream(final InputStream orig, final int len) {
         super();

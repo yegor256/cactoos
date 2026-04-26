@@ -16,18 +16,11 @@ import org.cactoos.scalar.Reduced;
  * @since 0.36
  */
 public final class Joined implements Input {
+
     /**
      * The inputs.
      */
     private final Iterable<? extends Input> inputs;
-
-    /**
-     * Ctor.
-     * @param ipts Iterable of inputs
-     */
-    public Joined(final Iterable<? extends Input> ipts) {
-        this.inputs = ipts;
-    }
 
     /**
      * Ctor.
@@ -41,6 +34,14 @@ public final class Joined implements Input {
                 new IterableOf<>(rest)
             )
         );
+    }
+
+    /**
+     * Ctor.
+     * @param ipts Iterable of inputs
+     */
+    public Joined(final Iterable<? extends Input> ipts) {
+        this.inputs = ipts;
     }
 
     @Override

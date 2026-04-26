@@ -17,11 +17,11 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Immutable}.
- *
  * @since 0.58.0
  */
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.UnnecessaryLocalRule"})
 final class ImmutableTest {
+
     @Test
     void size() {
         MatcherAssert.assertThat(
@@ -86,7 +86,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testToArray() {
+    void toArrayTyped() {
         MatcherAssert.assertThat(
             "toArray(T[]) must be equals to original",
             new org.cactoos.set.Immutable<>(
@@ -156,7 +156,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testAddAll() {
+    void addAllAgain() {
         MatcherAssert.assertThat(
             "addAll(Collection) must throw exception",
             () -> new org.cactoos.set.Immutable<>(
@@ -215,7 +215,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testAdd() {
+    void addsWithReturn() {
         MatcherAssert.assertThat(
             "add(T) must throw exception",
             () -> {
@@ -232,7 +232,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testRemove() {
+    void removesWithReturn() {
         MatcherAssert.assertThat(
             "remove(Object) must throw exception",
             () -> new org.cactoos.set.Immutable<>(
@@ -293,7 +293,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testHashCode() {
+    void hashes() {
         MatcherAssert.assertThat(
             "hashCode() must be equal to hashCode of the corresponding Set",
             new org.cactoos.set.Immutable<>(new SetOf<>(1, 2)).hashCode(),
@@ -304,7 +304,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testToString() {
+    void stringRepresentation() {
         MatcherAssert.assertThat(
             "toString() must be equal to toString of the corresponding Set",
             new org.cactoos.set.Immutable<>(new SetOf<>("a", "b", "c")).toString(),

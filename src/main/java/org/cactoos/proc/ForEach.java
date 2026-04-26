@@ -52,5 +52,4 @@ public final class ForEach<X> implements Proc<Iterable<? extends X>> {
             new FuncOf<>(this.proc, true), input
         ).value();
     }
-
 }

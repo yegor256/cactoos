@@ -92,5 +92,4 @@ public final class IoCheckedText implements Text {
     public int hashCode() {
         return this.toString().hashCode();
     }
-
 }

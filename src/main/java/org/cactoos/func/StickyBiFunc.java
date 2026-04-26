@@ -20,7 +20,8 @@ import org.cactoos.scalar.Sticky;
  * <p>This {@link BiFunc} decorator technically is an in-memory
  * cache.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
+ *
  * @param <X> Type of input
  * @param <Y> Type of input
  * @param <Z> Type of output
@@ -75,5 +76,4 @@ public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
         }
         return this.cache.get(key);
     }
-
 }

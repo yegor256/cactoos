@@ -25,7 +25,6 @@ import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link TextOf}.
- *
  * @since 0.12
  * @checkstyle JavadocMethodCheck (1000 lines)
  * @checkstyle StringLiteralsConcatenationCheck (1000 lines)
@@ -226,10 +225,11 @@ final class TextOfTest {
             "Can't read multiline inputStream",
             new TextOf(
                 new ByteArrayInputStream(
-                    "line1-\nline2".getBytes(StandardCharsets.UTF_8.name())
+                    String.format("line1-%cline2", (char) 10)
+                        .getBytes(StandardCharsets.UTF_8.name())
                 )
             ),
-            new IsText("line1-\nline2")
+            new IsText(String.format("line1-%cline2", (char) 10))
         );
     }
 
@@ -239,10 +239,11 @@ final class TextOfTest {
             "Can't read multiline inputStream with carriage return",
             new TextOf(
                 new ByteArrayInputStream(
-                    "line1-\rline2".getBytes(StandardCharsets.UTF_8.name())
+                    String.format("line1-%cline2", (char) 13)
+                        .getBytes(StandardCharsets.UTF_8.name())
                 )
             ),
-            new IsText("line1-\rline2")
+            new IsText(String.format("line1-%cline2", (char) 13))
         );
     }
 
@@ -312,7 +313,7 @@ final class TextOfTest {
      * value.
      */
     @Test
-    void testEquals() {
+    void equalsIfSameValue() {
         final String text = "equals";
         MatcherAssert.assertThat(
             "Must match text representing the same value",
@@ -327,7 +328,7 @@ final class TextOfTest {
      * value (in this case a {@link Joined}).
      */
     @Test
-    void testEqualsOtherText() {
+    void equalsToOtherText() {
         MatcherAssert.assertThat(
             "Must match another text representing the same value",
             new TextOf("isequaltoanothertext"),
@@ -343,7 +344,7 @@ final class TextOfTest {
      * instance of Text without failing
      */
     @Test
-    void testDoesNotEqualsNonTextObject() {
+    void doesntEqualNonTextObject() {
         MatcherAssert.assertThat(
             "Must match another object which is not a string",
             new TextOf("is not equals to null"),
@@ -358,7 +359,7 @@ final class TextOfTest {
      * that the envelope value is not equal to null without failing
      */
     @Test
-    void testDoesNotEqualsFalse() {
+    void doesntEqualNull() {
         MatcherAssert.assertThat(
             "Must not equals null",
             new TextOf("is not equals to not Text object"),
@@ -372,7 +373,7 @@ final class TextOfTest {
      * the String it represents.
      */
     @Test
-    void testHashCode() {
+    void hashesAsString() {
         final String hash = "hashCode";
         MatcherAssert.assertThat(
             "Must match its represented String hashcode",

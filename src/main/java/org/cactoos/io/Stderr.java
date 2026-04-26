@@ -20,5 +20,4 @@ public final class Stderr implements Output {
     public OutputStream stream() {
         return System.err;
     }
-
 }

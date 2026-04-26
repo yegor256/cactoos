@@ -21,5 +21,4 @@ public final class ScalarOfSupplier<T> extends ScalarEnvelope<T> {
     public ScalarOfSupplier(final Supplier<? extends T> supplier) {
         super(supplier::get);
     }
-
 }

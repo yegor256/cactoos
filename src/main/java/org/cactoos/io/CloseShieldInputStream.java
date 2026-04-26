@@ -77,5 +77,4 @@ public final class CloseShieldInputStream extends InputStream {
     public boolean markSupported() {
         return this.inner.get().markSupported();
     }
-
 }

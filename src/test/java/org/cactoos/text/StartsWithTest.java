@@ -64,5 +64,4 @@ final class StartsWithTest {
             new IsNot<>(new IsTrue())
         );
     }
-
 }

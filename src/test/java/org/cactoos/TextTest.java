@@ -53,5 +53,4 @@ final class TextTest {
             new IsText(message)
         );
     }
-
 }

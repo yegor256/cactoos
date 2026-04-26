@@ -11,7 +11,6 @@ import org.cactoos.Output;
 
 /**
  * Output that writes compressed data in the GZIP file format.
- *
  * @since 0.29
  */
 public final class GzipOutput implements Output {

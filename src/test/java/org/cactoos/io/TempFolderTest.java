@@ -59,14 +59,13 @@ final class TempFolderTest {
             new ForEach<>(
                 new ProcOf<String>(
                     name -> {
-                        final Path dir = Files.createDirectories(
-                            new File(path.toFile(), name).toPath()
-                        );
                         new ForEach<>(
                             new ProcOf<String>(
                                 filename -> {
                                     new TempFile(
-                                        () -> dir,
+                                        () -> Files.createDirectories(
+                                            new File(path.toFile(), name).toPath()
+                                        ),
                                         filename,
                                         ""
                                     ).value();
@@ -95,18 +94,16 @@ final class TempFolderTest {
     @Test
     void createDirectoryWithDirectoriesAndFiles() throws Exception {
         try (TempFolder temp = new TempFolder()) {
-            final Path root = temp.value();
             new ForEach<>(
                 new ProcOf<String>(
                     name -> {
-                        final Path dir = Files.createDirectories(
-                            new File(root.toFile(), name).toPath()
-                        );
                         new ForEach<>(
                             new ProcOf<String>(
                                 filename -> {
                                     new TempFile(
-                                        () -> dir,
+                                        () -> Files.createDirectories(
+                                            new File(temp.value().toFile(), name).toPath()
+                                        ),
                                         filename,
                                         ""
                                     ).value();

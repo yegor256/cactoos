@@ -25,5 +25,4 @@ final class CallableOfTest {
             new IsEqual<>(1)
         );
     }
-
 }

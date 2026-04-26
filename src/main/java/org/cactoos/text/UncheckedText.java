@@ -103,5 +103,4 @@ public final class UncheckedText implements Text {
     public int hashCode() {
         return this.asString().hashCode();
     }
-
 }

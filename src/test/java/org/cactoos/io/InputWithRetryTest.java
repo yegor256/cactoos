@@ -31,7 +31,7 @@ final class InputWithRetryTest {
                     }
                     return new DeadInputStream();
                 },
-                3,
+                cnt.get() + 3,
                 Duration.ZERO
             ).stream().read(),
             new IsEqual<>(-1)
@@ -50,7 +50,7 @@ final class InputWithRetryTest {
                     }
                     return new DeadInputStream();
                 },
-                3
+                cnt.get() + 3
             )::stream,
             new Throws<>(IllegalArgumentException.class)
         );

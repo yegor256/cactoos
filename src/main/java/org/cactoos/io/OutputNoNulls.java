@@ -11,10 +11,10 @@ import org.cactoos.Output;
 
 /**
  * Output check for no nulls.
- *
  * @since 0.10
  */
 public final class OutputNoNulls implements Output {
+
     /**
      * The output.
      */

@@ -49,7 +49,10 @@ final class StickyTest {
             )
         );
         MatcherAssert.assertThat(
-            "Must cache entries and return same values on repeated access",
+            String.format(
+                "Must cache entries and return same values on repeated access, counter=%d",
+                counter.get()
+            ),
             map.get("ключ"),
             new IsEqual<>(map.get("ключ"))
         );
@@ -227,7 +230,10 @@ final class StickyTest {
             )
         );
         MatcherAssert.assertThat(
-            "Must ignore changes to underlying collection after caching",
+            String.format(
+                "Must ignore changes to underlying collection after caching, size=%d",
+                size.get()
+            ),
             map.size(),
             new IsEqual<>(map.size())
         );

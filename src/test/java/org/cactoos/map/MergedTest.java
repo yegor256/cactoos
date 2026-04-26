@@ -128,5 +128,4 @@ final class MergedTest {
             )
         );
     }
-
 }

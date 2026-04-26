@@ -139,7 +139,7 @@ final class TextOfDateTimeTest {
     }
 
     @Test
-    void dateFormattedUsingCustomFormat()  {
+    void dateFormattedUsingCustomFormat() {
         MatcherAssert.assertThat(
             "Must format a java.util.Date with custom format.",
             new TextOfDateTime(

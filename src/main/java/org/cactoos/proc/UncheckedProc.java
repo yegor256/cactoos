@@ -39,5 +39,4 @@ public final class UncheckedProc<X> implements Proc<X> {
             throw new UncheckedIOException(ex);
         }
     }
-
 }

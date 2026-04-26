@@ -54,5 +54,4 @@ public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
             new FuncOf<>(this.proc, true), input
         ).value();
     }
-
 }

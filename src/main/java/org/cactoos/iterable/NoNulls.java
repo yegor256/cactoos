@@ -33,5 +33,4 @@ public final class NoNulls<X> implements Iterable<X> {
     public Iterator<X> iterator() {
         return new org.cactoos.iterator.NoNulls<>(this.origin.iterator());
     }
-
 }

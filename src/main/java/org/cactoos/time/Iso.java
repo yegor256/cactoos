@@ -17,5 +17,4 @@ public final class Iso implements Scalar<DateTimeFormatter> {
     public DateTimeFormatter value() {
         return DateTimeFormatter.ISO_OFFSET_DATE_TIME;
     }
-
 }

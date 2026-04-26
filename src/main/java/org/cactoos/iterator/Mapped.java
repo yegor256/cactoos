@@ -55,9 +55,7 @@ public final class Mapped<Y> extends IteratorEnvelope<Y> {
                 public void remove() {
                     iterator.remove();
                 }
-
             }
         );
     }
-
 }

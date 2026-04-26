@@ -19,7 +19,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
  * @param <E> Type of source item
  * @since 0.23
  */
-public final class BehavesAsList<E> extends TypeSafeMatcher<List<E>>  {
+public final class BehavesAsList<E> extends TypeSafeMatcher<List<E>> {
 
     /**
      * Sample item.

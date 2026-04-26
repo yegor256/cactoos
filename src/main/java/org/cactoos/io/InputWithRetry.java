@@ -12,7 +12,6 @@ import org.cactoos.func.Retry;
 
 /**
  * Input with retry.
- *
  * @since 1.0
  */
 public final class InputWithRetry implements Input {
@@ -42,13 +41,13 @@ public final class InputWithRetry implements Input {
         this(main, new Retry<>(Input::stream, att));
     }
 
+    public InputWithRetry(final Input main, final int att, final Duration dur) {
+        this(main, new Retry<>(Input::stream, att, dur));
+    }
+
     private InputWithRetry(final Input input, final Retry<Input, InputStream> retry) {
         this.input = input;
         this.retry = retry;
-    }
-
-    public InputWithRetry(final Input main, final int att, final Duration dur) {
-        this(main, new Retry<>(Input::stream, att, dur));
     }
 
     @Override

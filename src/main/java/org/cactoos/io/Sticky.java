@@ -51,5 +51,4 @@ public final class Sticky implements Input {
             new IoChecked<>(this.cache).value()
         );
     }
-
 }

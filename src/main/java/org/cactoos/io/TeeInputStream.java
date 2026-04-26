@@ -95,5 +95,4 @@ public final class TeeInputStream extends InputStream {
     public boolean markSupported() {
         return this.input.markSupported();
     }
-
 }

@@ -29,12 +29,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      */
     public MapDiff(final Iterable<Map.Entry<K, V>> first,
         final Iterable<Map.Entry<K, V>> second) {
-        super(
-            computeDiff(
-                mapFromEntries(first),
-                mapFromEntries(second)
-            )
-        );
+        this(mapFromEntries(first), mapFromEntries(second));
     }
 
     /**

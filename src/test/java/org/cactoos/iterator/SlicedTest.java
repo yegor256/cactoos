@@ -114,7 +114,7 @@ final class SlicedTest {
         final AtomicInteger counter = new AtomicInteger(0);
         new Sliced<>(
             0,
-            new HookedIterator<>(
+            new SlicedTest.HookedIterator<>(
                 counter::incrementAndGet,
                 list.iterator()
             )

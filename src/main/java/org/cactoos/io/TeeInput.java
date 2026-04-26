@@ -849,5 +849,4 @@ public final class TeeInput implements Input {
             this.source.stream(), this.target.stream()
         );
     }
-
 }

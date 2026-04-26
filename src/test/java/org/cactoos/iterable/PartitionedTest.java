@@ -38,5 +38,4 @@ final class PartitionedTest {
             new HasValue<>(2L)
         );
     }
-
 }

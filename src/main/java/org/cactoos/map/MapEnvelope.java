@@ -120,5 +120,4 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     public final int hashCode() {
         return new HashCode(this.map).value();
     }
-
 }

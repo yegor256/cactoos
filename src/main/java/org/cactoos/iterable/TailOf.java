@@ -12,7 +12,7 @@ package org.cactoos.iterable;
  * @param <T> Element type
  * @since 0.31
  */
-public final class TailOf<T> extends IterableEnvelope<T>  {
+public final class TailOf<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.

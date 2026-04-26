@@ -33,7 +33,7 @@ public final class NoNulls<X> implements Collection<X> {
      *      <li>The client queries items of original Collection of ? extends X</li>
      *      <li>Runtime exception occurs</li>
      *  </ol>
-     * @param items Original one.
+     * @param items Original one
      */
     public NoNulls(final Collection<X> items) {
         this.col = items;
@@ -120,22 +120,22 @@ public final class NoNulls<X> implements Collection<X> {
 
     @Override
     public boolean containsAll(final Collection<?> items) {
-        return this.col.containsAll(new NoNulls<>(items));
+        return this.col.containsAll(new org.cactoos.collection.NoNulls<>(items));
     }
 
     @Override
     public boolean addAll(final Collection<? extends X> items) {
-        return this.col.addAll(new NoNulls<>(items));
+        return this.col.addAll(new org.cactoos.collection.NoNulls<>(items));
     }
 
     @Override
     public boolean removeAll(final Collection<?> items) {
-        return this.col.removeAll(new NoNulls<>(items));
+        return this.col.removeAll(new org.cactoos.collection.NoNulls<>(items));
     }
 
     @Override
     public boolean retainAll(final Collection<?> items) {
-        return this.col.retainAll(new NoNulls<>(items));
+        return this.col.retainAll(new org.cactoos.collection.NoNulls<>(items));
     }
 
     @Override

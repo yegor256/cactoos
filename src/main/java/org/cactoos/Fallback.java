@@ -88,11 +88,11 @@ public interface Fallback<X> extends Func<Throwable, X> {
 
     /**
      * No fallback. Throw unchecked exception.
-     *
-     * @param <X> Type of result.
+     * @param <X> Type of result
      * @since 1.0
      */
     final class None<X> implements Fallback<X> {
+
         @Override
         public int support(final Throwable exception) {
             return 0;

@@ -19,10 +19,8 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link AppendTo}.
- *
  * @since 1.0
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class AppendToTest {
 
     /**
@@ -81,14 +79,12 @@ final class AppendToTest {
     void appendsUnicodeToFile(@TempDir final Path wdir) throws Exception {
         final File source = wdir.resolve("appunitest.txt").toFile();
         final String first = "Hello, товарищ output #3 äÄ ";
-        try (OutputStream out = new OutputTo(source)
-            .stream()) {
+        try (OutputStream out = new OutputTo(source).stream()) {
             out.write(first.getBytes(StandardCharsets.UTF_8));
             out.flush();
         }
         final String second = "#4 äÄ üÜ öÖ and ß";
-        try (OutputStream out = new AppendTo(source)
-            .stream()) {
+        try (OutputStream out = new AppendTo(source).stream()) {
             out.write(second.getBytes(StandardCharsets.UTF_8));
             out.flush();
         }

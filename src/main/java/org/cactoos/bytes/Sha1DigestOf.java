@@ -14,12 +14,13 @@ import org.cactoos.Input;
  * @since 0.29
  */
 public final class Sha1DigestOf extends DigestEnvelope {
+
     /**
      * Ctor.
      * @param input The input
      */
     public Sha1DigestOf(final Input input) {
-        super(input, "SHA-1");
+        this(input, 16 << 10);
     }
 
     /**

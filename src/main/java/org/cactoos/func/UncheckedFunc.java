@@ -37,5 +37,4 @@ public final class UncheckedFunc<X, Y> implements Func<X, Y> {
             () -> this.func.apply(input)
         ).value();
     }
-
 }

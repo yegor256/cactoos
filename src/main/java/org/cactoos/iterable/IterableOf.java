@@ -75,27 +75,25 @@ public final class IterableOf<X> implements Iterable<X> {
                 new And(
                     () -> other != null,
                     () -> Iterable.class.isAssignableFrom(other.getClass()),
-                    () -> {
-                        return new ScalarWithFallback<>(
-                            new And(
-                                (X value) -> true,
-                                new Matched<>(
-                                    this,
-                                    (Iterable<X>) other
-                                )
-                            ),
-                            new IterableOf<>(
-                                new Fallback.From<>(
-                                    IllegalStateException.class,
-                                    ex -> false
-                                ),
-                                new Fallback.From<>(
-                                    NoSuchElementException.class,
-                                    ex -> false
-                                )
+                    () -> new ScalarWithFallback<>(
+                        new And(
+                            (X value) -> true,
+                            new Matched<>(
+                                this,
+                                (Iterable<X>) other
                             )
-                        ).value();
-                    }
+                        ),
+                        new org.cactoos.iterable.IterableOf<>(
+                            new Fallback.From<>(
+                                IllegalStateException.class,
+                                ex -> false
+                            ),
+                            new Fallback.From<>(
+                                NoSuchElementException.class,
+                                ex -> false
+                            )
+                        )
+                    ).value()
                 )
             )
         ).value();

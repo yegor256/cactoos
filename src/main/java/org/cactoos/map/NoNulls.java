@@ -145,7 +145,7 @@ public class NoNulls<K, V> implements Map<K, V> {
     @Override
     @SuppressWarnings("unchecked")
     public final void putAll(final Map<? extends K, ? extends V> items) {
-        this.map.putAll(new NoNulls<>((Map<K, V>) items));
+        this.map.putAll(new org.cactoos.map.NoNulls<>((Map<K, V>) items));
     }
 
     @Override

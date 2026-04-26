@@ -57,5 +57,4 @@ public final class StickyFunc<X, Y> implements Func<X, Y> {
     public Y apply(final X input) throws Exception {
         return this.func.apply(input, true);
     }
-
 }

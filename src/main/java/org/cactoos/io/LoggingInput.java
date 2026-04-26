@@ -65,5 +65,4 @@ public final class LoggingInput implements Input {
             this.logger
         );
     }
-
 }

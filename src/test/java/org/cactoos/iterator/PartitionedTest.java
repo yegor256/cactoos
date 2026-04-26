@@ -123,5 +123,4 @@ final class PartitionedTest {
             new Throws<>(NoSuchElementException.class)
         );
     }
-
 }

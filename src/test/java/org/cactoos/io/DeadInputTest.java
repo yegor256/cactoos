@@ -24,5 +24,4 @@ final class DeadInputTest {
             new HasContent("")
         );
     }
-
 }

@@ -226,5 +226,4 @@ final class MapOfTest {
             )
         );
     }
-
 }

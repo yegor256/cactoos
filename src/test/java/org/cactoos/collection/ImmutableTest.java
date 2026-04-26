@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Immutable}.
- *
  * @since 1.16
  */
 @SuppressWarnings("PMD.TooManyMethods")
@@ -83,7 +82,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testToArray() {
+    void toArrayTyped() {
         MatcherAssert.assertThat(
             "toArray(T[]) must be equals to original",
             new Immutable<>(
@@ -197,7 +196,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testToString() {
+    void stringRepresentation() {
         MatcherAssert.assertThat(
             "toString() must be equals to original",
             new Immutable<>(
@@ -210,7 +209,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testHashCode() {
+    void hashes() {
         MatcherAssert.assertThat(
             "hashCode() must be equals to original",
             new Immutable<>(
@@ -223,7 +222,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void testEquals() {
+    void equalsToOriginal() {
         final List<Integer> another = new ListOf<>(4, 5, 6);
         MatcherAssert.assertThat(
             "equals() must be equals to original",

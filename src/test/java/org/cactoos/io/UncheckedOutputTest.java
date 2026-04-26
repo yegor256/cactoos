@@ -29,5 +29,4 @@ final class UncheckedOutputTest {
             new Throws<>(RuntimeException.class)
         );
     }
-
 }

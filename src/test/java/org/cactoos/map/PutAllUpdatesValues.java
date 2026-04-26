@@ -17,7 +17,7 @@ import org.hamcrest.TypeSafeMatcher;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class PutAllUpdatesValues<K, V> extends
-    TypeSafeMatcher<Map<K, V>>  {
+    TypeSafeMatcher<Map<K, V>> {
 
     /**
      * Sample key.

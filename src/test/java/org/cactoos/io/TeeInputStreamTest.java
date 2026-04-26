@@ -50,7 +50,7 @@ final class TeeInputStreamTest {
 
     @Test
     void leftInputClosed() throws Exception {
-        try (StringWriterMock write = new StringWriterMock()) {
+        try (StringWriterMock write = new TeeInputStreamTest.StringWriterMock()) {
             new LengthOf(
                 new TeeInput(
                     "foo",
@@ -80,7 +80,7 @@ final class TeeInputStreamTest {
             this.closed.set(true);
         }
 
-        public boolean isClosed() {
+        boolean isClosed() {
             return this.closed.get();
         }
     }

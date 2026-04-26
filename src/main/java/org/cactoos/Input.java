@@ -35,5 +35,4 @@ public interface Input {
      * @throws Exception If something goes wrong
      */
     InputStream stream() throws Exception;
-
 }

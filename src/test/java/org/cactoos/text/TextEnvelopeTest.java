@@ -16,16 +16,17 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 0.32
  */
 final class TextEnvelopeTest {
+
     /**
      * Test for {@link TextEnvelope#asString()} method. Must assert that
      * the envelope asString value is equal to its string value.
      */
     @Test
-    void testAsString() {
+    void asStringMatches() {
         final String text = "asString";
         MatcherAssert.assertThat(
             "Envelope value does not match String value",
-            new TextEnvelopeDummy(text),
+            new TextEnvelopeTest.TextEnvelopeDummy(text),
             new IsText(text)
         );
     }
@@ -34,10 +35,10 @@ final class TextEnvelopeTest {
      * Dummy class for {@link TextEnvelope} testing.
      * @since 0.32
      */
-    private final class TextEnvelopeDummy extends TextEnvelope {
+    private static final class TextEnvelopeDummy extends TextEnvelope {
+
         /**
          * Ctor.
-         *
          * @param input The String
          */
         TextEnvelopeDummy(final String input) {
@@ -46,19 +47,16 @@ final class TextEnvelopeTest {
 
         /**
          * Ctor.
-         *
          * @param input The String
          * @param cset The Charset
          */
-        TextEnvelopeDummy(final String input,
-            final Charset cset) {
+        TextEnvelopeDummy(final String input, final Charset cset) {
             this(() -> new String(input.getBytes(cset), cset));
         }
 
         /**
          * Ctor.
-         *
-         * @param scalar Text to be enveloped.
+         * @param scalar Text to be enveloped
          */
         TextEnvelopeDummy(final Scalar<String> scalar) {
             super(new TextOf(scalar));

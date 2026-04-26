@@ -80,28 +80,16 @@ final class SyncedTest {
                 "",
                 map -> {
                     MatcherAssert.assertThat(
-                        "",
-                        map.hasNext(),
-                        Matchers.anyOf(
-                            new IsEqual<>(true),
-                            new IsEqual<>(true)
-                        )
+                        "", map.hasNext(),
+                        Matchers.anyOf(new IsEqual<>(true), new IsEqual<>(true))
                     );
                     MatcherAssert.assertThat(
-                        "",
-                        map.next(),
-                        Matchers.anyOf(
-                            new IsEqual<>("a"),
-                            new IsEqual<>("b")
-                        )
+                        "", map.next(),
+                        Matchers.anyOf(new IsEqual<>("a"), new IsEqual<>("b"))
                     );
                     MatcherAssert.assertThat(
-                        "",
-                        map.hasNext(),
-                        Matchers.anyOf(
-                            new IsEqual<>(true),
-                            new IsEqual<>(false)
-                        )
+                        "", map.hasNext(),
+                        Matchers.anyOf(new IsEqual<>(true), new IsEqual<>(false))
                     );
                     return true;
                 },

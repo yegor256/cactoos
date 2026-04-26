@@ -24,7 +24,7 @@ public final class CloseShieldOutput implements Output {
 
     /**
      * Ctor.
-     * @param origin Output to preserve.
+     * @param origin Output to preserve
      */
     public CloseShieldOutput(final Output origin) {
         this.origin = origin;

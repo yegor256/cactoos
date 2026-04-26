@@ -12,7 +12,7 @@ package org.cactoos.iterable;
  * @param <T> Element type
  * @since 1.0.0
  */
-public final class Sliced<T> extends IterableEnvelope<T>  {
+public final class Sliced<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.

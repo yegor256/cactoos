@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test cases for {@link HeadInputStream}.
- *
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -22,10 +21,12 @@ final class HeadInputStreamTest {
 
     @Test
     void skipsLessThanTotal() throws Exception {
-        try (HeadInputStream stream = new HeadInputStream(
-            new InputOf("testSkippingLessThanTotal").stream(),
-            5
-        )) {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testSkippingLessThanTotal").stream(),
+                5
+            )
+        ) {
             MatcherAssert.assertThat(
                 "Incorrect number of bytes skipped",
                 stream.skip(3L),
@@ -36,10 +37,12 @@ final class HeadInputStreamTest {
 
     @Test
     void readsHeadAfterSkip() throws Exception {
-        try (HeadInputStream stream = new HeadInputStream(
-            new InputOf("testSkippingLessThanTotal").stream(),
-            5
-        )) {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testSkippingLessThanTotal").stream(),
+                5
+            )
+        ) {
             final long skipped = stream.skip(3L);
             MatcherAssert.assertThat(
                 String.format(
@@ -54,10 +57,12 @@ final class HeadInputStreamTest {
 
     @Test
     void skipsMoreThanTotal() throws Exception {
-        try (HeadInputStream stream = new HeadInputStream(
-            new InputOf("testSkippingMoreThanTotal").stream(),
-            5
-        )) {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testSkippingMoreThanTotal").stream(),
+                5
+            )
+        ) {
             MatcherAssert.assertThat(
                 "Incorrect number of bytes skipped",
                 stream.skip(7L),
@@ -68,10 +73,12 @@ final class HeadInputStreamTest {
 
     @Test
     void readsEmptyAfterSkipMoreThanTotal() throws Exception {
-        try (HeadInputStream stream = new HeadInputStream(
-            new InputOf("testSkippingMoreThanTotal").stream(),
-            5
-        )) {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testSkippingMoreThanTotal").stream(),
+                5
+            )
+        ) {
             final long skipped = stream.skip(7L);
             MatcherAssert.assertThat(
                 String.format(
@@ -86,10 +93,12 @@ final class HeadInputStreamTest {
 
     @Test
     void skipsBeforeReset() throws Exception {
-        try (HeadInputStream stream = new HeadInputStream(
-            new InputOf("testResetting").stream(),
-            5
-        )) {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testResetting").stream(),
+                5
+            )
+        ) {
             MatcherAssert.assertThat(
                 "Incorrect number of bytes skipped",
                 stream.skip(7L),
@@ -100,10 +109,12 @@ final class HeadInputStreamTest {
 
     @Test
     void resetRestoresStream() throws Exception {
-        try (HeadInputStream stream = new HeadInputStream(
-            new InputOf("testResetting").stream(),
-            5
-        )) {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testResetting").stream(),
+                5
+            )
+        ) {
             final long skipped = stream.skip(7L);
             stream.reset();
             MatcherAssert.assertThat(
@@ -118,11 +129,13 @@ final class HeadInputStreamTest {
     }
 
     @Test
-    void testAvailableLessThanTotal() throws Exception {
-        try (HeadInputStream stream = new HeadInputStream(
-            new InputOf("testAvailableLessThanTotal").stream(),
-            5
-        )) {
+    void countsAvailableBytesLessThanTotal() throws Exception {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testAvailableLessThanTotal").stream(),
+                5
+            )
+        ) {
             MatcherAssert.assertThat(
                 "must count available bytes",
                 stream.available(),

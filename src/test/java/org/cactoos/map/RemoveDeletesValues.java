@@ -21,7 +21,7 @@ import org.hamcrest.core.IsNot;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class RemoveDeletesValues<K, V> extends
-    TypeSafeMatcher<Map<K, V>>  {
+    TypeSafeMatcher<Map<K, V>> {
 
     /**
      * Sample key.

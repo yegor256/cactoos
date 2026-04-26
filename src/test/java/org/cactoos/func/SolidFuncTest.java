@@ -49,5 +49,4 @@ final class SolidFuncTest {
             )
         );
     }
-
 }

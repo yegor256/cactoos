@@ -37,5 +37,4 @@ public interface Scalar<T> {
      * @throws Exception If fails
      */
     T value() throws Exception;
-
 }

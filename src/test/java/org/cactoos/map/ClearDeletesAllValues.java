@@ -18,7 +18,7 @@ import org.hamcrest.core.IsEqual;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ClearDeletesAllValues<K, V> extends
-    TypeSafeMatcher<Map<K, V>>  {
+    TypeSafeMatcher<Map<K, V>> {
 
     @Override
     public boolean matchesSafely(final Map<K, V> map) {

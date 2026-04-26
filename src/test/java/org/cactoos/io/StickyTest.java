@@ -57,7 +57,7 @@ final class StickyTest {
                     )
                 )
             ),
-            new EndsWith("est laborum.\n")
+            new EndsWith(String.format("est laborum.%c", (char) 10))
         );
     }
 
@@ -88,5 +88,4 @@ final class StickyTest {
             new IsEqual<>(size)
         );
     }
-
 }

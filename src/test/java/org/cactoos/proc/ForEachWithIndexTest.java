@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class ForEachWithIndexTest {
 
     @Test
@@ -36,5 +35,4 @@ final class ForEachWithIndexTest {
             )
         );
     }
-
 }

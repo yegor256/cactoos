@@ -80,5 +80,4 @@ final class WriterAsOutput implements Output {
     public OutputStream stream() {
         return new WriterAsOutputStream(this.writer, this.decoder, this.size);
     }
-
 }

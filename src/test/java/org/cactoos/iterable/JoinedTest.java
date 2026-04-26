@@ -53,5 +53,4 @@ final class JoinedTest {
             new IsEqual<>(new IterableOf<>(0, 1, 2, 3))
         );
     }
-
 }

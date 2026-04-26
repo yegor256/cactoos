@@ -21,5 +21,4 @@ public interface Bytes {
      * @throws Exception If fails
      */
     byte[] asBytes() throws Exception;
-
 }

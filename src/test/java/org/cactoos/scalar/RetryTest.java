@@ -51,30 +51,29 @@ final class RetryTest {
                     if (tries.getAndIncrement() <= 1) {
                         throw new IllegalArgumentException("Not enough tries");
                     }
-                    return 0;
+                    return tries.get();
                 }
             ),
-            new HasValue<>(0)
+            new HasValue<>(3)
         );
     }
 
     @Test
     void runsScalarMultipleTimesIgnoringNegativeDuration() {
-        final int times = 2;
         final AtomicInteger tries = new AtomicInteger(0);
         MatcherAssert.assertThat(
             "Should ignore negative duration",
             new Retry<>(
                 () -> {
-                    if (tries.getAndIncrement() < times) {
+                    if (tries.getAndIncrement() < 2) {
                         throw new IllegalArgumentException("Not yet");
                     }
-                    return 0;
+                    return tries.get();
                 },
                 Integer.MAX_VALUE,
                 Duration.of(-5L, ChronoUnit.DAYS)
             ),
-            new HasValue<>(0)
+            new HasValue<>(3)
         );
     }
 
@@ -90,7 +89,7 @@ final class RetryTest {
                     executions.add(Instant.now());
                     throw new IllegalArgumentException("Not done yet");
                 }
-                return 0;
+                return tries.get();
             },
             Integer.MAX_VALUE,
             Duration.ofMillis(wait)

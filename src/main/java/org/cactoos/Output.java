@@ -42,5 +42,4 @@ public interface Output {
      * @throws Exception If something goes wrong
      */
     OutputStream stream() throws Exception;
-
 }

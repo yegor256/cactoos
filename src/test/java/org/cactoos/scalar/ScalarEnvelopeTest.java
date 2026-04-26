@@ -23,7 +23,7 @@ final class ScalarEnvelopeTest {
     void envelopeDelegatesCalls() {
         MatcherAssert.assertThat(
             "must delegate calls to apply",
-            new Static(1),
+            new ScalarEnvelopeTest.Static(1),
             new HasValue<>(1)
         );
     }

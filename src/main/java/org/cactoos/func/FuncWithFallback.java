@@ -112,5 +112,4 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
             this.fallbacks
         ).value();
     }
-
 }

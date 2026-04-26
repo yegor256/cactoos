@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.Satisfies;
  *
  * @since 0.50
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class BiProcOfTest {
     @Test
     void worksWithFunc() {

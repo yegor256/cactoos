@@ -65,5 +65,4 @@ public final class SlowInputStream extends InputStream {
     public int read(final byte[] buf) throws IOException {
         return this.read(buf, 0, buf.length);
     }
-
 }

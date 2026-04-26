@@ -52,5 +52,4 @@ public final class Joined<X> extends ListEnvelope<X> {
                 .collect(Collectors.toList())
         );
     }
-
 }

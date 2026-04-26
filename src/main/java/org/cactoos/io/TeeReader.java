@@ -56,5 +56,4 @@ public final class TeeReader extends Reader {
             this.destination.close();
         }
     }
-
 }

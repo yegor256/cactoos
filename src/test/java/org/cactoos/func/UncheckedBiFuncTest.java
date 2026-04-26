@@ -54,5 +54,4 @@ final class UncheckedBiFuncTest {
             new Throws<>(IllegalStateException.class)
         );
     }
-
 }

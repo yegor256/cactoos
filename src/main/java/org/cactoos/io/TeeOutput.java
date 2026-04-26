@@ -93,5 +93,4 @@ public final class TeeOutput implements Output {
             this.target.stream(), this.copy.stream()
         );
     }
-
 }

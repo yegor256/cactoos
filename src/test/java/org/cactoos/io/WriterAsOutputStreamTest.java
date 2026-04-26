@@ -21,7 +21,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link WriterAsOutputStream}.
- *
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -54,10 +53,12 @@ final class WriterAsOutputStreamTest {
     @Test
     void writesLargeContentToFile(@TempDir final Path wdir) throws IOException {
         final Path temp = wdir.resolve("writestream1.txt");
-        try (OutputStreamWriter writer = new OutputStreamWriter(
-            Files.newOutputStream(temp.toAbsolutePath()),
-            StandardCharsets.UTF_8
-        )) {
+        try (
+            OutputStreamWriter writer = new OutputStreamWriter(
+                Files.newOutputStream(temp.toAbsolutePath()),
+                StandardCharsets.UTF_8
+            )
+        ) {
             MatcherAssert.assertThat(
                 "Can't copy Input to Output and return Input",
                 new TeeInput(
@@ -80,10 +81,12 @@ final class WriterAsOutputStreamTest {
     @Test
     void writesToFileAndRemovesIt(@TempDir final Path wdir) throws Exception {
         final Path temp = wdir.resolve("writestream2.txt");
-        try (OutputStreamWriter writer = new OutputStreamWriter(
-            Files.newOutputStream(temp.toAbsolutePath()),
-            StandardCharsets.UTF_8
-        )) {
+        try (
+            OutputStreamWriter writer = new OutputStreamWriter(
+                Files.newOutputStream(temp.toAbsolutePath()),
+                StandardCharsets.UTF_8
+            )
+        ) {
             new LengthOf(
                 new TeeInput(
                     new InputOf("Hello, товарищ! How are you?"),

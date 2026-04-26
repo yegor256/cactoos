@@ -51,5 +51,4 @@ final class MappedTest {
             new IsText("abc")
         );
     }
-
 }

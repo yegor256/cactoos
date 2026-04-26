@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class RepeatedTest {
 
     @Test

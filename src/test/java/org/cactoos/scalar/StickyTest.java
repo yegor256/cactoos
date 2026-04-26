@@ -29,5 +29,4 @@ final class StickyTest {
             new IsEqual<>(scalar.value() + scalar.value())
         );
     }
-
 }

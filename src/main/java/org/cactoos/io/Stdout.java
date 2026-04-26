@@ -20,5 +20,4 @@ public final class Stdout implements Output {
     public OutputStream stream() {
         return System.out;
     }
-
 }

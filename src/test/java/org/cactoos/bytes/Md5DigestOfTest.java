@@ -70,5 +70,4 @@ final class Md5DigestOfTest {
             )
         );
     }
-
 }

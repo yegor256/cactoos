@@ -53,5 +53,4 @@ final class FuncNoNullsTest {
             new Throws<>(IOException.class)
         );
     }
-
 }

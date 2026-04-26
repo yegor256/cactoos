@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link CloseShieldOutput}.
  * @since 1.0.0
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class CloseShieldOutputTest {
 
     @Test

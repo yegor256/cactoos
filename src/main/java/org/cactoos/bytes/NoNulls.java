@@ -9,10 +9,10 @@ import org.cactoos.Bytes;
 
 /**
  * Bytes check for no nulls.
- *
  * @since 0.11
  */
 public final class NoNulls implements Bytes {
+
     /**
      * The input.
      */

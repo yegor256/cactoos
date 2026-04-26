@@ -23,7 +23,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class BehavesAsCollection<E> extends
-    TypeSafeMatcher<Collection<E>>  {
+    TypeSafeMatcher<Collection<E>> {
 
     /**
      * Sample item.

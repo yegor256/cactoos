@@ -42,5 +42,4 @@ public final class Sticky<X> extends IterableEnvelope<X> {
             )
         );
     }
-
 }

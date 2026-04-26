@@ -19,7 +19,6 @@ import org.cactoos.Text;
  *
  * @since 0.1
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 public final class LengthOf extends ScalarEnvelope<Long> {
 
     /**
@@ -71,14 +70,8 @@ public final class LengthOf extends ScalarEnvelope<Long> {
             try (InputStream stream = input.stream()) {
                 final byte[] buf = new byte[max];
                 long length = 0L;
-                while (true) {
-                    final int len = stream.read(buf);
-                    if (len > 0) {
-                        length += len;
-                    }
-                    if (len < 0) {
-                        break;
-                    }
+                for (int len = stream.read(buf); len >= 0; len = stream.read(buf)) {
+                    length += len;
                 }
                 return length;
             }

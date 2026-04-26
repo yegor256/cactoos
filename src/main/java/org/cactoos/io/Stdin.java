@@ -20,5 +20,4 @@ public final class Stdin implements Input {
     public InputStream stream() {
         return System.in;
     }
-
 }

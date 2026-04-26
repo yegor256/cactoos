@@ -34,5 +34,4 @@ public final class UncheckedInput implements Input {
     public InputStream stream() {
         return new Unchecked<>(this.input::stream).value();
     }
-
 }

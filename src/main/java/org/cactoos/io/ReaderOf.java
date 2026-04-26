@@ -284,5 +284,4 @@ public final class ReaderOf extends Reader {
     public void close() throws IOException {
         this.source.value().close();
     }
-
 }

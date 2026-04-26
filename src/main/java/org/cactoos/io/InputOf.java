@@ -38,7 +38,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param file The file
      */
     @SuppressWarnings("PMD.AvoidFileStream")
@@ -52,7 +51,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param path The path
      */
     @SuppressWarnings("PMD.AvoidFileStream")
@@ -62,7 +60,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param uri The URI
      */
     public InputOf(final URI uri) {
@@ -71,7 +68,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param url The URL
      */
     public InputOf(final URL url) {
@@ -80,7 +76,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param url The url
      * @param proxy The proxy through which the connection is made
      */
@@ -90,7 +85,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param scalar The url
      */
     public InputOf(final Scalar<URL> scalar) {
@@ -99,7 +93,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      */
     public InputOf(final Reader rdr) {
@@ -157,7 +150,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param chars The chars
      */
     public InputOf(final char... chars) {
@@ -166,7 +158,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param chars The chars
      * @param charset The charset
      */
@@ -176,7 +167,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param chars The chars
      * @param charset The charset
      */
@@ -292,7 +282,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param input The input
      */
     private InputOf(final Input input) {
@@ -303,5 +292,4 @@ public final class InputOf implements Input {
     public InputStream stream() throws Exception {
         return this.origin.stream();
     }
-
 }

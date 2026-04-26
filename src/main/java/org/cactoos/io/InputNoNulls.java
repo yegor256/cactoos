@@ -11,10 +11,10 @@ import org.cactoos.Input;
 
 /**
  * Input check for no nulls.
- *
  * @since 0.10
  */
 public final class InputNoNulls implements Input {
+
     /**
      * The input.
      */

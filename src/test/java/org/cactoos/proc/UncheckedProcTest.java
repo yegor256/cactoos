@@ -49,5 +49,4 @@ final class UncheckedProcTest {
             new Throws<>(IllegalStateException.class)
         );
     }
-
 }

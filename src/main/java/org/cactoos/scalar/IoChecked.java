@@ -43,5 +43,4 @@ public final class IoChecked<T> implements Scalar<T> {
             IOException::new
         ).value();
     }
-
 }

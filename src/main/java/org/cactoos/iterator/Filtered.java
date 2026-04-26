@@ -109,5 +109,4 @@ public final class Filtered<X> implements Iterator<X> {
             "#remove() is not supported"
         );
     }
-
 }

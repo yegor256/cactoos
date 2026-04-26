@@ -44,5 +44,4 @@ final class UncheckedFuncTest {
             new Throws<>(IllegalStateException.class)
         );
     }
-
 }

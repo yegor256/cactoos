@@ -22,5 +22,4 @@ public final class Endless<T> extends IterableEnvelope<T> {
     public Endless(final T item) {
         super(new IterableOf<>(() -> new org.cactoos.iterator.Endless<>(item)));
     }
-
 }

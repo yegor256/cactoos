@@ -92,7 +92,7 @@ final class ImmutableTest {
             }
         };
         MatcherAssert.assertThat(
-            "must delegate toString to decorated iterator",
+            String.format("must delegate toString to decorated iterator, string=%s", string),
             new TextOf(new Immutable<>(iterator).toString()),
             new IsText(iterator.toString())
         );

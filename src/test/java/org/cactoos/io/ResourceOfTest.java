@@ -51,7 +51,7 @@ final class ResourceOfTest {
         MatcherAssert.assertThat(
             "Must read a text resource from classpath",
             ResourceOfTest.large(),
-            new EndsWith("est laborum.\n")
+            new EndsWith(String.format("est laborum.%c", (char) 10))
         );
     }
 
@@ -60,7 +60,7 @@ final class ResourceOfTest {
         MatcherAssert.assertThat(
             "Must read a text resource from classloader",
             ResourceOfTest.large(),
-            new EndsWith(" laborum.\n")
+            new EndsWith(String.format(" laborum.%c", (char) 10))
         );
     }
 
@@ -102,7 +102,7 @@ final class ResourceOfTest {
                     new TextOf("org/cactoos/small-text.txt")
                 )
             ),
-            new EndsWith("ex ea commodo\n")
+            new EndsWith(String.format("ex ea commodo%c", (char) 10))
         );
     }
 
@@ -132,5 +132,4 @@ final class ResourceOfTest {
             )
         );
     }
-
 }

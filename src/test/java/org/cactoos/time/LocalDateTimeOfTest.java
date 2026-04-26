@@ -49,5 +49,4 @@ final class LocalDateTimeOfTest {
             new HasValue<>(LocalDateTime.of(2017, 12, 13, 14, 15, 16, 17))
         );
     }
-
 }

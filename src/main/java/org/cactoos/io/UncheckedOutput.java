@@ -34,5 +34,4 @@ public final class UncheckedOutput implements Output {
     public OutputStream stream() {
         return new Unchecked<>(this.output::stream).value();
     }
-
 }

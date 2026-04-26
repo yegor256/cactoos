@@ -8,7 +8,6 @@ import org.cactoos.BiFunc;
 
 /**
  * BiFunc check for no nulls.
- *
  * @param <X> Type of input
  * @param <Y> Type of input
  * @param <Z> Type of output

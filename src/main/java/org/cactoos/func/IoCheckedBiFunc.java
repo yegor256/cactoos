@@ -12,7 +12,8 @@ import org.cactoos.scalar.IoChecked;
  * Func that doesn't throw checked {@link Exception}, but throws
  * {@link IOException} instead.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
+ *
  * @param <X> Type of input
  * @param <Y> Type of input
  * @param <Z> Type of output
@@ -39,5 +40,4 @@ public final class IoCheckedBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
             () -> this.func.apply(first, second)
         ).value();
     }
-
 }

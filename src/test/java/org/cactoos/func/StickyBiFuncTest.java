@@ -28,5 +28,4 @@ final class StickyBiFuncTest {
             new IsEqual<>(func.apply(true, true) + func.apply(true, true))
         );
     }
-
 }

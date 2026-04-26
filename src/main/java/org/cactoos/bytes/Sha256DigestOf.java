@@ -14,12 +14,13 @@ import org.cactoos.Input;
  * @since 0.29
  */
 public final class Sha256DigestOf extends DigestEnvelope {
+
     /**
      * Ctor.
      * @param input The input
      */
     public Sha256DigestOf(final Input input) {
-        super(input, "SHA-256");
+        this(input, 16 << 10);
     }
 
     /**

@@ -5,7 +5,6 @@
 
 /**
  * Bytes.
- *
  * @since 0.20.2
  */
 package org.cactoos.bytes;

@@ -121,5 +121,4 @@ final class HeadOfTest {
             new Throws<>(UnsupportedOperationException.class)
         );
     }
-
 }

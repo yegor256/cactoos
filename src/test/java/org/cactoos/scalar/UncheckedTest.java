@@ -55,5 +55,4 @@ final class UncheckedTest {
             new IsTrue()
         );
     }
-
 }

@@ -8,7 +8,6 @@ import org.cactoos.BiFunc;
 
 /**
  * Envelope of {@link BiFunc}.
- *
  * @param <X> Type of input
  * @param <Y> Type of input
  * @param <Z> Type of output

@@ -61,5 +61,4 @@ public abstract class SortedSetEnvelope<T> extends SetEnvelope<T> implements
     public final T last() {
         return this.origin.last();
     }
-
 }

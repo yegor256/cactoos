@@ -11,6 +11,7 @@ import org.cactoos.iterable.IterableEnvelope;
  * Base collection.
  *
  * <p>There is no thread-safety guarantee.</p>
+ *
  * @param <X> Element type
  * @since 0.23
  */

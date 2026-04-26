@@ -39,5 +39,4 @@ public final class IoCheckedBiProc<X, Y> implements BiProc<X, Y> {
             IOException::new
         ).exec(first, second);
     }
-
 }

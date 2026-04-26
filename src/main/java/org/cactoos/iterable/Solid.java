@@ -30,5 +30,4 @@ public final class Solid<X> extends IterableEnvelope<X> {
     public Solid(final Iterable<? extends X> iterable) {
         super(new Synced<>(new Sticky<>(iterable)));
     }
-
 }

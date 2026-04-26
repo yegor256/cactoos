@@ -71,5 +71,4 @@ public final class StartsWith implements Scalar<Boolean> {
     public Boolean value() throws Exception {
         return this.text.asString().startsWith(this.prefix.asString());
     }
-
 }

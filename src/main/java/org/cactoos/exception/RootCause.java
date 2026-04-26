@@ -25,7 +25,7 @@ public final class RootCause implements Scalar<Throwable> {
 
     /**
      * Ctor.
-     * @param exc The exception to iterate.
+     * @param exc The exception to iterate
      */
     public RootCause(final Throwable exc) {
         this(new IteratorOfStackTrace(exc));
@@ -33,7 +33,7 @@ public final class RootCause implements Scalar<Throwable> {
 
     /**
      * Ctor.
-     * @param iter The exception Iterator.
+     * @param iter The exception Iterator
      */
     public RootCause(final Iterator<Throwable> iter) {
         this(() -> new TailOf<>(1, iter));
@@ -41,7 +41,7 @@ public final class RootCause implements Scalar<Throwable> {
 
     /**
      * Ctor.
-     * @param itr Decorated iterator.
+     * @param itr Decorated iterator
      */
     public RootCause(final Scalar<Iterator<Throwable>> itr) {
         this.itr = itr;

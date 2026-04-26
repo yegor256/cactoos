@@ -31,5 +31,4 @@ final class SyncedTest {
             new RunsInThreads<>(new Synced<>(1, 0, -1, -1, 2))
         );
     }
-
 }

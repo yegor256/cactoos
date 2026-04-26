@@ -39,5 +39,4 @@ public final class Unchecked<T> implements Scalar<T> {
             throw new UncheckedIOException(ex);
         }
     }
-
 }

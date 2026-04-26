@@ -48,5 +48,4 @@ final class SlowInput implements Input {
     public InputStream stream() throws Exception {
         return new SlowInputStream(this.origin.stream());
     }
-
 }

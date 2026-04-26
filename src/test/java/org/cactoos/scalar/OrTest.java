@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Or}.
- *
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -79,7 +78,7 @@ final class OrTest {
     }
 
     @Test
-    void testProcIterable() throws Exception {
+    void executesProcOnIterable() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new Or(
             (Proc<Integer>) list::add,
@@ -93,7 +92,7 @@ final class OrTest {
     }
 
     @Test
-    void testProcVarargs() throws Exception {
+    void executesProcOnVarargs() throws Exception {
         final List<Integer> list = new LinkedList<>();
         new Or(
             (Proc<Integer>) list::add,
@@ -107,7 +106,7 @@ final class OrTest {
     }
 
     @Test
-    void testFuncIterable() {
+    void appliesFuncToIterable() {
         MatcherAssert.assertThat(
             "function should be called for iterable",
             new Or(
@@ -119,7 +118,7 @@ final class OrTest {
     }
 
     @Test
-    void testFuncVarargs() {
+    void appliesFuncToVarargs() {
         MatcherAssert.assertThat(
             "function should be called for varargs",
             new Or(
@@ -131,7 +130,7 @@ final class OrTest {
     }
 
     @Test
-    void testMultipleFuncConditionTrue() {
+    void evaluatesMultipleFuncTrueCondition() {
         MatcherAssert.assertThat(
             "Can't compare subject with true conditions",
             new Or(
@@ -145,7 +144,7 @@ final class OrTest {
     }
 
     @Test
-    void testMultipleFuncConditionFalse() {
+    void evaluatesMultipleFuncFalseCondition() {
         MatcherAssert.assertThat(
             "Can't compare subject with false conditions",
             new Or(

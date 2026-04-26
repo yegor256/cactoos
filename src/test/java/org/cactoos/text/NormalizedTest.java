@@ -23,5 +23,4 @@ final class NormalizedTest {
             new HasString("hello world")
         );
     }
-
 }

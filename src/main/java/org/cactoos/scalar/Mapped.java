@@ -38,5 +38,4 @@ public final class Mapped<U> extends ScalarEnvelope<U> {
     ) {
         super(() -> func.apply(scalar.value()));
     }
-
 }

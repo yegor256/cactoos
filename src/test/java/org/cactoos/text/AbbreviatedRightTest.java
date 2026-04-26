@@ -103,7 +103,7 @@ final class AbbreviatedRightTest {
     void abbreviatesTextThatChanges() {
         final AtomicInteger counter = new AtomicInteger(0);
         MatcherAssert.assertThat(
-            "Must abbreviate a text that changes",
+            String.format("Must abbreviate a text that changes, counter=%d", counter.get()),
             new AbbreviatedRight(
                 new TextOf(
                     () -> {

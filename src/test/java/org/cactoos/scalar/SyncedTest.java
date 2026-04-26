@@ -18,7 +18,6 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.24
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class SyncedTest {
 
     @Test
@@ -45,5 +44,4 @@ final class SyncedTest {
             new IsEqual<>(threads)
         );
     }
-
 }

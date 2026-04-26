@@ -169,7 +169,7 @@ public final class Immutable<T> implements List<T> {
 
     @Override
     public List<T> subList(final int start, final int end) {
-        return new Immutable<>(
+        return new org.cactoos.list.Immutable<>(
             this.list.subList(start, end)
         );
     }

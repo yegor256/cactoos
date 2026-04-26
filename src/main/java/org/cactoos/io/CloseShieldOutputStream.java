@@ -57,5 +57,4 @@ public final class CloseShieldOutputStream extends OutputStream {
     public void close() {
         this.inner.set(new DeadOutputStream());
     }
-
 }

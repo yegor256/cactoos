@@ -10,7 +10,6 @@ import org.cactoos.scalar.Checked;
 
 /**
  * BiFunc that throws exception of specified type.
- *
  * @param <X> Type of input
  * @param <Y> Type of input
  * @param <Z> Type of output
@@ -33,7 +32,7 @@ public final class CheckedBiFunc<X, Y, Z, E extends Exception> implements
     /**
      * Ctor.
      * @param original Original BiFunc
-     * @param fnc Function that wraps exceptions.
+     * @param fnc Function that wraps exceptions
      */
     public CheckedBiFunc(final BiFunc<X, Y, Z> original,
         final Func<Exception, E> fnc) {

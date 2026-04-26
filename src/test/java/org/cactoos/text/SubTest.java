@@ -73,5 +73,4 @@ final class SubTest {
             new HasString("wor")
         );
     }
-
 }

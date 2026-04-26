@@ -11,8 +11,7 @@ import org.cactoos.scalar.Checked;
 
 /**
  * Output that throws exception of specified type.
- *
- * @param <E> Exception's type.
+ * @param <E> Exception's type
  * @since 0.31
  */
 public final class CheckedOutput<E extends Exception> implements Output {
@@ -29,8 +28,8 @@ public final class CheckedOutput<E extends Exception> implements Output {
 
     /**
      * Ctor.
-     * @param orig Origin output.
-     * @param fnc Function that wraps exceptions.
+     * @param orig Origin output
+     * @param fnc Function that wraps exceptions
      */
     public CheckedOutput(final Output orig, final Func<? super Exception, ? extends E> fnc) {
         this.origin = orig;

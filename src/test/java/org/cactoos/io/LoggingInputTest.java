@@ -217,5 +217,4 @@ final class LoggingInputTest {
             logger.removeHandler(handler);
         }
     }
-
 }

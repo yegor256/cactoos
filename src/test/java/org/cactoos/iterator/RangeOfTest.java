@@ -14,14 +14,13 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test of range implementation.
- *
  * @since 1.0
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class RangeOfTest {
 
     @Test
-    void testIntegerRange() {
+    void generatesIntegerRange() {
         MatcherAssert.assertThat(
             "Must generate a range of integers",
             new ListOf<>(
@@ -32,7 +31,7 @@ final class RangeOfTest {
     }
 
     @Test
-    void testIntegerFibonacciRange() {
+    void generatesIntegerFibonacciRange() {
         final AtomicReference<Integer> last = new AtomicReference<>(0);
         MatcherAssert.assertThat(
             "Must generate a range of fibonacci integers",
@@ -52,7 +51,7 @@ final class RangeOfTest {
     }
 
     @Test
-    void testLongRange() {
+    void generatesLongRange() {
         MatcherAssert.assertThat(
             "Must generate a range of long",
             new ListOf<>(
@@ -63,7 +62,7 @@ final class RangeOfTest {
     }
 
     @Test
-    void testCharacterRange() {
+    void generatesCharacterRange() {
         MatcherAssert.assertThat(
             "Must generate a range of characters.",
             new ListOf<>(
@@ -74,7 +73,7 @@ final class RangeOfTest {
     }
 
     @Test
-    void testLocalDateRange() {
+    void generatesLocalDateRange() {
         MatcherAssert.assertThat(
             "Must generate a range of local dates.",
             new ListOf<>(
@@ -91,5 +90,4 @@ final class RangeOfTest {
             )
         );
     }
-
 }

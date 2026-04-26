@@ -65,5 +65,4 @@ public final class LoggingOutput implements Output {
             this.logger
         );
     }
-
 }

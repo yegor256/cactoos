@@ -62,5 +62,4 @@ final class Base64BytesTest {
             )
         );
     }
-
 }

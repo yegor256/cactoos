@@ -26,7 +26,7 @@ public final class DateOf implements Scalar<Date> {
 
     /**
      * Parses the provided date as ISO formatted.
-     * @param date The date to parse.
+     * @param date The date to parse
      */
     public DateOf(final CharSequence date) {
         this(date, new Iso().value());
@@ -34,8 +34,8 @@ public final class DateOf implements Scalar<Date> {
 
     /**
      * Parses the date using the provided format.
-     * @param date The date to parse.
-     * @param format The format to use.
+     * @param date The date to parse
+     * @param format The format to use
      */
     public DateOf(final CharSequence date, final String format) {
         this(date, DateTimeFormatter.ofPattern(format));
@@ -43,8 +43,8 @@ public final class DateOf implements Scalar<Date> {
 
     /**
      * Parsing the date using the provided formatter.
-     * @param date The date to parse.
-     * @param formatter The formatter to use.
+     * @param date The date to parse
+     * @param formatter The formatter to use
      */
     public DateOf(final CharSequence date, final DateTimeFormatter formatter) {
         this.parsed = new Unchecked<>(
@@ -64,5 +64,4 @@ public final class DateOf implements Scalar<Date> {
     public Date value() {
         return this.parsed.value();
     }
-
 }
