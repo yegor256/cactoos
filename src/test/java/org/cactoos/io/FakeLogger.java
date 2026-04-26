@@ -5,6 +5,7 @@
 package org.cactoos.io;
 
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
@@ -14,8 +15,17 @@ import java.util.logging.Logger;
  *
  * @since 0.29
  */
-@SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
 public final class FakeLogger extends Logger {
+
+    /**
+     * Captured records handler.
+     */
+    private final FakeHandler handler;
+
+    /**
+     * Threshold level.
+     */
+    private final Level threshold;
 
     /**
      * Ctor.
@@ -47,13 +57,29 @@ public final class FakeLogger extends Logger {
      */
     public FakeLogger(final String name, final Level lvl) {
         super(name, null);
-        this.setUseParentHandlers(false);
-        this.addHandler(new FakeHandler());
-        this.setLevel(lvl);
+        this.handler = new FakeHandler();
+        this.threshold = lvl;
+    }
+
+    @Override
+    public Level getLevel() {
+        return this.threshold;
+    }
+
+    @Override
+    public boolean getUseParentHandlers() {
+        return false;
+    }
+
+    @Override
+    public void log(final LogRecord record) {
+        if (record.getLevel().intValue() >= this.threshold.intValue()) {
+            this.handler.publish(record);
+        }
     }
 
     @Override
     public String toString() {
-        return this.getHandlers()[0].toString();
+        return this.handler.toString();
     }
 }

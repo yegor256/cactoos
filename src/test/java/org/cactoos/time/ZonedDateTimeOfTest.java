@@ -21,7 +21,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class ZonedDateTimeOfTest {
 
     @Test
-    void testParsingIsoFormattedStringToZonedDateTime() {
+    void parsesIsoFormattedStringToZonedDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a ZonedDateTime with default/ISO format.",
             new ZonedDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
@@ -35,7 +35,7 @@ final class ZonedDateTimeOfTest {
     }
 
     @Test
-    void testParsingFormattedStringWithZoneToZonedDateTime() {
+    void parsesFormattedStringWithZoneToZonedDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a ZonedDateTime with custom format and zone.",
             new ZonedDateTimeOf(
@@ -53,7 +53,7 @@ final class ZonedDateTimeOfTest {
     }
 
     @Test
-    void testParsingFormattedStringWithFormatterToZonedDateTime() {
+    void parsesFormattedStringWithFormatterToZonedDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a ZonedDateTime with custom format and zone.",
             new ZonedDateTimeOf(

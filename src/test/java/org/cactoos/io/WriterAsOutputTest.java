@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link WriterAsOutput}.
- *
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -27,10 +26,12 @@ final class WriterAsOutputTest {
     @Test
     void writesLargeContentToFile(@TempDir final Path wdir) throws IOException {
         final Path temp = wdir.resolve("cactoos-1.txt-1");
-        try (OutputStreamWriter writer = new OutputStreamWriter(
-            Files.newOutputStream(temp.toAbsolutePath()),
-            StandardCharsets.UTF_8
-        )) {
+        try (
+            OutputStreamWriter writer = new OutputStreamWriter(
+                Files.newOutputStream(temp.toAbsolutePath()),
+                StandardCharsets.UTF_8
+            )
+        ) {
             MatcherAssert.assertThat(
                 "Can't copy Input to Output and return Input",
                 new TeeInput(

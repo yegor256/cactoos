@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test Case for {@link Skipped}.
- *
  * @since 0.34
  * @checkstyle JavadocMethodCheck (500 lines)
  */

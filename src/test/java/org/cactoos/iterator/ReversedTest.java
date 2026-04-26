@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test case for {@link Reversed}.
- *
  * @since 0.45
  */
 final class ReversedTest {

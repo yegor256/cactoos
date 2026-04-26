@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link LSInputOf}.
- *
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle AbbreviationAsWordInNameCheck (5 lines)

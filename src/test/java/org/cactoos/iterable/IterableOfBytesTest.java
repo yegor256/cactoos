@@ -12,11 +12,11 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link IterableOfBytes}.
- *
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class IterableOfBytesTest {
+
     @Test
     void convertsTextToIterableOfBytes() {
         MatcherAssert.assertThat(

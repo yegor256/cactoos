@@ -10,7 +10,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link MaxOf}.
- *
  * @since 0.10
  */
 @SuppressWarnings("PMD.TooManyMethods")

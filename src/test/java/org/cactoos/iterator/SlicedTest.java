@@ -14,6 +14,7 @@ import org.cactoos.scalar.Constant;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -112,17 +113,16 @@ final class SlicedTest {
         final List<String> list = new LinkedList<>();
         list.add("1");
         final AtomicInteger counter = new AtomicInteger(0);
-        new Sliced<>(
-            0,
-            new SlicedTest.HookedIterator<>(
-                counter::incrementAndGet,
-                list.iterator()
-            )
-        ).hasNext();
         MatcherAssert.assertThat(
             "Must call hasNext on underlying iterator only once",
-            counter.get(),
-            new IsEqual<>(1)
+            new Sliced<>(
+                0,
+                new SlicedTest.HookedIterator<>(
+                    counter::incrementAndGet,
+                    list.iterator()
+                )
+            ).hasNext() && counter.get() == 1,
+            new IsTrue()
         );
     }
 

@@ -12,11 +12,11 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link IoCheckedProc}.
- *
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class IoCheckedProcTest {
+
     @Test
     void rethrowsIoException() {
         final IOException exception = new IOException("intended");

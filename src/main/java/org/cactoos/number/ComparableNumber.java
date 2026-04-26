@@ -12,7 +12,7 @@ package org.cactoos.number;
  *
  * @since 1.0.0
  */
-public final class ComparableNumber extends NumberEnvelope
+public final class ComparableNumber extends Number
     implements Comparable<ComparableNumber> {
 
     /**
@@ -21,11 +21,37 @@ public final class ComparableNumber extends NumberEnvelope
     private static final long serialVersionUID = -2598821437507165938L;
 
     /**
+     * Wrapped number.
+     */
+    private final Number wrapped;
+
+    /**
      * Ctor.
      * @param nbr Number
      */
     public ComparableNumber(final Number nbr) {
-        super(nbr);
+        super();
+        this.wrapped = nbr;
+    }
+
+    @Override
+    public int intValue() {
+        return this.wrapped.intValue();
+    }
+
+    @Override
+    public long longValue() {
+        return this.wrapped.longValue();
+    }
+
+    @Override
+    public float floatValue() {
+        return this.wrapped.floatValue();
+    }
+
+    @Override
+    public double doubleValue() {
+        return this.wrapped.doubleValue();
     }
 
     @Override
@@ -35,11 +61,16 @@ public final class ComparableNumber extends NumberEnvelope
 
     @Override
     public boolean equals(final Object obj) {
-        return super.equals(obj);
+        return this == obj || this.wrapped.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return this.wrapped.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return this.wrapped.toString();
     }
 }

@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test Case for {@link Shuffled}.
- *
  * @since 0.20
  * @checkstyle JavadocMethodCheck (500 lines)
  */

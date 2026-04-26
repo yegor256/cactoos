@@ -15,9 +15,11 @@ import org.cactoos.text.UncheckedText;
  * Fake handler logger.
  *
  * <p>There is no thread-safety guarantee.
+ *
  * @since 0.29
  */
 public final class FakeHandler extends Handler {
+
     /**
      * Lines.
      */

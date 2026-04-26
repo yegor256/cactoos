@@ -13,14 +13,13 @@ import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link TeeReader}.
- *
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TeeReaderTest {
 
     @Test
-    void testTeeReader() throws IOException {
+    void copiesViaTeeReader() throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final String content = "Hello, товарищ!";
         final Reader reader = new TeeReader(

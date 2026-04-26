@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link WriterTo}.
- *
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */

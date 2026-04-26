@@ -128,7 +128,10 @@ final class ThreadsTest {
                     )
                 ).value(),
                 new Throws<>(
-                    "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
+                    String.format(
+                        "java.io.IOException: java.util.concurrent.ExecutionException: %s: Something went wrong",
+                        IllegalStateException.class.getName()
+                    ),
                     UncheckedIOException.class
                 )
             );
@@ -252,7 +255,10 @@ final class ThreadsTest {
                     )
                 ).value(),
                 new Throws<>(
-                    "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
+                    String.format(
+                        "java.io.IOException: java.util.concurrent.ExecutionException: %s: Something went wrong",
+                        IllegalStateException.class.getName()
+                    ),
                     UncheckedIOException.class
                 )
             );

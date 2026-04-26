@@ -20,6 +20,7 @@ import org.cactoos.io.ReaderOf;
  * @since 0.29
  */
 final class EmptyClosableReader extends Reader {
+
     /**
      * Closed reader.
      */

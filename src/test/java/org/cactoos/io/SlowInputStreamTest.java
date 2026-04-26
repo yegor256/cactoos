@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test for {@link SlowInputStream}.
- *
  * @since 0.47
  */
 final class SlowInputStreamTest {

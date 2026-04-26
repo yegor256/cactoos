@@ -36,11 +36,11 @@ import org.takes.tk.TkHtml;
 
 /**
  * Test case for {@link InputOf}.
- *
  * @since 0.1
  */
 @SuppressWarnings({"unchecked", "PMD.TooManyMethods"})
 final class InputOfTest {
+
     @Test
     void readsAlternativeInputForFileCase() {
         MatcherAssert.assertThat(

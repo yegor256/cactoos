@@ -18,7 +18,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class LocalDateTimeOfTest {
 
     @Test
-    void testParsingIsoFormattedStringToLocalDateTime() {
+    void parsesIsoFormattedStringToLocalDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a LocalDateTime with default/ISO format.",
             new LocalDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
@@ -27,7 +27,7 @@ final class LocalDateTimeOfTest {
     }
 
     @Test
-    void testParsingFormattedStringWithFormatToLocalDateTime() {
+    void parsesFormattedStringWithFormatToLocalDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a LocalDateTime with custom format.",
             new LocalDateTimeOf(
@@ -39,7 +39,7 @@ final class LocalDateTimeOfTest {
     }
 
     @Test
-    void testParsingFormattedStringWithFormatterToLocalDateTime() {
+    void parsesFormattedStringWithFormatterToLocalDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a LocalDateTime with custom formatter.",
             new LocalDateTimeOf(

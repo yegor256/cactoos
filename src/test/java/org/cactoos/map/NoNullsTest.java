@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link NoNulls}.
- *
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ParameterNumberCheck (500 lines)

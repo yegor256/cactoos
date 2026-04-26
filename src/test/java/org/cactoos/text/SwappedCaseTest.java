@@ -10,7 +10,6 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link SwappedCase}.
- *
  * @since 0.13.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */

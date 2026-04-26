@@ -10,7 +10,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link True}.
- *
  * @since 0.7
  * @checkstyle JavadocMethodCheck (500 lines)
  */

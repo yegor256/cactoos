@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link MapEnvelope}.
- *
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle DiamondOperatorCheck (500 lines)
@@ -280,6 +279,7 @@ final class MapEnvelopeTest {
      * @since 0.4
      */
     private static final class DerivedMapEnvelope<K, V> extends MapEnvelope<K, V> {
+
         DerivedMapEnvelope(final Map<K, V> content) {
             super(content);
         }

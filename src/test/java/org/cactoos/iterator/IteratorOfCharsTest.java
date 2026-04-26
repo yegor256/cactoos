@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link IteratorOfChars}.
- *
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  */

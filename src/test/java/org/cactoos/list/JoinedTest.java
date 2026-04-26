@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Joined}.
- *
  * @since 0.20
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle DiamondOperatorCheck (500 lines)

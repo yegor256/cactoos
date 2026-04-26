@@ -55,7 +55,7 @@ final class SolidBiFuncTest {
     }
 
     @Test
-    void testThatFuncResultCacheIsLimited() throws Exception {
+    void cachesFuncResultUpToLimit() throws Exception {
         final BiFunc<Integer, Integer, Integer> func =
             new SolidBiFunc<>(
                 (first, second) -> new SecureRandom().nextInt(),

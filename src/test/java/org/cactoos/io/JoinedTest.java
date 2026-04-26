@@ -14,6 +14,7 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 0.36
  */
 final class JoinedTest {
+
     @Test
     void joinsOk() {
         MatcherAssert.assertThat(

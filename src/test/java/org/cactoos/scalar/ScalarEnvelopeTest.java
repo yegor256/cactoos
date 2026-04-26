@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ScalarEnvelope}.
- *
  * @since 0.41
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)
@@ -46,6 +45,7 @@ final class ScalarEnvelopeTest {
     }
 
     private static final class Static extends ScalarEnvelope<Integer> {
+
         Static(final int result) {
             super(() -> result);
         }

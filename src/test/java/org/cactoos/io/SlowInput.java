@@ -10,7 +10,6 @@ import org.cactoos.Input;
 
 /**
  * Input that returns content in small portions.
- *
  * @since 0.12
  */
 final class SlowInput implements Input {

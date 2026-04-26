@@ -20,7 +20,6 @@ import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Unit tests for {@link TempFile}.
- *
  * @since 1.0
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")

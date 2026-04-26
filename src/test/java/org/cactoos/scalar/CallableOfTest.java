@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link CallableOf}.
- *
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class CallableOfTest {
+
     @Test
     void convertsScalar() throws Exception {
         MatcherAssert.assertThat(

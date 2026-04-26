@@ -11,7 +11,6 @@ import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test case for {@link Repeated}.
- *
  * @since 0.4
  * @checkstyle JavadocMethodCheck (500 lines)
  */

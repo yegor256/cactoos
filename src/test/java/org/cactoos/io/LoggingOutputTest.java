@@ -20,7 +20,6 @@ import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Test case for {@link LoggingOutput}.
- *
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -91,11 +90,12 @@ final class LoggingOutputTest {
         final Logger logger = new FakeLogger();
         final Path temp = wdir.resolve("ccts-1");
         final Path path = temp.resolve("x/y/z/file.txt");
-        try (OutputStream output = new LoggingOutput(
-            new OutputTo(path),
-            "text file",
-            logger
-        ).stream()
+        try (
+            OutputStream output = new LoggingOutput(
+                new OutputTo(path),
+                "text file",
+                logger
+            ).stream()
         ) {
             new LengthOf(
                 new TeeInput(
@@ -125,11 +125,12 @@ final class LoggingOutputTest {
         final Logger logger = new FakeLogger(Level.WARNING);
         final Path temp = wdir.resolve("ccts-2");
         final Path path = temp.resolve("a/b/c/file.txt");
-        try (OutputStream output = new LoggingOutput(
-            new OutputTo(path),
-            "text file",
-            logger
-        ).stream()
+        try (
+            OutputStream output = new LoggingOutput(
+                new OutputTo(path),
+                "text file",
+                logger
+            ).stream()
         ) {
             new LengthOf(
                 new TeeInput(

@@ -20,7 +20,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class DateOfTest {
 
     @Test
-    void testParsingIsoFormattedStringToDate() {
+    void parsesIsoFormattedStringToDate() {
         MatcherAssert.assertThat(
             "must parse a Date with default/ISO format.",
             new DateOf("2017-12-13T14:15:16.000000017Z"),
@@ -35,7 +35,7 @@ final class DateOfTest {
     }
 
     @Test
-    void testParsingCustomFormattedStringToDate() {
+    void parsesCustomFormattedStringToDate() {
         MatcherAssert.assertThat(
             "must parse a Date with custom format.",
             new DateOf(
@@ -53,7 +53,7 @@ final class DateOfTest {
     }
 
     @Test
-    void testParsingCustomFormattedStringWithoutTimeToDate() {
+    void parsesCustomFormattedStringWithoutTimeToDate() {
         MatcherAssert.assertThat(
             "must parse a Date with custom format.",
             new DateOf(
@@ -71,7 +71,7 @@ final class DateOfTest {
     }
 
     @Test
-    void testParsingCustomFormatterStringToDate() {
+    void parsesCustomFormatterStringToDate() {
         MatcherAssert.assertThat(
             "must parse a Date with custom format.",
             new DateOf(

@@ -40,13 +40,12 @@ final class TimedFuncTest {
 
     @Test
     void futureTaskIsCancelled() {
-        final Future<Boolean> future = Executors.newSingleThreadExecutor()
-            .submit(
-                () -> {
-                    Thread.sleep(2000L);
-                    return true;
-                }
-            );
+        final Future<Boolean> future = Executors.newSingleThreadExecutor().submit(
+            () -> {
+                Thread.sleep(2000L);
+                return true;
+            }
+        );
         try {
             new Timed<Boolean, Boolean>(
                 50L,

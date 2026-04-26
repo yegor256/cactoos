@@ -16,6 +16,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class BytesTest {
+
     @Test
     void failForNullArgument() {
         MatcherAssert.assertThat(

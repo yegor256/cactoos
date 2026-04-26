@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link OutputStreamTo}.
- *
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */

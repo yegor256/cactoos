@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Sticky}.
- *
  * @since 0.8
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -40,7 +39,7 @@ final class StickyTest {
     }
 
     @Test
-    void testEmpty() {
+    void isEmptyOnEmpty() {
         MatcherAssert.assertThat(
             "Must be empty",
             new Sticky<>(),
@@ -49,7 +48,7 @@ final class StickyTest {
     }
 
     @Test
-    void testEqualsIterable() {
+    void equalsIterable() {
         MatcherAssert.assertThat(
             "Must be equals to equivalent iterable",
             new Sticky<>(1, 2),

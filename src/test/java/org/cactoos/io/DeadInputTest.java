@@ -10,7 +10,6 @@ import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link DeadInput}.
- *
  * @since 0.16
  * @checkstyle JavadocMethodCheck (500 lines)
  */

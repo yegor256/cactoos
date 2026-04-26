@@ -11,7 +11,6 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test cases for {@link HeadOf}.
- *
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  */

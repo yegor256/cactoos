@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link ListEnvelope}.
- *
  * @since 0.32
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)
@@ -184,6 +183,7 @@ final class ListEnvelopeTest {
     }
 
     private static final class StringList extends ListEnvelope<String> {
+
         StringList(final String... elements) {
             super(new ListOf<>(elements));
         }

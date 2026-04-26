@@ -10,7 +10,6 @@ import java.io.InputStream;
 
 /**
  * InputStream that returns content in small portions.
- *
  * @since 0.12
  */
 public final class SlowInputStream extends InputStream {

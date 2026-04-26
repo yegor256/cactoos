@@ -74,7 +74,7 @@ final class NoNullsTest {
     }
 
     @Test
-    void testSuccessNotNullArg() {
+    void containsNotNullArg() {
         MatcherAssert.assertThat(
             "Must contain not null argument",
             new NoNulls<>(
@@ -85,7 +85,7 @@ final class NoNullsTest {
     }
 
     @Test
-    void testSuccessAddAll() {
+    void addsAll() {
         final Collection<Integer> nonulls = new NoNulls<>(new ArrayList<>(0));
         nonulls.addAll(new ListOf<>(1, 2));
         MatcherAssert.assertThat(
@@ -244,7 +244,7 @@ final class NoNullsTest {
     }
 
     @Test
-    void shouldBeEmpty() {
+    void isEmptyOnEmpty() {
         MatcherAssert.assertThat(
             "Must be empty if created from an empty list",
             new NoNulls<>(new ListOf<>()).isEmpty(),

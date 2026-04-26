@@ -5,7 +5,6 @@
 
 /**
  * Tests.
- *
  * @todo #1425:30min Continue replacing usage of MatcherAssert.assertThat with
  *  Assertion from cactoos-matchers. Keep PR short and limit the changes to
  *  single package. Update this puzzle for the next package.

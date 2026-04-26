@@ -24,7 +24,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link GzipOutput}.
- *
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -46,9 +45,10 @@ final class GzipOutputTest {
             writer.write(content);
         }
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try (OutputStream output = new GzipOutput(
-            new OutputTo(baos)
-        ).stream()
+        try (
+            OutputStream output = new GzipOutput(
+                new OutputTo(baos)
+            ).stream()
         ) {
             new LengthOf(
                 new TeeInput(
@@ -68,9 +68,11 @@ final class GzipOutputTest {
     @SuppressWarnings("PMD.CloseResource")
     void writeToClosedGzipOutput(@TempDir final Path wdir) throws Exception {
         final OutputStream stream;
-        try (OutputStream out = Files.newOutputStream(
-            wdir.resolve("cactoos.txt")
-        )) {
+        try (
+            OutputStream out = Files.newOutputStream(
+                wdir.resolve("cactoos.txt")
+            )
+        ) {
             stream = out;
         }
         MatcherAssert.assertThat(

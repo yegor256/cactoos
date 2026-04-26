@@ -18,7 +18,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link TempFolder}.
- *
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -39,9 +38,11 @@ final class TempFolderTest {
     @Test
     void deletesDirectory() throws Exception {
         final Path path;
-        try (TempFolder dir = new TempFolder(
-            new Randomized('d', 'e', 'g').asString()
-        )) {
+        try (
+            TempFolder dir = new TempFolder(
+                new Randomized('d', 'e', 'g').asString()
+            )
+        ) {
             path = dir.value();
         }
         MatcherAssert.assertThat(

@@ -14,13 +14,12 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link InputWithRetry}.
- *
  * @since 1.0
  */
 final class InputWithRetryTest {
 
     @Test
-    void testInputWithRetryShouldRead() throws Exception {
+    void readsAfterRetries() throws Exception {
         final AtomicInteger cnt = new AtomicInteger(0);
         MatcherAssert.assertThat(
             "should read -1 from stream",
@@ -39,7 +38,7 @@ final class InputWithRetryTest {
     }
 
     @Test
-    void testExceededNumberOfAttempts() {
+    void throwsWhenAttemptsExceeded() {
         final AtomicInteger cnt = new AtomicInteger(0);
         MatcherAssert.assertThat(
             "should throw same exception",

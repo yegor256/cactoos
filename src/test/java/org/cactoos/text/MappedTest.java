@@ -11,7 +11,6 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Tests for @{link Mapped}.
- *
  * @since 0.47
  */
 final class MappedTest {

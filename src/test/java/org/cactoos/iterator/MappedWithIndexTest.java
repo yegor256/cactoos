@@ -22,6 +22,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 1.0.0
  */
 final class MappedWithIndexTest {
+
     @Test
     void iteratesOver() {
         MatcherAssert.assertThat(

@@ -77,9 +77,9 @@ public final class ItemAt<T> implements Scalar<T> {
         this.saved = new Sticky<>(
             () -> {
                 if (position < 0) {
-                    throw new IOException(new FormattedText(
-                        "The position must be non-negative: %d", position
-                    ).asString());
+                    throw new IOException(
+                        String.format("The position must be non-negative: %d", position)
+                    );
                 }
                 final Iterator<? extends T> src = iterable.iterator();
                 int cur;

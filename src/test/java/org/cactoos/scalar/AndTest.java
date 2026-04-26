@@ -68,7 +68,7 @@ final class AndTest {
     }
 
     @Test
-    void testFuncIterable() {
+    void appliesFuncToIterable() {
         MatcherAssert.assertThat(
             "lambda should be called for iterable",
             new And(
@@ -80,7 +80,7 @@ final class AndTest {
     }
 
     @Test
-    void testFuncVarargs() {
+    void appliesFuncToVarargs() {
         MatcherAssert.assertThat(
             "lambda should be called for varargs",
             new And(
@@ -92,7 +92,7 @@ final class AndTest {
     }
 
     @Test
-    void testMultipleFuncConditionTrue() {
+    void comparesAgainstMultipleTrueConditions() {
         MatcherAssert.assertThat(
             "Can't compare subject with true conditions",
             new And(
@@ -106,7 +106,7 @@ final class AndTest {
     }
 
     @Test
-    void testMultipleFuncConditionFalse() {
+    void comparesAgainstMultipleFalseConditions() {
         MatcherAssert.assertThat(
             "Can't compare subject with false conditions",
             new And(

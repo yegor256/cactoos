@@ -5,7 +5,6 @@
 
 /**
  * Procedures, tests.
- *
  * @since 0.47
  */
 package org.cactoos.proc;

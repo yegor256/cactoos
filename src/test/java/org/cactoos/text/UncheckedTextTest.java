@@ -16,11 +16,11 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link UncheckedText}.
- *
  * @since 0.3
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class UncheckedTextTest {
+
     @Test
     void rethrowsCheckedToUncheckedException() {
         MatcherAssert.assertThat(

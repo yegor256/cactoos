@@ -173,6 +173,54 @@
                   <new>parameter void org.cactoos.set.Union&lt;T&gt;::&lt;init&gt;(java.util.Set&lt;T&gt;, ===java.util.Set&lt;T&gt;===)</new>
                   <justification>Using Set interface instead of SetOf implementation for better API design</justification>
                 </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter int org.cactoos.number.ComparableNumber::compareTo(===java.lang.Number===)</old>
+                  <new>parameter int org.cactoos.number.ComparableNumber::compareTo(===org.cactoos.number.ComparableNumber===)</new>
+                  <justification>Self-typed Comparable parameter follows Comparable contract recommendations</justification>
+                </item>
+                <item>
+                  <code>java.class.noLongerImplementsInterface</code>
+                  <old>class org.cactoos.number.ComparableNumber</old>
+                  <new>class org.cactoos.number.ComparableNumber</new>
+                  <justification>Self-typed Comparable parameter follows Comparable contract recommendations</justification>
+                </item>
+                <item>
+                  <code>java.class.superTypeTypeParametersChanged</code>
+                  <old>class org.cactoos.number.ComparableNumber</old>
+                  <new>class org.cactoos.number.ComparableNumber</new>
+                  <justification>Self-typed Comparable parameter follows Comparable contract recommendations</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter int org.cactoos.text.ComparableText::compareTo(===org.cactoos.Text===)</old>
+                  <new>parameter int org.cactoos.text.ComparableText::compareTo(===org.cactoos.text.ComparableText===)</new>
+                  <justification>Self-typed Comparable parameter follows Comparable contract recommendations</justification>
+                </item>
+                <item>
+                  <code>java.class.noLongerImplementsInterface</code>
+                  <old>class org.cactoos.text.ComparableText</old>
+                  <new>class org.cactoos.text.ComparableText</new>
+                  <justification>Self-typed Comparable parameter follows Comparable contract recommendations</justification>
+                </item>
+                <item>
+                  <code>java.class.superTypeTypeParametersChanged</code>
+                  <old>class org.cactoos.text.ComparableText</old>
+                  <new>class org.cactoos.text.ComparableText</new>
+                  <justification>Self-typed Comparable parameter follows Comparable contract recommendations</justification>
+                </item>
+                <item>
+                  <code>java.class.noLongerInheritsFromClass</code>
+                  <old>class org.cactoos.number.ComparableNumber</old>
+                  <new>class org.cactoos.number.ComparableNumber</new>
+                  <justification>Switched to composition to satisfy linter rules and keep equals/hashCode local to the Comparable</justification>
+                </item>
+                <item>
+                  <code>java.class.noLongerInheritsFromClass</code>
+                  <old>class org.cactoos.text.ComparableText</old>
+                  <new>class org.cactoos.text.ComparableText</new>
+                  <justification>Switched to composition to satisfy linter rules and keep equals/hashCode local to the Comparable</justification>
+                </item>
               </differences>
             </revapi.differences>
           </analysisConfiguration>

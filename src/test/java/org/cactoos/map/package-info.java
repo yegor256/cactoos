@@ -5,7 +5,6 @@
 
 /**
  * Maps, tests.
- *
  * @since 0.14
  */
 package org.cactoos.map;

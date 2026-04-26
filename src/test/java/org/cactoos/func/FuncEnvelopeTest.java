@@ -29,6 +29,7 @@ final class FuncEnvelopeTest {
     }
 
     private static final class Append extends FuncEnvelope<Integer, Text> {
+
         Append(final String suffix) {
             super(input -> new FormattedText("%d%s", input, suffix));
         }

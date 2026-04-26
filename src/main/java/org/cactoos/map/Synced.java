@@ -4,9 +4,8 @@
  */
 package org.cactoos.map;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.cactoos.Func;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
@@ -150,6 +149,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param map The map
      */
     public Synced(final Map<? extends X, ? extends Y> map) {
-        super(Collections.synchronizedMap(new HashMap<X, Y>(map)));
+        super(new ConcurrentHashMap<X, Y>(map));
     }
 }

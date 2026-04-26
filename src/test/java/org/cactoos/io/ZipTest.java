@@ -21,7 +21,6 @@ import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Test case for {@link Zip}.
- *
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -31,11 +30,13 @@ final class ZipTest {
     void zip(@TempDir final Path dir) throws Exception {
         dir.resolve("x/y").toFile().mkdirs();
         Files.write(dir.resolve("x/y/test"), "".getBytes(StandardCharsets.UTF_8));
-        try (ZipInputStream input = new ZipInputStream(
-            new Zip(
-                new Directory(dir)
-            ).stream()
-        )) {
+        try (
+            ZipInputStream input = new ZipInputStream(
+                new Zip(
+                    new Directory(dir)
+                ).stream()
+            )
+        ) {
             int cnt = 0;
             ZipEntry entry = input.getNextEntry();
             while (entry != null) {
@@ -52,7 +53,6 @@ final class ZipTest {
 
     @Test
     void zipsArbitraryFileList(@TempDir final Path dir) throws Exception {
-        dir.resolve("file0");
         final List<Path> targets = new ListOf<>(
             dir.resolve("dir1/file1.txt"),
             dir.resolve("dir2/file2.txt")

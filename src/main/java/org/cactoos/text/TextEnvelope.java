@@ -37,12 +37,12 @@ public abstract class TextEnvelope implements Text {
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
         return this.origin.equals(obj);
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return this.origin.hashCode();
     }
 }

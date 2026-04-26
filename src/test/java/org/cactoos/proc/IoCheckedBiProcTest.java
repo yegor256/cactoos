@@ -19,6 +19,7 @@ import org.llorllale.cactoos.matchers.Throws;
  */
 @SuppressWarnings({"PMD.UnnecessaryLocalRule", "PMD.ExceptionAsFlowControl"})
 final class IoCheckedBiProcTest {
+
     @Test
     void executesWrappedProc() throws Exception {
         final AtomicInteger counter = new AtomicInteger();

@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Repeated}.
- *
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */

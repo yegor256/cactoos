@@ -5,7 +5,6 @@
 
 /**
  * Scalars, tests.
- *
  * @since 0.12
  */
 package org.cactoos.scalar;

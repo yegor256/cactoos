@@ -18,6 +18,7 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 0.47
  */
 final class StickyTest {
+
     @Test
     void cachesResult() {
         final Text sticky = new Sticky(new Randomized());

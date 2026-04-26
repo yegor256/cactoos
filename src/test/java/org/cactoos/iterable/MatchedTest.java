@@ -18,7 +18,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Matched}.
- *
  * @since 0.39
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -142,7 +141,7 @@ final class MatchedTest {
     }
 
     @Test
-    void shouldNotChangeAfterTraversing() throws Exception {
+    void doesNotChangeAfterTraversing() throws Exception {
         final Iterable<Integer> matched = new Matched<>(
             Objects::equals,
             new IterableOf<>(1, 2, 3),

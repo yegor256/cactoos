@@ -18,6 +18,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.47
  */
 final class MatchedTest {
+
     @Test
     void failsWhenElementsNotMatch() {
         MatcherAssert.assertThat(
@@ -72,7 +73,7 @@ final class MatchedTest {
     }
 
     @Test
-    void shouldProduceValuesOfFirstIterator() {
+    void producesValuesOfFirstIterator() {
         MatcherAssert.assertThat(
             "must match all items of first iterator",
             new ListOf<>(

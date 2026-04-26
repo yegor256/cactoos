@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.HasEntry;
 
 /**
  * Test case for {@link MapDiff}.
- *
  * @since 0.58.0
  */
 final class MapDiffTest {

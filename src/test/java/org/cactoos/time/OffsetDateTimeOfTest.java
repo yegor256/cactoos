@@ -19,7 +19,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 final class OffsetDateTimeOfTest {
 
     @Test
-    void testParsingIsoFormattedStringToOffsetDateTime() {
+    void parsesIsoFormattedStringToOffsetDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a OffsetDateTime with default/ISO format.",
             new OffsetDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
@@ -32,7 +32,7 @@ final class OffsetDateTimeOfTest {
     }
 
     @Test
-    void testParsingFormattedStringWithOffsetToOffsetDateTime() {
+    void parsesFormattedStringWithOffsetToOffsetDateTime() {
         MatcherAssert.assertThat(
             "Can't parse a OffsetDateTime with custom format.",
             new OffsetDateTimeOf(

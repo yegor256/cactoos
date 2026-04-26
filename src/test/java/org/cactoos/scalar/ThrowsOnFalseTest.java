@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test suite for {@link ThrowsOnFalse}.
- *
  * @since 0.56.0
  */
 final class ThrowsOnFalseTest {

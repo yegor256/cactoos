@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link OutputTo}.
- *
  * @since 0.15
  * @checkstyle JavadocMethodCheck (500 lines)
  */

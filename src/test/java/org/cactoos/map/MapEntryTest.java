@@ -11,7 +11,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link MapEntry}.
- *
  * @since 0.9
  * @checkstyle JavadocMethodCheck (500 lines)
  */

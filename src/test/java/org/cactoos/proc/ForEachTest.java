@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link ForEach}.
- *
  * @since 1.0
  */
 @SuppressWarnings("unchecked")

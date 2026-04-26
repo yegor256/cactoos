@@ -10,7 +10,6 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Reversed}.
- *
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */

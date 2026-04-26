@@ -23,15 +23,24 @@ import org.cactoos.scalar.Unchecked;
  *
  * @since 0.27
  */
-public final class ComparableText extends TextEnvelope
-    implements Comparable<ComparableText> {
+public final class ComparableText implements Text, Comparable<ComparableText> {
+
+    /**
+     * Wrapped text.
+     */
+    private final Text origin;
 
     /**
      * Ctor.
      * @param text The text
      */
     public ComparableText(final Text text) {
-        super(text);
+        this.origin = text;
+    }
+
+    @Override
+    public String asString() throws Exception {
+        return this.origin.asString();
     }
 
     @Override
@@ -43,11 +52,16 @@ public final class ComparableText extends TextEnvelope
 
     @Override
     public boolean equals(final Object obj) {
-        return super.equals(obj);
+        return this == obj || this.origin.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return this.origin.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return this.origin.toString();
     }
 }

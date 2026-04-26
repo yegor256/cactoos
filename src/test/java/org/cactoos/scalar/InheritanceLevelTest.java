@@ -11,7 +11,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link InheritanceLevel}.
- *
  * @since 0.30
  * @checkstyle JavadocMethodCheck (500 lines)
  */

@@ -13,8 +13,9 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 1.0.0
  */
 final class NewlineTest {
+
     @Test
-    void test() {
+    void equalsSystemLineSeparator() {
         MatcherAssert.assertThat(
             "Must be equal to the System.lineSeparator()",
             new Newline(),

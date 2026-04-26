@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link ForEachInThreads}.
- *
  * @since 1.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -22,7 +21,7 @@ final class ForEachInThreadsTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    void testProcIterable() throws Exception {
+    void iteratesInThreads() throws Exception {
         final List<Integer> list = new Synced<>(
             new ListOf<>()
         );

@@ -32,7 +32,7 @@ final class UncheckedBiFuncTest {
     }
 
     @Test
-    void testUncheckedBiFunc() {
+    void appliesBiFunc() {
         MatcherAssert.assertThat(
             "Must return value",
             new UncheckedBiFunc<>(

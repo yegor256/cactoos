@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link LoggingInput}.
- *
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */
@@ -160,11 +159,13 @@ final class LoggingInputTest {
     @SuppressWarnings("unchecked")
     void logResetFromLargeTextFile() throws Exception {
         final Logger logger = new FakeLogger();
-        try (InputStream input = new LoggingInput(
-            new ResourceOf("org/cactoos/large-text.txt"),
-            "text file",
-            logger
-        ).stream()) {
+        try (
+            InputStream input = new LoggingInput(
+                new ResourceOf("org/cactoos/large-text.txt"),
+                "text file",
+                logger
+            ).stream()
+        ) {
             input.mark(150);
             input.reset();
             MatcherAssert.assertThat(

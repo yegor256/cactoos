@@ -15,6 +15,7 @@ import org.llorllale.cactoos.matchers.HasValue;
  * @since 1.0
  */
 final class HashCodeTest {
+
     /**
      * {@link HashCode} must compute the exact same hashCode as produced
      * by Joshua Block's "Item 9: Always override hashCode when you override

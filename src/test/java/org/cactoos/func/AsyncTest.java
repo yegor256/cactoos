@@ -24,6 +24,7 @@ import org.llorllale.cactoos.matchers.Throws;
  */
 @SuppressWarnings({"PMD.CloseResource", "PMD.UnnecessaryLocalRule"})
 final class AsyncTest {
+
     @Test
     void runsInBackground() {
         MatcherAssert.assertThat(

@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
  * @since 1.0.0
  */
 final class MappedWithIndexTest {
+
     @Test
     void transformsIterable() {
         MatcherAssert.assertThat(
