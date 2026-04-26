@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ListIterator;
 import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
+import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 
 /**
@@ -61,7 +62,7 @@ public final class Reversed<X> implements Iterator<X> {
      * @param src Source list iterator, deferred
      */
     private Reversed(final Scalar<ListIterator<? extends X>> src) {
-        this.origin = new Unchecked<>(src);
+        this.origin = new Unchecked<>(new Sticky<>(src));
     }
 
     @Override

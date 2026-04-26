@@ -9,7 +9,6 @@ import org.cactoos.Text;
 
 /**
  * Tests if this Text ends with the specified suffix.
- *
  * @since 1.0
  */
 public final class EndsWith implements Scalar<Boolean> {

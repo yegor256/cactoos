@@ -14,6 +14,7 @@ import org.cactoos.scalar.Constant;
  * Extract a substring from a Text.
  *
  * <p>There is no thread-safety guarantee.
+ *
  * @since 0.11
  */
 public final class Sub extends TextEnvelope {

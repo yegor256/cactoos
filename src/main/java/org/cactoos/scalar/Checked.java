@@ -65,23 +65,21 @@ public final class Checked<T, E extends Exception> implements Scalar<T> {
      * Skips unnecessary wrapping of exceptions of the same type.
      * Allows wrapping of exceptions of the same type if the error message
      * has been changed.
-     *
      * @param exp Exception
      * @return E Wrapped exception
      */
     @SuppressWarnings("unchecked")
     private E wrappedException(final Exception exp) {
         E wrapped = new UncheckedFunc<>(this.func).apply(exp);
-        final String message = wrapped.getMessage()
-            .replaceFirst(
-                new UncheckedText(
-                    new FormattedText(
-                        "%s: ",
-                        exp.getClass().getName()
-                    )
-                ).asString(),
-                ""
-            );
+        final String message = wrapped.getMessage().replaceFirst(
+            new UncheckedText(
+                new FormattedText(
+                    "%s: ",
+                    exp.getClass().getName()
+                )
+            ).asString(),
+            ""
+        );
         if (new InheritanceLevel(exp.getClass(), wrapped.getClass()).value() >= 0
             && message.equals(exp.getMessage())) {
             wrapped = (E) exp;

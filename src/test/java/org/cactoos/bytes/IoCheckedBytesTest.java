@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link IoCheckedBytes}.
- *
  * @since 0.52
  * @checkstyle JavadocMethodCheck (500 lines)
  */

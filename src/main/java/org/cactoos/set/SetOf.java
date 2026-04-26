@@ -20,7 +20,6 @@ public final class SetOf<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param array An array of some elements
      */
     @SafeVarargs

@@ -35,8 +35,8 @@ public final class Equals<R, T extends Comparable<R>> implements Scalar<Boolean>
 
     /**
      * Ctor.
-     * @param source The first scalar to compare.
-     * @param compared The second scalar to compare.
+     * @param source The first scalar to compare
+     * @param compared The second scalar to compare
      */
     public Equals(final T source, final R compared) {
         this(new Constant<>(source), new Constant<>(compared));
@@ -44,8 +44,8 @@ public final class Equals<R, T extends Comparable<R>> implements Scalar<Boolean>
 
     /**
      * Ctor.
-     * @param source The first scalar to compare.
-     * @param compared The second scalar to compare.
+     * @param source The first scalar to compare
+     * @param compared The second scalar to compare
      */
     public Equals(final Scalar<? extends T> source, final Scalar<? extends R> compared) {
         this.first = source;

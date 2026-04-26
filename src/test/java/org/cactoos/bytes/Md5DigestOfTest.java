@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Md5DigestOf}.
- *
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 lines)
  */

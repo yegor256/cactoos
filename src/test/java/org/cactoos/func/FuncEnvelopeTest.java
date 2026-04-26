@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link FuncEnvelope}.
- *
  * @since 0.41
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle JavadocTypeCheck (500 lines)

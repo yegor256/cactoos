@@ -27,10 +27,10 @@ import org.cactoos.text.TextOf;
  * }</pre>
  * The physical file is deleted from the filesystem when the temp file is
  * closed.
- *
  * @since 1.0
  */
 public final class TempFile implements Scalar<Path>, Closeable {
+
     /**
      * Creates the temporary file, returning its path.
      */

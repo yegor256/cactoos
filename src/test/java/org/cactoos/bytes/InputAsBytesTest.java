@@ -20,7 +20,6 @@ import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link InputAsBytes}.
- *
  * @since 0.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */

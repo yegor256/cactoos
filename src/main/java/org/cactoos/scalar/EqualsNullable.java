@@ -13,6 +13,7 @@ import org.cactoos.Scalar;
  * @since 1.0
  */
 public final class EqualsNullable implements Scalar<Boolean> {
+
     /**
      * The first object for comparison.
      */

@@ -8,9 +8,11 @@ package org.cactoos.text;
  * Returns a text that is the default system line separator.
  *
  * <p>There is no thread-safety guarantee.
+ *
  * @since 1.0.0
  */
 public final class Newline extends TextEnvelope {
+
     /**
      * Ctor.
      */

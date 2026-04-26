@@ -62,12 +62,12 @@ public abstract class NumberEnvelope extends Number {
     }
 
     @Override
-    public final boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         return this.wrapped.equals(obj);
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return this.wrapped.hashCode();
     }
 

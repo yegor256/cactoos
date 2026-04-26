@@ -38,6 +38,7 @@ import org.cactoos.iterable.Mapped;
  * @since 0.29
  */
 public final class LowestOf<T extends Comparable<? super T>> extends ScalarEnvelope<T> {
+
     /**
      * Ctor.
      * @param items The comparable items

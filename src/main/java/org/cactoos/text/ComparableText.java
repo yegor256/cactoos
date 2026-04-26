@@ -23,9 +23,8 @@ import org.cactoos.scalar.Unchecked;
  *
  * @since 0.27
  */
-@SuppressWarnings("PMD.OverrideBothEqualsAndHashCodeOnComparable")
 public final class ComparableText extends TextEnvelope
-    implements Comparable<Text> {
+    implements Comparable<ComparableText> {
 
     /**
      * Ctor.
@@ -36,9 +35,19 @@ public final class ComparableText extends TextEnvelope
     }
 
     @Override
-    public int compareTo(final Text other) {
+    public int compareTo(final ComparableText other) {
         return new Unchecked<>(
             () -> this.asString().compareTo(other.asString())
         ).value();
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

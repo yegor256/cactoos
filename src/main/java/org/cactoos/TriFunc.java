@@ -6,7 +6,6 @@ package org.cactoos;
 
 /**
  * Function that accepts three arguments.
- *
  * @param <X> Type of input
  * @param <Y> Type of input
  * @param <Z> Type of input

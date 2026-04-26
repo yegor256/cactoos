@@ -35,9 +35,9 @@ public final class
 
     /**
      * Ctor.
-     * @param min Start of the range.
-     * @param max End of the range.
-     * @param incrementor The {@link Func} to process for the next value.
+     * @param min Start of the range
+     * @param max End of the range
+     * @param incrementor The {@link Func} to process for the next value
      */
     public RangeOf(final T min, final T max,
         final Func<? super T, ? extends T> incrementor) {

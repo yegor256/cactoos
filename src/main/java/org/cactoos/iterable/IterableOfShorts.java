@@ -8,7 +8,6 @@ import org.cactoos.iterator.IteratorOfShorts;
 
 /**
  * Iterable of short values.
- *
  * @since 1.0
  */
 public final class IterableOfShorts extends IterableEnvelope<Short> {

@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Fallback.From}.
- *
  * @since 0.31
  * @checkstyle JavadocMethodCheck (500 lines)
  */

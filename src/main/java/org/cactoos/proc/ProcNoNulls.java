@@ -8,11 +8,11 @@ import org.cactoos.Proc;
 
 /**
  * Proc check for no nulls.
- *
  * @param <X> Type of input
  * @since 0.11
  */
 public final class ProcNoNulls<X> implements Proc<X> {
+
     /**
      * The procedure.
      */

@@ -58,7 +58,6 @@ public final class ResourceOf implements Input {
      * @param cls Resource class loader
      * @since 0.49
      */
-    @SuppressWarnings("PMD.UseProperClassLoader")
     public ResourceOf(final CharSequence res, final Class<?> cls) {
         this(res, (Scalar<ClassLoader>) cls::getClassLoader);
     }
@@ -88,7 +87,6 @@ public final class ResourceOf implements Input {
      * @param cls Resource class loader
      * @since 0.49
      */
-    @SuppressWarnings("PMD.UseProperClassLoader")
     public ResourceOf(final CharSequence res,
         final Func<CharSequence, Input> fbk, final Class<?> cls) {
         this(res, fbk, (Scalar<ClassLoader>) cls::getClassLoader);
@@ -209,8 +207,7 @@ public final class ResourceOf implements Input {
      * @param res Resource name
      * @param fbk Fallback
      */
-    public ResourceOf(final Text res,
-        final Func<Text, Input> fbk) {
+    public ResourceOf(final Text res, final Func<Text, Input> fbk) {
         this(
             res, fbk,
             (Scalar<ClassLoader>) () -> Thread.currentThread().getContextClassLoader()

@@ -8,7 +8,6 @@ import org.cactoos.iterator.IteratorOfLongs;
 
 /**
  * Iterable of long values.
- *
  * @since 1.0
  */
 public final class IterableOfLongs extends IterableEnvelope<Long> {

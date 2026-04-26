@@ -6,6 +6,8 @@ package org.cactoos.iterator;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
@@ -28,7 +30,7 @@ public final class Joined<T> implements Iterator<T> {
     /**
      * Current traversal iterator.
      */
-    private Iterator<? extends T> current;
+    private final AtomicReference<Iterator<? extends T>> current;
 
     /**
      * Ctor.
@@ -67,23 +69,25 @@ public final class Joined<T> implements Iterator<T> {
      */
     public Joined(final Iterable<Iterator<? extends T>> items) {
         this.iters = new Unchecked<>(new Sticky<>(items::iterator));
-        this.current = null;
+        this.current = new AtomicReference<>();
     }
 
     @Override
     public boolean hasNext() {
-        if (this.current == null) {
-            this.current = Collections.emptyIterator();
+        this.current.compareAndSet(null, Collections.emptyIterator());
+        while (!this.current.get().hasNext() && this.iters.value().hasNext()) {
+            this.current.set(this.iters.value().next());
         }
-        while (!this.current.hasNext() && this.iters.value().hasNext()) {
-            this.current = this.iters.value().next();
-        }
-        return this.current.hasNext();
+        return this.current.get().hasNext();
     }
 
     @Override
     public T next() {
-        this.hasNext();
-        return this.current.next();
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.current.get().next();
     }
 }

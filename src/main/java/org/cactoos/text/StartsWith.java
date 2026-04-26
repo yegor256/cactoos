@@ -28,7 +28,6 @@ public final class StartsWith implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param prefix The prefix
      */
@@ -38,7 +37,6 @@ public final class StartsWith implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param prefix The prefix
      */
@@ -48,7 +46,6 @@ public final class StartsWith implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param prefix The prefix
      */
@@ -58,7 +55,6 @@ public final class StartsWith implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param prefix The prefix
      */

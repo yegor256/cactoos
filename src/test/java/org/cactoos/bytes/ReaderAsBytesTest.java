@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link ReaderAsBytes}.
- *
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */

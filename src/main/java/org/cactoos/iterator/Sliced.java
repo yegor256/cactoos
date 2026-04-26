@@ -16,7 +16,8 @@ import java.util.function.IntPredicate;
  * original iterator.
  *
  * <p>There is no thread-safety guarantee.</p>
- * @param <T> The type of the iterator.
+ *
+ * @param <T> The type of the iterator
  * @since 1.0.0
  */
 public final class Sliced<T> implements Iterator<T> {

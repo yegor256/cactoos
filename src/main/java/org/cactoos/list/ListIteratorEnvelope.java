@@ -23,7 +23,7 @@ public abstract class ListIteratorEnvelope<T> implements ListIterator<T> {
 
     /**
      * Ctor.
-     * @param iter Original list iterator.
+     * @param iter Original list iterator
      */
     public ListIteratorEnvelope(final ListIterator<T> iter) {
         this.origin = iter;

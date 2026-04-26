@@ -14,7 +14,6 @@ import org.cactoos.Text;
 
 /**
  * Replace the Text.
- *
  * @since 0.2
  */
 public final class Replaced extends TextEnvelope {
@@ -58,7 +57,7 @@ public final class Replaced extends TextEnvelope {
      * @param text The text
      * @param regex The regular expression
      * @param func Transforms the resulting matcher object into a replacement
-     *  string. Any exceptions will be wrapped in an {@link IOException}.
+     *  string; any exceptions will be wrapped in an {@link IOException}
      */
     public Replaced(
         final Text text,

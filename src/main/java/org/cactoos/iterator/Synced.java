@@ -24,6 +24,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * @since 1.0
  */
 public final class Synced<T> implements Iterator<T> {
+
     /**
      * The original iterator.
      */
@@ -36,7 +37,7 @@ public final class Synced<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     * @param iterator The iterator to synchronize access to.
+     * @param iterator The iterator to synchronize access to
      */
     public Synced(final Iterator<? extends T> iterator) {
         this(new ReentrantReadWriteLock(), iterator);
@@ -44,8 +45,8 @@ public final class Synced<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     * @param lock The lock to use for synchronization.
-     * @param iterator The iterator to synchronize access to.
+     * @param lock The lock to use for synchronization
+     * @param iterator The iterator to synchronize access to
      */
     public Synced(final ReadWriteLock lock, final Iterator<? extends T> iterator) {
         this.iterator = iterator;

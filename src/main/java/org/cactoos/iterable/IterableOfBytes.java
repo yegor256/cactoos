@@ -11,7 +11,6 @@ import org.cactoos.iterator.IteratorOfBytes;
 
 /**
  * Iterable of bytes.
- *
  * @since 1.0
  */
 public final class IterableOfBytes extends IterableEnvelope<Byte> {

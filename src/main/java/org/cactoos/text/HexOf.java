@@ -34,7 +34,7 @@ public final class HexOf extends TextEnvelope {
                     final byte[] bts = bytes.asBytes();
                     final char[] hex = new char[bts.length * 2];
                     int chr = 0;
-                    for (final byte currentbyte: bts) {
+                    for (final byte currentbyte : bts) {
                         final int value = 0xff & currentbyte;
                         hex[chr] = HexOf.HEX_CHARS[value >>> 4];
                         hex[chr + 1] = HexOf.HEX_CHARS[value & 0x0f];

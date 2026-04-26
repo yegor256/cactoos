@@ -37,7 +37,7 @@ public final class Shuffled<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param rnd Randomizer.
+     * @param rnd Randomizer
      * @param src The underlying iterable
      */
     public Shuffled(final Random rnd, final Iterable<? extends T> src) {

@@ -16,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 0.32
  */
 public final class IteratorOfBooleans implements Iterator<Boolean> {
+
     /**
      * The list of items to iterate.
      */

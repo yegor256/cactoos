@@ -39,7 +39,6 @@ public final class ForEach<X> implements Proc<Iterable<? extends X>> {
 
     /**
      * Ctor.
-     *
      * @param proc The proc to execute
      */
     public ForEach(final Proc<? super X> proc) {

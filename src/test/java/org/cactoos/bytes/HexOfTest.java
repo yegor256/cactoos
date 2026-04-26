@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link HexOf}.
- *
  * @since 0.29
  * @checkstyle JavadocMethodCheck (500 line)
  */

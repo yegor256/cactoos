@@ -13,10 +13,10 @@ import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link FuncOf}.
- *
  * @since 0.20
  */
 final class FuncOfTest {
+
     @Test
     void convertsProcIntoFunc() {
         final AtomicReference<Object> done = new AtomicReference<>();

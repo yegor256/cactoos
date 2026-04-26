@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Repeated}.
- *
  * @since 0.13.1
  * @checkstyle JavadocMethodCheck (500 lines)
  */

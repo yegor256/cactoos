@@ -23,7 +23,7 @@ public final class IteratorOfStackTrace implements Iterator<Throwable> {
 
     /**
      * Ctor.
-     * @param exc The exception to iterate.
+     * @param exc The exception to iterate
      */
     public IteratorOfStackTrace(final Throwable exc) {
         this.exception = exc;

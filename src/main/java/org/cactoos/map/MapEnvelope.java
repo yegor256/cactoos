@@ -33,7 +33,7 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
 
     /**
      * Ctor.
-     * @param original The original map.
+     * @param original The original map
      */
     public MapEnvelope(final Map<X, Y> original) {
         this.map = original;

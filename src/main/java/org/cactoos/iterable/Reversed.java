@@ -17,6 +17,7 @@ package org.cactoos.iterable;
  * @since 0.9
  */
 public final class Reversed<X> extends IterableEnvelope<X> {
+
     /**
      * Ctor.
      * @param src Source iterable

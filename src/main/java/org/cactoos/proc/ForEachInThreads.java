@@ -41,7 +41,6 @@ public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
 
     /**
      * Ctor.
-     *
      * @param proc The proc to execute
      */
     public ForEachInThreads(final Proc<X> proc) {

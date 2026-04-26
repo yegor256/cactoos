@@ -9,7 +9,6 @@ import org.cactoos.func.FuncOf;
 
 /**
  * Scalar that runs repeatedly for a number of times.
- *
  * @param <X> Type of output
  * @since 0.49.2
  */
@@ -31,8 +30,8 @@ public final class Repeated<X> implements Scalar<X> {
      * <p>If {@code max} is equal or less than zero {@link #value()} will return
      * an exception.</p>
      *
-     * @param scalar Scalar to repeat.
-     * @param times How many times.
+     * @param scalar Scalar to repeat
+     * @param times How many times
      */
     public Repeated(final Scalar<? extends X> scalar, final int times) {
         this.scalar = scalar;

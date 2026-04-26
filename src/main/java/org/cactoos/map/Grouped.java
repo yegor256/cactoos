@@ -30,7 +30,6 @@ public final class Grouped<K, V, T> extends MapEnvelope<K, List<V>> {
 
     /**
      * Ctor.
-     *
      * @param list Iterable which is used to retrieve data from
      * @param keys Function to get a key
      * @param values Function to get a value
@@ -45,7 +44,7 @@ public final class Grouped<K, V, T> extends MapEnvelope<K, List<V>> {
             {
                 for (final T item : list) {
                     this.computeIfAbsent(
-                        keys.apply(item), k -> new ArrayList<>()
+                        keys.apply(item), k -> new ArrayList<>(0)
                     ).add(values.apply(item));
                 }
             }

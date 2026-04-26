@@ -67,7 +67,7 @@ public final class TempFolder implements Scalar<Path>, Closeable {
     /**
      * Ctor.
      * Creates new folder in temporary directory.
-     * @param path Relative path to new directory.
+     * @param path Relative path to new directory
      * @since 1.0
      */
     public TempFolder(final String path) {
@@ -77,7 +77,7 @@ public final class TempFolder implements Scalar<Path>, Closeable {
     /**
      * Ctor.
      * Creates new folder in temporary directory.
-     * @param path Relative path to new directory.
+     * @param path Relative path to new directory
      * @since 1.0
      */
     public TempFolder(final Text path) {

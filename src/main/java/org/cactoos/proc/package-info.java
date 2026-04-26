@@ -5,7 +5,6 @@
 
 /**
  * Procedures.
- *
  * @since 0.47
  * @todo #1567:30min Exploit generic variance for package org.cactoos.proc
  *  to ensure typing works as best as possible as it is explained in

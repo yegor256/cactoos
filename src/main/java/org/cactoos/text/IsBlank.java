@@ -11,6 +11,7 @@ import org.cactoos.Text;
  * Determines if text is blank (consists of spaces) or not.
  *
  * <p>There is no thread-safety guarantee.
+ *
  * @see IsEmpty
  * @since 0.1
  */

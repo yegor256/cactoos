@@ -30,6 +30,7 @@ public final class Trimmed extends TextEnvelope {
      * Ctor.
      *
      * Creates a trimmed text from the given
+     *
      * @param text The text
      */
     public Trimmed(final Text text) {

@@ -31,7 +31,6 @@ public final class ItemAt<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param position Position
      * @param iterable Iterable
      */
@@ -52,7 +51,6 @@ public final class ItemAt<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param position Position
      * @param fallback Fallback value
      * @param iterable Iterable
@@ -67,7 +65,6 @@ public final class ItemAt<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param position Position
      * @param fallback Fallback value
      * @param iterable Iterable
@@ -80,11 +77,9 @@ public final class ItemAt<T> implements Scalar<T> {
         this.saved = new Sticky<>(
             () -> {
                 if (position < 0) {
-                    throw new IOException(
-                        new FormattedText(
-                            "The position must be non-negative: %d", position
-                        ).asString()
-                    );
+                    throw new IOException(new FormattedText(
+                        "The position must be non-negative: %d", position
+                    ).asString());
                 }
                 final Iterator<? extends T> src = iterable.iterator();
                 int cur;

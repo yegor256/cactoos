@@ -130,7 +130,7 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param scalar The Scalar.
+     * @param scalar The Scalar
      */
     @SafeVarargs
     public Or(final Scalar<Boolean>... scalar) {
@@ -139,7 +139,7 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param iterable The iterable.
+     * @param iterable The iterable
      */
     public Or(final Iterable<? extends Scalar<Boolean>> iterable) {
         this.origin = iterable;

@@ -38,7 +38,7 @@ public final class Shuffled<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     * @param random Randomizer.
+     * @param random Randomizer
      * @param iterator The original iterator
      */
     public Shuffled(final Random random, final Iterator<? extends T> iterator) {

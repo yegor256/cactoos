@@ -12,14 +12,12 @@ import org.cactoos.scalar.Ternary;
  * Text in capitalized case,
  * changed the first character to title case as per {@link Character#toTitleCase(int)},
  * no other characters are changed.
- *
  * @since 0.46
  */
 public final class Capitalized extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param text The text
      */
     public Capitalized(final CharSequence text) {

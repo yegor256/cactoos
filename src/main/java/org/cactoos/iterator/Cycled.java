@@ -31,7 +31,7 @@ public final class Cycled<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     * @param iterable Iterable.
+     * @param iterable Iterable
      */
     public Cycled(final Iterable<? extends T> iterable) {
         this.origin = iterable;

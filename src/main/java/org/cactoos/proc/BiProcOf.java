@@ -44,8 +44,8 @@ public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param first The procedure on first arg.
-     * @param second The procedure on second arg.
+     * @param first The procedure on first arg
+     * @param second The procedure on second arg
      */
     public BiProcOf(
         final Proc<? super X> first,

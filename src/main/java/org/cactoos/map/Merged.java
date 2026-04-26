@@ -12,15 +12,15 @@ import org.cactoos.iterable.Mapped;
 /**
  * This class can be used to merge a few {@link Map}.
  * Repeatable keys will be overridden by next ones.
- *
  * @param <K> Key type
  * @param <V> Value type
  * @since 1.0
  */
 public final class Merged<K, V> extends MapEnvelope<K, V> {
+
     /**
      * Ctor.
-     * @param maps Maps to merge.
+     * @param maps Maps to merge
      */
     @SafeVarargs
     public Merged(final Map<? extends K, ? extends V>... maps) {
@@ -29,7 +29,7 @@ public final class Merged<K, V> extends MapEnvelope<K, V> {
 
     /**
      * Ctor.
-     * @param maps Iterable of {@link Map}s to merge.
+     * @param maps Iterable of {@link Map}s to merge
      */
     public Merged(final Iterable<? extends Map<? extends K, ? extends V>> maps) {
         super(

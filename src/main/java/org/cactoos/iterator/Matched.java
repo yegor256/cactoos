@@ -40,9 +40,9 @@ public final class Matched<X, Y> implements Iterator<X> {
 
     /**
      * Ctor.
-     * @param fnc The function to detect the correlation between elements.
-     * @param fst The first part of duplex iterator.
-     * @param snd The second part of duplex iterator.
+     * @param fnc The function to detect the correlation between elements
+     * @param fst The first part of duplex iterator
+     * @param snd The second part of duplex iterator
      */
     public Matched(
         final BiFunc<? super X, ? super Y, Boolean> fnc,

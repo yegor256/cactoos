@@ -21,6 +21,7 @@ import org.cactoos.text.UncheckedText;
  * @since 0.9
  */
 public final class MapEntry<K, V> implements Map.Entry<K, V> {
+
     /**
      * The key.
      */
@@ -33,8 +34,8 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
 
     /**
      * Ctor.
-     * @param src The key of the entry's map.
-     * @param trgt The value associated to the key of the entry's map.
+     * @param src The key of the entry's map
+     * @param trgt The value associated to the key of the entry's map
      */
     public MapEntry(final K src, final V trgt) {
         this.key = src;

@@ -21,8 +21,7 @@ public final class PaddedEnd extends TextEnvelope {
      * @param length The minimum length of the resulting string
      * @param symbol The padding symbol
      */
-    public PaddedEnd(
-        final Text text, final int length, final char symbol) {
+    public PaddedEnd(final Text text, final int length, final char symbol) {
         super(
             new Flattened(
                 () -> {

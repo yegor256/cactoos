@@ -14,6 +14,7 @@ import org.cactoos.Text;
  * @since 0.11
  */
 public final class NoNulls extends TextEnvelope {
+
     /**
      * Ctor.
      * @param text The text

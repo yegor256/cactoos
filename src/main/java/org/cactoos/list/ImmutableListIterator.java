@@ -23,7 +23,7 @@ public final class ImmutableListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
-     * @param iter Original list iterator.
+     * @param iter Original list iterator
      */
     public ImmutableListIterator(final ListIterator<? extends T> iter) {
         this.origin = iter;

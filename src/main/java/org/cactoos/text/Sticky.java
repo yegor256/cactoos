@@ -18,6 +18,7 @@ import org.cactoos.Text;
  * @since 0.47
  */
 public final class Sticky extends TextEnvelope {
+
     /**
      * Ctor.
      * @param txt Text to cache

@@ -17,7 +17,7 @@ public final class IterableOfStackTrace extends IterableEnvelope<Throwable> {
 
     /**
      * Ctor.
-     * @param exc The exception to iterate.
+     * @param exc The exception to iterate
      */
     public IterableOfStackTrace(final Throwable exc) {
         super(new IterableOf<>(() -> new IteratorOfStackTrace(exc)));

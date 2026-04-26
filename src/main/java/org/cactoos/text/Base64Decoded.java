@@ -17,7 +17,6 @@ public final class Base64Decoded extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param input The CharSequence
      */
     public Base64Decoded(final CharSequence input) {
@@ -26,7 +25,6 @@ public final class Base64Decoded extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param origin Origin text
      */
     public Base64Decoded(final Text origin) {

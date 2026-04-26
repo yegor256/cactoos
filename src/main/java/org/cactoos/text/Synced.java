@@ -14,6 +14,7 @@ import org.cactoos.Text;
  * @since 0.18
  */
 public final class Synced extends TextEnvelope {
+
     /**
      * Ctor.
      * @param text The text

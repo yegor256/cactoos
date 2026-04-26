@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link FuncWithFallback}.
- *
  * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */

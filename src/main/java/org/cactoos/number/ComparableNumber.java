@@ -12,9 +12,8 @@ package org.cactoos.number;
  *
  * @since 1.0.0
  */
-@SuppressWarnings("PMD.OverrideBothEqualsAndHashCodeOnComparable")
 public final class ComparableNumber extends NumberEnvelope
-    implements Comparable<Number> {
+    implements Comparable<ComparableNumber> {
 
     /**
      * Serialization marker.
@@ -23,7 +22,6 @@ public final class ComparableNumber extends NumberEnvelope
 
     /**
      * Ctor.
-     *
      * @param nbr Number
      */
     public ComparableNumber(final Number nbr) {
@@ -31,7 +29,17 @@ public final class ComparableNumber extends NumberEnvelope
     }
 
     @Override
-    public int compareTo(final Number nbr) {
+    public int compareTo(final ComparableNumber nbr) {
         return Double.compare(this.doubleValue(), nbr.doubleValue());
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

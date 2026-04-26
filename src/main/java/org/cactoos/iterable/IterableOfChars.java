@@ -11,7 +11,6 @@ import org.cactoos.iterator.IteratorOfChars;
 
 /**
  * Iterable of characters.
- *
  * @since 1.0
  */
 public final class IterableOfChars extends IterableEnvelope<Character> {

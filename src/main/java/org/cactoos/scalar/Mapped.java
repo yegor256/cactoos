@@ -26,11 +26,12 @@ import org.cactoos.Scalar;
  * @since 1.0.0
  */
 public final class Mapped<U> extends ScalarEnvelope<U> {
+
     /**
      * Ctor.
-     * @param func Map function.
-     * @param scalar Scalar.
-     * @param <T> Type of input.
+     * @param func Map function
+     * @param scalar Scalar
+     * @param <T> Type of input
      */
     public <T> Mapped(
         final Func<? super T, ? extends U> func,

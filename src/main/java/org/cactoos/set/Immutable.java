@@ -18,6 +18,7 @@ import java.util.Set;
  */
 @SuppressWarnings("PMD.TooManyMethods")
 public final class Immutable<T> implements Set<T> {
+
     /**
      * Encapsulated set.
      */

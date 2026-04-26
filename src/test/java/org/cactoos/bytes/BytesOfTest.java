@@ -31,7 +31,6 @@ import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link BytesOf}.
- *
  * @since 0.12
  * @checkstyle JavadocMethodCheck (500 lines)
  */

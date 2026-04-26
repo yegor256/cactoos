@@ -40,7 +40,6 @@ public final class LengthOf extends ScalarEnvelope<Long> {
     /**
      * Ctor.
      * Character-length of Text.
-     *
      * @param text The input
      */
     public LengthOf(final Text text) {
@@ -80,7 +79,7 @@ public final class LengthOf extends ScalarEnvelope<Long> {
 
     /**
      * Ctor.
-     * @param number Number.
+     * @param number Number
      */
     private LengthOf(final Scalar<Long> number) {
         super(number);

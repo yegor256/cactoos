@@ -9,7 +9,6 @@ import org.cactoos.Text;
 
 /**
  * Tests if this Text contains other Text.
- *
  * @since 1.0
  */
 public final class Contains implements Scalar<Boolean> {

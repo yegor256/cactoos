@@ -18,9 +18,9 @@ import org.cactoos.iterable.IterableOf;
  * @since 0.1
  */
 public final class ListOf<T> extends ListEnvelope<T> {
+
     /**
      * Ctor.
-     *
      * @param array An array of some elements
      */
     @SafeVarargs

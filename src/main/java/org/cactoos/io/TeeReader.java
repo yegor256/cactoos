@@ -12,6 +12,7 @@ import java.io.Writer;
  * Input to Output copying reader.
  *
  * <p>There is no thread-safety guarantee.
+ *
  * @since 0.13
  */
 @SuppressWarnings("PMD.UseTryWithResources")

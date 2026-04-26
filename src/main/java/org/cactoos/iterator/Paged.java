@@ -34,8 +34,8 @@ public final class Paged<X> implements Iterator<X> {
 
     /**
      * Ctor.
-     * @param first First element.
-     * @param next Function to get the next element.
+     * @param first First element
+     * @param next Function to get the next element
      */
     public Paged(
         final Iterator<? extends X> first,

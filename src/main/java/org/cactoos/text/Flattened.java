@@ -16,6 +16,7 @@ import org.cactoos.scalar.Mapped;
  * @since 0.46
  */
 public final class Flattened extends TextEnvelope {
+
     /**
      * Ctor.
      * @param sclr The text

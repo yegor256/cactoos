@@ -22,6 +22,7 @@ import org.cactoos.Text;
  * Text text1 = new Lowered(new TextOf("HELLO"));
  * text1.asString(); // "hello"
  * }</pre>
+ *
  * @since 0.1
  */
 public final class Lowered extends TextEnvelope {

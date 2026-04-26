@@ -12,15 +12,14 @@ import org.cactoos.iterator.IteratorOf;
 
 /**
  * Split the Text.
- *
  * @see String#split(String)
  * @see String#split(String, int)
  * @since 0.9
  */
 public final class Split extends IterableEnvelope<Text> {
+
     /**
      * Ctor.
-     *
      * @param text The text
      * @param rgx The regex
      * @see String#split(String)
@@ -31,7 +30,6 @@ public final class Split extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param rgx The regex
      * @param lmt The limit

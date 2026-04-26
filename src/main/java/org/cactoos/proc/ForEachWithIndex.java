@@ -40,7 +40,6 @@ public final class ForEachWithIndex<X> implements Proc<Iterable<X>> {
 
     /**
      * Ctor.
-     *
      * @param proc The proc to execute
      */
     public ForEachWithIndex(final BiProc<X, Integer> proc) {

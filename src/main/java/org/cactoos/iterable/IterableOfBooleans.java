@@ -8,7 +8,6 @@ import org.cactoos.iterator.IteratorOfBooleans;
 
 /**
  * Iterable of boolean values.
- *
  * @since 1.0
  */
 public final class IterableOfBooleans extends IterableEnvelope<Boolean> {

@@ -41,7 +41,6 @@ public final class Binary implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param condition Boolean function
      * @param consequent Proc executed when condition is true
      */

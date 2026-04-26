@@ -27,7 +27,6 @@ public final class TextOfScalar implements Text {
 
     /**
      * Ctor.
-     *
      * @param scalar The scalar of CharSequence
      */
     public TextOfScalar(final Scalar<? extends CharSequence> scalar) {

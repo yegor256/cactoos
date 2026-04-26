@@ -38,6 +38,7 @@ import org.cactoos.iterable.IterableOf;
  * @since 1.0
  */
 public final class HashCode implements Scalar<Integer> {
+
     /**
      * Hash code.
      */
@@ -48,6 +49,7 @@ public final class HashCode implements Scalar<Integer> {
      *
      * <p>The {@code initial} and {@code multiplier} values are arbitrarily
      * set to 17 and 31 respectively.
+     *
      * @param attributes The object's attributes
      */
     public HashCode(final Object... attributes) {
@@ -59,6 +61,7 @@ public final class HashCode implements Scalar<Integer> {
      *
      * <p>The {@code initial} and {@code multiplier} values are arbitrarily
      * set to 17 and 31 respectively.
+     *
      * @param attributes The object's attributes
      */
     public HashCode(final Iterable<?> attributes) {

@@ -11,10 +11,10 @@ import org.llorllale.cactoos.matchers.IsApplicable;
 
 /**
  * Tests for {@link Flattened}.
- *
  * @since 0.49
  */
 final class FlattenedTest {
+
     @Test
     void flattens() {
         MatcherAssert.assertThat(

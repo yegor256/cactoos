@@ -16,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 0.32
  */
 public final class IteratorOfFloats implements Iterator<Float> {
+
     /**
      * The list of items to iterate.
      */

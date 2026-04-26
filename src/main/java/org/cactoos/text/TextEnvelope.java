@@ -8,7 +8,6 @@ import org.cactoos.Text;
 
 /**
  * {@link Text} envelope.
- *
  * @since 0.32
  * @checkstyle AbstractClassNameCheck (500 lines)
  */
@@ -21,7 +20,7 @@ public abstract class TextEnvelope implements Text {
 
     /**
      * Ctor.
-     * @param text Text representing the text value.
+     * @param text Text representing the text value
      */
     public TextEnvelope(final Text text) {
         this.origin = text;
@@ -38,12 +37,12 @@ public abstract class TextEnvelope implements Text {
     }
 
     @Override
-    public final boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         return this.origin.equals(obj);
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return this.origin.hashCode();
     }
 }

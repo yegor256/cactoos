@@ -10,7 +10,6 @@ import org.cactoos.collection.CollectionEnvelope;
 /**
  * Set envelope.
  * <p>There is no thread-safety guarantee.</p>
- *
  * @param <T> Element type
  * @since 0.49.2
  * @checkstyle AbstractClassNameCheck (500 lines)
@@ -20,7 +19,6 @@ public abstract class SetEnvelope<T> extends CollectionEnvelope<T> implements
 
     /**
      * Ctor.
-     *
      * @param src Source
      */
     public SetEnvelope(final Set<T> src) {

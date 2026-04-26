@@ -11,11 +11,11 @@ import org.cactoos.func.FuncOf;
 
 /**
  * ScalarOf.
- *
  * @param <T> Element type
  * @since 0.4
  */
 public final class ScalarOf<T> extends ScalarEnvelope<T> {
+
     /**
      * Ctor.
      * @param runnable Encapsulated proc
@@ -54,7 +54,6 @@ public final class ScalarOf<T> extends ScalarEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param origin The scalar
      */
     public ScalarOf(final Callable<? extends T> origin) {

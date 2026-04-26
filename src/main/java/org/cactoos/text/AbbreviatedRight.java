@@ -52,7 +52,6 @@ public final class AbbreviatedRight extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param text A CharSequence
      * @param max Max width of the result string
      */

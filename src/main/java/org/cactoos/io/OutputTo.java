@@ -112,8 +112,7 @@ public final class OutputTo implements Output {
      * @param charset Charset
      * @param size Buffer size
      */
-    OutputTo(final Writer wtr, final Charset charset,
-        final int size) {
+    OutputTo(final Writer wtr, final Charset charset, final int size) {
         this(new WriterAsOutputStream(wtr, charset, size));
     }
 
@@ -133,8 +132,7 @@ public final class OutputTo implements Output {
      * @param charset Charset
      * @param size Buffer size
      */
-    OutputTo(final Writer wtr, final CharSequence charset,
-        final int size) {
+    OutputTo(final Writer wtr, final CharSequence charset, final int size) {
         this(new WriterAsOutputStream(wtr, charset, size));
     }
 
@@ -144,8 +142,7 @@ public final class OutputTo implements Output {
      * @param ddr Charset decoder
      * @param size Buffer size
      */
-    OutputTo(final Writer wtr, final CharsetDecoder ddr,
-        final int size) {
+    OutputTo(final Writer wtr, final CharsetDecoder ddr, final int size) {
         this(new WriterAsOutputStream(wtr, ddr, size));
     }
 
