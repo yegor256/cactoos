@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
+import org.cactoos.Scalar;
 
 /**
  * Reader as {@link Bytes}.
@@ -28,7 +29,7 @@ final class ReaderAsBytes implements Bytes {
     /**
      * The charset.
      */
-    private final CharSequence charset;
+    private final Scalar<? extends CharSequence> charset;
 
     /**
      * The buffer size.
@@ -69,7 +70,7 @@ final class ReaderAsBytes implements Bytes {
      * @param max Buffer size
      */
     ReaderAsBytes(final Reader rdr, final Charset cset, final int max) {
-        this(rdr, cset.name(), max);
+        this(rdr, cset::name, max);
     }
 
     /**
@@ -89,6 +90,20 @@ final class ReaderAsBytes implements Bytes {
      * @param max Buffer size
      */
     ReaderAsBytes(final Reader rdr, final CharSequence cset, final int max) {
+        this(rdr, () -> cset, max);
+    }
+
+    /**
+     * Ctor.
+     * @param rdr Reader
+     * @param cset Charset, deferred
+     * @param max Buffer size
+     */
+    private ReaderAsBytes(
+        final Reader rdr,
+        final Scalar<? extends CharSequence> cset,
+        final int max
+    ) {
         this.reader = rdr;
         this.charset = cset;
         this.size = max;
@@ -106,6 +121,6 @@ final class ReaderAsBytes implements Bytes {
             builder.append(buffer, 0, done);
         }
         this.reader.close();
-        return builder.toString().getBytes(this.charset.toString());
+        return builder.toString().getBytes(this.charset.value().toString());
     }
 }

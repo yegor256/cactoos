@@ -52,8 +52,16 @@ public final class Intersection<T> extends SetEnvelope<T> {
         final Scalar<Iterable<T>> second
     ) {
         this(
-            new Unchecked<>(first).value(),
-            new Unchecked<>(second).value()
+            new SetOf<T>(
+                new IterableOf<T>(
+                    () -> new Unchecked<>(first).value().iterator()
+                )
+            ),
+            new SetOf<T>(
+                new IterableOf<T>(
+                    () -> new Unchecked<>(second).value().iterator()
+                )
+            )
         );
     }
 
@@ -63,22 +71,11 @@ public final class Intersection<T> extends SetEnvelope<T> {
      * @param second Second set
      */
     public Intersection(final Set<T> first, final Set<T> second) {
-        super(computeIntersection(first, second));
-    }
-
-    /**
-     * Compute the intersection between two sets.
-     * @param first The first set
-     * @param second The second set
-     * @param <E> Type of elements
-     * @return The intersection set (elements in both first and second)
-     */
-    private static <E> Set<E> computeIntersection(
-        final Set<E> first,
-        final Set<E> second
-    ) {
-        final Set<E> result = new HashSet<>(first);
-        result.retainAll(second);
-        return result;
+        super(new HashSet<T>(first) {
+            private static final long serialVersionUID = 1L;
+            {
+                this.retainAll(second);
+            }
+        });
     }
 }

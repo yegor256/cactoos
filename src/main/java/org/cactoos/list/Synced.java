@@ -4,8 +4,8 @@
  */
 package org.cactoos.list;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Synchronized list.
@@ -21,6 +21,6 @@ public final class Synced<X> extends ListEnvelope<X> {
      * @param list The underlying list
      */
     public Synced(final List<X> list) {
-        super(Collections.synchronizedList(list));
+        super(new CopyOnWriteArrayList<X>(list));
     }
 }

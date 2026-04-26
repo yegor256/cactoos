@@ -5,7 +5,6 @@
 package org.cactoos.list;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import org.cactoos.iterable.IterableOf;
 
 /**
@@ -46,10 +45,6 @@ public final class Joined<X> extends ListEnvelope<X> {
      * @param src Source lists
      */
     public Joined(final Iterable<? extends List<? extends X>> src) {
-        super(
-            new ListOf<>(src).stream()
-                .flatMap(List::stream)
-                .collect(Collectors.toList())
-        );
+        super(new ListOf<X>(new org.cactoos.iterable.Joined<X>(src)));
     }
 }

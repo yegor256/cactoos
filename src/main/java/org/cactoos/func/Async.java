@@ -12,6 +12,9 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.Func;
 import org.cactoos.Proc;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Func that runs in the background.
@@ -47,9 +50,9 @@ public final class Async<X, Y> implements
     private final Func<X, Y> func;
 
     /**
-     * The executor service.
+     * The executor service, deferred.
      */
-    private final ExecutorService executor;
+    private final Unchecked<ExecutorService> executor;
 
     /**
      * Shut down the executor service on close.
@@ -61,7 +64,13 @@ public final class Async<X, Y> implements
      * @param fnc The func
      */
     public Async(final Func<X, Y> fnc) {
-        this(fnc, Executors.defaultThreadFactory());
+        this(
+            fnc,
+            (Scalar<ExecutorService>) () -> Executors.newSingleThreadExecutor(
+                Executors.defaultThreadFactory()
+            ),
+            true
+        );
     }
 
     /**
@@ -70,7 +79,11 @@ public final class Async<X, Y> implements
      * @param fct Factory
      */
     public Async(final Func<X, Y> fnc, final ThreadFactory fct) {
-        this(fnc, Executors.newSingleThreadExecutor(fct), true);
+        this(
+            fnc,
+            (Scalar<ExecutorService>) () -> Executors.newSingleThreadExecutor(fct),
+            true
+        );
     }
 
     /**
@@ -79,28 +92,28 @@ public final class Async<X, Y> implements
      * @param exec Executor Service
      */
     public Async(final Func<X, Y> fnc, final ExecutorService exec) {
-        this(fnc, exec, false);
+        this(fnc, (Scalar<ExecutorService>) () -> exec, false);
     }
 
     /**
      * Primary ctor.
      * @param fnc The func
-     * @param exec Executor Service
+     * @param exec Executor Service, deferred
      * @param sht Shut it down on close
      */
     private Async(
         final Func<X, Y> fnc,
-        final ExecutorService exec,
+        final Scalar<ExecutorService> exec,
         final boolean sht
     ) {
         this.func = fnc;
-        this.executor = exec;
+        this.executor = new Unchecked<>(new Sticky<>(exec));
         this.shutdown = sht;
     }
 
     @Override
     public Future<Y> apply(final X input) {
-        return this.executor.submit(
+        return this.executor.value().submit(
             () -> this.func.apply(input)
         );
     }
@@ -113,14 +126,14 @@ public final class Async<X, Y> implements
     @Override
     public void close() {
         if (this.shutdown) {
-            this.executor.shutdown();
+            this.executor.value().shutdown();
             try {
-                if (!this.executor.awaitTermination(1L, TimeUnit.MINUTES)) {
-                    this.executor.shutdownNow();
+                if (!this.executor.value().awaitTermination(1L, TimeUnit.MINUTES)) {
+                    this.executor.value().shutdownNow();
                 }
             } catch (final InterruptedException ex) {
                 Thread.currentThread().interrupt();
-                this.executor.shutdownNow();
+                this.executor.value().shutdownNow();
             }
         }
     }

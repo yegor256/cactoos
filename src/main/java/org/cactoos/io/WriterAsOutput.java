@@ -10,6 +10,9 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Output;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Writer as {@link Output}.
@@ -28,9 +31,9 @@ final class WriterAsOutput implements Output {
     private final Writer writer;
 
     /**
-     * The charset decoder.
+     * The charset decoder, deferred.
      */
-    private final CharsetDecoder decoder;
+    private final Unchecked<CharsetDecoder> decoder;
 
     /**
      * The buffer size.
@@ -61,7 +64,7 @@ final class WriterAsOutput implements Output {
      * @param max Buffer size
      */
     WriterAsOutput(final Writer wtr, final Charset cset, final int max) {
-        this(wtr, cset.newDecoder(), max);
+        this(wtr, (Scalar<CharsetDecoder>) cset::newDecoder, max);
     }
 
     /**
@@ -71,13 +74,27 @@ final class WriterAsOutput implements Output {
      * @param max Buffer size
      */
     WriterAsOutput(final Writer wtr, final CharsetDecoder ddr, final int max) {
+        this(wtr, (Scalar<CharsetDecoder>) () -> ddr, max);
+    }
+
+    /**
+     * Ctor.
+     * @param wtr Reader
+     * @param ddr Decoder, deferred
+     * @param max Buffer size
+     */
+    private WriterAsOutput(
+        final Writer wtr,
+        final Scalar<CharsetDecoder> ddr,
+        final int max
+    ) {
         this.writer = wtr;
-        this.decoder = ddr;
+        this.decoder = new Unchecked<>(new Sticky<>(ddr));
         this.size = max;
     }
 
     @Override
     public OutputStream stream() {
-        return new WriterAsOutputStream(this.writer, this.decoder, this.size);
+        return new WriterAsOutputStream(this.writer, this.decoder.value(), this.size);
     }
 }

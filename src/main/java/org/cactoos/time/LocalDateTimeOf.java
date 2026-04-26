@@ -25,7 +25,7 @@ public final class LocalDateTimeOf implements Scalar<LocalDateTime> {
      * @param date The date to parse
      */
     public LocalDateTimeOf(final CharSequence date) {
-        this(date, new Iso().value());
+        this(date, new Iso());
     }
 
     /**
@@ -35,7 +35,7 @@ public final class LocalDateTimeOf implements Scalar<LocalDateTime> {
      * @param format The format to use
      */
     public LocalDateTimeOf(final CharSequence date, final String format) {
-        this(date, DateTimeFormatter.ofPattern(format));
+        this(date, () -> DateTimeFormatter.ofPattern(format));
     }
 
     /**
@@ -46,8 +46,18 @@ public final class LocalDateTimeOf implements Scalar<LocalDateTime> {
      */
     public LocalDateTimeOf(final CharSequence date,
         final DateTimeFormatter formatter) {
+        this(date, () -> formatter);
+    }
+
+    /**
+     * Parses the date using a deferred formatter.
+     * @param date The date to parse
+     * @param fmt The formatter, deferred
+     */
+    private LocalDateTimeOf(final CharSequence date,
+        final Scalar<DateTimeFormatter> fmt) {
         this.parsed = new Unchecked<>(
-            () -> LocalDateTime.from(formatter.parse(date))
+            () -> LocalDateTime.from(fmt.value().parse(date))
         );
     }
 

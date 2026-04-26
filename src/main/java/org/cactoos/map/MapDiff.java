@@ -29,7 +29,24 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      */
     public MapDiff(final Iterable<Map.Entry<K, V>> first,
         final Iterable<Map.Entry<K, V>> second) {
-        this(mapFromEntries(first), mapFromEntries(second));
+        this(
+            new HashMap<K, V>() {
+                private static final long serialVersionUID = 1L;
+                {
+                    for (final Map.Entry<K, V> entry : first) {
+                        this.put(entry.getKey(), entry.getValue());
+                    }
+                }
+            },
+            new HashMap<K, V>() {
+                private static final long serialVersionUID = 1L;
+                {
+                    for (final Map.Entry<K, V> entry : second) {
+                        this.put(entry.getKey(), entry.getValue());
+                    }
+                }
+            }
+        );
     }
 
     /**
@@ -55,8 +72,12 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
         final Scalar<Iterable<Map.Entry<K, V>>> second
     ) {
         this(
-            new Unchecked<>(first).value(),
-            new Unchecked<>(second).value()
+            new IterableOf<Map.Entry<K, V>>(
+                () -> new Unchecked<>(first).value().iterator()
+            ),
+            new IterableOf<Map.Entry<K, V>>(
+                () -> new Unchecked<>(second).value().iterator()
+            )
         );
     }
 
@@ -66,40 +87,11 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      * @param second Second map
      */
     public MapDiff(final Map<K, V> first, final Map<K, V> second) {
-        super(computeDiff(first, second));
-    }
-
-    /**
-     * Compute the difference between two maps.
-     * @param first The first map
-     * @param second The second map
-     * @param <K> Type of keys
-     * @param <V> Type of values
-     * @return The difference map (entries in first but not in second)
-     */
-    private static <K, V> Map<K, V> computeDiff(
-        final Map<K, V> first,
-        final Map<K, V> second
-    ) {
-        final Map<K, V> result = new HashMap<>(first);
-        result.keySet().removeAll(second.keySet());
-        return result;
-    }
-
-    /**
-     * Create a map from entries.
-     * @param entries The entries
-     * @param <K> Type of keys
-     * @param <V> Type of values
-     * @return The map
-     */
-    private static <K, V> Map<K, V> mapFromEntries(
-        final Iterable<Map.Entry<K, V>> entries
-    ) {
-        final Map<K, V> map = new HashMap<>(0);
-        for (final Map.Entry<K, V> entry : entries) {
-            map.put(entry.getKey(), entry.getValue());
-        }
-        return map;
+        super(new HashMap<K, V>(first) {
+            private static final long serialVersionUID = 1L;
+            {
+                this.keySet().removeAll(second.keySet());
+            }
+        });
     }
 }

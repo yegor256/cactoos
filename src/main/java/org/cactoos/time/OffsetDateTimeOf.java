@@ -27,7 +27,7 @@ public final class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
      * @param date The date to parse
      */
     public OffsetDateTimeOf(final CharSequence date) {
-        this(date, new Iso().value());
+        this(date, new Iso());
     }
 
     /**
@@ -39,8 +39,9 @@ public final class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
      */
     public OffsetDateTimeOf(final CharSequence date, final String format,
         final ZoneOffset offset) {
-        this(date,
-            DateTimeFormatter.ofPattern(format).withZone(offset.normalized())
+        this(
+            date,
+            () -> DateTimeFormatter.ofPattern(format).withZone(offset.normalized())
         );
     }
 
@@ -52,8 +53,18 @@ public final class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
      */
     public OffsetDateTimeOf(final CharSequence date,
         final DateTimeFormatter formatter) {
+        this(date, () -> formatter);
+    }
+
+    /**
+     * Parses the date using a deferred formatter.
+     * @param date The date to parse
+     * @param fmt The formatter to use, deferred
+     */
+    private OffsetDateTimeOf(final CharSequence date,
+        final Scalar<DateTimeFormatter> fmt) {
         this.parsed = new Unchecked<>(
-            () -> ZonedDateTime.from(formatter.parse(date)).toOffsetDateTime()
+            () -> ZonedDateTime.from(fmt.value().parse(date)).toOffsetDateTime()
         );
     }
 

@@ -7,6 +7,8 @@ package org.cactoos.io;
 import java.io.OutputStream;
 import java.util.logging.Logger;
 import org.cactoos.Output;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Logged output.
@@ -28,9 +30,9 @@ public final class LoggingOutput implements Output {
     private final String destination;
 
     /**
-     * The Logger.
+     * The Logger, deferred.
      */
-    private final Logger logger;
+    private final Scalar<Logger> logger;
 
     /**
      * Ctor.
@@ -38,7 +40,7 @@ public final class LoggingOutput implements Output {
      * @param dst The name of destination data
      */
     public LoggingOutput(final Output output, final String dst) {
-        this(output, dst, Logger.getLogger(dst));
+        this(output, dst, () -> Logger.getLogger(dst));
     }
 
     /**
@@ -52,6 +54,20 @@ public final class LoggingOutput implements Output {
         final String dst,
         final Logger lgr
     ) {
+        this(output, dst, () -> lgr);
+    }
+
+    /**
+     * Ctor.
+     * @param output Data output
+     * @param dst The name of destination data
+     * @param lgr Message logger, deferred
+     */
+    private LoggingOutput(
+        final Output output,
+        final String dst,
+        final Scalar<Logger> lgr
+    ) {
         this.origin = output;
         this.destination = dst;
         this.logger = lgr;
@@ -62,7 +78,7 @@ public final class LoggingOutput implements Output {
         return new LoggingOutputStream(
             this.origin.stream(),
             this.destination,
-            this.logger
+            new Unchecked<>(this.logger).value()
         );
     }
 }

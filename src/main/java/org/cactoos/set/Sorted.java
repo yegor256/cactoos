@@ -34,12 +34,15 @@ public final class Sorted<T> extends SortedSetEnvelope<T> {
      * @param cmp Comparator
      * @param src An {@link Iterable}
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public Sorted(
         final Comparator<? super T> cmp,
         final Iterable<? extends T> src
     ) {
-        super(new TreeSet<>(cmp));
-        src.forEach(super::add);
+        super(new TreeSet<T>(cmp) {
+            private static final long serialVersionUID = 1L;
+            {
+                src.forEach(this::add);
+            }
+        });
     }
 }

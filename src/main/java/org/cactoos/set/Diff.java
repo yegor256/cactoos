@@ -52,8 +52,16 @@ public final class Diff<T> extends SetEnvelope<T> {
         final Scalar<Iterable<T>> second
     ) {
         this(
-            new Unchecked<>(first).value(),
-            new Unchecked<>(second).value()
+            new SetOf<T>(
+                new IterableOf<T>(
+                    () -> new Unchecked<>(first).value().iterator()
+                )
+            ),
+            new SetOf<T>(
+                new IterableOf<T>(
+                    () -> new Unchecked<>(second).value().iterator()
+                )
+            )
         );
     }
 
@@ -63,22 +71,11 @@ public final class Diff<T> extends SetEnvelope<T> {
      * @param second Second set
      */
     public Diff(final Set<T> first, final Set<T> second) {
-        super(computeDiff(first, second));
-    }
-
-    /**
-     * Compute the difference between two sets.
-     * @param first The first set
-     * @param second The second set
-     * @param <E> Type of elements
-     * @return The difference set (elements in first but not in second)
-     */
-    private static <E> Set<E> computeDiff(
-        final Set<E> first,
-        final Set<E> second
-    ) {
-        final Set<E> result = new HashSet<>(first);
-        result.removeAll(second);
-        return result;
+        super(new HashSet<T>(first) {
+            private static final long serialVersionUID = 1L;
+            {
+                this.removeAll(second);
+            }
+        });
     }
 }

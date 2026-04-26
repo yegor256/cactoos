@@ -38,9 +38,9 @@ import org.cactoos.text.FormattedText;
 public final class AndInThreads implements Scalar<Boolean> {
 
     /**
-     * The service.
+     * The service, deferred.
      */
-    private final ExecutorService service;
+    private final Unchecked<ExecutorService> service;
 
     /**
      * The iterator.
@@ -93,7 +93,7 @@ public final class AndInThreads implements Scalar<Boolean> {
      * @param src The iterable
      */
     public AndInThreads(final Iterable<? extends Scalar<Boolean>> src) {
-        this(Executors.newCachedThreadPool(), src, true);
+        this((Scalar<ExecutorService>) Executors::newCachedThreadPool, src, true);
     }
 
     /**
@@ -182,18 +182,18 @@ public final class AndInThreads implements Scalar<Boolean> {
      */
     public AndInThreads(final ExecutorService svc,
         final Iterable<? extends Scalar<Boolean>> src) {
-        this(svc, src, false);
+        this((Scalar<ExecutorService>) () -> svc, src, false);
     }
 
     /**
      * Ctor.
-     * @param svc Executable service to run thread in
+     * @param svc Executable service, deferred
      * @param src The iterable
      * @param sht Shut it down
      */
-    private AndInThreads(final ExecutorService svc,
+    private AndInThreads(final Scalar<ExecutorService> svc,
         final Iterable<? extends Scalar<Boolean>> src, final boolean sht) {
-        this.service = svc;
+        this.service = new Unchecked<>(new Sticky<>(svc));
         this.iterable = src;
         this.shut = sht;
     }
@@ -202,16 +202,16 @@ public final class AndInThreads implements Scalar<Boolean> {
     public Boolean value() throws Exception {
         final Collection<Future<Boolean>> futures = new LinkedList<>();
         for (final Scalar<Boolean> item : this.iterable) {
-            futures.add(this.service.submit(item::value));
+            futures.add(this.service.value().submit(item::value));
         }
         final boolean result = new And(
             Future::get,
             futures
         ).value();
         if (this.shut) {
-            this.service.shutdown();
+            this.service.value().shutdown();
             try {
-                if (!this.service.awaitTermination(1L, TimeUnit.MINUTES)) {
+                if (!this.service.value().awaitTermination(1L, TimeUnit.MINUTES)) {
                     throw new IllegalStateException(
                         new FormattedText(
                             "Can't terminate the service, result=%b",

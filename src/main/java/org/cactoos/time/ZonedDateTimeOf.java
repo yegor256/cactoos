@@ -26,7 +26,7 @@ public final class ZonedDateTimeOf implements Scalar<ZonedDateTime> {
      * @param date The date to parse
      */
     public ZonedDateTimeOf(final CharSequence date) {
-        this(date, new Iso().value());
+        this(date, new Iso());
     }
 
     /**
@@ -38,7 +38,7 @@ public final class ZonedDateTimeOf implements Scalar<ZonedDateTime> {
      */
     public ZonedDateTimeOf(final CharSequence date, final String format,
         final ZoneId zone) {
-        this(date, DateTimeFormatter.ofPattern(format).withZone(zone));
+        this(date, () -> DateTimeFormatter.ofPattern(format).withZone(zone));
     }
 
     /**
@@ -49,8 +49,18 @@ public final class ZonedDateTimeOf implements Scalar<ZonedDateTime> {
      */
     public ZonedDateTimeOf(final CharSequence date,
         final DateTimeFormatter formatter) {
+        this(date, () -> formatter);
+    }
+
+    /**
+     * Parses the date using the deferred formatter.
+     * @param date The date to parse
+     * @param fmt The formatter to use, deferred
+     */
+    private ZonedDateTimeOf(final CharSequence date,
+        final Scalar<DateTimeFormatter> fmt) {
         this.parsed = new Unchecked<>(
-            () -> ZonedDateTime.from(formatter.parse(date))
+            () -> ZonedDateTime.from(fmt.value().parse(date))
         );
     }
 

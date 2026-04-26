@@ -242,7 +242,7 @@ public final class ReaderOf extends Reader {
      */
     public ReaderOf(final InputStream stream, final CharSequence charset)
         throws UnsupportedEncodingException {
-        this(new InputStreamReader(stream, charset.toString()));
+        this((Scalar<Reader>) () -> new InputStreamReader(stream, charset.toString()));
     }
 
     /**

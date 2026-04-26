@@ -30,7 +30,11 @@ public final class TextOfDateTime extends TextEnvelope {
      * @param date The date to format
      */
     public TextOfDateTime(final LocalDate date) {
-        this(new Iso().value(), date);
+        this(
+            () -> new Iso().value().format(
+                ZonedDateTime.of(date, LocalTime.MIN, ZoneId.systemDefault())
+            )
+        );
     }
 
     /**
@@ -39,7 +43,13 @@ public final class TextOfDateTime extends TextEnvelope {
      * @param date The date to format
      */
     public TextOfDateTime(final String format, final LocalDate date) {
-        this(format, date, Locale.getDefault(Locale.Category.FORMAT));
+        this(
+            () -> DateTimeFormatter.ofPattern(
+                format, Locale.getDefault(Locale.Category.FORMAT)
+            ).format(
+                ZonedDateTime.of(date, LocalTime.MIN, ZoneId.systemDefault())
+            )
+        );
     }
 
     /**
@@ -54,7 +64,11 @@ public final class TextOfDateTime extends TextEnvelope {
         final LocalDate date,
         final Locale locale
     ) {
-        this(DateTimeFormatter.ofPattern(format, locale), date);
+        this(
+            () -> DateTimeFormatter.ofPattern(format, locale).format(
+                ZonedDateTime.of(date, LocalTime.MIN, ZoneId.systemDefault())
+            )
+        );
     }
 
     /**
@@ -62,7 +76,9 @@ public final class TextOfDateTime extends TextEnvelope {
      * @param date The date to format
      */
     public TextOfDateTime(final LocalDateTime date) {
-        this(new Iso().value(), date);
+        this(
+            () -> new Iso().value().format(date.atZone(ZoneId.systemDefault()))
+        );
     }
 
     /**
@@ -71,7 +87,11 @@ public final class TextOfDateTime extends TextEnvelope {
      * @param date The date to format
      */
     public TextOfDateTime(final String format, final LocalDateTime date) {
-        this(format, date, Locale.getDefault(Locale.Category.FORMAT));
+        this(
+            () -> DateTimeFormatter.ofPattern(
+                format, Locale.getDefault(Locale.Category.FORMAT)
+            ).format(date.atZone(ZoneId.systemDefault()))
+        );
     }
 
     /**
@@ -86,7 +106,10 @@ public final class TextOfDateTime extends TextEnvelope {
         final LocalDateTime date,
         final Locale locale
     ) {
-        this(DateTimeFormatter.ofPattern(format, locale), date);
+        this(
+            () -> DateTimeFormatter.ofPattern(format, locale)
+                .format(date.atZone(ZoneId.systemDefault()))
+        );
     }
 
     /**
@@ -94,7 +117,11 @@ public final class TextOfDateTime extends TextEnvelope {
      * @param date The date to format
      */
     public TextOfDateTime(final Date date) {
-        this(new Iso().value(), date);
+        this(
+            () -> new Iso().value().format(
+                ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())
+            )
+        );
     }
 
     /**
@@ -104,7 +131,13 @@ public final class TextOfDateTime extends TextEnvelope {
      * @param date The date to format
      */
     public TextOfDateTime(final String format, final Date date) {
-        this(format, date, Locale.getDefault(Locale.Category.FORMAT));
+        this(
+            () -> DateTimeFormatter.ofPattern(
+                format, Locale.getDefault(Locale.Category.FORMAT)
+            ).format(
+                ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())
+            )
+        );
     }
 
     /**
@@ -119,7 +152,11 @@ public final class TextOfDateTime extends TextEnvelope {
         final Date date,
         final Locale locale
     ) {
-        this(DateTimeFormatter.ofPattern(format, locale), date);
+        this(
+            () -> DateTimeFormatter.ofPattern(format, locale).format(
+                ZonedDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())
+            )
+        );
     }
 
     /**
@@ -127,7 +164,7 @@ public final class TextOfDateTime extends TextEnvelope {
      * @param date The date to format
      */
     public TextOfDateTime(final OffsetDateTime date) {
-        this(new Iso().value(), date);
+        this(() -> new Iso().value().format(date));
     }
 
     /**
@@ -136,7 +173,11 @@ public final class TextOfDateTime extends TextEnvelope {
      * @param date The date to format
      */
     public TextOfDateTime(final String format, final OffsetDateTime date) {
-        this(format, date, Locale.getDefault(Locale.Category.FORMAT));
+        this(
+            () -> DateTimeFormatter.ofPattern(
+                format, Locale.getDefault(Locale.Category.FORMAT)
+            ).format(date)
+        );
     }
 
     /**
@@ -151,7 +192,7 @@ public final class TextOfDateTime extends TextEnvelope {
         final OffsetDateTime date,
         final Locale locale
     ) {
-        this(DateTimeFormatter.ofPattern(format, locale), date);
+        this(() -> DateTimeFormatter.ofPattern(format, locale).format(date));
     }
 
     /**
@@ -159,7 +200,7 @@ public final class TextOfDateTime extends TextEnvelope {
      * @param date The date to format
      */
     public TextOfDateTime(final ZonedDateTime date) {
-        this(new Iso().value(), date);
+        this(() -> new Iso().value().format(date));
     }
 
     /**
@@ -168,7 +209,11 @@ public final class TextOfDateTime extends TextEnvelope {
      * @param date The date to format
      */
     public TextOfDateTime(final String format, final ZonedDateTime date) {
-        this(format, date, Locale.getDefault(Locale.Category.FORMAT));
+        this(
+            () -> DateTimeFormatter.ofPattern(
+                format, Locale.getDefault(Locale.Category.FORMAT)
+            ).format(date)
+        );
     }
 
     /**
@@ -183,7 +228,7 @@ public final class TextOfDateTime extends TextEnvelope {
         final ZonedDateTime date,
         final Locale locale
     ) {
-        this(DateTimeFormatter.ofPattern(format, locale), date);
+        this(() -> DateTimeFormatter.ofPattern(format, locale).format(date));
     }
 
     /**

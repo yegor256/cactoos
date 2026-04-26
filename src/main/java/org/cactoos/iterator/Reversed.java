@@ -7,7 +7,9 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import org.cactoos.Scalar;
 import org.cactoos.list.ListOf;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Reverse iterator.
@@ -23,9 +25,9 @@ import org.cactoos.list.ListOf;
 public final class Reversed<X> implements Iterator<X> {
 
     /**
-     * Origin iterator to be reversed.
+     * Origin iterator to be reversed, deferred.
      */
-    private final ListIterator<? extends X> origin;
+    private final Unchecked<ListIterator<? extends X>> origin;
 
     /**
      * Ctor.
@@ -51,24 +53,24 @@ public final class Reversed<X> implements Iterator<X> {
      * @param src Source list
      */
     private Reversed(final List<? extends X> src) {
-        this(src.listIterator(src.size()));
+        this((Scalar<ListIterator<? extends X>>) () -> src.listIterator(src.size()));
     }
 
     /**
      * Ctor.
-     * @param src Source list iterator
+     * @param src Source list iterator, deferred
      */
-    private Reversed(final ListIterator<? extends X> src) {
-        this.origin = src;
+    private Reversed(final Scalar<ListIterator<? extends X>> src) {
+        this.origin = new Unchecked<>(src);
     }
 
     @Override
     public boolean hasNext() {
-        return this.origin.hasPrevious();
+        return this.origin.value().hasPrevious();
     }
 
     @Override
     public X next() {
-        return this.origin.previous();
+        return this.origin.value().previous();
     }
 }

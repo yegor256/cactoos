@@ -8,9 +8,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import org.cactoos.Func;
 import org.cactoos.Input;
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.func.IoCheckedFunc;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
 
@@ -38,16 +40,16 @@ public final class ResourceOf implements Input {
     private final Func<Text, Input> fallback;
 
     /**
-     * Resource class loader.
+     * Resource class loader, deferred.
      */
-    private final ClassLoader loader;
+    private final Scalar<ClassLoader> loader;
 
     /**
      * New resource input with current context {@link ClassLoader}.
      * @param res Resource name
      */
     public ResourceOf(final CharSequence res) {
-        this(res, Thread.currentThread().getContextClassLoader());
+        this(res, (Scalar<ClassLoader>) () -> Thread.currentThread().getContextClassLoader());
     }
 
     /**
@@ -58,7 +60,7 @@ public final class ResourceOf implements Input {
      */
     @SuppressWarnings("PMD.UseProperClassLoader")
     public ResourceOf(final CharSequence res, final Class<?> cls) {
-        this(res, cls.getClassLoader());
+        this(res, (Scalar<ClassLoader>) cls::getClassLoader);
     }
 
     /**
@@ -67,6 +69,15 @@ public final class ResourceOf implements Input {
      * @param ldr Resource class loader
      */
     public ResourceOf(final CharSequence res, final ClassLoader ldr) {
+        this(res, (Scalar<ClassLoader>) () -> ldr);
+    }
+
+    /**
+     * New resource input with deferred {@link ClassLoader}.
+     * @param res Resource name
+     * @param ldr Resource class loader, deferred
+     */
+    private ResourceOf(final CharSequence res, final Scalar<ClassLoader> ldr) {
         this(new TextOf(res), ldr);
     }
 
@@ -80,7 +91,7 @@ public final class ResourceOf implements Input {
     @SuppressWarnings("PMD.UseProperClassLoader")
     public ResourceOf(final CharSequence res,
         final Func<CharSequence, Input> fbk, final Class<?> cls) {
-        this(res, fbk, cls.getClassLoader());
+        this(res, fbk, (Scalar<ClassLoader>) cls::getClassLoader);
     }
 
     /**
@@ -91,6 +102,17 @@ public final class ResourceOf implements Input {
      */
     public ResourceOf(final CharSequence res,
         final Func<CharSequence, Input> fbk, final ClassLoader ldr) {
+        this(res, fbk, (Scalar<ClassLoader>) () -> ldr);
+    }
+
+    /**
+     * New resource input with deferred {@link ClassLoader}.
+     * @param res Resource name
+     * @param fbk Fallback
+     * @param ldr Resource class loader, deferred
+     */
+    private ResourceOf(final CharSequence res,
+        final Func<CharSequence, Input> fbk, final Scalar<ClassLoader> ldr) {
         this(new TextOf(res), input -> fbk.apply(input.asString()), ldr);
     }
 
@@ -110,7 +132,10 @@ public final class ResourceOf implements Input {
      */
     public ResourceOf(final CharSequence res,
         final Func<CharSequence, Input> fbk) {
-        this(res, fbk, Thread.currentThread().getContextClassLoader());
+        this(
+            res, fbk,
+            (Scalar<ClassLoader>) () -> Thread.currentThread().getContextClassLoader()
+        );
     }
 
     /**
@@ -127,7 +152,7 @@ public final class ResourceOf implements Input {
      * @param res Resource name
      */
     public ResourceOf(final Text res) {
-        this(res, Thread.currentThread().getContextClassLoader());
+        this(res, (Scalar<ClassLoader>) () -> Thread.currentThread().getContextClassLoader());
     }
 
     /**
@@ -136,6 +161,15 @@ public final class ResourceOf implements Input {
      * @param ldr Resource class loader
      */
     public ResourceOf(final Text res, final ClassLoader ldr) {
+        this(res, (Scalar<ClassLoader>) () -> ldr);
+    }
+
+    /**
+     * New resource input with deferred {@link ClassLoader}.
+     * @param res Resource name
+     * @param ldr Resource class loader, deferred
+     */
+    private ResourceOf(final Text res, final Scalar<ClassLoader> ldr) {
         this(
             res,
             input -> {
@@ -143,8 +177,8 @@ public final class ResourceOf implements Input {
                     new FormattedText(
                         "The resource \"%s\" was not found in %s (%s)",
                         input,
-                        ldr,
-                        ldr.getClass().getCanonicalName()
+                        new Unchecked<>(ldr).value(),
+                        new Unchecked<>(ldr).value().getClass().getCanonicalName()
                     ).asString()
                 );
             },
@@ -177,7 +211,10 @@ public final class ResourceOf implements Input {
      */
     public ResourceOf(final Text res,
         final Func<Text, Input> fbk) {
-        this(res, fbk, Thread.currentThread().getContextClassLoader());
+        this(
+            res, fbk,
+            (Scalar<ClassLoader>) () -> Thread.currentThread().getContextClassLoader()
+        );
     }
 
     /**
@@ -188,6 +225,17 @@ public final class ResourceOf implements Input {
      */
     public ResourceOf(final Text res,
         final Func<Text, Input> fbk, final ClassLoader ldr) {
+        this(res, fbk, (Scalar<ClassLoader>) () -> ldr);
+    }
+
+    /**
+     * New resource input with deferred {@link ClassLoader}.
+     * @param res Resource name
+     * @param fbk Fallback
+     * @param ldr Resource class loader, deferred
+     */
+    private ResourceOf(final Text res,
+        final Func<Text, Input> fbk, final Scalar<ClassLoader> ldr) {
         this.path = res;
         this.loader = ldr;
         this.fallback = fbk;
@@ -200,12 +248,13 @@ public final class ResourceOf implements Input {
                 "The \"path\" of the resource is NULL, which is not allowed"
             );
         }
-        if (this.loader == null) {
+        final ClassLoader ldr = new Unchecked<>(this.loader).value();
+        if (ldr == null) {
             throw new IllegalArgumentException(
                 "The \"classloader\" is NULL, which is not allowed"
             );
         }
-        InputStream input = this.loader.getResourceAsStream(
+        InputStream input = ldr.getResourceAsStream(
             this.path.asString()
         );
         if (input == null) {

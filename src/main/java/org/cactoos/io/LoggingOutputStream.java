@@ -11,6 +11,9 @@ import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
@@ -35,9 +38,9 @@ public final class LoggingOutputStream extends OutputStream {
     private final String destination;
 
     /**
-     * The logger.
+     * The logger, deferred.
      */
-    private final Logger logger;
+    private final Unchecked<Logger> logger;
 
     /**
      * The bytes read.
@@ -55,7 +58,7 @@ public final class LoggingOutputStream extends OutputStream {
      * @param dst The name of source data
      */
     public LoggingOutputStream(final OutputStream output, final String dst) {
-        this(output, dst, Logger.getLogger(dst));
+        this(output, dst, () -> Logger.getLogger(dst));
     }
 
     /**
@@ -69,10 +72,24 @@ public final class LoggingOutputStream extends OutputStream {
         final String dst,
         final Logger lgr
     ) {
+        this(output, dst, () -> lgr);
+    }
+
+    /**
+     * Ctor.
+     * @param output Destination of data
+     * @param dst The name of source data
+     * @param lgr Message logger, deferred
+     */
+    private LoggingOutputStream(
+        final OutputStream output,
+        final String dst,
+        final Scalar<Logger> lgr
+    ) {
         super();
         this.origin = output;
         this.destination = dst;
-        this.logger = lgr;
+        this.logger = new Unchecked<>(new Sticky<>(lgr));
         this.bytes = new AtomicLong();
         this.time = new AtomicLong();
     }
@@ -94,9 +111,9 @@ public final class LoggingOutputStream extends OutputStream {
         this.origin.write(buf, offset, len);
         this.bytes.getAndAdd((long) len);
         this.time.getAndAdd(Duration.between(start, Instant.now()).toMillis());
-        final Level level = this.logger.getLevel();
+        final Level level = this.logger.value().getLevel();
         if (!level.equals(Level.INFO)) {
-            this.logger.log(
+            this.logger.value().log(
                 level,
                 new UncheckedText(
                     new FormattedText(
@@ -113,9 +130,9 @@ public final class LoggingOutputStream extends OutputStream {
     @Override
     public void close() throws IOException {
         this.origin.close();
-        final Level level = this.logger.getLevel();
+        final Level level = this.logger.value().getLevel();
         if (level.equals(Level.INFO)) {
-            this.logger.log(
+            this.logger.value().log(
                 level,
                 new UncheckedText(
                     new FormattedText(
@@ -127,7 +144,7 @@ public final class LoggingOutputStream extends OutputStream {
                 ).asString()
             );
         }
-        this.logger.log(
+        this.logger.value().log(
             level,
             new UncheckedText(
                 new FormattedText(
@@ -141,9 +158,9 @@ public final class LoggingOutputStream extends OutputStream {
     @Override
     public void flush() throws IOException {
         this.origin.flush();
-        final Level level = this.logger.getLevel();
+        final Level level = this.logger.value().getLevel();
         if (level.equals(Level.INFO)) {
-            this.logger.log(
+            this.logger.value().log(
                 level,
                 new UncheckedText(
                     new FormattedText(
@@ -155,7 +172,7 @@ public final class LoggingOutputStream extends OutputStream {
                 ).asString()
             );
         }
-        this.logger.log(
+        this.logger.value().log(
             level,
             new UncheckedText(
                 new FormattedText(

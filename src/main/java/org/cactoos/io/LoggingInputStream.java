@@ -37,9 +37,9 @@ public final class LoggingInputStream extends InputStream {
     private final String source;
 
     /**
-     * The logger.
+     * The logger, deferred.
      */
-    private final Logger logger;
+    private final Unchecked<Logger> logger;
 
     /**
      * The bytes read.
@@ -62,7 +62,7 @@ public final class LoggingInputStream extends InputStream {
      * @param src The name of source data
      */
     public LoggingInputStream(final InputStream input, final String src) {
-        this(input, src, Logger.getLogger(src));
+        this(input, src, () -> Logger.getLogger(src));
     }
 
     /**
@@ -76,16 +76,31 @@ public final class LoggingInputStream extends InputStream {
         final String src,
         final Logger lgr
     ) {
+        this(input, src, () -> lgr);
+    }
+
+    /**
+     * Ctor.
+     * @param input Source of data
+     * @param src The name of source data
+     * @param lgr The message logger, deferred
+     * @checkstyle ParameterNumberCheck (15 lines)
+     */
+    private LoggingInputStream(
+        final InputStream input,
+        final String src,
+        final org.cactoos.Scalar<Logger> lgr
+    ) {
         super();
         this.origin = input;
         this.source = src;
-        this.logger = lgr;
+        this.logger = new Unchecked<>(new Sticky<>(lgr));
         this.level = new Unchecked<>(
             new Sticky<>(
                 () -> {
-                    Level lvl = lgr.getLevel();
+                    Level lvl = this.logger.value().getLevel();
                     if (lvl == null) {
-                        Logger parent = lgr;
+                        Logger parent = this.logger.value();
                         while (lvl == null) {
                             parent = parent.getParent();
                             lvl = parent.getLevel();
@@ -135,11 +150,11 @@ public final class LoggingInputStream extends InputStream {
         );
         if (byts > 0) {
             if (!this.level.value().equals(Level.INFO)) {
-                this.logger.log(this.level.value(), msg.asString());
+                this.logger.value().log(this.level.value(), msg.asString());
             }
         } else {
             if (this.level.value().equals(Level.INFO)) {
-                this.logger.info(msg.asString());
+                this.logger.value().info(msg.asString());
             }
         }
         return byts;
@@ -148,7 +163,7 @@ public final class LoggingInputStream extends InputStream {
     @Override
     public long skip(final long num) throws IOException {
         final long skipped = this.origin.skip(num);
-        this.logger.log(
+        this.logger.value().log(
             this.level.value(),
             new UncheckedText(
                 new FormattedText(
@@ -164,7 +179,7 @@ public final class LoggingInputStream extends InputStream {
     @Override
     public int available() throws IOException {
         final int avail = this.origin.available();
-        this.logger.log(
+        this.logger.value().log(
             this.level.value(),
             new UncheckedText(
                 new FormattedText(
@@ -180,7 +195,7 @@ public final class LoggingInputStream extends InputStream {
     @Override
     public void close() throws IOException {
         this.origin.close();
-        this.logger.log(
+        this.logger.value().log(
             this.level.value(),
             new UncheckedText(
                 new FormattedText(
@@ -194,7 +209,7 @@ public final class LoggingInputStream extends InputStream {
     @Override
     public void mark(final int limit) {
         this.origin.mark(limit);
-        this.logger.log(
+        this.logger.value().log(
             this.level.value(),
             new UncheckedText(
                 new FormattedText(
@@ -209,7 +224,7 @@ public final class LoggingInputStream extends InputStream {
     @Override
     public void reset() throws IOException {
         this.origin.reset();
-        this.logger.log(
+        this.logger.value().log(
             this.level.value(),
             new UncheckedText(
                 new FormattedText(
@@ -229,7 +244,7 @@ public final class LoggingInputStream extends InputStream {
         } else {
             msg = "Mark and reset NOT supported from %s";
         }
-        this.logger.log(
+        this.logger.value().log(
             this.level.value(),
             new UncheckedText(
                 new FormattedText(

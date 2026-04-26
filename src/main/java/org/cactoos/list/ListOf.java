@@ -41,9 +41,12 @@ public final class ListOf<T> extends ListEnvelope<T> {
      * Ctor.
      * @param src An {@link Iterable}
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public ListOf(final Iterable<? extends T> src) {
-        super(new LinkedList<>());
-        src.forEach(super::add);
+        super(new LinkedList<T>() {
+            private static final long serialVersionUID = 1L;
+            {
+                src.forEach(this::add);
+            }
+        });
     }
 }

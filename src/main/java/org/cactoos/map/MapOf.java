@@ -146,7 +146,10 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
         final Map<? extends X, ? extends Y> src,
         final Iterable<Map.Entry<? extends X, ? extends Y>> list
     ) {
-        this(new Joined<Map.Entry<? extends X, ? extends Y>>(src.entrySet(), list));
+        this(new Joined<Map.Entry<? extends X, ? extends Y>>(
+            new IterableOf<>(() -> src.entrySet().iterator()),
+            list
+        ));
     }
 
     /**
@@ -154,22 +157,13 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param entries List of the entries
      */
     public MapOf(final Iterable<Map.Entry<? extends X, ? extends Y>> entries) {
-        super(MapOf.make(entries));
-    }
-
-    /**
-     * Ctor.
-     * @param entries List of the entries
-     * @param <X> Key type
-     * @param <Y> Value type
-     * @return Map created
-     */
-    private static <X, Y> Map<X, Y> make(
-        final Iterable<Map.Entry<? extends X, ? extends Y>> entries) {
-        final Map<X, Y> map = new HashMap<>(0);
-        for (final Map.Entry<? extends X, ? extends Y> entry : entries) {
-            map.put(entry.getKey(), entry.getValue());
-        }
-        return map;
+        super(new HashMap<X, Y>(0) {
+            private static final long serialVersionUID = 1L;
+            {
+                for (final Map.Entry<? extends X, ? extends Y> entry : entries) {
+                    this.put(entry.getKey(), entry.getValue());
+                }
+            }
+        });
     }
 }

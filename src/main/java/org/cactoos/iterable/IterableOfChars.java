@@ -4,6 +4,8 @@
  */
 package org.cactoos.iterable;
 
+import java.util.Iterator;
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.iterator.IteratorOfChars;
 
@@ -19,7 +21,7 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
      * @param str String
      */
     public IterableOfChars(final String str) {
-        this(str.toCharArray());
+        this(() -> new IteratorOfChars(str));
     }
 
     /**
@@ -27,7 +29,7 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
      * @param txt Text
      */
     public IterableOfChars(final Text txt) {
-        this(txt.toString());
+        this(() -> new IteratorOfChars(txt));
     }
 
     /**
@@ -35,6 +37,14 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
      * @param chars Characters
      */
     public IterableOfChars(final char... chars) {
-        super(new IterableOf<>(() -> new IteratorOfChars(chars)));
+        this(() -> new IteratorOfChars(chars));
+    }
+
+    /**
+     * Ctor.
+     * @param iter The iterator, deferred
+     */
+    private IterableOfChars(final Scalar<Iterator<Character>> iter) {
+        super(new IterableOf<>(iter));
     }
 }

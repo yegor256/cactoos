@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * A few {@link ListIterator} joined together.
@@ -26,9 +29,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
-     * {@link List} of {@link ListIterator}.
+     * {@link List} of {@link ListIterator}, deferred.
      */
-    private final List<? extends ListIterator<? extends T>> listiters;
+    private final Unchecked<List<? extends ListIterator<? extends T>>> listiters;
 
     /**
      * Cursor of the {@link List} of {@link ListIterator}.
@@ -56,7 +59,10 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
      */
     @SuppressWarnings("unchecked")
     public JoinedListIterator(final T item, final ListIterator<? extends T> items) {
-        this(new ListOf<>(new ListOf<>(item).listIterator(), items));
+        this(
+            (Scalar<List<? extends ListIterator<? extends T>>>) () ->
+                new ListOf<>(new ListOf<>(item).listIterator(), items)
+        );
     }
 
     /**
@@ -66,7 +72,10 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
      */
     @SuppressWarnings("unchecked")
     public JoinedListIterator(final ListIterator<? extends T> items, final T item) {
-        this(new ListOf<>(items, new ListOf<>(item).listIterator()));
+        this(
+            (Scalar<List<? extends ListIterator<? extends T>>>) () ->
+                new ListOf<>(items, new ListOf<>(item).listIterator())
+        );
     }
 
     /**
@@ -74,7 +83,17 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
      * @param items Items to concatenate
      */
     public JoinedListIterator(final List<? extends ListIterator<? extends T>> items) {
-        this.listiters = items;
+        this((Scalar<List<? extends ListIterator<? extends T>>>) () -> items);
+    }
+
+    /**
+     * Ctor.
+     * @param items Items to concatenate, deferred
+     */
+    private JoinedListIterator(
+        final Scalar<List<? extends ListIterator<? extends T>>> items
+    ) {
+        this.listiters = new Unchecked<>(new Sticky<>(items));
         this.cursorlit = new AtomicInteger(-1);
         this.cursor = new AtomicInteger(-1);
     }
@@ -153,7 +172,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
      * @return Has or no
      */
     private boolean listHasNextElt() {
-        return this.cursorlit.get() + 1 <= this.listiters.size() - 1;
+        return this.cursorlit.get() + 1 <= this.listiters.value().size() - 1;
     }
 
     /**
@@ -173,7 +192,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
         if (this.cursorlit.get() == -1) {
             current = Collections.emptyListIterator();
         } else {
-            current = this.listiters.get(this.cursorlit.get());
+            current = this.listiters.value().get(this.cursorlit.get());
         }
         return current;
     }

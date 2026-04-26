@@ -29,7 +29,7 @@ public final class DateOf implements Scalar<Date> {
      * @param date The date to parse
      */
     public DateOf(final CharSequence date) {
-        this(date, new Iso().value());
+        this(date, new Iso());
     }
 
     /**
@@ -38,7 +38,7 @@ public final class DateOf implements Scalar<Date> {
      * @param format The format to use
      */
     public DateOf(final CharSequence date, final String format) {
-        this(date, DateTimeFormatter.ofPattern(format));
+        this(date, () -> DateTimeFormatter.ofPattern(format));
     }
 
     /**
@@ -47,12 +47,21 @@ public final class DateOf implements Scalar<Date> {
      * @param formatter The formatter to use
      */
     public DateOf(final CharSequence date, final DateTimeFormatter formatter) {
+        this(date, () -> formatter);
+    }
+
+    /**
+     * Parses the date using a deferred formatter.
+     * @param date The date to parse
+     * @param fmt The formatter, deferred
+     */
+    private DateOf(final CharSequence date, final Scalar<DateTimeFormatter> fmt) {
         this.parsed = new Unchecked<>(
             () -> Date.from(
                 LocalDateTime.parse(
                     date,
                     new DateTimeFormatterBuilder()
-                        .append(formatter)
+                        .append(fmt.value())
                         .parseDefaulting(ChronoField.HOUR_OF_DAY, 0L)
                         .toFormatter()
                 ).toInstant(ZoneOffset.UTC)

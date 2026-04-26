@@ -149,23 +149,6 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      * @param map The map to cache
      */
     public Sticky(final Map<? extends X, ? extends Y> map) {
-        super(Sticky.copy(map));
-    }
-
-    /**
-     * Copy entries from source map to a new HashMap.
-     * @param src Source map
-     * @param <X> Key type
-     * @param <Y> Value type
-     * @return New HashMap with copied entries
-     */
-    private static <X, Y> Map<X, Y> copy(
-        final Map<? extends X, ? extends Y> src
-    ) {
-        final Map<X, Y> target = new HashMap<>(src.size());
-        for (final Map.Entry<? extends X, ? extends Y> entry : src.entrySet()) {
-            target.put(entry.getKey(), entry.getValue());
-        }
-        return target;
+        super(new HashMap<X, Y>(map));
     }
 }

@@ -4,11 +4,11 @@
  */
 package org.cactoos.map;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Iterable as {@link Map}.
@@ -40,15 +40,15 @@ public final class Grouped<K, V, T> extends MapEnvelope<K, List<V>> {
         final Function<? super T, ? extends K> keys,
         final Function<? super T, ? extends V> values
     ) {
-        super(
-            StreamSupport.stream(
-                list.spliterator(), false
-            ).collect(
-                Collectors.groupingBy(
-                    keys,
-                    Collectors.mapping(values, Collectors.toList())
-                )
-            )
-        );
+        super(new HashMap<K, List<V>>() {
+            private static final long serialVersionUID = 1L;
+            {
+                for (final T item : list) {
+                    this.computeIfAbsent(
+                        keys.apply(item), k -> new ArrayList<>()
+                    ).add(values.apply(item));
+                }
+            }
+        });
     }
 }

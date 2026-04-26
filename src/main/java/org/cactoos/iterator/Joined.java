@@ -7,6 +7,8 @@ package org.cactoos.iterator;
 import java.util.Collections;
 import java.util.Iterator;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * A few Iterators joined together.
@@ -19,9 +21,9 @@ import org.cactoos.iterable.IterableOf;
 public final class Joined<T> implements Iterator<T> {
 
     /**
-     * Iterators.
+     * Iterators, deferred.
      */
-    private final Iterator<Iterator<? extends T>> iters;
+    private final Unchecked<Iterator<Iterator<? extends T>>> iters;
 
     /**
      * Current traversal iterator.
@@ -64,14 +66,17 @@ public final class Joined<T> implements Iterator<T> {
      * @param items Items to concatenate
      */
     public Joined(final Iterable<Iterator<? extends T>> items) {
-        this.iters = items.iterator();
-        this.current = Collections.emptyIterator();
+        this.iters = new Unchecked<>(new Sticky<>(items::iterator));
+        this.current = null;
     }
 
     @Override
     public boolean hasNext() {
-        while (!this.current.hasNext() && this.iters.hasNext()) {
-            this.current = this.iters.next();
+        if (this.current == null) {
+            this.current = Collections.emptyIterator();
+        }
+        while (!this.current.hasNext() && this.iters.value().hasNext()) {
+            this.current = this.iters.value().next();
         }
         return this.current.hasNext();
     }

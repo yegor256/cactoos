@@ -37,7 +37,7 @@ public final class Sorted<T> implements Iterator<T> {
      */
     @SuppressWarnings("unchecked")
     public Sorted(final Iterator<? extends T> items) {
-        this((Comparator<T>) Comparator.naturalOrder(), items);
+        this(() -> (Comparator<T>) Comparator.naturalOrder(), items);
     }
 
     /**
@@ -46,6 +46,18 @@ public final class Sorted<T> implements Iterator<T> {
      * @param iterator The underlying iterator
      */
     public Sorted(final Comparator<? super T> comparator, final Iterator<? extends T> iterator) {
+        this(() -> comparator, iterator);
+    }
+
+    /**
+     * Ctor.
+     * @param cmp The comparator, deferred
+     * @param iterator The underlying iterator
+     */
+    private Sorted(
+        final org.cactoos.Scalar<Comparator<? super T>> cmp,
+        final Iterator<? extends T> iterator
+    ) {
         this.scalar = new Unchecked<>(
             new Sticky<>(
                 () -> {
@@ -53,7 +65,7 @@ public final class Sorted<T> implements Iterator<T> {
                     while (iterator.hasNext()) {
                         items.add(iterator.next());
                     }
-                    items.sort(comparator);
+                    items.sort(cmp.value());
                     return items.iterator();
                 }
             )
