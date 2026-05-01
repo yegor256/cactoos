@@ -15,7 +15,7 @@ install: |
   pdd -f /dev/null
 merge:
   script: |
-    mvn clean install -Pqulice --errors --settings ../settings.xml
+    mvn clean install -ntp -Pqulice --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
 release:
   pre: false
@@ -28,4 +28,4 @@ release:
     mvn versions:set "-DnewVersion=${tag}" --settings ../settings.xml
     git commit -am "${tag}"
     export MAVEN_OPTS="--add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED"
-    mvn clean deploy -Pcactoos -Pqulice -Psonatype --errors --settings ../settings.xml
+    mvn clean deploy -ntp -Pcactoos -Pqulice -Psonatype --errors --settings ../settings.xml
