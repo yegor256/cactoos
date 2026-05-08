@@ -113,6 +113,23 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>hone-maven-plugin</artifactId>
+        <version>0.25.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>pull</goal>
+              <goal>optimize</goal>
+              <goal>rmi</goal>
+            </goals>
+            <configuration>
+              <rules>streams/*</rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.revapi</groupId>
         <artifactId>revapi-maven-plugin</artifactId>
         <version>0.15.1</version>
