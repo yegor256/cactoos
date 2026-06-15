@@ -67,7 +67,7 @@ public final class Replaced extends TextEnvelope {
         super(
             new Mapped(
                 str -> {
-                    final StringBuffer buffer = new StringBuffer();
+                    final StringBuilder buffer = new StringBuilder();
                     final Matcher matcher = regex.value().matcher(str);
                     while (matcher.find()) {
                         matcher.appendReplacement(
