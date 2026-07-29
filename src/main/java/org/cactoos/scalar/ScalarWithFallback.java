@@ -104,13 +104,18 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
                     ).entrySet().iterator()
                 )
             );
-        if (candidates.hasNext()) {
-            return candidates.next().getKey().apply(exp);
-        } else {
-            throw new Exception(
-                "No fallback found - throw the original exception",
-                exp
-            );
+        if (!candidates.hasNext()) {
+            if (exp instanceof RuntimeException) {
+                throw (RuntimeException) exp;
+            }
+            if (exp instanceof Error) {
+                throw (Error) exp;
+            }
+            if (exp instanceof Exception) {
+                throw (Exception) exp;
+            }
+            throw new Exception(exp);
         }
+        return candidates.next().getKey().apply(exp);
     }
 }

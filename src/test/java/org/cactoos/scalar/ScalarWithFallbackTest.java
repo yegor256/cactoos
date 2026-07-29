@@ -182,4 +182,38 @@ final class ScalarWithFallbackTest {
             new Throws<>(Exception.class)
         );
     }
+
+    @Test
+    void rethrowsOriginalUncheckedException() {
+        MatcherAssert.assertThat(
+            "Must rethrow the original unchecked exception when no fallback matches",
+            () -> new ScalarWithFallback<>(
+                () -> {
+                    throw new IllegalArgumentException("Unchecked failure");
+                },
+                new Fallback.From<>(
+                    IOException.class,
+                    exp -> "Fallback from IOException"
+                )
+            ).value(),
+            new Throws<>("Unchecked failure", IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void rethrowsOriginalCheckedException() {
+        MatcherAssert.assertThat(
+            "Must rethrow the original checked exception when no fallback matches",
+            () -> new ScalarWithFallback<>(
+                () -> {
+                    throw new IOException("Checked failure");
+                },
+                new Fallback.From<>(
+                    IllegalArgumentException.class,
+                    exp -> "Fallback from IllegalArgumentException"
+                )
+            ).value(),
+            new Throws<>("Checked failure", IOException.class)
+        );
+    }
 }
