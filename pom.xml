@@ -125,6 +125,8 @@
             </goals>
             <configuration>
               <rules>streams/*</rules>
+              <skipOnWindows>true</skipOnWindows>
+              <skipWithoutDocker>true</skipWithoutDocker>
             </configuration>
           </execution>
         </executions>
