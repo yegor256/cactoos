@@ -20,7 +20,6 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  * @since 0.56
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class StickyTest {
 
     @Test

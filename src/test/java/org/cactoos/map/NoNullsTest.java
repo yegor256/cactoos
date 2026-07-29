@@ -21,7 +21,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ParameterNumberCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class NoNullsTest {
 
     @Test

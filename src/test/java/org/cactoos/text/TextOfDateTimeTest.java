@@ -26,7 +26,6 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 1.0.0
  * @checkstyle StringLiteralsConcatenationCheck (1000 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class TextOfDateTimeTest {
 
     @Test

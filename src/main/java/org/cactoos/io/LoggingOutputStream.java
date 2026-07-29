@@ -24,7 +24,6 @@ import org.cactoos.text.UncheckedText;
  *
  * @since 0.29
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 public final class LoggingOutputStream extends OutputStream {
 
     /**

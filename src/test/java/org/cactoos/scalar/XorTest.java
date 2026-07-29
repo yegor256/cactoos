@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.HasValue;
  * Test case for {@link Xor}.
  * @since 0.48
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class XorTest {
 
     @Test

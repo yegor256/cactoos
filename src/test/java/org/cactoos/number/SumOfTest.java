@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
  *  of SumOf and adapt the tests and the code to make this obvious and clear.
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class SumOfTest {
 
     @Test

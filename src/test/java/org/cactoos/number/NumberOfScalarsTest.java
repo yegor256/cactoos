@@ -18,7 +18,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
  * Test case for {@link NumberOfScalars}.
  * @since 1.0.0
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest

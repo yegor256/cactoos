@@ -25,7 +25,6 @@ import org.cactoos.scalar.Unchecked;
  *  when the cursor is in between two listerators should be well documented in this
  *  class (because there are multiple options in that case).
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**

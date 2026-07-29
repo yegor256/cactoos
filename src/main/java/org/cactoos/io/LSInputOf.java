@@ -20,6 +20,7 @@ import org.w3c.dom.ls.LSInput;
  * @since 0.6
  * @checkstyle AbbreviationAsWordInNameCheck (10 lines)
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public final class LSInputOf implements LSInput {
 
     /**

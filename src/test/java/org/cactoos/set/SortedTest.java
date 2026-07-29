@@ -22,7 +22,6 @@ import org.llorllale.cactoos.matchers.IsText;
  * @since 1.0.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class SortedTest {
 
     @Test

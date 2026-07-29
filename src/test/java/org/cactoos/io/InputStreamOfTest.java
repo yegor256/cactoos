@@ -25,7 +25,6 @@ import org.llorllale.cactoos.matchers.Satisfies;
  * @since 0.13
  * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class InputStreamOfTest {
 
     @Test

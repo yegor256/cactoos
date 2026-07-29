@@ -29,7 +29,7 @@ import org.llorllale.cactoos.matchers.StartsWith;
  * @checkstyle JavadocMethodCheck (1000 lines)
  * @checkstyle StringLiteralsConcatenationCheck (1000 lines)
  */
-@SuppressWarnings({"unchecked", "PMD.TooManyMethods"})
+@SuppressWarnings("unchecked")
 final class TextOfTest {
 
     @Test

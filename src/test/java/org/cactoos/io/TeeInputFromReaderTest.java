@@ -19,7 +19,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * @since 1.0
  * @checkstyle JavadocMethodCheck (400 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class TeeInputFromReaderTest {
 
     @Test
