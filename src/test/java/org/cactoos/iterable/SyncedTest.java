@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
 /**
  * Test Case for {@link Synced}.
  * @since 0.24
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class SyncedTest {
 

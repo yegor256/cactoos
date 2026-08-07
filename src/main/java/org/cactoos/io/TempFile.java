@@ -139,7 +139,6 @@ public final class TempFile implements Scalar<Path>, Closeable {
     /**
      * Deletes the file from the filesystem.
      * @checkstyle NoJavadocForOverriddenMethodsCheck (5 lines)
-     * @checkstyle JavadocMethodCheck (5 lines)
      */
     @Override
     public void close() throws IOException {

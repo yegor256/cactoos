@@ -17,7 +17,6 @@ import java.util.ListIterator;
  * @param <T> Element type
  * @since 1.16
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public final class Immutable<T> implements List<T> {
 
     /**

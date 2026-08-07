@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link ListOf}.
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ListOfTest {
 
@@ -139,7 +138,7 @@ final class ListOfTest {
     }
 
     @Test
-    void toStringUsesListContent() {
+    void printsListContent() {
         MatcherAssert.assertThat(
             "Can't print content using toString.",
             new ListOf<>(1, 2).toString(),

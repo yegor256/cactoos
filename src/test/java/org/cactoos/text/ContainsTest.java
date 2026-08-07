@@ -11,7 +11,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 /**
  * Test case for {@link Contains}.
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ContainsTest {
 

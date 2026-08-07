@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test Case for {@link Skipped}.
  * @since 0.34
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class SkippedTest {
 

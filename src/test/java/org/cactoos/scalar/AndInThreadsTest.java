@@ -25,7 +25,7 @@ import org.llorllale.cactoos.matchers.HasValue;
  * Test case for {@link AndInThreads}.
  * @since 0.25
  */
-@SuppressWarnings({"unchecked", "PMD.TooManyMethods", "PMD.CloseResource"})
+@SuppressWarnings({"unchecked", "PMD.CloseResource"})
 final class AndInThreadsTest {
 
     @Test
@@ -97,7 +97,7 @@ final class AndInThreadsTest {
         final List<String> list = new Synced<>(new ListOf<>());
         new AndInThreads(
             new Mapped<>(
-                new FuncOf<String, Scalar<Boolean>>(list::add, new True()),
+                new FuncOf<>(list::add, new True()),
                 new IterableOf<>("hello", "world")
             )
         ).value();
@@ -146,7 +146,7 @@ final class AndInThreadsTest {
         try {
             new AndInThreads(
                 service,
-                new ProcNoNulls<Integer>(list::add),
+                new ProcNoNulls<>(list::add),
                 1, 2
             ).value();
             MatcherAssert.assertThat(
@@ -171,7 +171,7 @@ final class AndInThreadsTest {
         try {
             new AndInThreads(
                 service,
-                new ProcNoNulls<Integer>(list::add),
+                new ProcNoNulls<>(list::add),
                 new ListOf<>(1, 2)
             ).value();
             MatcherAssert.assertThat(
@@ -208,7 +208,7 @@ final class AndInThreadsTest {
             "Result should be calculated for threads iterable booleans",
             new AndInThreads(
                 Executors.newSingleThreadExecutor(),
-                new ListOf<Scalar<Boolean>>(
+                new ListOf<>(
                     new Constant<>(true),
                     new Constant<>(false)
                 )

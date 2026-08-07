@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.HasSize;
 /**
  * Test case for {@link Directory}.
  * @since 0.12
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class DirectoryTest {
 

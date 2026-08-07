@@ -38,7 +38,7 @@ public final class Sorted<T> extends SortedSetEnvelope<T> {
         final Comparator<? super T> cmp,
         final Iterable<? extends T> src
     ) {
-        super(new TreeSet<T>(cmp) {
+        super(new TreeSet<>(cmp) {
             private static final long serialVersionUID = 1L;
             {
                 src.forEach(this::add);

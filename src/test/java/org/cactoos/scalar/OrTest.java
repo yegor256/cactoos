@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 /**
  * Test case for {@link Or}.
  * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class OrTest {
 

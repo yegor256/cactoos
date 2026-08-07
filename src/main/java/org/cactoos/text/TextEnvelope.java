@@ -9,7 +9,6 @@ import org.cactoos.Text;
 /**
  * {@link Text} envelope.
  * @since 0.32
- * @checkstyle AbstractClassNameCheck (500 lines)
  */
 public abstract class TextEnvelope implements Text {
 

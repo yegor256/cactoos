@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link TeeInputStream}.
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TeeInputStreamTest {
 

@@ -30,7 +30,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
     public MapDiff(final Iterable<Map.Entry<K, V>> first,
         final Iterable<Map.Entry<K, V>> second) {
         this(
-            new HashMap<K, V>() {
+            new HashMap<>() {
                 private static final long serialVersionUID = 1L;
                 {
                     for (final Map.Entry<K, V> entry : first) {
@@ -38,7 +38,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
                     }
                 }
             },
-            new HashMap<K, V>() {
+            new HashMap<>() {
                 private static final long serialVersionUID = 1L;
                 {
                     for (final Map.Entry<K, V> entry : second) {
@@ -72,10 +72,10 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
         final Scalar<Iterable<Map.Entry<K, V>>> second
     ) {
         this(
-            new IterableOf<Map.Entry<K, V>>(
+            new IterableOf<>(
                 () -> new Unchecked<>(first).value().iterator()
             ),
-            new IterableOf<Map.Entry<K, V>>(
+            new IterableOf<>(
                 () -> new Unchecked<>(second).value().iterator()
             )
         );
@@ -87,7 +87,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      * @param second Second map
      */
     public MapDiff(final Map<K, V> first, final Map<K, V> second) {
-        super(new HashMap<K, V>(first) {
+        super(new HashMap<>(first) {
             private static final long serialVersionUID = 1L;
             {
                 this.keySet().removeAll(second.keySet());

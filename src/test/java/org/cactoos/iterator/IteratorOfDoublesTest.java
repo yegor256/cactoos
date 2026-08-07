@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.34
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class IteratorOfDoublesTest {
 
@@ -58,7 +57,7 @@ final class IteratorOfDoublesTest {
 
     private IteratorOfDoubles iteratorWithFetchedElements() {
         final IteratorOfDoubles iterator =
-            new IteratorOfDoubles(1.1D, 2.2D, 3.3D);
+            new IteratorOfDoubles(1.1d, 2.2d, 3.3d);
         iterator.next();
         iterator.next();
         iterator.next();

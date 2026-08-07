@@ -18,7 +18,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * Test case for {@link TeeInput}. Cases for ctors which use
  * {@link org.cactoos.Text} as an input.
  * @since 1.0
- * @checkstyle JavadocMethodCheck (215 lines)
  */
 final class TeeInputFromTextTest {
 

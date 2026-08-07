@@ -17,7 +17,6 @@ import org.cactoos.Input;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.29
- * @checkstyle AbstractClassNameCheck (500 lines)
  * @checkstyle DesignForExtensionCheck (500 lines)
  */
 public abstract class DigestEnvelope implements Bytes {

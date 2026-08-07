@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link UncheckedText}.
  * @since 0.3
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class UncheckedTextTest {
 
@@ -38,7 +37,7 @@ final class UncheckedTextTest {
     }
 
     @Test
-    void toStringMustReturnSameOfAsString() {
+    void printsSameOfAsString() {
         final String text = "one";
         MatcherAssert.assertThat(
             "Must implement #toString which returns the same of #asString",

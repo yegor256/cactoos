@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.HasValues;
  * @param <K> Type of key
  * @param <V> Type of value
  * @since 0.24
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class BehavesAsMap<K, V> extends TypeSafeMatcher<Map<K, V>> {
 

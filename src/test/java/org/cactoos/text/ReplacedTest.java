@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link Replaced}.
  * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ReplacedTest {
 
@@ -161,8 +160,8 @@ final class ReplacedTest {
         MatcherAssert.assertThat(
             "Cannot do dynamic string replacement with unicode characters",
             new Replaced(
-                new TextOf("abc def GHI\u2300JKL"),
-                () -> Pattern.compile("[a-z]+|\u2300"),
+                new TextOf("abc def GHI⌀JKL"),
+                () -> Pattern.compile("[a-z]+|⌀"),
                 matcher -> String.valueOf(matcher.group().length())
             ),
             new HasString("3 3 GHI1JKL")

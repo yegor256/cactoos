@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.IsText;
 /**
  * Test cases for {@link HeadInputStream}.
  * @since 0.31
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class HeadInputStreamTest {

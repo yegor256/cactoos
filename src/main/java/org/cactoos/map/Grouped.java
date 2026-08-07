@@ -39,7 +39,7 @@ public final class Grouped<K, V, T> extends MapEnvelope<K, List<V>> {
         final Function<? super T, ? extends K> keys,
         final Function<? super T, ? extends V> values
     ) {
-        super(new HashMap<K, List<V>>() {
+        super(new HashMap<>() {
             private static final long serialVersionUID = 1L;
             {
                 for (final T item : list) {

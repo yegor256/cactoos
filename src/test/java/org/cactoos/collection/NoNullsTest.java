@@ -26,7 +26,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * There is no thread-safety guarantee.
  *
  * @since 0.35
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class NoNullsTest {
 
@@ -100,7 +99,7 @@ final class NoNullsTest {
     void throwsErrorIfNullInAddAll() {
         MatcherAssert.assertThat(
             "Must throw exception for nullable #addAll() parameter collection",
-            () -> new NoNulls<>(new ArrayList<Integer>(0)).addAll(new ListOf<>(1, 2, null)),
+            () -> new NoNulls<>(new ArrayList<>(0)).addAll(new ListOf<>(1, 2, null)),
             new Throws<>(
                 "Item #2 of #toArray() is NULL",
                 IllegalStateException.class

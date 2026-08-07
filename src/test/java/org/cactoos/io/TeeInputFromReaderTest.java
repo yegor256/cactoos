@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.HasContent;
  * Test case for {@link TeeInput}. Cases for ctors which use
  * {@link java.io.Reader} as an input.
  * @since 1.0
- * @checkstyle JavadocMethodCheck (400 lines)
  */
 final class TeeInputFromReaderTest {
 

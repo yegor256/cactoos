@@ -18,7 +18,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link IoCheckedText}.
  * @since 0.51
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class IoCheckedTextTest {
 
@@ -55,7 +54,7 @@ final class IoCheckedTextTest {
     }
 
     @Test
-    void toStringMustReturnSameOfAsString() {
+    void printsSameOfAsString() {
         final String text = "one";
         MatcherAssert.assertThat(
             "Must implement #toString which returns the same of #asString",

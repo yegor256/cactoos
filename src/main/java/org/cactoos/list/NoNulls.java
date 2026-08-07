@@ -19,7 +19,6 @@ import org.cactoos.text.UncheckedText;
  * @param <T> Element type
  * @since 0.27
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public final class NoNulls<T> implements List<T> {
 
     /**

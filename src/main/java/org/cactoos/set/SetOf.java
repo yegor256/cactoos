@@ -32,7 +32,7 @@ public final class SetOf<T> extends SetEnvelope<T> {
      * @param src An {@link Iterable}
      */
     public SetOf(final Iterable<? extends T> src) {
-        super(new HashSet<T>() {
+        super(new HashSet<>() {
             private static final long serialVersionUID = 1L;
             {
                 src.forEach(this::add);

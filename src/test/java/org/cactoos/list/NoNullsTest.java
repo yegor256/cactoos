@@ -17,12 +17,11 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test cases for {@link NoNulls}.
  * @since 0.35
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class NoNullsTest {
 
     @Test
-    void getThrowsErrorIfNull() {
+    void throwsErrorIfNullInGet() {
         MatcherAssert.assertThat(
             "must throw error if contains null",
             () -> new NoNulls<>(
@@ -93,7 +92,7 @@ final class NoNullsTest {
     }
 
     @Test
-    void getThrowsErrorIfListIteratorNextValueIsNullValue() {
+    void throwsErrorIfListIteratorNextValueIsNull() {
         MatcherAssert.assertThat(
             "must throw error if removed value in iterator is null",
             () -> new NoNulls<>(
@@ -107,7 +106,7 @@ final class NoNullsTest {
     }
 
     @Test
-    void getThrowsErrorIfListIteratorPreviousValueIsNullValue() {
+    void throwsErrorIfListIteratorPreviousValueIsNull() {
         final List<Integer> list = new ArrayList<>(2);
         list.add(1);
         list.add(2);

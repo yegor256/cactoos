@@ -11,7 +11,6 @@ import org.llorllale.cactoos.matchers.HasString;
 /**
  * Test case for {@link Upper}.
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class UpperTest {
 

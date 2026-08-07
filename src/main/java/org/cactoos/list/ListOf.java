@@ -34,7 +34,7 @@ public final class ListOf<T> extends ListEnvelope<T> {
      * @since 0.21
      */
     public ListOf(final Iterator<? extends T> src) {
-        this(new IterableOf<T>(src));
+        this(new IterableOf<>(src));
     }
 
     /**
@@ -42,7 +42,7 @@ public final class ListOf<T> extends ListEnvelope<T> {
      * @param src An {@link Iterable}
      */
     public ListOf(final Iterable<? extends T> src) {
-        super(new LinkedList<T>() {
+        super(new LinkedList<>() {
             private static final long serialVersionUID = 1L;
             {
                 src.forEach(this::add);

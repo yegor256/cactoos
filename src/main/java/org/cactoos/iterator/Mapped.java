@@ -32,7 +32,7 @@ public final class Mapped<Y> extends IteratorEnvelope<Y> {
         final Iterator<? extends X> iterator
     ) {
         super(
-            new Iterator<Y>() {
+            new Iterator<>() {
 
                 @Override
                 public boolean hasNext() {

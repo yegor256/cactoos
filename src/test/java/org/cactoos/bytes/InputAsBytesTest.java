@@ -21,9 +21,8 @@ import org.llorllale.cactoos.matchers.StartsWith;
 /**
  * Test case for {@link InputAsBytes}.
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"unchecked", "PMD.UnnecessaryLocalRule"})
+@SuppressWarnings("unchecked")
 final class InputAsBytesTest {
 
     @Test
@@ -47,7 +46,6 @@ final class InputAsBytesTest {
     }
 
     @Test
-    // @checkstyle AnonInnerLengthCheck (100 lines)
     void readsLargeContent() throws Exception {
         final int size = 100_000;
         try (InputStream slow = new SlowInputStream(size)) {

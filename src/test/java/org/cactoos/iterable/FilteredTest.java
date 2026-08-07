@@ -18,7 +18,6 @@ import org.llorllale.cactoos.matchers.HasValues;
 /**
  * Test case for {@link Filtered}.
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class FilteredTest {
 
@@ -39,7 +38,6 @@ final class FilteredTest {
     }
 
     @Test
-    @SuppressWarnings("PMD.UseStringIsEmptyRule")
     void filtersEmptyList() {
         MatcherAssert.assertThat(
             "Must calculate the length of an empty iterable",

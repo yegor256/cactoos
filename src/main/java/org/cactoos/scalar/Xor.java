@@ -10,7 +10,7 @@ import org.cactoos.iterable.Joined;
 
 /**
  * Logical exclusive or.
-
+ *
  * Returns {@link True} when an odd number of elements have value true,
  * otherwise return {@link False}.
  *

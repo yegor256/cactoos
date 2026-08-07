@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link Reduced}.
  * @since 0.30
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ReducedTest {
 

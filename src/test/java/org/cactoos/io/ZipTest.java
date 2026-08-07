@@ -22,7 +22,6 @@ import org.junit.jupiter.api.io.TempDir;
 /**
  * Test case for {@link Zip}.
  * @since 0.29
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ZipTest {
 

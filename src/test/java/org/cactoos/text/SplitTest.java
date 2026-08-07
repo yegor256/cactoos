@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link Split}.
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class SplitTest {
 

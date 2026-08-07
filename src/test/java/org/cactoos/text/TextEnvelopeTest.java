@@ -22,7 +22,7 @@ final class TextEnvelopeTest {
      * the envelope asString value is equal to its string value.
      */
     @Test
-    void asStringMatches() {
+    void matchesItsStringValue() {
         final String text = "asString";
         MatcherAssert.assertThat(
             "Envelope value does not match String value",

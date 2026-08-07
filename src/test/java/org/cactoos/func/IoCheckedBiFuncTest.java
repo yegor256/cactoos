@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link IoCheckedBiFunc}.
  * @since 0.13
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class IoCheckedBiFuncTest {
 

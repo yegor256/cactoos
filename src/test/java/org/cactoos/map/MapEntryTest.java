@@ -12,13 +12,12 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link MapEntry}.
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class MapEntryTest {
 
     @Test
-    void getKey() {
+    void retrievesKey() {
         final String key = "hello";
         final String value = "world";
         MatcherAssert.assertThat(
@@ -29,7 +28,7 @@ final class MapEntryTest {
     }
 
     @Test
-    void getValue() {
+    void retrievesValue() {
         final String key = "foo";
         final String value = "bar";
         MatcherAssert.assertThat(
@@ -96,7 +95,7 @@ final class MapEntryTest {
     }
 
     @Test
-    void toStringMethod() {
+    void printsKeyAndValue() {
         MatcherAssert.assertThat(
             "ToString method returns unexpected value",
             new MapEntry<>("somekey", "somevalue").toString(),

@@ -15,7 +15,6 @@ import org.hamcrest.core.IsEqual;
  * @param <K> Type of key
  * @param <V> Type of value
  * @since 0.30
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ClearDeletesAllValues<K, V> extends
     TypeSafeMatcher<Map<K, V>> {

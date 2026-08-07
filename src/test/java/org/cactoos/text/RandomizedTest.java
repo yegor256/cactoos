@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.HasString;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.32
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class RandomizedTest {
 

@@ -73,7 +73,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void toArray() {
+    void convertsToArray() {
         MatcherAssert.assertThat(
             "toArray() must be equals to original",
             new org.cactoos.set.Immutable<>(
@@ -86,7 +86,7 @@ final class ImmutableTest {
     }
 
     @Test
-    void toArrayTyped() {
+    void convertsToTypedArray() {
         MatcherAssert.assertThat(
             "toArray(T[]) must be equals to original",
             new org.cactoos.set.Immutable<>(

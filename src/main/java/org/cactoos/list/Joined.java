@@ -45,6 +45,6 @@ public final class Joined<X> extends ListEnvelope<X> {
      * @param src Source lists
      */
     public Joined(final Iterable<? extends List<? extends X>> src) {
-        super(new ListOf<X>(new org.cactoos.iterable.Joined<X>(src)));
+        super(new ListOf<>(new org.cactoos.iterable.Joined<>(src)));
     }
 }

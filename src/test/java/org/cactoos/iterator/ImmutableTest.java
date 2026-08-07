@@ -19,7 +19,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test Case for {@link Immutable}.
  * @since 0.32
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ImmutableTest {
 
@@ -74,7 +73,7 @@ final class ImmutableTest {
     @Test
     void decoratesToString() throws Exception {
         final String string = new Randomized().asString();
-        final Iterator<Object> iterator = new Iterator<Object>() {
+        final Iterator<Object> iterator = new Iterator<>() {
             @Override
             public Object next() {
                 return new Object();

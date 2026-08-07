@@ -12,7 +12,6 @@ import org.cactoos.collection.CollectionEnvelope;
  * <p>There is no thread-safety guarantee.</p>
  * @param <T> Element type
  * @since 0.49.2
- * @checkstyle AbstractClassNameCheck (500 lines)
  */
 public abstract class SetEnvelope<T> extends CollectionEnvelope<T> implements
     Set<T> {

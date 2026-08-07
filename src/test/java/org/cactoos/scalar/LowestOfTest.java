@@ -19,7 +19,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link LowestOf}.
  * @since 0.29
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class LowestOfTest {
 

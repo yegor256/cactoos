@@ -23,7 +23,6 @@ import org.llorllale.cactoos.matchers.Satisfies;
 /**
  * Test case for {@link InputStreamOf}.
  * @since 0.13
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class InputStreamOfTest {
 

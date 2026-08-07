@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.IsText;
 /**
  * Test case for {@link Ternary}.
  * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TernaryTest {
 

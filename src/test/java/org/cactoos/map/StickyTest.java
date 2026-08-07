@@ -18,7 +18,6 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
 /**
  * Test case for {@link Sticky}.
  * @since 0.56
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class StickyTest {
 
@@ -219,7 +218,7 @@ final class StickyTest {
     void ignoresSubsequentChangesToSourceCollection() {
         final AtomicInteger size = new AtomicInteger(1);
         final Map<Integer, Integer> map = new Sticky<>(
-            new MapOf<Integer, Integer>(
+            new MapOf<>(
                 entry -> new MapEntry<>(entry, entry),
                 () -> Collections.nCopies(
                     size.incrementAndGet(),

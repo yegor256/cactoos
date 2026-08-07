@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 /**
  * Test Case for {@link Cycled}.
  * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class CycledTest {
 

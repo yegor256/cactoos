@@ -21,7 +21,7 @@ final class NumberOfTest {
         MatcherAssert.assertThat(
             "Must parse float number",
             new NumberOf("1656.894").floatValue(),
-            new IsNumber(1656.894F)
+            new IsNumber(1656.894f)
         );
     }
 

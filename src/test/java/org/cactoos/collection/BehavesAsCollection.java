@@ -20,7 +20,6 @@ import org.llorllale.cactoos.matchers.Satisfies;
  * Matcher for collection.
  * @param <E> Type of source item
  * @since 0.23
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class BehavesAsCollection<E> extends
     TypeSafeMatcher<Collection<E>> {

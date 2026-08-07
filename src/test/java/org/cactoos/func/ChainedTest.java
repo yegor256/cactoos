@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 /**
  * Test case for {@link Chained}.
  * @since 0.7
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ChainedTest {
 

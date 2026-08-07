@@ -83,7 +83,6 @@ public final class LoggingInputStream extends InputStream {
      * @param input Source of data
      * @param src The name of source data
      * @param lgr The message logger, deferred
-     * @checkstyle ParameterNumberCheck (15 lines)
      */
     private LoggingInputStream(
         final InputStream input,

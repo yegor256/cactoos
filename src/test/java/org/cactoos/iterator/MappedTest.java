@@ -36,7 +36,7 @@ final class MappedTest {
     void failsIfIteratorExhausted() {
         final Iterator<String> iterator = new Mapped<>(
             Number::toString,
-            new IteratorOf<Number>(1)
+            new IteratorOf<>(1)
         );
         iterator.next();
         MatcherAssert.assertThat(

@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link Not}.
  * @since 0.7
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class NotTest {
 

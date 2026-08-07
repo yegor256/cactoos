@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.HasSize;
 /**
  * Test case for {@link Reversed}.
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ReversedTest {
 

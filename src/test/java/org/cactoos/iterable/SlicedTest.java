@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link Sliced}.
  * @since 1.0.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class SlicedTest {
 

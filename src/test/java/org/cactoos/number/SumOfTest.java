@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
  *  because they started to give different results. The task is to investigate
  *  thoroughly what is a "correct" behaviour concerning overflow in the case
  *  of SumOf and adapt the tests and the code to make this obvious and clear.
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class SumOfTest {
 

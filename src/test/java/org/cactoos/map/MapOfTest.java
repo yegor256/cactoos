@@ -22,7 +22,6 @@ import org.llorllale.cactoos.matchers.HasEntry;
 /**
  * Test case for {@link MapOf}.
  * @since 0.4
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class MapOfTest {
 
@@ -128,14 +127,14 @@ final class MapOfTest {
         MatcherAssert.assertThat(
             "Must convert map op maps to string",
             new MapOf<Integer, Map<String, String>>(
-                new MapEntry<Integer, Map<String, String>>(
+                new MapEntry<>(
                     -1,
                     new MapOf<String, String>(
                         new MapEntry<>("first", "second"),
                         new MapEntry<>("4", "7")
                     )
                 ),
-                new MapEntry<Integer, Map<String, String>>(
+                new MapEntry<>(
                     1,
                     new MapOf<String, String>(
                         new MapEntry<>("green", "red"),

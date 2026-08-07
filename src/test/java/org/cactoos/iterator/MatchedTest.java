@@ -63,8 +63,8 @@ final class MatchedTest {
             "must throw NoSuchElementException when both iterators are exhausted",
             () -> new Matched<Integer, Integer>(
                 Objects::equals,
-                new IteratorOf<Integer>(),
-                new IteratorOf<Integer>()
+                new IteratorOf<>(),
+                new IteratorOf<>()
             ).next(),
             new Throws<>(
                 NoSuchElementException.class

@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.HasContent;
 /**
  * Test case for {@link TeeReader}.
  * @since 0.13
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TeeReaderTest {
 

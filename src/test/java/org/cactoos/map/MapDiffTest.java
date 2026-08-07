@@ -71,7 +71,7 @@ final class MapDiffTest {
         MatcherAssert.assertThat(
             "Can't compute the difference with empty first map",
             new MapDiff<Integer, String>(
-                new MapOf<Integer, String>(),
+                new MapOf<>(),
                 new MapOf<>(
                     new MapEntry<>(8, "eight"),
                     new MapEntry<>(9, "nine"),

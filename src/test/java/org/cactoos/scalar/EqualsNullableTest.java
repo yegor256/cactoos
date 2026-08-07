@@ -11,7 +11,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 /**
  * Test case for {@link EqualsNullable}.
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class EqualsNullableTest {
 

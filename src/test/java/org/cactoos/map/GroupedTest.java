@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link Grouped}.
  * @since 0.30
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class GroupedTest {
 

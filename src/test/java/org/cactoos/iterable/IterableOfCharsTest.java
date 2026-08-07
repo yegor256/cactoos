@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.HasValues;
 /**
  * Test case for {@link IterableOfChars}.
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class IterableOfCharsTest {
 

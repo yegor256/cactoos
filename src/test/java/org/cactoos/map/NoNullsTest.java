@@ -18,13 +18,12 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link NoNulls}.
  * @since 0.30
- * @checkstyle JavadocMethodCheck (500 lines)
  * @checkstyle ParameterNumberCheck (500 lines)
  */
 final class NoNullsTest {
 
     @Test
-    void getSize() {
+    void calculatesSize() {
         MatcherAssert.assertThat(
             "Can't calculate size",
             new NoNulls<>(
@@ -42,7 +41,7 @@ final class NoNullsTest {
         MatcherAssert.assertThat(
             "Can't get is empty true",
             new NoNulls<>(
-                new MapOf<Integer, Integer>()
+                new MapOf<>()
             ).isEmpty(),
             new IsEqual<>(true)
         );
@@ -53,7 +52,7 @@ final class NoNullsTest {
         MatcherAssert.assertThat(
             "Can't get is empty false",
             new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(0, -1)
                 )
             ).isEmpty(),
@@ -66,7 +65,7 @@ final class NoNullsTest {
         MatcherAssert.assertThat(
             "Can't get #containsKey() true",
             new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(0, -1)
                 )
             ).containsKey(0),
@@ -79,7 +78,7 @@ final class NoNullsTest {
         MatcherAssert.assertThat(
             "Can't get #containsKey() false",
             new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(0, -1)
                 )
             ).containsKey(-1),
@@ -92,7 +91,7 @@ final class NoNullsTest {
         MatcherAssert.assertThat(
             "Could no throw an IllegalStateException for null key",
             () -> new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(0, -1)
                 )
             ).containsKey(null),
@@ -105,7 +104,7 @@ final class NoNullsTest {
         MatcherAssert.assertThat(
             "Can't get #containsValue() false",
             new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(0, -1)
                 )
             ).containsValue(0),
@@ -118,7 +117,7 @@ final class NoNullsTest {
         MatcherAssert.assertThat(
             "Can't get #containsValue() true",
             new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(0, -1)
                 )
             ).containsValue(-1),
@@ -131,7 +130,7 @@ final class NoNullsTest {
         MatcherAssert.assertThat(
             "Can't get #containsValue() exception",
             () -> new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(0, -1)
                 )
             ).containsValue(null),
@@ -140,11 +139,11 @@ final class NoNullsTest {
     }
 
     @Test
-    void getValue() {
+    void retrievesValue() {
         MatcherAssert.assertThat(
             "Can't call #get()",
             new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(0, -1)
                 )
             ).get(0),
@@ -153,11 +152,11 @@ final class NoNullsTest {
     }
 
     @Test
-    void getValueByNullKey() {
+    void throwsErrorForNullKeyInGet() {
         MatcherAssert.assertThat(
             "Can't call #get() with key null",
             () -> new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(0, -1)
                 )
             ).get(null),
@@ -166,11 +165,11 @@ final class NoNullsTest {
     }
 
     @Test
-    void getValueByNullValue() {
+    void throwsErrorForNullValueInGet() {
         MatcherAssert.assertThat(
             "Can't call #get() with null value",
             () -> new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(0, null)
                 )
             ).get(0),

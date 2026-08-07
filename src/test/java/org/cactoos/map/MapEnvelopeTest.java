@@ -15,8 +15,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link MapEnvelope}.
  * @since 0.4
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle DiamondOperatorCheck (500 lines)
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class MapEnvelopeTest {
@@ -26,7 +24,7 @@ final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "#isEmpty() returns false for empty map",
             new NoNulls<>(
-                new MapOf<Integer, Integer>()
+                new MapOf<>()
             ).isEmpty(),
             new IsEqual<>(true)
         );
@@ -37,7 +35,7 @@ final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "#isEmpty() returns true for not empty map",
             new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(1, 0)
                 )
             ).isEmpty(),
@@ -50,7 +48,7 @@ final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "contains key returns false with exist key",
             new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(1, 0)
                 )
             ).containsKey(1),
@@ -63,7 +61,7 @@ final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "contains key returns true with absent key",
             new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(1, 0)
                 )
             ).containsKey(0),
@@ -76,7 +74,7 @@ final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "contains value returns false with exist value",
             new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(1, 0)
                 )
             ).containsValue(0),
@@ -89,7 +87,7 @@ final class MapEnvelopeTest {
         MatcherAssert.assertThat(
             "contains value returns true with absent value",
             new NoNulls<>(
-                new MapOf<Integer, Integer>(
+                new MapOf<>(
                     new MapEntry<>(1, 0)
                 )
             ).containsValue(1),
@@ -245,7 +243,7 @@ final class MapEnvelopeTest {
     @Test
     void clearIsDelegated() {
         final Map<Integer, Integer> map = new MapEnvelopeTest.DerivedMapEnvelope<>(
-            new MapOf<Integer, Integer>(
+            new MapOf<>(
                 new MapEntry<>(0, 1)
             )
         );
@@ -260,7 +258,7 @@ final class MapEnvelopeTest {
     @Test
     void removeIsDelegated() {
         final Map<Integer, Integer> map = new MapEnvelopeTest.DerivedMapEnvelope<>(
-            new MapOf<Integer, Integer>(
+            new MapOf<>(
                 new MapEntry<>(0, 1)
             )
         );

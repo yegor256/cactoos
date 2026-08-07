@@ -18,9 +18,7 @@ import org.llorllale.cactoos.matchers.HasContent;
 /**
  * Test case for {@link WriterAsOutput}.
  * @since 0.13
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class WriterAsOutputTest {
 
     @Test

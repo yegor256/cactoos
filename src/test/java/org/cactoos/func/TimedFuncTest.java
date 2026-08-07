@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link Timed}.
  * @since 0.29.3
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidCatchingGenericException")
 final class TimedFuncTest {

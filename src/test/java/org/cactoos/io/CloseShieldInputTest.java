@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.IsText;
  * Test case for {@link CloseShieldInput}.
  * @since 1.0.0
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class CloseShieldInputTest {
 
     @Test

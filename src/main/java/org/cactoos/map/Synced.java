@@ -149,6 +149,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param map The map
      */
     public Synced(final Map<? extends X, ? extends Y> map) {
-        super(new ConcurrentHashMap<X, Y>(map));
+        super(new ConcurrentHashMap<>(map));
     }
 }

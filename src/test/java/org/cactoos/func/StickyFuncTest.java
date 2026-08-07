@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case for {@link StickyFunc}.
  * @since 0.4
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class StickyFuncTest {

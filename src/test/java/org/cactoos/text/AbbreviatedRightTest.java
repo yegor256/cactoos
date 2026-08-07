@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.IsText;
 /**
  * Test case for {@link AbbreviatedRight}.
  * @since 0.58.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class AbbreviatedRightTest {
 

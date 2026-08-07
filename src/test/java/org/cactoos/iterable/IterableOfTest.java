@@ -17,8 +17,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
 /**
  * Test case for {@link IterableOf}.
  * @since 0.12
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
 final class IterableOfTest {
 

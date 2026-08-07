@@ -149,6 +149,6 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      * @param map The map to cache
      */
     public Sticky(final Map<? extends X, ? extends Y> map) {
-        super(new HashMap<X, Y>(map));
+        super(new HashMap<>(map));
     }
 }

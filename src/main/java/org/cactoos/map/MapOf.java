@@ -157,7 +157,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @param entries List of the entries
      */
     public MapOf(final Iterable<Map.Entry<? extends X, ? extends Y>> entries) {
-        super(new HashMap<X, Y>(0) {
+        super(new HashMap<>(0) {
             private static final long serialVersionUID = 1L;
             {
                 for (final Map.Entry<? extends X, ? extends Y> entry : entries) {

@@ -20,7 +20,6 @@ import org.w3c.dom.ls.LSInput;
  * @since 0.6
  * @checkstyle AbbreviationAsWordInNameCheck (10 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public final class LSInputOf implements LSInput {
 
     /**
@@ -57,7 +56,6 @@ public final class LSInputOf implements LSInput {
      * @param pubid PublicID
      * @param sysid SystemID
      * @param bse Base
-     * @checkstyle ParameterNumberCheck (3 lines)
      */
     public LSInputOf(final Input data, final String pubid,
         final String sysid, final String bse) {

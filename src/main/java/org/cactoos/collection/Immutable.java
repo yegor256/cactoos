@@ -15,7 +15,6 @@ import java.util.Iterator;
  * @param <X> Type of source item
  * @since 1.16
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public final class Immutable<X> implements Collection<X> {
 
     /**

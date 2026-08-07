@@ -21,7 +21,6 @@ import org.cactoos.scalar.Unchecked;
  *
  * @since 0.21
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 public final class Directory implements Iterable<Path> {
 
     /**

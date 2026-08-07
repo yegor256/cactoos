@@ -18,7 +18,6 @@ import org.llorllale.cactoos.matchers.HasString;
 /**
  * Test case for {@link LoggingInput}.
  * @since 0.29
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class LoggingInputTest {

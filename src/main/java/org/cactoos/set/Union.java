@@ -52,13 +52,13 @@ public final class Union<T> extends SetEnvelope<T> {
         final Scalar<Iterable<T>> second
     ) {
         this(
-            new SetOf<T>(
-                new IterableOf<T>(
+            new SetOf<>(
+                new IterableOf<>(
                     () -> new Unchecked<>(first).value().iterator()
                 )
             ),
-            new SetOf<T>(
-                new IterableOf<T>(
+            new SetOf<>(
+                new IterableOf<>(
                     () -> new Unchecked<>(second).value().iterator()
                 )
             )
@@ -71,7 +71,7 @@ public final class Union<T> extends SetEnvelope<T> {
      * @param second Second set
      */
     public Union(final Set<T> first, final Set<T> second) {
-        super(new HashSet<T>(first) {
+        super(new HashSet<>(first) {
             private static final long serialVersionUID = 1L;
             {
                 this.addAll(second);

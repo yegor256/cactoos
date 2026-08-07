@@ -124,7 +124,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @MethodSource("arguments")
-    void toString(final Number nbr) {
+    void printsItself(final Number nbr) {
         MatcherAssert.assertThat(
             "Must implement toString via doubleValue",
             new NumberOfScalars(() -> nbr).toString(),

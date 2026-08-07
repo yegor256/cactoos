@@ -19,7 +19,6 @@ import org.cactoos.text.UncheckedText;
  * @param <V> Type of value
  * @since 0.27
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public class NoNulls<K, V> implements Map<K, V> {
 
     /**

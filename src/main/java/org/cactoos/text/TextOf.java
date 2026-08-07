@@ -29,7 +29,6 @@ import org.cactoos.iterable.Mapped;
  * <p>There is no thread-safety guarantee.
  *
  * @since 0.12
- * @checkstyle ClassFanOutComplexityCheck (1000 lines)
  */
 public final class TextOf extends TextEnvelope {
 

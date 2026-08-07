@@ -32,7 +32,6 @@ import org.llorllale.cactoos.matchers.StartsWith;
 /**
  * Test case for {@link BytesOf}.
  * @since 0.12
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class BytesOfTest {
 
@@ -138,7 +137,7 @@ final class BytesOfTest {
     }
 
     @Test
-    void asBytes() throws Exception {
+    void convertsTextIntoBytes() throws Exception {
         MatcherAssert.assertThat(
             "Can't convert text into bytes",
             new BytesOf(
@@ -151,7 +150,7 @@ final class BytesOfTest {
     }
 
     @Test
-    void asBytesFromIterator() throws Exception {
+    void convertsIteratorIntoBytes() throws Exception {
         MatcherAssert.assertThat(
             "Can't convert iterator into bytes",
             new BytesOf(
@@ -164,7 +163,7 @@ final class BytesOfTest {
     }
 
     @Test
-    void asBytesFromIterable() throws Exception {
+    void convertsIterableIntoBytes() throws Exception {
         MatcherAssert.assertThat(
             "Must convert iterable into bytes",
             new BytesOf(

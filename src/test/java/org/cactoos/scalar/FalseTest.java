@@ -12,12 +12,11 @@ import org.llorllale.cactoos.matchers.HasValue;
 /**
  * Test case for {@link False}.
  * @since 0.7
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class FalseTest {
 
     @Test
-    void asValue() {
+    void returnsFalse() {
         MatcherAssert.assertThat(
             "Must return false",
             new False().value(),
@@ -26,7 +25,7 @@ final class FalseTest {
     }
 
     @Test
-    void asScalar() {
+    void matchesFalse() {
         MatcherAssert.assertThat(
             "Must be false",
             new False(),

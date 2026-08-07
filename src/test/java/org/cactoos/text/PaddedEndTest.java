@@ -11,7 +11,6 @@ import org.llorllale.cactoos.matchers.HasString;
 /**
  * Test case for {@link PaddedEnd}.
  * @since 0.32
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class PaddedEndTest {
 

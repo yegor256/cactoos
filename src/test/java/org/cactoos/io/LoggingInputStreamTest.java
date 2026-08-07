@@ -16,9 +16,7 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link LoggingInputStream}.
  * @since 0.39
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class LoggingInputStreamTest {
 
     @Test

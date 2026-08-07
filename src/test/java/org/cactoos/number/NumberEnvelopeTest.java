@@ -124,7 +124,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @MethodSource("arguments")
-    void toString(final Number nbr) {
+    void printsItself(final Number nbr) {
         MatcherAssert.assertThat(
             "Must forward toString",
             new NumberEnvelope(nbr) { }.toString(),

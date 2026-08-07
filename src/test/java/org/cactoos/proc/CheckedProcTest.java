@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link CheckedProc}.
  * @since 0.32
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class CheckedProcTest {
 

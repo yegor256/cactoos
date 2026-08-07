@@ -19,7 +19,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 /**
  * Test case for {@link Retry}.
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class RetryTest {
 

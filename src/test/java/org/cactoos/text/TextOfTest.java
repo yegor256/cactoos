@@ -26,8 +26,6 @@ import org.llorllale.cactoos.matchers.StartsWith;
 /**
  * Test case for {@link TextOf}.
  * @since 0.12
- * @checkstyle JavadocMethodCheck (1000 lines)
- * @checkstyle StringLiteralsConcatenationCheck (1000 lines)
  */
 @SuppressWarnings("unchecked")
 final class TextOfTest {

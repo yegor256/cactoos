@@ -58,7 +58,6 @@ public final class NumberOfScalars extends Number {
      * @param inm Integer scalar
      * @param fnm Float scalar
      * @param dnm Long scalar
-     * @checkstyle ParameterNumberCheck (5 lines)
      */
     public NumberOfScalars(final Scalar<Long> lnm, final Scalar<Integer> inm,
         final Scalar<Float> fnm, final Scalar<Double> dnm) {

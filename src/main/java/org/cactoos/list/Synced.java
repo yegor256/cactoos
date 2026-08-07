@@ -22,6 +22,6 @@ public final class Synced<X> extends ListEnvelope<X> {
      * @param list The underlying list
      */
     public Synced(final List<X> list) {
-        super(new CopyOnWriteArrayList<X>(list));
+        super(new CopyOnWriteArrayList<>(list));
     }
 }

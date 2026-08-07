@@ -19,7 +19,6 @@ import org.llorllale.cactoos.matchers.IsText;
  * Test case for {@link CloseShieldOutputStream}.
  * @since 1.0.0
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class CloseShieldOutputStreamTest {
 
     @Test

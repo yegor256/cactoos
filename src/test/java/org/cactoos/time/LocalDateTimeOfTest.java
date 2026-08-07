@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 /**
  * Tests for {@link LocalDateTimeOf}.
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class LocalDateTimeOfTest {
 

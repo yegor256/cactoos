@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link Merged}.
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class MergedTest {
 
@@ -100,7 +99,7 @@ final class MergedTest {
         MatcherAssert.assertThat(
             "Exception is expected for merge with null",
             () -> new Merged<Integer, Integer>(
-                new MapOf<Integer, Integer>(),
+                new MapOf<>(),
                 null
             ).size(),
             new Throws<>(NullPointerException.class)

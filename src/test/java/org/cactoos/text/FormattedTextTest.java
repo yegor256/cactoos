@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link FormattedText}.
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class FormattedTextTest {
 

@@ -11,13 +11,12 @@ import org.llorllale.cactoos.matchers.HasValues;
 /**
  * Test case for {@link IterableOfFloats}.
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class IterableOfFloatsTest {
 
     @Test
     void convertsFloatValuesToIterable() {
-        final float[] values = {1.0F, 2.0F, 3.0F};
+        final float[] values = {1.0f, 2.0f, 3.0f};
         MatcherAssert.assertThat(
             "Must convert float values to iterable",
             new IterableOfFloats(values),

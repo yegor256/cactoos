@@ -20,9 +20,8 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test case for {@link Async}.
  * @since 0.10
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.CloseResource", "PMD.UnnecessaryLocalRule"})
+@SuppressWarnings("PMD.CloseResource")
 final class AsyncTest {
 
     @Test

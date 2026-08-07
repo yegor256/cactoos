@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 /**
  * Tests for DateOf.
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class DateOfTest {
 

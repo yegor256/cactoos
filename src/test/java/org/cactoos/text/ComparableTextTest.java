@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.IsText;
 /**
  * Test case for {@link FormattedText}.
  * @since 0.27
- * @checkstyle JavadocMethodCheck (100 lines)
  */
 final class ComparableTextTest {
 

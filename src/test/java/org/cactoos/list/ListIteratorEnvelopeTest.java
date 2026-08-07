@@ -12,8 +12,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Test cases for {@link ListIteratorEnvelope}.
  * @since 0.35
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTypeCheck (500 lines)
  */
 final class ListIteratorEnvelopeTest {
 
