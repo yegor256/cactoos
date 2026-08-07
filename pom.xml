@@ -377,20 +377,13 @@
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.30.2</version>
+            <version>0.30.3</version>
             <configuration>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/site/resources/.*</exclude>
                 <exclude>pmd:.*/src/test/java/org/cactoos/experimental/ThreadsTest\.java</exclude>
                 <exclude>pmd:.*/src/test/java/org/cactoos/func/AsyncTest\.java</exclude>
                 <exclude>pmd:.*/src/test/java/org/cactoos/scalar/AndInThreadsTest\.java</exclude>
-                <!-- UseDiamondOperator false positives and a PMD crash,
-                  see https://github.com/yegor256/qulice/issues/1685
-                  and https://github.com/yegor256/qulice/issues/1686 -->
-                <exclude>pmd:.*/src/main/java/org/cactoos/iterable/Paged\.java</exclude>
-                <exclude>pmd:.*/src/main/java/org/cactoos/number/MultiplicationOf\.java</exclude>
-                <exclude>pmd:.*/src/main/java/org/cactoos/scalar/ScalarWithFallback\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/cactoos/iterator/PagedTest\.java</exclude>
               </excludes>
             </configuration>
           </plugin>
