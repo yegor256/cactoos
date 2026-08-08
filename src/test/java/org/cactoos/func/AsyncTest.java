@@ -143,6 +143,7 @@ final class AsyncTest {
     }
 
     @Test
+    @SuppressWarnings("FutureReturnValueIgnored")
     void shutsDownInternalExecutorOnClose() throws Exception {
         final CountDownLatch latch = new CountDownLatch(1);
         final Async<Boolean, Boolean> async = new Async<>(
@@ -163,6 +164,7 @@ final class AsyncTest {
     }
 
     @Test
+    @SuppressWarnings("FutureReturnValueIgnored")
     void doesNotShutDownExternalExecutor() throws Exception {
         final ExecutorService exec = Executors.newSingleThreadExecutor();
         try {

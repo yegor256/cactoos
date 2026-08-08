@@ -9,9 +9,7 @@ import java.util.Iterator;
 /**
  * Tail portion of the iterator.
  *
- * <p>
- * There is no thread-safety guarantee.
- * </p>
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Element type
  * @since 0.31

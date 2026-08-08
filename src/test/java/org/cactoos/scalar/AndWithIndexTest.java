@@ -4,7 +4,7 @@
  */
 package org.cactoos.scalar;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import org.cactoos.func.BiFuncOf;
 import org.cactoos.iterable.IterableOf;
@@ -22,7 +22,7 @@ final class AndWithIndexTest {
 
     @Test
     void iteratesListWithIndexFromBiFunc() {
-        final List<String> list = new LinkedList<>();
+        final List<String> list = new ArrayList<>(2);
         MatcherAssert.assertThat(
             "Must iterate a list with a function",
             new AndWithIndex(
@@ -38,7 +38,7 @@ final class AndWithIndexTest {
 
     @Test
     void populatesListWithIndexFromBiFunc() throws Exception {
-        final List<String> list = new LinkedList<>();
+        final List<String> list = new ArrayList<>(2);
         new AndWithIndex(
             new BiFuncOf<>(
                 (text, index) -> list.add(index, text),
@@ -54,8 +54,9 @@ final class AndWithIndexTest {
     }
 
     @Test
+    @SuppressWarnings("ModifiedButNotUsed")
     void iteratesListWithIndexFromBiProc() {
-        final List<String> list = new LinkedList<>();
+        final List<String> list = new ArrayList<>(2);
         MatcherAssert.assertThat(
             "Must iterate a list with a procedure",
             new AndWithIndex(
@@ -72,7 +73,7 @@ final class AndWithIndexTest {
 
     @Test
     void populatesListWithIndexFromBiProc() throws Exception {
-        final List<String> list = new LinkedList<>();
+        final List<String> list = new ArrayList<>(2);
         new AndWithIndex(
             new BiProcOf<>(
                 (text, index) -> {

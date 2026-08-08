@@ -94,7 +94,7 @@ final class ImmutableTest {
         );
     }
 
-    @Test()
+    @Test
     void subListReturnsListIteratorWithUnsupportedSet() {
         MatcherAssert.assertThat(
             "subList.listIterator().set() must throw exception",
@@ -113,7 +113,7 @@ final class ImmutableTest {
         );
     }
 
-    @Test()
+    @Test
     void returnsSubListWithUnsupportedSet() {
         MatcherAssert.assertThat(
             "subList.set() must throw exception",

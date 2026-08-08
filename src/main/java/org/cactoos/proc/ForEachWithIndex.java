@@ -12,21 +12,19 @@ import org.cactoos.scalar.AndWithIndex;
  * Executes a {@link BiProc} for each element of an
  * {@link Iterable}
  *
- * <p>
- * This class can be effectively used to iterate through a collection similar to how
+ * <p>This class can be effectively used to iterate through a collection similar to how
  * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)} works except
- * this class also passes the index of the current element to the proc:
- * </p>
+ * this class also passes the index of the current element to the proc:</p>
  *
  * {@code
  * new ForEachWithIndex(
- *    new BiProcOf<>((input, index) -> System.out.printf("%d: \'%s\' ", index + 1, input)),
+ * new BiProcOf<>((input, index) -> System.out.printf("%d: \'%s\' ", index + 1, input)),
  * ).execute(
- *    new IterableOf<>("Mary", "John", "William", "Napkin")
+ * new IterableOf<>("Mary", "John", "William", "Napkin")
  * ); // will print 1: 'Mary' 2: 'John' 3: 'William' 4: 'Napkin' to standard output
  * }
- * <p>
- * There is no thread-safety guarantee.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> The type to iterate over
  * @since 1.0

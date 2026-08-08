@@ -105,14 +105,14 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
                 )
             );
         if (!candidates.hasNext()) {
-            if (exp instanceof RuntimeException) {
-                throw (RuntimeException) exp;
+            if (exp instanceof RuntimeException runtime) {
+                throw runtime;
             }
-            if (exp instanceof Error) {
-                throw (Error) exp;
+            if (exp instanceof Error error) {
+                throw error;
             }
-            if (exp instanceof Exception) {
-                throw (Exception) exp;
+            if (exp instanceof Exception exception) {
+                throw exception;
             }
             throw new Exception(exp);
         }

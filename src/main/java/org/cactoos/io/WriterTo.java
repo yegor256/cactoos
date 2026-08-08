@@ -79,7 +79,11 @@ public final class WriterTo extends Writer {
      * @param charset The charset
      */
     public WriterTo(final Output output, final CharSequence charset) {
-        this(() -> new OutputStreamWriter(output.stream(), charset.toString()));
+        this(
+            () -> new OutputStreamWriter(
+                output.stream(), Charset.forName(charset.toString())
+            )
+        );
     }
 
     /**

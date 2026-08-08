@@ -20,15 +20,15 @@ import org.cactoos.iterable.Mapped;
  *
  * {@code
  * new And(
- *    new True(),
- *    new True(),
- *    new True()
+ * new True(),
+ * new True(),
+ * new True()
  * ).value(); // the result is true
  *
  * new And(
- *    new True(),
- *    new False(),
- *    new True()
+ * new True(),
+ * new False(),
+ * new True()
  * ).value(); // the result is false
  * }
  *

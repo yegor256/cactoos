@@ -84,6 +84,12 @@ final class InputOfTest {
                     }
 
                     @Override
+                    public int read(final byte[] buf, final int off, final int len)
+                        throws IOException {
+                        return input.read(buf, off, len);
+                    }
+
+                    @Override
                     public void close() throws IOException {
                         input.close();
                         closed.set(true);
@@ -188,6 +194,7 @@ final class InputOfTest {
     }
 
     @Test
+    @SuppressWarnings("UnnecessaryStringBuilder")
     void readsStringBuilder() {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
@@ -209,6 +216,7 @@ final class InputOfTest {
     }
 
     @Test
+    @SuppressWarnings("JdkObsolete")
     void readsStringBuffer() {
         final String starts = "The future ";
         final String ends = "is now!";

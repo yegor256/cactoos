@@ -32,7 +32,7 @@ public final class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
 
     /**
      * Parses date using the provided format to create
-     *  {@link OffsetDateTime} instances.
+     * {@link OffsetDateTime} instances.
      * @param date The date to parse
      * @param format The format to use
      * @param offset The offset to use
@@ -47,7 +47,7 @@ public final class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
 
     /**
      * Parses the date using the formatter to create
-     *  {@link OffsetDateTime} instances.
+     * {@link OffsetDateTime} instances.
      * @param date The date to parse
      * @param formatter The formatter to use
      */

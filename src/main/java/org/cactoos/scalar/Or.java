@@ -24,10 +24,10 @@ import org.cactoos.iterable.Mapped;
  *
  * {@code
  * new Or(
- *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input) ),
- *    new IterableOf<>("Mary", "John", "William", "Napkin")
+ * new ProcOf<>(input -> System.out.printf("\'%s\' ", input) ),
+ * new IterableOf<>("Mary", "John", "William", "Napkin")
  * ).value(); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
- *            // the result of this operation is always false
+ * // the result of this operation is always false
  * }
  *
  * <p>This class could be also used for matching multiple boolean
@@ -35,15 +35,15 @@ import org.cactoos.iterable.Mapped;
  *
  * {@code
  * new Or(
- *    new False(),
- *    new True(),
- *    new True()
+ * new False(),
+ * new True(),
+ * new True()
  * ).value(); // the result is true
  *
  * new Or(
- *    new False(),
- *    new False(),
- *    new False()
+ * new False(),
+ * new False(),
+ * new False()
  * ).value(); // the result is false
  * }
  *

@@ -266,7 +266,9 @@ public final class TextOf extends TextEnvelope {
      */
     public TextOf(final Bytes bytes, final String cset) {
         this(
-            new TextOfScalar(() -> new String(bytes.asBytes(), cset))
+            new TextOfScalar(
+                () -> new String(bytes.asBytes(), Charset.forName(cset))
+            )
         );
     }
 

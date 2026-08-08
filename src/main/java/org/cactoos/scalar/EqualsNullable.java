@@ -9,7 +9,9 @@ import org.cactoos.Scalar;
 /**
  * Checks 2 objects for equality.
  * Null values are accepted.
+ *
  * <p>There is no thread-safety guarantee.
+ *
  * @since 1.0
  */
 public final class EqualsNullable implements Scalar<Boolean> {

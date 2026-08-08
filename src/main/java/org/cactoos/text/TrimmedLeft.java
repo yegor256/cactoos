@@ -9,8 +9,7 @@ import org.cactoos.Text;
 /**
  * Text without control characters (char &lt;= 32) only from left.
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.12
  */

@@ -55,6 +55,23 @@ public final class HeadInputStream extends InputStream {
     }
 
     @Override
+    public int read(final byte[] buf, final int off, final int len) throws IOException {
+        final int adjusted;
+        if (this.processed >= this.length) {
+            adjusted = -1;
+        } else {
+            final int done = this.origin.read(
+                buf, off, (int) Math.min((long) len, this.length - this.processed)
+            );
+            if (done > 0) {
+                this.processed += done;
+            }
+            adjusted = done;
+        }
+        return adjusted;
+    }
+
+    @Override
     public long skip(final long skip) throws IOException {
         final long adjusted;
         if (this.processed + skip > this.length) {

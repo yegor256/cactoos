@@ -29,7 +29,9 @@ public final class Lowered extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * <p>Creates a lower-case text from a character sequence
+     *
      * @param text The text
      */
     public Lowered(final CharSequence text) {
@@ -38,7 +40,9 @@ public final class Lowered extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * <p>Creates a lower-case text from a {@link Text}
+     *
      * @param text The text
      */
     public Lowered(final Text text) {
@@ -47,7 +51,9 @@ public final class Lowered extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * <p>Creates a lower-case text from a {@link Text}
+     *
      * @param text The text
      * @param locale The locale
      */

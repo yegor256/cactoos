@@ -29,6 +29,12 @@ final class LoggingInputStreamTest {
                     public int read() throws IOException {
                         throw new IOException(message);
                     }
+
+                    @Override
+                    public int read(final byte[] buf, final int off, final int len)
+                        throws IOException {
+                        throw new IOException(message);
+                    }
                 },
                 this.getClass().getSimpleName()
             )

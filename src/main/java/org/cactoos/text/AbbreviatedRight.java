@@ -31,7 +31,7 @@ public final class AbbreviatedRight extends TextEnvelope {
     /**
      * Ctor.
      *
-     * <p> By default, the max line width is 80 characters.
+     * <p>By default, the max line width is 80 characters.
      *
      * @param text The CharSequence
      */
@@ -42,7 +42,7 @@ public final class AbbreviatedRight extends TextEnvelope {
     /**
      * Ctor.
      *
-     * <p> By default, the max line width is 80 characters.
+     * <p>By default, the max line width is 80 characters.
      *
      * @param text The Text
      */

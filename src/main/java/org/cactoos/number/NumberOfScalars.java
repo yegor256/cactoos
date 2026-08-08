@@ -95,9 +95,9 @@ public final class NumberOfScalars extends Number {
 
     @Override
     public boolean equals(final Object obj) {
-        return obj instanceof Number && Double.compare(
+        return obj instanceof Number number && Double.compare(
             this.doubleValue(),
-            ((Number) obj).doubleValue()
+            number.doubleValue()
         ) == 0;
     }
 

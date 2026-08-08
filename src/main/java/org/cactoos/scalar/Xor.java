@@ -11,7 +11,7 @@ import org.cactoos.iterable.Joined;
 /**
  * Logical exclusive or.
  *
- * Returns {@link True} when an odd number of elements have value true,
+ * <p>Returns {@link True} when an odd number of elements have value true,
  * otherwise return {@link False}.
  *
  * <p>This class could be also used for matching multiple boolean
@@ -19,15 +19,15 @@ import org.cactoos.iterable.Joined;
  *
  * {@code
  * new Xor(
- *    new True(),
- *    new True(),
- *    new True()
+ * new True(),
+ * new True(),
+ * new True()
  * ).value(); // the result is true
  *
  * new Xor(
- *    new True(),
- *    new False(),
- *    new True()
+ * new True(),
+ * new False(),
+ * new True()
  * ).value(); // the result is false
  * }
  *

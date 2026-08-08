@@ -204,7 +204,11 @@ public final class ReaderOf extends Reader {
      * @param charset The charset
      */
     public ReaderOf(final Input input, final CharSequence charset) {
-        this(() -> new InputStreamReader(input.stream(), charset.toString()));
+        this(
+            () -> new InputStreamReader(
+                input.stream(), Charset.forName(charset.toString())
+            )
+        );
     }
 
     /**
@@ -242,7 +246,11 @@ public final class ReaderOf extends Reader {
      */
     public ReaderOf(final InputStream stream, final CharSequence charset)
         throws UnsupportedEncodingException {
-        this((Scalar<Reader>) () -> new InputStreamReader(stream, charset.toString()));
+        this(
+            (Scalar<Reader>) () -> new InputStreamReader(
+                stream, Charset.forName(charset.toString())
+            )
+        );
     }
 
     /**

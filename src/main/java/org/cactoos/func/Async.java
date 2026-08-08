@@ -119,6 +119,7 @@ public final class Async<X, Y> implements
     }
 
     @Override
+    @SuppressWarnings("FutureReturnValueIgnored")
     public void exec(final X input) {
         this.apply(input);
     }

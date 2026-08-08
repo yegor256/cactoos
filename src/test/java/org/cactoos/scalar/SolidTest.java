@@ -88,7 +88,7 @@ final class SolidTest {
         MatcherAssert.assertThat(
             "must return null value in multiple threads",
             scalar -> solid.value() == null,
-            new RunsInThreads<>(new Unchecked<>(solid::value))
+            new RunsInThreads<>(new Unchecked<>(solid))
         );
     }
 
@@ -104,7 +104,7 @@ final class SolidTest {
         );
         final List<Scalar<Object>> tasks = new ListOf<>();
         for (int idx = 0; idx < threads; ++idx) {
-            tasks.add(solid::value);
+            tasks.add(solid);
         }
         new LengthOf(new Threads<>(threads, tasks)).value();
         MatcherAssert.assertThat(

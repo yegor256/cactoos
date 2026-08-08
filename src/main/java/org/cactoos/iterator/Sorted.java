@@ -4,9 +4,9 @@
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
@@ -61,7 +61,7 @@ public final class Sorted<T> implements Iterator<T> {
         this.scalar = new Unchecked<>(
             new Sticky<>(
                 () -> {
-                    final List<T> items = new LinkedList<>();
+                    final List<T> items = new ArrayList<>(0);
                     while (iterator.hasNext()) {
                         items.add(iterator.next());
                     }

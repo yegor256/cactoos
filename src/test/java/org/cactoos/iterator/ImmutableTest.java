@@ -4,8 +4,8 @@
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import org.cactoos.text.Randomized;
@@ -24,7 +24,7 @@ final class ImmutableTest {
 
     @Test
     void doesNotAllowRemovingOfElements() {
-        final List<String> list = new LinkedList<>();
+        final List<String> list = new ArrayList<>(1);
         list.add("one");
         final Iterator<String> immutable = new Immutable<>(list.iterator());
         immutable.next();

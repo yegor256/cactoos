@@ -4,7 +4,7 @@
  */
 package org.cactoos.scalar;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
@@ -78,7 +78,7 @@ final class OrTest {
 
     @Test
     void executesProcOnIterable() throws Exception {
-        final List<Integer> list = new LinkedList<>();
+        final List<Integer> list = new ArrayList<>(4);
         new Or(
             (Proc<Integer>) list::add,
             new IterableOf<>(1, 2, 3, 4)
@@ -92,7 +92,7 @@ final class OrTest {
 
     @Test
     void executesProcOnVarargs() throws Exception {
-        final List<Integer> list = new LinkedList<>();
+        final List<Integer> list = new ArrayList<>(3);
         new Or(
             (Proc<Integer>) list::add,
             2, 3, 4

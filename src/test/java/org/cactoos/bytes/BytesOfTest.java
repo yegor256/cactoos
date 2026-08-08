@@ -121,6 +121,12 @@ final class BytesOfTest {
                     }
 
                     @Override
+                    public int read(final byte[] buf, final int off, final int len)
+                        throws IOException {
+                        return input.read(buf, off, len);
+                    }
+
+                    @Override
                     public void close() throws IOException {
                         input.close();
                         closed.set(true);

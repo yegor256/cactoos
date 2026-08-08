@@ -26,12 +26,12 @@ public final class NoNulls<X> implements Collection<X> {
 
     /**
      * Ctor without '? extends X' wildcard because of the issue:
-     *  <ol>
-     *      <li>The client gets Collection of X</li>
-     *      <li>The client adds item of X to it</li>
-     *      <li>The client queries items of original Collection of ? extends X</li>
-     *      <li>Runtime exception occurs</li>
-     *  </ol>
+     * <ol>
+     * <li>The client gets Collection of X</li>
+     * <li>The client adds item of X to it</li>
+     * <li>The client queries items of original Collection of ? extends X</li>
+     * <li>Runtime exception occurs</li>
+     * </ol>
      * @param items Original one
      */
     public NoNulls(final Collection<X> items) {
@@ -148,6 +148,7 @@ public final class NoNulls<X> implements Collection<X> {
     }
 
     @Override
+    @SuppressWarnings("UndefinedEquals")
     public boolean equals(final Object obj) {
         return this.col.equals(obj);
     }

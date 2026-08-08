@@ -12,15 +12,12 @@ import org.cactoos.Scalar;
  * {@link Scalar} that apply a {@link Func} to the result of another
  * {@link Scalar}.
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.
  *
- * <p>
- * This class implements {@link Scalar}, which throws a checked
+ * <p>This class implements {@link Scalar}, which throws a checked
  * {@link IOException}. This may not be convenient in many cases. To make it
  * more convenient and get rid of the checked exception you can use the
- * {@link Unchecked} decorator.
- * </p>
+ * {@link Unchecked} decorator.</p>
  *
  * @param <U> Type of result
  * @since 1.0.0

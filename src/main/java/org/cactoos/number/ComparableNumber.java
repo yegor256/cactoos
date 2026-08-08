@@ -7,8 +7,7 @@ package org.cactoos.number;
 /**
  * {@link Number} as {@link Comparable}.
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
  */

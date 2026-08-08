@@ -4,7 +4,7 @@
  */
 package org.cactoos.io;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
@@ -30,7 +30,7 @@ public final class FakeHandler extends Handler {
      */
     FakeHandler() {
         super();
-        this.entries = new LinkedList<>();
+        this.entries = new ArrayList<>(0);
     }
 
     @Override

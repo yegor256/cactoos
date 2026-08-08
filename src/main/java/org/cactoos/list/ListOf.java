@@ -4,8 +4,8 @@
  */
 package org.cactoos.list;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.iterable.IterableOf;
 
@@ -42,7 +42,7 @@ public final class ListOf<T> extends ListEnvelope<T> {
      * @param src An {@link Iterable}
      */
     public ListOf(final Iterable<? extends T> src) {
-        super(new LinkedList<>() {
+        super(new ArrayList<>(0) {
             private static final long serialVersionUID = 1L;
             {
                 src.forEach(this::add);

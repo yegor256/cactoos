@@ -31,7 +31,7 @@ public final class ZonedDateTimeOf implements Scalar<ZonedDateTime> {
 
     /**
      * Parses date using the provided format to create
-     *  {@link ZonedDateTime} instances.
+     * {@link ZonedDateTime} instances.
      * @param date The date to parse
      * @param format The format to use
      * @param zone The zone to use
@@ -43,7 +43,7 @@ public final class ZonedDateTimeOf implements Scalar<ZonedDateTime> {
 
     /**
      * Parses the date using the formatter to create
-     *  {@link ZonedDateTime} instances.
+     * {@link ZonedDateTime} instances.
      * @param date The date to parse
      * @param formatter The formatter to use
      */

@@ -9,8 +9,7 @@ import org.cactoos.BiFunc;
 /**
  * Mapped with index iterable.
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.
  *
  * @param <Y> Type of target item
  * @since 1.0.0

@@ -48,7 +48,7 @@ public final class
 
     @Override
     public boolean hasNext() {
-        return this.value.get().compareTo(this.max) < 1;
+        return this.value.get().compareTo(this.max) <= 0;
     }
 
     @Override

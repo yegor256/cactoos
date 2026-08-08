@@ -9,7 +9,7 @@ import org.cactoos.BiFunc;
 /**
  * Matched iterable.
  *
- * Iterates over 2 iterables at the same time and verify that elements with the
+ * <p>Iterates over 2 iterables at the same time and verify that elements with the
  * same position has correlation by the function. The function might be equals,
  * endsWith, greaterThen, nonNull, empty, negative, positive, etc.
  *

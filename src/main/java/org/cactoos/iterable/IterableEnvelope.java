@@ -35,6 +35,7 @@ public abstract class IterableEnvelope<X> implements Iterable<X> {
     }
 
     @Override
+    @SuppressWarnings("UndefinedEquals")
     public final boolean equals(final Object other) {
         return this.wrapped.equals(other);
     }

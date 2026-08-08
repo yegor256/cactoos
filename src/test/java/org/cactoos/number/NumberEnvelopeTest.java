@@ -113,7 +113,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @MethodSource("arguments")
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({"unlikely-arg-type", "EqualsIncompatibleType"})
     void notEqualsObject(final Number nbr) {
         MatcherAssert.assertThat(
             "Must forward equals and be false for incorrect Number",

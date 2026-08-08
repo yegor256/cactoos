@@ -25,7 +25,7 @@ public final class ItemAt<T> implements Scalar<T> {
 
     /**
      * {@link Sticky} that holds the value of the {@link Scalar}
-     *  at the position specified in the constructor.
+     * at the position specified in the constructor.
      */
     private final Scalar<T> saved;
 

@@ -17,8 +17,8 @@ import org.cactoos.text.TextOf;
 
 /**
  * A temporary file.
- * <p>
- * These are ephemeral files to be used in small scopes.
+ *
+ * <p>These are ephemeral files to be used in small scopes.
  * Typical use looks like this:
  * <pre>{@code
  *    try (final TempFile file = new TempFile()) {
@@ -27,6 +27,7 @@ import org.cactoos.text.TextOf;
  * }</pre>
  * The physical file is deleted from the filesystem when the temp file is
  * closed.
+ *
  * @since 1.0
  */
 public final class TempFile implements Scalar<Path>, Closeable {
@@ -38,10 +39,11 @@ public final class TempFile implements Scalar<Path>, Closeable {
 
     /**
      * Ctor.
-     * <p>
-     * Specifies empty strings for suffix and prefix, and creates the file
+     *
+     * <p>Specifies empty strings for suffix and prefix, and creates the file
      * in the filesystem's temporary directory denoted by the system property
      * {@code java.io.tmpdir}.
+     *
      * @since 1.0
      */
     public TempFile() {
@@ -50,9 +52,10 @@ public final class TempFile implements Scalar<Path>, Closeable {
 
     /**
      * Ctor.
-     * <p>
-     * The temporary file will be created inside the filesystem's
+     *
+     * <p>The temporary file will be created inside the filesystem's
      * temporary folder (system property: {@code java.io.tmpdir}).
+     *
      * @param prefix The temp filename's prefix
      * @param suffix The temp filename's suffix
      * @since 1.0
@@ -67,9 +70,10 @@ public final class TempFile implements Scalar<Path>, Closeable {
 
     /**
      * Ctor.
-     * <p>
-     * The temporary file will be created inside the filesystem's
+     *
+     * <p>The temporary file will be created inside the filesystem's
      * temporary folder (system property: {@code java.io.tmpdir}).
+     *
      * @param prefix The temp filename's prefix
      * @param suffix The temp filename's suffix
      * @since 1.0

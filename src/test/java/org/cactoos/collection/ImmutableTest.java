@@ -221,6 +221,7 @@ final class ImmutableTest {
     }
 
     @Test
+    @SuppressWarnings("EqualsIncompatibleType")
     void equalsToOriginal() {
         final List<Integer> another = new ListOf<>(4, 5, 6);
         MatcherAssert.assertThat(
@@ -235,6 +236,7 @@ final class ImmutableTest {
     }
 
     @Test
+    @SuppressWarnings("UndefinedEquals")
     void equalsIsSymmetricWithPlainList() {
         final List<Integer> plain = new ListOf<>(1, 2, 3);
         final Collection<Integer> wrapper = new Immutable<>(

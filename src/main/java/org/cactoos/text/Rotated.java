@@ -27,12 +27,9 @@ public final class Rotated extends TextEnvelope {
                         if (offset < 0) {
                             offset = origin.length() + offset;
                         }
-                        // @checkstyle ParameterAssignmentCheck (6 lines)
-                        origin = new StringBuilder(length).append(
-                            origin.substring(offset)
-                        ).append(
-                            origin.substring(0, offset)
-                        ).toString();
+                        // @checkstyle ParameterAssignmentCheck (2 lines)
+                        origin = origin.substring(offset)
+                            + origin.substring(0, offset);
                     }
                     return origin;
                 },

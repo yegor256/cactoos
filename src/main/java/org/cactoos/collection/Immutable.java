@@ -118,6 +118,7 @@ public final class Immutable<X> implements Collection<X> {
     }
 
     @Override
+    @SuppressWarnings("UndefinedEquals")
     public boolean equals(final Object obj) {
         return this == obj
             || obj instanceof Immutable

@@ -20,9 +20,10 @@ public final class Replaced extends TextEnvelope {
 
     /**
      * Ctor.
-     * <p>
-     * Will replace all instances of the substring matched by {@code find}
+     *
+     * <p>Will replace all instances of the substring matched by {@code find}
      * with {@code replace}.
+     *
      * @param text The text
      * @param find The regular expression
      * @param replace The replacement string
@@ -37,13 +38,13 @@ public final class Replaced extends TextEnvelope {
 
     /**
      * Ctor.
-     * <p>
-     * The given {@link Pattern regex} is used to produce a
+     *
+     * <p>The given {@link Pattern regex} is used to produce a
      * {@link Pattern#matcher(CharSequence) matcher} that will be
      * transformed by {@code func} into a replacement string to replace each
      * {@link Matcher#find() matching} substring.
-     * <p>
-     * Example usage:
+     *
+     * <p>Example usage:
      * <pre>{@code
      * final String result = new Replaced(
      *      new TextOf("one two THREE four FIVE six"),
@@ -51,9 +52,10 @@ public final class Replaced extends TextEnvelope {
      *      matcher -> String.valueOf(matcher.group().length())
      * ).asString();  //will return the string "3 3 THREE 4 FIVE 3"
      * }</pre>
-     * <p>
-     * Note: a {@link PatternSyntaxException} will be thrown if the
+     *
+     * <p>Note: a {@link PatternSyntaxException} will be thrown if the
      * regular expression's syntax is invalid.
+     *
      * @param text The text
      * @param regex The regular expression
      * @param func Transforms the resulting matcher object into a replacement
@@ -67,7 +69,7 @@ public final class Replaced extends TextEnvelope {
         super(
             new Mapped(
                 str -> {
-                    final StringBuffer buffer = new StringBuffer();
+                    final StringBuilder buffer = new StringBuilder();
                     final Matcher matcher = regex.value().matcher(str);
                     while (matcher.find()) {
                         matcher.appendReplacement(

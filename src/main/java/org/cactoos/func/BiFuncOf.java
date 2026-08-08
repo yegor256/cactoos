@@ -71,8 +71,6 @@ public final class BiFuncOf<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
      * @param fnc The func
      */
     public BiFuncOf(final BiFunc<X, Y, Z> fnc) {
-        super(
-            fnc::apply
-        );
+        super(fnc);
     }
 }

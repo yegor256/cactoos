@@ -92,7 +92,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @MethodSource("arguments")
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({"unlikely-arg-type", "EqualsIncompatibleType"})
     void equalsNumber(final Number nbr) {
         MatcherAssert.assertThat(
             "Must implement equals doubleValue",
@@ -113,7 +113,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @MethodSource("arguments")
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({"unlikely-arg-type", "EqualsIncompatibleType"})
     void notEqualsObject(final Number nbr) {
         MatcherAssert.assertThat(
             "Must implement not equals incorrect value",

@@ -22,8 +22,7 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test cases for {@link NoNulls}.
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.35
  */

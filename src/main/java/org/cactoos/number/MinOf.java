@@ -11,9 +11,7 @@ import org.cactoos.scalar.Reduced;
 /**
  * Find the smaller among items.
  *
- * <p>
- * Here is how you can use it to find the min of a set of numbers:
- * </p>
+ * <p>Here is how you can use it to find the min of a set of numbers:</p>
  *
  * <pre>
  * int min = new MinOf(1, 2, 3, 4).intValue();

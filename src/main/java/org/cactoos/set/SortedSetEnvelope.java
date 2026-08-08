@@ -9,10 +9,13 @@ import java.util.SortedSet;
 
 /**
  * SortedSet envelope.
+ *
  * <p>There is no thread-safety guarantee.</p>
+ *
  * @param <T> Element type
  * @since 0.45
  */
+@SuppressWarnings("JdkObsolete")
 public abstract class SortedSetEnvelope<T> extends SetEnvelope<T> implements
     SortedSet<T> {
 

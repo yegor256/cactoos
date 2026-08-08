@@ -15,13 +15,11 @@ import org.cactoos.TriFunc;
  * Unlike regular Split, stores empty "" tokens
  * created by adjacent regex separators.
  *
- * <p>
- *     Examples:
- *     1) text - " hello there ", regex - " "
- *     result: ["", "hello", "there", ""]
- *     2) text - "aaa", regex - "a"
- *     result: ["", "", "", ""]
- * </p>
+ * <p>Examples:
+ * 1) text - " hello there ", regex - " "
+ * result: ["", "hello", "there", ""]
+ * 2) text - "aaa", regex - "a"
+ * result: ["", "", "", ""]</p>
  *
  * @since 0.0
  */

@@ -12,20 +12,18 @@ import org.cactoos.scalar.And;
  * Executes a {@link Proc} for each element of an
  * {@link Iterable}
  *
- * <p>
- * This class can be effectively used to iterate through a collection, just like
- * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)} works:
- * </p>
+ * <p>This class can be effectively used to iterate through a collection, just like
+ * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)} works:</p>
  *
  * {@code
  * new ForEach(
- *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input)),
+ * new ProcOf<>(input -> System.out.printf("\'%s\' ", input)),
  * ).execute(
- *    new IterableOf<>("Mary", "John", "William", "Napkin")
+ * new IterableOf<>("Mary", "John", "William", "Napkin")
  * ); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
  * }
- * <p>
- * There is no thread-safety guarantee.
+ *
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> The type to iterate over
  * @since 1.0

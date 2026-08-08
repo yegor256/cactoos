@@ -13,13 +13,10 @@ import java.util.function.Function;
 /**
  * Iterable as {@link Map}.
  *
- * <p>
- * This class groups objects from iterable by applying functions for keys and
- * values
- * </p>
+ * <p>This class groups objects from iterable by applying functions for keys and
+ * values</p>
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.
  *
  * @param <K> Type of key
  * @param <V> Type of value

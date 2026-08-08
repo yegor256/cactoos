@@ -20,7 +20,6 @@ public final class Paged<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
-     * <p>
      * @param first First bag of elements
      * @param next Subsequent bags of elements
      */

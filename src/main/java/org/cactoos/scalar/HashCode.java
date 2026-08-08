@@ -11,26 +11,26 @@ import org.cactoos.iterable.IterableOf;
 /**
  * Object HashCode.
  *
- * Replace this code:
+ * <p>Replace this code:
  * {@code
- *  public int hashCode() {
- *      int hash = 5;
- *      hash = 67 * hash + Objects.hashCode(this.attr1);
- *      hash = 67 * hash + Objects.hashCode(this.attr2);
- *      hash = 67 * hash + Objects.hashCode(this.attr3);
- *      // ... more attributes
- *      return hash;
- *  }
+ * public int hashCode() {
+ * int hash = 5;
+ * hash = 67 * hash + Objects.hashCode(this.attr1);
+ * hash = 67 * hash + Objects.hashCode(this.attr2);
+ * hash = 67 * hash + Objects.hashCode(this.attr3);
+ * // ... more attributes
+ * return hash;
+ * }
  * }
  *
- * With this:
+ * <p>With this:
  * {@code
- *  public int hashCode() {
- *      return new HashCode(
- *          5, 67,
- *          this.attr1, this.attr2, this.attr3, ...
- *      ).value();
- *  }
+ * public int hashCode() {
+ * return new HashCode(
+ * 5, 67,
+ * this.attr1, this.attr2, this.attr3, ...
+ * ).value();
+ * }
  * }
  *
  * <p>There is no thread-safety guarantee.

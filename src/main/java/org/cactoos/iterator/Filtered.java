@@ -4,8 +4,8 @@
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayDeque;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 import org.cactoos.Func;
@@ -74,7 +74,7 @@ public final class Filtered<X> implements Iterator<X> {
     ) {
         this.iterator = src;
         this.func = fnc;
-        this.buffer = new LinkedList<>();
+        this.buffer = new ArrayDeque<>();
     }
 
     @Override

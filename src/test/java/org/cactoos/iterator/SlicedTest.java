@@ -4,8 +4,8 @@
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -109,7 +109,7 @@ final class SlicedTest {
      */
     @Test
     void hasNextCallsOriginOnce() {
-        final List<String> list = new LinkedList<>();
+        final List<String> list = new ArrayList<>(1);
         list.add("1");
         final AtomicInteger counter = new AtomicInteger(0);
         MatcherAssert.assertThat(

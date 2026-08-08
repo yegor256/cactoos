@@ -13,7 +13,7 @@ import org.cactoos.text.FormattedText;
 /**
  * Matched iterator.
  *
- * Iterates over 2 iterators at the same time and verify that elements with the
+ * <p>Iterates over 2 iterators at the same time and verify that elements with the
  * same position has correlation by the function. The function might be equals,
  * endsWith, greaterThen, nonNull, empty, negative, positive, etc.
  *

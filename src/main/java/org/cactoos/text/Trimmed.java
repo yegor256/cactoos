@@ -13,10 +13,9 @@ import org.cactoos.Text;
  * {@link String#trim()}, removing whitespace characters
  * from both the beginning and the end of the text.</p>
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.
  *
- *<p>Example:</p>
+ * <p>Example:</p>
  * <pre>{@code
  * Text text = new Trimmed(new TextOf("  hello world  "));
  * text.asString(); // "hello world"
@@ -29,7 +28,7 @@ public final class Trimmed extends TextEnvelope {
     /**
      * Ctor.
      *
-     * Creates a trimmed text from the given
+     * <p>Creates a trimmed text from the given
      *
      * @param text The text
      */

@@ -13,13 +13,9 @@ import org.cactoos.iterable.Mapped;
 /**
  * Map decorator that goes through the map only once.
  *
- * <p>
- * The map is read-only.
- * </p>
+ * <p>The map is read-only.</p>
  *
- * <p>
- * Objects of this class are thread-safe.
- * </p>
+ * <p>Objects of this class are thread-safe.</p>
  *
  * @param <X> Type of key
  * @param <Y> Type of value

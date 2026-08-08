@@ -11,9 +11,7 @@ import org.cactoos.scalar.Reduced;
 /**
  * Find the greater among items.
  *
- * <p>
- * Here is how you can use it to find the max of a set of numbers:
- * </p>
+ * <p>Here is how you can use it to find the max of a set of numbers:</p>
  *
  * <pre>
  * int max = new MaxOf(1, 2, 3, 4).intValue();

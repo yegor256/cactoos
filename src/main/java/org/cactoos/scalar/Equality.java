@@ -10,10 +10,10 @@ import org.cactoos.Scalar;
 /**
  * Equality.
  *
- * Returns:
- *         the value {@code 0} if {@code x == y};
- *         the value {@code -1} if {@code x < y};
- *         the value {@code 1} if {@code x > y}
+ * <p>Returns:
+ * the value {@code 0} if {@code x == y};
+ * the value {@code -1} if {@code x < y};
+ * the value {@code 1} if {@code x > y}
  *
  * <p>There is no thread-safety guarantee.
  *

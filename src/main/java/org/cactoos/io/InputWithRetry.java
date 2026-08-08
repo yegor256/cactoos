@@ -37,10 +37,21 @@ public final class InputWithRetry implements Input {
      */
     private final Input input;
 
+    /**
+     * Ctor.
+     * @param main The original input to read from
+     * @param att The maximum number of attempts
+     */
     public InputWithRetry(final Input main, final int att) {
         this(main, new Retry<>(Input::stream, att));
     }
 
+    /**
+     * Ctor.
+     * @param main The original input to read from
+     * @param att The maximum number of attempts
+     * @param dur The duration to wait between attempts
+     */
     public InputWithRetry(final Input main, final int att, final Duration dur) {
         this(main, new Retry<>(Input::stream, att, dur));
     }

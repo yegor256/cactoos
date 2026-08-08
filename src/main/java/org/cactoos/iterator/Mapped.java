@@ -12,8 +12,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Mapped iterator.
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.
  *
  * @param <Y> Type of target item
  * @since 0.1

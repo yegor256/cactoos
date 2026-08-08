@@ -4,7 +4,7 @@
  */
 package org.cactoos.func;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
@@ -33,7 +33,7 @@ final class SyncFuncTest {
 
     @Test
     void addsAllElementsInThreads() throws Exception {
-        final List<Integer> list = new LinkedList<>();
+        final List<Integer> list = new ArrayList<>(100);
         final int threads = 100;
         for (int idx = 0; idx < threads; ++idx) {
             new SyncFunc<Boolean, Boolean>(input -> list.add(1)).apply(true);

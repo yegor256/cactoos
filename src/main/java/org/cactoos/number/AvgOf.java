@@ -13,8 +13,7 @@ import org.cactoos.scalar.Ternary;
 /**
  * Average of numbers.
  *
- * <p>Here is how you can use it to find the mathematical average of numbers:
- * </p>
+ * <p>Here is how you can use it to find the mathematical average of numbers:</p>
  *
  * <pre>
  * int avg = new AvgOf(1, 2, 3, 4).intValue();

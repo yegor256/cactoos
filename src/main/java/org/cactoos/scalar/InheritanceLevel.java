@@ -13,14 +13,14 @@ import org.cactoos.Scalar;
  *
  * <p>Result interpretation:
  * <ul>
- *     <li>{@link Integer#MIN_VALUE} -&gt; classes are not related.
- *     (ex. matching FileNotFoundException with RuntimeException);
- *     <li>0 -&gt; classes are identical. (ex. matching IOException with
- *     IOException);
- *     <li>1 -&gt; single level inheritance. (ex. matching
- *     FileNotFoundException with IOException);
- *     <li>2 -&gt; two inheritance levels. (ex. matching
- *     FileNotFoundException with Exception).
+ * <li>{@link Integer#MIN_VALUE} -&gt; classes are not related.
+ * (ex. matching FileNotFoundException with RuntimeException);
+ * <li>0 -&gt; classes are identical. (ex. matching IOException with
+ * IOException);
+ * <li>1 -&gt; single level inheritance. (ex. matching
+ * FileNotFoundException with IOException);
+ * <li>2 -&gt; two inheritance levels. (ex. matching
+ * FileNotFoundException with Exception).
  * </ul>
  *
  * @since 0.30

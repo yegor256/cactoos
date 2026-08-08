@@ -4,8 +4,8 @@
  */
 package org.cactoos.scalar;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -200,7 +200,7 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     @Override
     public Boolean value() throws Exception {
-        final Collection<Future<Boolean>> futures = new LinkedList<>();
+        final Collection<Future<Boolean>> futures = new ArrayList<>(0);
         for (final Scalar<Boolean> item : this.iterable) {
             futures.add(this.service.value().submit(item::value));
         }

@@ -10,8 +10,7 @@ import org.cactoos.Text;
 /**
  * Text converted to upper case.
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.
  *
  * <p>Example:</p>
  *
@@ -38,8 +37,10 @@ public final class Upper extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * <p>Creates an upper-case text from a {@link Text}
      * using {@link Locale#ENGLISH}.</p>
+     *
      * @param text The text
      */
     public Upper(final Text text) {

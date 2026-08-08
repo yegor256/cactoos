@@ -14,8 +14,7 @@ import org.cactoos.Text;
 /**
  * Length.
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.1
  */
