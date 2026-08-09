@@ -19,7 +19,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link Immutable}.
  * @since 0.58.0
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class ImmutableTest {
 
     @Test
