@@ -102,7 +102,6 @@ public final class TailOf implements Input {
      * @param num Number of bytes in response array from previous read
      * @param read Number of bytes read in the buffer
      * @return New count of bytes in the response array
-     * @checkstyle ParameterNumberCheck (3 lines)
      */
     private int copyPartial(final byte[] buffer, final byte[] response,
         final int num, final int read) {
