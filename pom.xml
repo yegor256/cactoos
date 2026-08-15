@@ -62,6 +62,9 @@
       <url>https://github.com/yegor256/cactoos</url>
     </site>
   </distributionManagement>
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.takes</groupId>
@@ -388,7 +391,7 @@
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.30.7</version>
+            <version>0.30.11</version>
             <configuration>
               <excludes combine.children="append">
                 <exclude>checkstyle:/src/site/resources/.*</exclude>
