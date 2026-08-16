@@ -55,14 +55,14 @@ public final class LSInputOf implements LSInput {
      * @param data Input
      * @param pubid PublicID
      * @param sysid SystemID
-     * @param bse Base
+     * @param uri Base URI
      */
     public LSInputOf(final Input data, final String pubid,
-        final String sysid, final String bse) {
+        final String sysid, final String uri) {
         this.input = data;
         this.pid = pubid;
         this.sid = sysid;
-        this.base = bse;
+        this.base = uri;
     }
 
     @Override
