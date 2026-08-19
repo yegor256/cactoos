@@ -391,15 +391,7 @@
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.30.14</version>
-            <configuration>
-              <excludes combine.children="append">
-                <exclude>checkstyle:/src/site/resources/.*</exclude>
-                <exclude>pmd:.*/src/test/java/org/cactoos/experimental/ThreadsTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/cactoos/func/AsyncTest\.java</exclude>
-                <exclude>pmd:.*/src/test/java/org/cactoos/scalar/AndInThreadsTest\.java</exclude>
-              </excludes>
-            </configuration>
+            <version>0.31.1</version>
           </plugin>
           <plugin>
             <groupId>de.thetaphi</groupId>
