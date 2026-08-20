@@ -48,11 +48,6 @@ public final class BehavesAsSet<T> extends TypeSafeMatcher<Set<T>> {
         description.appendText("not a valid set");
     }
 
-    /**
-     * Occurrences of sample in iterator.
-     * @param iterator Set iterator
-     * @return Occurrences
-     */
     private int occurrences(final Iterator<T> iterator) {
         int occurrences = 0;
         while (iterator.hasNext()) {

@@ -118,11 +118,6 @@ final class TailOfTest {
         );
     }
 
-    /**
-     * Generate random byte array.
-     * @param size Size of array
-     * @return Generated array
-     */
     private byte[] generate(final int size) {
         final byte[] bytes = new byte[size];
         new Random().nextBytes(bytes);

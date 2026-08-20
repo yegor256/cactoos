@@ -9,6 +9,7 @@ import org.cactoos.BiFunc;
 import org.cactoos.proc.ProcOf;
 import org.cactoos.scalar.Constant;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsSame;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Satisfies;
 
@@ -16,7 +17,6 @@ import org.llorllale.cactoos.matchers.Satisfies;
  * Test case for {@link BiFuncOf}.
  * @since 0.20
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class BiFuncOfTest {
 
     @Test
@@ -58,16 +58,13 @@ final class BiFuncOfTest {
     }
 
     @Test
-    void convertsScalarIntoBiFunc() {
+    void convertsScalarIntoBiFunc() throws Exception {
+        final BiFunc<String, String, Object> func =
+            new BiFuncOf<>(new Constant<>(new Object()));
         MatcherAssert.assertThat(
             "Must convert scalar into bi-function",
-            new BiFuncOf<>(new Constant<>(new Object())),
-            new Satisfies<>(
-                func -> {
-                    final Object result = func.apply("discarded", "discarded");
-                    return func.apply("other", "other") == result;
-                }
-            )
+            func.apply("other", "other"),
+            new IsSame<>(func.apply("discarded", "discarded"))
         );
     }
 

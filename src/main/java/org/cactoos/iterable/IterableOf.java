@@ -12,7 +12,6 @@ import org.cactoos.Scalar;
 import org.cactoos.iterator.IteratorOf;
 import org.cactoos.scalar.And;
 import org.cactoos.scalar.HashCode;
-import org.cactoos.scalar.Or;
 import org.cactoos.scalar.ScalarWithFallback;
 import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.Joined;
@@ -69,32 +68,29 @@ public final class IterableOf<X> implements Iterable<X> {
     @SuppressFBWarnings("EQ_UNUSUAL")
     @SuppressWarnings("unchecked")
     public boolean equals(final Object other) {
-        return new Unchecked<>(
-            new Or(
-                () -> other == this,
-                new And(
-                    () -> other != null,
-                    () -> Iterable.class.isAssignableFrom(other.getClass()),
-                    () -> new ScalarWithFallback<>(
-                        new And(
-                            (X value) -> true,
-                            new Matched<>(
-                                this,
-                                (Iterable<X>) other
-                            )
-                        ),
-                        new org.cactoos.iterable.IterableOf<>(
-                            new Fallback.From<>(
-                                IllegalStateException.class,
-                                ex -> false
-                            ),
-                            new Fallback.From<>(
-                                NoSuchElementException.class,
-                                ex -> false
-                            )
+        return other == this || new Unchecked<>(
+            new And(
+                () -> other != null,
+                () -> Iterable.class.isAssignableFrom(other.getClass()),
+                () -> new ScalarWithFallback<>(
+                    new And(
+                        (X value) -> true,
+                        new Matched<>(
+                            this,
+                            (Iterable<X>) other
                         )
-                    ).value()
-                )
+                    ),
+                    new org.cactoos.iterable.IterableOf<>(
+                        new Fallback.From<>(
+                            IllegalStateException.class,
+                            ex -> false
+                        ),
+                        new Fallback.From<>(
+                            NoSuchElementException.class,
+                            ex -> false
+                        )
+                    )
+                ).value()
             )
         ).value();
     }

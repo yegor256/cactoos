@@ -294,9 +294,6 @@ final class ThreadsTest {
         );
     }
 
-    /**
-     * Sleep.
-     */
     private void sleep() {
         try {
             TimeUnit.MILLISECONDS.sleep(100L);

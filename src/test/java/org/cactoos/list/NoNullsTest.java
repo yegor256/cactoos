@@ -79,7 +79,7 @@ final class NoNullsTest {
 
     @Test
     void removeThrowsErrorIfValueNull() {
-        final List<Integer> list = new ArrayList<>(1);
+        final List<String> list = new ArrayList<>(1);
         list.add(null);
         MatcherAssert.assertThat(
             "must throw error if removed value is null",

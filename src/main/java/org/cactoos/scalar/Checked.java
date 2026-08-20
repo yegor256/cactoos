@@ -60,14 +60,6 @@ public final class Checked<T, E extends Exception> implements Scalar<T> {
         }
     }
 
-    /**
-     * Wraps exception.
-     * Skips unnecessary wrapping of exceptions of the same type.
-     * Allows wrapping of exceptions of the same type if the error message
-     * has been changed.
-     * @param exp Exception
-     * @return E Wrapped exception
-     */
     @SuppressWarnings("unchecked")
     private E wrappedException(final Exception exp) {
         E wrapped = new UncheckedFunc<>(this.func).apply(exp);

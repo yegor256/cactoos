@@ -174,14 +174,6 @@ final class WriterAsOutputStream extends OutputStream {
         this.writer.close();
     }
 
-    /**
-     * Write a portion from the buffer.
-     * @param buffer The buffer
-     * @param offset Offset in the buffer
-     * @param length Maximum possible amount to take
-     * @return How much was taken
-     * @throws IOException If fails
-     */
     private int next(final byte[] buffer, final int offset,
         final int length) throws IOException {
         final ByteBuffer ibuf = this.input.value();

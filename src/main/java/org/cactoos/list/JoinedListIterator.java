@@ -166,26 +166,14 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * If {@link List} of {@link ListIterator} has next element.
-     * @return Has or no
-     */
     private boolean listHasNextElt() {
         return this.cursorlit.get() + 1 <= this.listiters.value().size() - 1;
     }
 
-    /**
-     * If {@link List} of {@link ListIterator} has previous element.
-     * @return Has or no
-     */
     private boolean listHasPreviousElt() {
         return this.cursorlit.get() - 1 >= 0;
     }
 
-    /**
-     * Get current {@link ListIterator}.
-     * @return Current element
-     */
     private ListIterator<? extends T> currentListIterator() {
         final ListIterator<? extends T> current;
         if (this.cursorlit.get() == -1) {

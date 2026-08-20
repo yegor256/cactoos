@@ -58,10 +58,6 @@ public final class InheritanceLevel implements Scalar<Integer> {
         return level;
     }
 
-    /**
-     * Calculates inheritance level.
-     * @return Integer Level
-     */
     private int calculateLevel() {
         int level = Integer.MIN_VALUE;
         Class<?> sclass = this.derived.getSuperclass();

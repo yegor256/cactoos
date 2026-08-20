@@ -182,7 +182,7 @@ final class SortedTest {
         MatcherAssert.assertThat(
             "Must keep unique integer numbers sorted",
             new Sorted<Number>(
-                Comparator.comparing(Number::intValue),
+                Comparator.comparingInt(Number::intValue),
                 2, 1, 3, 2, 1
             ),
             new IsIterableContainingInOrder<>(

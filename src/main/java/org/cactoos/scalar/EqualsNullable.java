@@ -4,6 +4,7 @@
  */
 package org.cactoos.scalar;
 
+import java.util.Objects;
 import org.cactoos.Scalar;
 
 /**
@@ -65,11 +66,7 @@ public final class EqualsNullable implements Scalar<Boolean> {
     }
 
     @Override
-    @SuppressWarnings("PMD.CompareObjectsWithEquals")
     public Boolean value() throws Exception {
-        final Object source = this.first.value();
-        final Object compared = this.second.value();
-        return source == compared
-            || source != null && source.equals(compared);
+        return Objects.equals(this.first.value(), this.second.value());
     }
 }

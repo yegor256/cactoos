@@ -9,7 +9,6 @@ import org.cactoos.Func;
 import org.cactoos.Text;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.scalar.And;
-import org.cactoos.scalar.Or;
 import org.cactoos.scalar.Unchecked;
 
 /**
@@ -86,14 +85,11 @@ public final class UncheckedText implements Text {
     @Override
     @SuppressFBWarnings("EQ_UNUSUAL")
     public boolean equals(final Object obj) {
-        return new Unchecked<>(
-            new Or(
-                () -> this == obj,
-                new And(
-                    () -> obj instanceof Text,
-                    () -> this.asString().equals(
-                        Text.class.cast(obj).asString()
-                    )
+        return this == obj || new Unchecked<>(
+            new And(
+                () -> obj instanceof Text,
+                () -> this.asString().equals(
+                    Text.class.cast(obj).asString()
                 )
             )
         ).value();

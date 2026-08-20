@@ -94,9 +94,6 @@ public final class Sliced<T> implements Iterator<T> {
         return this.iterator.next();
     }
 
-    /**
-     * Skips head elements up to start index.
-     */
     private void skip() {
         while (this.current < this.start && this.iterator.hasNext()) {
             this.iterator.next();

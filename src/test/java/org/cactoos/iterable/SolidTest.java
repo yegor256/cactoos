@@ -7,6 +7,7 @@ package org.cactoos.iterable;
 import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
@@ -60,21 +61,7 @@ final class SolidTest {
         );
     }
 
-    @Test
-    void worksInThreadsMultipleTimes() {
-        int count = 0;
-        for (int idx = 0; idx < 10; ++idx) {
-            this.worksInThreads();
-            ++count;
-        }
-        MatcherAssert.assertThat(
-            "Must work in threads 10 times",
-            count,
-            Matchers.equalTo(10)
-        );
-    }
-
-    @Test
+    @RepeatedTest(10)
     void worksInThreads() {
         MatcherAssert.assertThat(
             "Can't behave as an iterable in multiple threads",

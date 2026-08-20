@@ -76,13 +76,6 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
         return result;
     }
 
-    /**
-     * Finds the best fallback for the given exception type and apply it to
-     * the exception or throw the original error if no fallback found.
-     * @param exp The original exception
-     * @return Result of the most suitable fallback
-     * @throws Exception The original exception if no fallback found
-     */
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private T fallback(final Throwable exp) throws Exception {
         final Iterator<? extends Map.Entry<Fallback<? extends T>, Integer>> candidates =

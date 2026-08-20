@@ -118,10 +118,6 @@ final class ResourceOfTest {
         );
     }
 
-    /**
-     * Large text resource.
-     * @return The content of the large resource
-     */
     private static Text large() {
         return new TextOf(
             new ResourceOf(
