@@ -110,6 +110,63 @@ new Upper(
 );
 ```
 
+### Splitting Text
+
+To split text using Java's standard behavior:
+
+```java
+Iterable<Text> parts = new Split("hello,world", ",");
+// Result: ["hello", "world"]
+```
+
+### Splitting with Preserved Empty Tokens
+
+Java's `String.split()` discards trailing empty tokens.
+Use `SplitPreserveAllTokens` when you need to preserve ALL tokens,
+including empty ones created by adjacent or trailing delimiters:
+
+```java
+// Standard split loses trailing empty token
+"a,b,".split(",")  // Returns: ["a", "b"] - trailing empty LOST!
+
+// SplitPreserveAllTokens preserves it
+Iterable<Text> parts = new SplitPreserveAllTokens("a,b,", ",");
+// Result: ["a", "b", ""]  - all tokens preserved!
+```
+
+This is essential for parsing CSV/TSV data where empty fields are meaningful:
+
+```java
+// Parse CSV with empty fields
+Iterable<Text> fields = new SplitPreserveAllTokens(
+  "John,,Smith,,"
+  ","
+);
+// Result: ["John", "", "Smith", "", ""]  - all 5 fields!
+
+// With spaces as delimiter
+Iterable<Text> words = new SplitPreserveAllTokens(" hello  world ");
+// Result: ["", "hello", "", "world", ""]
+
+// Default delimiter is space
+Iterable<Text> tokens = new SplitPreserveAllTokens("a b c");
+// Result: ["a", "b", "c"]
+
+// With limit on number of tokens
+Iterable<Text> limited = new SplitPreserveAllTokens("a,b,c,d", ",", 2);
+// Result: ["a", "b"]
+```
+
+**Key guarantee**: With N delimiters, you always get exactly N+1 tokens.
+
+| Input | Delimiter | `String.split()` | `SplitPreserveAllTokens` |
+| ------- | ----------- | ------------------ | -------------------------- |
+| `"a,b,"` | `,` | `["a", "b"]` | `["a", "b", ""]` |
+| `",,"` | `,` | `[]` | `["", "", ""]` |
+| `","` | `,` | `[]` | `["", ""]` |
+
+> **Note**: The delimiter is matched as a literal string, not a regex.
+
 ## Iterables/Collections/Lists/Sets
 
 More about it here:
@@ -254,6 +311,54 @@ final Set<String> sorted = new org.cactoos.set.Sorted<>(
 );
 ```
 
+## Maps
+
+To create a simple map:
+
+```java
+Map<String, Integer> map = new MapOf<>(
+  new MapEntry<>("one", 1),
+  new MapEntry<>("two", 2),
+  new MapEntry<>("three", 3)
+);
+```
+
+### Immutable Maps
+
+To create an immutable (read-only) map that prevents any modifications:
+
+```java
+Map<String, Integer> map = new org.cactoos.map.Immutable<>(
+  new MapOf<>(
+    new MapEntry<>("one", 1),
+    new MapEntry<>("two", 2)
+  )
+);
+map.get("one");      // returns 1
+map.put("three", 3); // throws UnsupportedOperationException!
+map.clear();         // throws UnsupportedOperationException!
+```
+
+The `Immutable` map decorator guarantees that:
+
+- Mutating methods (`put`, `remove`, `putAll`, `clear`) are blocked
+- Views from `keySet()`, `values()`, and `entrySet()` are immutable
+- `Entry.setValue()` is blocked on entries from `entrySet()`
+
+This is useful when you need to pass a map to untrusted code or ensure
+a map cannot be accidentally modified:
+
+```java
+// Safe to pass to any method - cannot be modified
+public Map<String, Config> getConfiguration() {
+  return new Immutable<>(this.config);
+}
+```
+
+> **Note**: This is a decorator, not a copy. If the underlying map is modified
+> through another reference, changes will be visible. For a true snapshot,
+> copy the data first.
+
 ## Funcs and Procs
 
 This is a traditional `foreach` loop:
@@ -331,6 +436,7 @@ final String text = new TextOfDateTime(date).asString();
 | `And` | `Iterables.all()` | - | - |
 | `Filtered` | `Iterables.filter()` | ? | - |
 | `FormattedText` | - | - | `String.format()` |
+| `map.Immutable` | `ImmutableMap` | `UnmodifiableMap` | `unmodifiableMap()` |
 | `IsBlank` | - | `StringUtils.isBlank()` | - |
 | `Joined` | - | - | `String.join()` |
 | `LengthOf` | - | - | `String#length()` |
@@ -342,6 +448,7 @@ final String text = new TextOfDateTime(date).asString();
 | `Reversed` | - | - | `StringBuilder#reverse()` |
 | `Rotated` | - | `StringUtils.rotate()` | - |
 | `Split` | - | - | `String#split()` |
+| `SplitPreserveAllTokens` | - | `StringUtils.splitPreserveAllTokens()` | - |
 | `StickyList` | `Lists.newArrayList()` | ? | `Arrays.asList()` |
 | `Sub` | - | - | `String#substring()` |
 | `SwappedCase` | - | `StringUtils.swapCase()` | - |
@@ -449,26 +556,26 @@ in GitHub precommits.
 
 ## Contributors
 
-* [@yegor256](https://github.com/yegor256) as Yegor Bugayenko ([Blog](http://www.yegor256.com))
-* [@g4s8](https://github.com/g4s8) as [Kirill Che.](mailto:g4s8.public@gmail.com)
-* [@fabriciofx](https://github.com/fabriciofx) as Fabrício Cabral
-* [@englishman](https://github.com/englishman) as Andriy Kryvtsun
-* [@VsSekorin](https://github.com/VsSekorin) as Vseslav Sekorin
-* [@DronMDF](https://github.com/DronMDF) as Andrey Valyaev
-* [@dusan-rychnovsky](https://github.com/dusan-rychnovsky) as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
-* [@timmeey](https://github.com/timmeey) as Tim Hinkes ([Blog](https://blog.timmeey.de))
-* [@alex-semenyuk](https://github.com/alex-semenyuk) as Alexey Semenyuk
-* [@smallcreep](https://github.com/smallcreep) as Ilia Rogozhin
-* [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
-* [@llorllale](https://github.com/llorllale) as George Aristy
-* [@driver733](https://github.com/driver733) as Mikhail Yakushin
-* [@izrik](https://github.com/izrik) as Richard Sartor
-* [@Vatavuk](https://github.com/Vatavuk) as Vedran Grgo Vatavuk
-* [@dgroup](https://github.com/dgroup) as Yurii Dubinka
-* [@iakunin](https://github.com/iakunin) as Maksim Iakunin
-* [@fanifieiev](https://github.com/fanifieiev) as Fevzi Anifieiev
-* [@victornoel](https://github.com/victornoel) as Victor Noël
-* [@paulodamaso](https://github.com/paulodamaso) as Paulo Lobo
+- [@yegor256](https://github.com/yegor256) as Yegor Bugayenko ([Blog](http://www.yegor256.com))
+- [@g4s8](https://github.com/g4s8) as [Kirill Che.](mailto:g4s8.public@gmail.com)
+- [@fabriciofx](https://github.com/fabriciofx) as Fabrício Cabral
+- [@englishman](https://github.com/englishman) as Andriy Kryvtsun
+- [@VsSekorin](https://github.com/VsSekorin) as Vseslav Sekorin
+- [@DronMDF](https://github.com/DronMDF) as Andrey Valyaev
+- [@dusan-rychnovsky](https://github.com/dusan-rychnovsky) as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
+- [@timmeey](https://github.com/timmeey) as Tim Hinkes ([Blog](https://blog.timmeey.de))
+- [@alex-semenyuk](https://github.com/alex-semenyuk) as Alexey Semenyuk
+- [@smallcreep](https://github.com/smallcreep) as Ilia Rogozhin
+- [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
+- [@llorllale](https://github.com/llorllale) as George Aristy
+- [@driver733](https://github.com/driver733) as Mikhail Yakushin
+- [@izrik](https://github.com/izrik) as Richard Sartor
+- [@Vatavuk](https://github.com/Vatavuk) as Vedran Grgo Vatavuk
+- [@dgroup](https://github.com/dgroup) as Yurii Dubinka
+- [@iakunin](https://github.com/iakunin) as Maksim Iakunin
+- [@fanifieiev](https://github.com/fanifieiev) as Fevzi Anifieiev
+- [@victornoel](https://github.com/victornoel) as Victor Noël
+- [@paulodamaso](https://github.com/paulodamaso) as Paulo Lobo
 
 [blog]: http://www.yegor256.com/2017/06/22/object-oriented-input-output-in-cactoos.html
 [OffsetDateTime]: https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html

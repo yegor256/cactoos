@@ -15,6 +15,7 @@ jobs:
     timeout-minutes: 15
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-24.04, windows-2022, macos-15]
         java: [23]
@@ -32,4 +33,11 @@ jobs:
             ${{ runner.os }}-jdk-${{ matrix.java }}-maven-
       - run: java -version
       - run: mvn -version
-      - run: mvn --errors --batch-mode clean install -Pqulice
+      # hone-maven-plugin needs a working Docker daemon.
+      # - skipWithoutDocker: macOS runners have no docker binary
+      # - skipOnWindows: Windows runners ship docker CLI but no usable daemon for hone
+      # Quote -D args for PowerShell on Windows.
+      - run: >-
+          mvn --errors --batch-mode clean install -Pqulice
+          "-Dhone.skipWithoutDocker=true"
+          "-Dhone.skipOnWindows=true"
