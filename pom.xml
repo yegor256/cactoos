@@ -391,7 +391,7 @@
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.31.2</version>
+            <version>0.35.1</version>
           </plugin>
           <plugin>
             <groupId>de.thetaphi</groupId>
