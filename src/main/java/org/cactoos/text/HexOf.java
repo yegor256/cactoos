@@ -9,7 +9,7 @@ import org.cactoos.Bytes;
 /**
  * Hexadecimal representation of Bytes.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.28
  */
@@ -25,6 +25,7 @@ public final class HexOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param bytes The bytes
      */
     public HexOf(final Bytes bytes) {

@@ -15,8 +15,10 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link LoggingInputStream}.
+ *
  * @since 0.39
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class LoggingInputStreamTest {
 
     @Test

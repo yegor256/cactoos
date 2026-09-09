@@ -46,6 +46,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with current context {@link ClassLoader}.
+     *
      * @param res Resource name
      */
     public ResourceOf(final CharSequence res) {
@@ -54,6 +55,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with {@link ClassLoader} from the specified {@link Class}.
+     *
      * @param res Resource name
      * @param cls Resource class loader
      * @since 0.49
@@ -64,6 +66,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with specified {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param ldr Resource class loader
      */
@@ -73,6 +76,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with deferred {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param ldr Resource class loader, deferred
      */
@@ -82,6 +86,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with {@link ClassLoader} from the specified {@link Class}.
+     *
      * @param res Resource name
      * @param fbk Fallback
      * @param cls Resource class loader
@@ -94,6 +99,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with specified {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param fbk Fallback
      * @param ldr Resource class loader
@@ -105,6 +111,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with deferred {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param fbk Fallback
      * @param ldr Resource class loader, deferred
@@ -116,6 +123,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with current context {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param fbk Fallback
      */
@@ -125,6 +133,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with current context {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param fbk Fallback
      */
@@ -138,6 +147,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with current context {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param fbk Fallback
      */
@@ -147,6 +157,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with current context {@link ClassLoader}.
+     *
      * @param res Resource name
      */
     public ResourceOf(final Text res) {
@@ -155,6 +166,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with specified {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param ldr Resource class loader
      */
@@ -164,6 +176,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with deferred {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param ldr Resource class loader, deferred
      */
@@ -186,6 +199,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with current context {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param fbk Fallback
      */
@@ -195,6 +209,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with current context {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param fbk Fallback
      */
@@ -204,6 +219,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with current context {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param fbk Fallback
      */
@@ -216,6 +232,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with specified {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param fbk Fallback
      * @param ldr Resource class loader
@@ -227,6 +244,7 @@ public final class ResourceOf implements Input {
 
     /**
      * New resource input with deferred {@link ClassLoader}.
+     *
      * @param res Resource name
      * @param fbk Fallback
      * @param ldr Resource class loader, deferred

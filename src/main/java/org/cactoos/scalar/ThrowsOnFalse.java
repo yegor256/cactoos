@@ -9,6 +9,7 @@ import org.cactoos.Scalar;
 
 /**
  * Throws an exception on false expression.
+ *
  * @since 0.56.0
  */
 public final class ThrowsOnFalse implements Scalar<Boolean> {
@@ -25,6 +26,7 @@ public final class ThrowsOnFalse implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param sclr Scalar
      * @param message Error Message
      */
@@ -36,6 +38,7 @@ public final class ThrowsOnFalse implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param sclr Scalar
      * @param exc Exception
      */

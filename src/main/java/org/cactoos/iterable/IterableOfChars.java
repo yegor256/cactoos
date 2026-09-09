@@ -11,12 +11,14 @@ import org.cactoos.iterator.IteratorOfChars;
 
 /**
  * Iterable of characters.
+ *
  * @since 1.0
  */
 public final class IterableOfChars extends IterableEnvelope<Character> {
 
     /**
      * Ctor.
+     *
      * @param str String
      */
     public IterableOfChars(final String str) {
@@ -25,6 +27,7 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
 
     /**
      * Ctor.
+     *
      * @param txt Text
      */
     public IterableOfChars(final Text txt) {
@@ -33,6 +36,7 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
 
     /**
      * Ctor.
+     *
      * @param chars Characters
      */
     public IterableOfChars(final char... chars) {
@@ -41,6 +45,7 @@ public final class IterableOfChars extends IterableEnvelope<Character> {
 
     /**
      * Ctor.
+     *
      * @param iter The iterator, deferred
      */
     private IterableOfChars(final Scalar<Iterator<Character>> iter) {

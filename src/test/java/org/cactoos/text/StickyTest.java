@@ -15,6 +15,7 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Sticky}.
+ *
  * @since 0.47
  */
 final class StickyTest {

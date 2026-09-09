@@ -19,6 +19,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ResourceOf}.
+ *
  * @since 0.1
  */
 final class ResourceOfTest {

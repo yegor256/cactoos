@@ -14,6 +14,7 @@ import org.cactoos.Text;
 
 /**
  * Replace the Text.
+ *
  * @since 0.2
  */
 public final class Replaced extends TextEnvelope {
@@ -22,7 +23,7 @@ public final class Replaced extends TextEnvelope {
      * Ctor.
      *
      * <p>Will replace all instances of the substring matched by {@code find}
-     * with {@code replace}.
+     * with {@code replace}.</p>
      *
      * @param text The text
      * @param find The regular expression
@@ -42,9 +43,9 @@ public final class Replaced extends TextEnvelope {
      * <p>The given {@link Pattern regex} is used to produce a
      * {@link Pattern#matcher(CharSequence) matcher} that will be
      * transformed by {@code func} into a replacement string to replace each
-     * {@link Matcher#find() matching} substring.
+     * {@link Matcher#find() matching} substring.</p>
      *
-     * <p>Example usage:
+     * <p>Example usage:</p>
      * <pre>{@code
      * final String result = new Replaced(
      *      new TextOf("one two THREE four FIVE six"),
@@ -54,7 +55,7 @@ public final class Replaced extends TextEnvelope {
      * }</pre>
      *
      * <p>Note: a {@link PatternSyntaxException} will be thrown if the
-     * regular expression's syntax is invalid.
+     * regular expression's syntax is invalid.</p>
      *
      * @param text The text
      * @param regex The regular expression

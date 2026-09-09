@@ -21,8 +21,10 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link WriterAsOutputStream}.
+ *
  * @since 0.13
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class WriterAsOutputStreamTest {
 
     @Test

@@ -20,6 +20,7 @@ import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test of range implementation.
+ *
  * @since 1.0
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")

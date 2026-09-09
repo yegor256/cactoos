@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link IoCheckedProc}.
+ *
  * @since 0.4
  */
 final class IoCheckedProcTest {

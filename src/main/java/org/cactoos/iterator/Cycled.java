@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Cycled Iterator.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of item
  * @since 0.8
@@ -31,6 +31,7 @@ public final class Cycled<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param iterable Iterable
      */
     public Cycled(final Iterable<? extends T> iterable) {

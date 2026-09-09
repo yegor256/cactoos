@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link RunnableOf}.
+ *
  * @since 0.2
  */
 final class RunnableOfTest {

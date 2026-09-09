@@ -10,6 +10,7 @@ import org.cactoos.iterable.IterableOf;
 
 /**
  * Iterable, which elements are "folded" through the func.
+ *
  * @param <X> Type of input and output
  * @param <T> Type of element
  * @since 0.30
@@ -33,6 +34,7 @@ public final class Folded<X, T> implements Scalar<X> {
 
     /**
      * Ctor.
+     *
      * @param ipt Input
      * @param fnc Func original
      * @param list Array of items
@@ -45,6 +47,7 @@ public final class Folded<X, T> implements Scalar<X> {
 
     /**
      * Ctor.
+     *
      * @param ipt Input
      * @param fnc Func original
      * @param list List of items

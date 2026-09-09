@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link Skipped}.
+ *
  * @since 0.34
  */
 final class SkippedTest {

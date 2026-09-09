@@ -12,7 +12,7 @@ import org.cactoos.iterable.IterableOf;
 /**
  * Iterable as Sorted {@link Set} based on {@link TreeSet}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Set type
  * @since 1.0.0
@@ -21,6 +21,7 @@ public final class Sorted<T> extends SortedSetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param cmp Comparator
      * @param array An array of some elements
      */
@@ -31,6 +32,7 @@ public final class Sorted<T> extends SortedSetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param cmp Comparator
      * @param src An {@link Iterable}
      */

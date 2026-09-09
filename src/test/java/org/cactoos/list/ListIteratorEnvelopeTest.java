@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test cases for {@link ListIteratorEnvelope}.
+ *
  * @since 0.35
  */
 final class ListIteratorEnvelopeTest {

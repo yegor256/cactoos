@@ -16,10 +16,11 @@ import org.cactoos.Output;
 /**
  * An {@link Output} that encapsulates other destination for the data.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.12
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 public final class OutputTo implements Output {
 
     /**
@@ -29,6 +30,7 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param file The file
      */
     public OutputTo(final File file) {
@@ -37,6 +39,7 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param file The file
      * @param mkdirs Should we do mkdirs beforehand?
      * @since 0.15
@@ -55,6 +58,7 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param path The path
      */
     public OutputTo(final Path path) {
@@ -63,6 +67,7 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param path The path
      * @param mkdirs Should we do mkdirs beforehand?
      * @since 0.15
@@ -82,6 +87,7 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param writer The writer
      */
     public OutputTo(final Writer writer) {
@@ -90,6 +96,7 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param wtr Writer
      * @param charset Charset
      */
@@ -99,6 +106,7 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param wtr Writer
      * @param charset Charset
      */
@@ -108,6 +116,7 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param charset Charset
      * @param size Buffer size
@@ -118,6 +127,7 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param size Buffer size
      * @since 0.13.3
@@ -128,6 +138,7 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param charset Charset
      * @param size Buffer size
@@ -138,6 +149,7 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param ddr Charset decoder
      * @param size Buffer size
@@ -148,6 +160,7 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param stream The stream
      */
     public OutputTo(final OutputStream stream) {
@@ -156,6 +169,7 @@ public final class OutputTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param output The output
      */
     private OutputTo(final Output output) {

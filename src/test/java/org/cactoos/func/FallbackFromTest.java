@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Fallback.From}.
+ *
  * @since 0.31
  */
 @SuppressWarnings("unchecked")

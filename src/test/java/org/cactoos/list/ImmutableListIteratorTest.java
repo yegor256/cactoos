@@ -11,6 +11,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ImmutableListIterator}.
+ *
  * @since 1.0
  */
 final class ImmutableListIteratorTest {

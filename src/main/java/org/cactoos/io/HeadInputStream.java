@@ -10,7 +10,7 @@ import java.io.InputStream;
 /**
  * Input stream that only shows the first N bytes of the original stream.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.31
  */
@@ -33,6 +33,7 @@ public final class HeadInputStream extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param orig The original input stream
      * @param len A number of bytes that can be read from the beginning
      */

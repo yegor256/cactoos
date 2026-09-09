@@ -26,6 +26,7 @@ public abstract class SortedSetEnvelope<T> extends SetEnvelope<T> implements
 
     /**
      * Primary ctor.
+     *
      * @param origin The original SortedSet to delegate to
      */
     protected SortedSetEnvelope(final SortedSet<T> origin) {

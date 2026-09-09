@@ -12,6 +12,7 @@ import org.cactoos.list.ListOf;
 
 /**
  * Iterator implementation for {@link Iterator} partitioning.
+ *
  * @param <T> Partitions value type
  * @since 0.29
  */
@@ -29,6 +30,7 @@ public final class Partitioned<T> implements Iterator<List<T>> {
 
     /**
      * Ctor.
+     *
      * @param sze Size of the partitions
      * @param src Source iterator
      */

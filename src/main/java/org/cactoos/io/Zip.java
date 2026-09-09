@@ -20,6 +20,7 @@ import org.cactoos.bytes.BytesOf;
  * Zip files and directory.
  * <br>
  * <br>There is no thread-safety guarantee.
+ *
  * @since 0.29
  */
 @SuppressWarnings("PMD.AvoidFileStream")
@@ -39,6 +40,7 @@ public final class Zip implements Input {
      * new Zip(new IterableOf<Path>(Paths.get("/tmp/x"), Paths.get("/tmp/y")));
      * }
      * </pre>
+     *
      * @param origin Origin {@link Path} list (e. g. a {@link Directory})
      */
     public Zip(final Iterable<? extends Path> origin) {

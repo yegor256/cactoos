@@ -16,7 +16,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * A few {@link ListIterator} joined together.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Items type
  * @since 1.0.0
@@ -44,6 +44,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param items Items to concatenate
      */
     @SafeVarargs
@@ -53,6 +54,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param item First item
      * @param items ListIterator
      */
@@ -66,6 +68,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param items ListIterators
      * @param item End item
      */
@@ -79,6 +82,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param items Items to concatenate
      */
     public JoinedListIterator(final List<? extends ListIterator<? extends T>> items) {
@@ -87,6 +91,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param items Items to concatenate, deferred
      */
     private JoinedListIterator(

@@ -25,7 +25,7 @@ import org.cactoos.scalar.AndInThreads;
  * // Order of printing can be random.
  * }
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> The type to iterate over
  * @since 1.0
@@ -39,6 +39,7 @@ public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
 
     /**
      * Ctor.
+     *
      * @param proc The proc to execute
      */
     public ForEachInThreads(final Proc<X> proc) {

@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Capitalized}.
+ *
  * @since 0.46
  */
 final class CapitalizedTest {

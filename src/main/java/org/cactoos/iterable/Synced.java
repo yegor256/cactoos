@@ -35,6 +35,7 @@ public final class Synced<X> implements Iterable<X> {
 
     /**
      * Ctor.
+     *
      * @param src The underlying iterable
      */
     @SafeVarargs
@@ -44,6 +45,7 @@ public final class Synced<X> implements Iterable<X> {
 
     /**
      * Ctor.
+     *
      * @param iterable The iterable synchronize access to
      */
     public Synced(final Iterable<? extends X> iterable) {
@@ -52,6 +54,7 @@ public final class Synced<X> implements Iterable<X> {
 
     /**
      * Ctor.
+     *
      * @param lck The lock to synchronize with
      * @param iterable The iterable synchronize access to
      */

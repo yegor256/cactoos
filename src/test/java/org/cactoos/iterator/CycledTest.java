@@ -16,6 +16,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link Cycled}.
+ *
  * @since 0.8
  */
 final class CycledTest {

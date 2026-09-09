@@ -9,7 +9,7 @@ import org.cactoos.iterator.IteratorOfStackTrace;
 /**
  * Iterable of exception.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.56
  */
@@ -17,6 +17,7 @@ public final class IterableOfStackTrace extends IterableEnvelope<Throwable> {
 
     /**
      * Ctor.
+     *
      * @param exc The exception to iterate
      */
     public IterableOfStackTrace(final Throwable exc) {

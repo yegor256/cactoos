@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Strict}.
+ *
  * @since 1.0
  */
 final class StrictTest {

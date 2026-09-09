@@ -16,6 +16,7 @@ public final class Sliced<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param start Starting index
      * @param count Maximum number of elements for resulted iterator
      * @param items Varargs items
@@ -27,6 +28,7 @@ public final class Sliced<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param start Starting index
      * @param count Maximum number of elements for resulted iterator
      * @param iterable Decorated iterable

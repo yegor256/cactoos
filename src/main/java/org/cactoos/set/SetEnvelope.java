@@ -20,6 +20,7 @@ public abstract class SetEnvelope<T> extends CollectionEnvelope<T> implements
 
     /**
      * Ctor.
+     *
      * @param src Source
      */
     public SetEnvelope(final Set<T> src) {

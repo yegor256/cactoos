@@ -17,6 +17,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link IoCheckedText}.
+ *
  * @since 0.51
  */
 final class IoCheckedTextTest {

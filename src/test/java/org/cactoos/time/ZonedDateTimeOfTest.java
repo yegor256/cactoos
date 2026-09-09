@@ -15,6 +15,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Tests for {@link ZonedDateTimeOf}.
+ *
  * @since 1.0
  */
 final class ZonedDateTimeOfTest {

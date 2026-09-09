@@ -18,6 +18,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link HighestOf}.
+ *
  * @since 0.29
  */
 final class HighestOfTest {

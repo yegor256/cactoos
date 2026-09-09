@@ -11,6 +11,7 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test cases for {@link HeadOf}.
+ *
  * @since 0.31
  */
 final class HeadOfTest {

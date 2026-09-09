@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link ItemAt}.
+ *
  * @since 0.7
  */
 final class ItemAtTest {

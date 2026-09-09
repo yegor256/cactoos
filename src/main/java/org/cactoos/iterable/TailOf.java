@@ -16,6 +16,7 @@ public final class TailOf<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param num Number of tail elements
      * @param src The underlying iterable
      */
@@ -26,6 +27,7 @@ public final class TailOf<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param num Number of tail elements
      * @param iterable Decorated iterable
      */

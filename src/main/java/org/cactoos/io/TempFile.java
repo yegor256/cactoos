@@ -19,14 +19,15 @@ import org.cactoos.text.TextOf;
  * A temporary file.
  *
  * <p>These are ephemeral files to be used in small scopes.
- * Typical use looks like this:
+ * Typical use looks like this:</p>
  * <pre>{@code
  *    try (final TempFile file = new TempFile()) {
  *       //write to the file
  *    }
  * }</pre>
- * The physical file is deleted from the filesystem when the temp file is
- * closed.
+ *
+ * <p>The physical file is deleted from the filesystem when the temp file is
+ * closed.</p>
  *
  * @since 1.0
  */
@@ -42,7 +43,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
      *
      * <p>Specifies empty strings for suffix and prefix, and creates the file
      * in the filesystem's temporary directory denoted by the system property
-     * {@code java.io.tmpdir}.
+     * {@code java.io.tmpdir}.</p>
      *
      * @since 1.0
      */
@@ -54,7 +55,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
      * Ctor.
      *
      * <p>The temporary file will be created inside the filesystem's
-     * temporary folder (system property: {@code java.io.tmpdir}).
+     * temporary folder (system property: {@code java.io.tmpdir}).</p>
      *
      * @param prefix The temp filename's prefix
      * @param suffix The temp filename's suffix
@@ -72,7 +73,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
      * Ctor.
      *
      * <p>The temporary file will be created inside the filesystem's
-     * temporary folder (system property: {@code java.io.tmpdir}).
+     * temporary folder (system property: {@code java.io.tmpdir}).</p>
      *
      * @param prefix The temp filename's prefix
      * @param suffix The temp filename's suffix
@@ -88,6 +89,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
 
     /**
      * Ctor.
+     *
      * @param dir The directory in which to create the temp file
      * @param prefix The temp filename's prefix
      * @param suffix The temp filename's suffix
@@ -106,6 +108,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
 
     /**
      * Ctor.
+     *
      * @param dir The directory in which to create the temp file
      * @param prefix The temp filename's prefix
      * @param suffix The temp filename's suffix
@@ -128,6 +131,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
 
     /**
      * Primary ctor.
+     *
      * @param fullpath Creates the file and returns the path to it
      * @since 1.0
      */
@@ -142,6 +146,7 @@ public final class TempFile implements Scalar<Path>, Closeable {
 
     /**
      * Deletes the file from the filesystem.
+     *
      * @checkstyle NoJavadocForOverriddenMethodsCheck (5 lines)
      */
     @Override

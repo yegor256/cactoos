@@ -9,7 +9,7 @@ import org.cactoos.BiFunc;
 /**
  * Mapped with index iterable.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <Y> Type of target item
  * @since 1.0.0
@@ -18,6 +18,7 @@ public final class MappedWithIndex<Y> extends IterableEnvelope<Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func
      * @param src Source iterable
      * @param <X> Type of source item
@@ -32,6 +33,7 @@ public final class MappedWithIndex<Y> extends IterableEnvelope<Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func
      * @param src Source iterable
      * @param <X> Type of source item

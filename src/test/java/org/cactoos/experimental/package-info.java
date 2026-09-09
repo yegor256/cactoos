@@ -5,6 +5,7 @@
 
 /**
  * The unit-test for the package {@link org.cactoos.experimental}.
+ *
  * @since 1.0.0
  */
 package org.cactoos.experimental;

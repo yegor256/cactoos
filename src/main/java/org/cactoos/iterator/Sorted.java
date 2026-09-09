@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import org.cactoos.Scalar;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 
@@ -42,6 +43,7 @@ public final class Sorted<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param comparator The comparator
      * @param iterator The underlying iterator
      */
@@ -51,11 +53,12 @@ public final class Sorted<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param cmp The comparator, deferred
      * @param iterator The underlying iterator
      */
     private Sorted(
-        final org.cactoos.Scalar<Comparator<? super T>> cmp,
+        final Scalar<Comparator<? super T>> cmp,
         final Iterator<? extends T> iterator
     ) {
         this.scalar = new Unchecked<>(

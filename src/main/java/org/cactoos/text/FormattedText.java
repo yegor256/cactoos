@@ -15,7 +15,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Text in Sprintf format.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1
  */
@@ -23,6 +23,7 @@ public final class FormattedText extends TextEnvelope {
 
     /**
      * New formatted string with default locale.
+     *
      * @param ptn Pattern
      * @param arguments Arguments
      */
@@ -32,6 +33,7 @@ public final class FormattedText extends TextEnvelope {
 
     /**
      * New formatted string with default locale.
+     *
      * @param ptn Pattern
      * @param arguments Arguments
      */
@@ -41,6 +43,7 @@ public final class FormattedText extends TextEnvelope {
 
     /**
      * New formatted string with specified locale.
+     *
      * @param ptn Pattern
      * @param locale Format locale
      * @param arguments Arguments
@@ -55,6 +58,7 @@ public final class FormattedText extends TextEnvelope {
 
     /**
      * New formatted string with specified locale.
+     *
      * @param ptn Pattern
      * @param locale Format locale
      * @param arguments Arguments
@@ -69,6 +73,7 @@ public final class FormattedText extends TextEnvelope {
 
     /**
      * New formatted string with default locale.
+     *
      * @param ptn Pattern
      * @param arguments Arguments
      */
@@ -82,6 +87,7 @@ public final class FormattedText extends TextEnvelope {
 
     /**
      * New formatted string with default locale.
+     *
      * @param ptn Pattern
      * @param arguments Arguments
      */
@@ -95,6 +101,7 @@ public final class FormattedText extends TextEnvelope {
 
     /**
      * New formatted string with specified locale.
+     *
      * @param ptn Pattern
      * @param locale Format locale
      * @param arguments Arguments
@@ -109,6 +116,7 @@ public final class FormattedText extends TextEnvelope {
 
     /**
      * New formatted string with specified locale.
+     *
      * @param ptn Pattern
      * @param locale Format locale
      * @param args Arguments
@@ -123,6 +131,7 @@ public final class FormattedText extends TextEnvelope {
 
     /**
      * New formatted string with deferred locale.
+     *
      * @param ptn Pattern
      * @param locale Format locale, deferred
      * @param args Arguments

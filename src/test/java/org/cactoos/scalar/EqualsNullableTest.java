@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link EqualsNullable}.
+ *
  * @since 1.0
  */
 final class EqualsNullableTest {

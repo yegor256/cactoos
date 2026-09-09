@@ -14,12 +14,14 @@ import org.llorllale.cactoos.matchers.HasEntry;
 
 /**
  * Test case for {@link MapDiff}.
+ *
  * @since 0.58.0
  */
 final class MapDiffTest {
 
     /**
      * Tests that map difference can be computed correctly.
+     *
      * @since 0.58.0
      */
     @Test
@@ -44,6 +46,7 @@ final class MapDiffTest {
 
     /**
      * Tests that map difference with empty second map returns the first map.
+     *
      * @since 0.58.0
      */
     @Test
@@ -64,6 +67,7 @@ final class MapDiffTest {
 
     /**
      * Tests that map difference with empty first map returns empty map.
+     *
      * @since 0.58.0
      */
     @Test
@@ -84,6 +88,7 @@ final class MapDiffTest {
 
     /**
      * Tests that map difference works with java.util.Map.
+     *
      * @since 0.58.0
      */
     @Test
@@ -105,6 +110,7 @@ final class MapDiffTest {
 
     /**
      * Tests that map difference works with iterables.
+     *
      * @since 0.58.0
      */
     @Test
@@ -121,6 +127,7 @@ final class MapDiffTest {
 
     /**
      * Tests that map difference works with iterators.
+     *
      * @since 0.58.0
      */
     @Test

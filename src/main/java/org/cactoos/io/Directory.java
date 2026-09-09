@@ -17,7 +17,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Files and folders in a directory.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.21
  */
@@ -30,6 +30,7 @@ public final class Directory implements Iterable<Path> {
 
     /**
      * Ctor.
+     *
      * @param file File as a path to directory
      */
     public Directory(final File file) {
@@ -38,6 +39,7 @@ public final class Directory implements Iterable<Path> {
 
     /**
      * Ctor.
+     *
      * @param path Path of the dir
      */
     public Directory(final Path path) {
@@ -46,6 +48,7 @@ public final class Directory implements Iterable<Path> {
 
     /**
      * Ctor.
+     *
      * @param source Path of the directory, deferred
      */
     private Directory(final Scalar<Path> source) {

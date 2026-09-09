@@ -14,7 +14,7 @@ import org.cactoos.text.UncheckedText;
 /**
  * MapEntry as {@link java.util.AbstractMap.Entry}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <K> Key type
  * @param <V> Value type
@@ -34,6 +34,7 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
 
     /**
      * Ctor.
+     *
      * @param src The key of the entry's map
      * @param trgt The value associated to the key of the entry's map
      */

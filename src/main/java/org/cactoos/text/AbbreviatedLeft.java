@@ -12,7 +12,7 @@ import org.cactoos.scalar.Ternary;
 /**
  * Abbreviates a Text using ellipses from the left side.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.58.0
  */
@@ -21,6 +21,7 @@ public final class AbbreviatedLeft extends TextEnvelope {
     /**
      * The default max line width.
      */
+    // @checkstyle SingleUseConstantCheck (1 line)
     private static final int MAX_WIDTH = 80;
 
     /**
@@ -31,7 +32,7 @@ public final class AbbreviatedLeft extends TextEnvelope {
     /**
      * Ctor.
      *
-     * <p>By default, the max line width is 80 characters.
+     * <p>By default, the max line width is 80 characters.</p>
      *
      * @param text The CharSequence
      */
@@ -42,7 +43,7 @@ public final class AbbreviatedLeft extends TextEnvelope {
     /**
      * Ctor.
      *
-     * <p>By default, the max line width is 80 characters.
+     * <p>By default, the max line width is 80 characters.</p>
      *
      * @param text The Text
      */
@@ -52,6 +53,7 @@ public final class AbbreviatedLeft extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text A CharSequence
      * @param max Max width of the result string
      */
@@ -61,6 +63,7 @@ public final class AbbreviatedLeft extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The Text
      * @param max Max width of the result string
      */

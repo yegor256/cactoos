@@ -14,7 +14,7 @@ import org.cactoos.Input;
 /**
  * Digest Envelope.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.29
  * @checkstyle DesignForExtensionCheck (500 lines)
@@ -38,6 +38,7 @@ public abstract class DigestEnvelope implements Bytes {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param algrthm The algorithm
      */
@@ -47,6 +48,7 @@ public abstract class DigestEnvelope implements Bytes {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param max Buffer size
      * @param algrthm The algorithm

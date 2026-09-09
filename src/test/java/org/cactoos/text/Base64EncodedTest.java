@@ -11,6 +11,7 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for  {@link Base64Encoded}.
+ *
  * @since 0.20.2
  */
 final class Base64EncodedTest {

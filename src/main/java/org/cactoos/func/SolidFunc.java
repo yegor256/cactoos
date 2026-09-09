@@ -24,6 +24,7 @@ public final class SolidFunc<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Original function
      */
     public SolidFunc(final Func<X, Y> fnc) {
@@ -32,6 +33,7 @@ public final class SolidFunc<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Original function
      * @param max Max caching buffer length
      * @since 0.26

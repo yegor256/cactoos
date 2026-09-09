@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Tests for {@link Newline}.
+ *
  * @since 1.0.0
  */
 final class NewlineTest {

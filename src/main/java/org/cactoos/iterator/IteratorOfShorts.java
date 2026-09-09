@@ -29,6 +29,7 @@ public final class IteratorOfShorts implements Iterator<Short> {
 
     /**
      * Ctor.
+     *
      * @param items Items to iterate
      */
     @SuppressWarnings("PMD.ArrayIsStoredDirectly")

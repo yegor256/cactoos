@@ -12,7 +12,7 @@ import org.cactoos.iterable.IterableOf;
 /**
  * Implementation of {@link List}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> List type
  * @since 0.1
@@ -21,6 +21,7 @@ public final class ListOf<T> extends ListEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param array An array of some elements
      */
     @SafeVarargs
@@ -30,6 +31,7 @@ public final class ListOf<T> extends ListEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param src An {@link Iterator}
      * @since 0.21
      */
@@ -39,6 +41,7 @@ public final class ListOf<T> extends ListEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param src An {@link Iterable}
      */
     public ListOf(final Iterable<? extends T> src) {

@@ -14,7 +14,7 @@ import org.cactoos.text.UncheckedText;
  * Scalar that wraps an original checked exception thrown by the origin using
  * the given wrapping function.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of result
  * @param <E> Type of exception
@@ -34,6 +34,7 @@ public final class Checked<T, E extends Exception> implements Scalar<T> {
 
     /**
      * Ctor.
+     *
      * @param scalar Encapsulated scalar
      * @param fnc Func that wraps exception
      */

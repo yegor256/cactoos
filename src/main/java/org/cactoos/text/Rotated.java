@@ -8,12 +8,14 @@ import org.cactoos.Text;
 
 /**
  * Rotate (circular shift) a String of shift characters.
+ *
  * @since 0.12
  */
 public final class Rotated extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param shift The shift
      */

@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link FuncOf}.
+ *
  * @since 0.20
  */
 final class FuncOfTest {

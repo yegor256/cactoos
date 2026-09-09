@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Xor}.
+ *
  * @since 0.48
  */
 final class XorTest {

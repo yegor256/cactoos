@@ -20,7 +20,7 @@ import org.cactoos.text.UncheckedText;
 /**
  * Logged output stream.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.29
  */
@@ -53,6 +53,7 @@ public final class LoggingOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param output Destination of data
      * @param dst The name of source data
      */
@@ -62,6 +63,7 @@ public final class LoggingOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param output Destination of data
      * @param dst The name of source data
      * @param lgr Message logger
@@ -76,6 +78,7 @@ public final class LoggingOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param output Destination of data
      * @param dst The name of source data
      * @param lgr Message logger, deferred

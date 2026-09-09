@@ -24,7 +24,7 @@ import org.cactoos.scalar.Unchecked;
  * <p>This class is for internal use only. Use {@link OutputStreamTo}
  * instead.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.13
  */
@@ -52,6 +52,7 @@ final class WriterAsOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param wtr Writer
      */
     WriterAsOutputStream(final Writer wtr) {
@@ -60,6 +61,7 @@ final class WriterAsOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param wtr Writer
      * @param charset Charset
      */
@@ -69,6 +71,7 @@ final class WriterAsOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param wtr Writer
      * @param charset Charset
      */
@@ -78,6 +81,7 @@ final class WriterAsOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param charset Charset
      * @param size Buffer size
@@ -96,6 +100,7 @@ final class WriterAsOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param size Buffer size
      * @since 0.13.3
@@ -106,6 +111,7 @@ final class WriterAsOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param charset Charset
      * @param size Buffer size
@@ -123,6 +129,7 @@ final class WriterAsOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param ddr Charset decoder
      * @param size Buffer size
@@ -134,6 +141,7 @@ final class WriterAsOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param ddr Charset decoder, deferred
      * @param size Buffer size

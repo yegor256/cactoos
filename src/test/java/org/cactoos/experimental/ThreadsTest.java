@@ -20,6 +20,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Threads}.
+ *
  * @since 1.0.0
  */
 @SuppressWarnings("PMD.CloseResource")

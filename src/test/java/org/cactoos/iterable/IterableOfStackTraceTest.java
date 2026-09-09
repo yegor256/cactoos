@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test Case for {@link IterableOfStackTrace}.
+ *
  * @since 0.56
  */
 final class IterableOfStackTraceTest {

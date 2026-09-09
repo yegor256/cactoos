@@ -12,6 +12,7 @@ import org.cactoos.func.UncheckedFunc;
 
 /**
  * Iterator implementation to model range functionality.
+ *
  * @param <T> Range value type
  * @since 0.50
  */
@@ -35,6 +36,7 @@ public final class
 
     /**
      * Ctor.
+     *
      * @param min Start of the range
      * @param max End of the range
      * @param incrementor The {@link Func} to process for the next value

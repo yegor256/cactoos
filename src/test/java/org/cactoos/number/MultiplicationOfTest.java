@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link MultiplicationOf}.
+ *
  * @since 0.49.2
  */
 final class MultiplicationOfTest {

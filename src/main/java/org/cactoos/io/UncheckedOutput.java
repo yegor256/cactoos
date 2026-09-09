@@ -11,7 +11,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Input that doesn't throw checked {@link Exception}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.9
  */
@@ -24,6 +24,7 @@ public final class UncheckedOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param opt Output
      */
     public UncheckedOutput(final Output opt) {

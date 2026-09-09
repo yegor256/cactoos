@@ -9,7 +9,7 @@ import org.cactoos.Scalar;
 /**
  * Envelope for Scalar.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of result
  * @since 0.41
@@ -23,6 +23,7 @@ public abstract class ScalarEnvelope<T> implements Scalar<T> {
 
     /**
      * Ctor.
+     *
      * @param scalar The scalar
      */
     public ScalarEnvelope(final Scalar<? extends T> scalar) {

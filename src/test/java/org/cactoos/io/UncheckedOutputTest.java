@@ -11,6 +11,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link UncheckedOutput}.
+ *
  * @since 0.11
  */
 final class UncheckedOutputTest {

@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link DeadInput}.
+ *
  * @since 0.16
  */
 final class DeadInputTest {

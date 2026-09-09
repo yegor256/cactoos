@@ -14,7 +14,7 @@ import org.cactoos.Output;
 /**
  * Output to Output copying pipe.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.16
  */
@@ -32,6 +32,7 @@ public final class TeeOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param tgt The target
      * @param mirror The copy destination
      * @param charset The charset
@@ -43,6 +44,7 @@ public final class TeeOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param tgt The target
      * @param mirror The copy destination
      */
@@ -52,6 +54,7 @@ public final class TeeOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param tgt The target
      * @param mirror The copy destination
      */
@@ -61,6 +64,7 @@ public final class TeeOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param tgt The target
      * @param mirror The copy destination
      */
@@ -70,6 +74,7 @@ public final class TeeOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param tgt The target
      * @param mirror The copy destination
      */
@@ -79,6 +84,7 @@ public final class TeeOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param tgt The target
      * @param mirror The copy destination
      */

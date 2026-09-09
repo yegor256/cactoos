@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link PaddedEnd}.
+ *
  * @since 0.32
  */
 final class PaddedEndTest {

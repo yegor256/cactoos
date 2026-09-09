@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link CallableOf}.
+ *
  * @since 0.2
  */
 final class CallableOfTest {

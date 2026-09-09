@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link IteratorOfBooleans}.
+ *
  * @since 0.32
  */
 final class IteratorOfBooleansTest {

@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link BiProcOf}.
+ *
  * @since 0.50
  */
 final class BiProcOfTest {

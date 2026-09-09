@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link StickyFunc}.
+ *
  * @since 0.4
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")

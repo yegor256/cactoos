@@ -30,7 +30,7 @@ import org.cactoos.iterable.Mapped;
  * use the {@link Unchecked} decorator. Or you may use
  * {@link IoChecked} to wrap it in an IOException.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Scalar type
  * @see Unchecked
@@ -41,6 +41,7 @@ public final class LowestOf<T extends Comparable<? super T>> extends ScalarEnvel
 
     /**
      * Ctor.
+     *
      * @param items The comparable items
      */
     @SafeVarargs
@@ -55,6 +56,7 @@ public final class LowestOf<T extends Comparable<? super T>> extends ScalarEnvel
 
     /**
      * Ctor.
+     *
      * @param scalars The scalars
      */
     @SafeVarargs
@@ -64,6 +66,7 @@ public final class LowestOf<T extends Comparable<? super T>> extends ScalarEnvel
 
     /**
      * Ctor.
+     *
      * @param iterable The items
      */
     public LowestOf(final Iterable<? extends Scalar<? extends T>> iterable) {

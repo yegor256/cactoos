@@ -16,7 +16,7 @@ import org.cactoos.Text;
  * double value = new NumberOf("185.65156465123").doubleValue();
  * </pre>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
  */
@@ -29,6 +29,7 @@ public final class NumberOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     *
      * @param txt Number-string
      */
     public NumberOf(final String txt) {
@@ -37,6 +38,7 @@ public final class NumberOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text Number-text
      */
     public NumberOf(final Text text) {
@@ -45,6 +47,7 @@ public final class NumberOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     *
      * @param nbr Number
      */
     private NumberOf(final Number nbr) {

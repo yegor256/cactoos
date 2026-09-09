@@ -14,6 +14,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link PropertiesOf}.
+ *
  * @since 0.7
  */
 final class PropertiesOfTest {

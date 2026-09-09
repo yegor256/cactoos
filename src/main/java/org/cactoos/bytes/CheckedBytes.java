@@ -10,6 +10,7 @@ import org.cactoos.scalar.Checked;
 
 /**
  * Bytes that throws exception of specified type.
+ *
  * @param <E> Exception's type
  * @since 0.31
  */
@@ -27,6 +28,7 @@ public final class CheckedBytes<E extends Exception> implements Bytes {
 
     /**
      * Ctor.
+     *
      * @param orig Origin bytes
      * @param fnc Function that wraps exceptions
      */

@@ -11,7 +11,7 @@ import org.cactoos.Func;
  * Elements will continue to be provided so long as {@code next} produces
  * non-empty iterators.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of item
  * @since 0.47
@@ -20,6 +20,7 @@ public final class Paged<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
+     *
      * @param first First bag of elements
      * @param next Subsequent bags of elements
      */

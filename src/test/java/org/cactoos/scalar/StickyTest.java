@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Sticky}.
+ *
  * @since 0.4
  */
 final class StickyTest {

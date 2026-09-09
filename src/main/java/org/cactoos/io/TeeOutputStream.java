@@ -10,7 +10,7 @@ import java.io.OutputStream;
 /**
  * Stream that copies output to output.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.16
  */
@@ -29,6 +29,7 @@ public final class TeeOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param tgt Destination of data
      * @param mirror Copy
      */

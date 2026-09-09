@@ -15,6 +15,7 @@ import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test case for {@link Directory}.
+ *
  * @since 0.12
  */
 final class DirectoryTest {

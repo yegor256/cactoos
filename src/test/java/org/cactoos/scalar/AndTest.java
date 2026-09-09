@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link And}.
+ *
  * @since 0.8
  */
 final class AndTest {

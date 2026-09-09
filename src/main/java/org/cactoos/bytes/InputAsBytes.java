@@ -34,6 +34,7 @@ public final class InputAsBytes implements Bytes {
 
     /**
      * Ctor.
+     *
      * @param input The input
      */
     InputAsBytes(final Input input) {
@@ -42,6 +43,7 @@ public final class InputAsBytes implements Bytes {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param max Max length of the buffer for reading
      */

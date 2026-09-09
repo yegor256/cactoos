@@ -14,7 +14,7 @@ import java.io.OutputStream;
  * This class closes {@link TeeInputStream#output}
  * after {@link TeeInputStream#close()}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1
  */
@@ -32,6 +32,7 @@ public final class TeeInputStream extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param src Source of data
      * @param tgt Destination of data
      */

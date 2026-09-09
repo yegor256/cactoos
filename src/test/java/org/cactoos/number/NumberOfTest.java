@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link NumberOf}.
+ *
  * @since 1.0.0
  */
 final class NumberOfTest {

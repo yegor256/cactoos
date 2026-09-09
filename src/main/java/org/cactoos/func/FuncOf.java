@@ -11,7 +11,7 @@ import org.cactoos.Scalar;
 /**
  * Represents many possible inputs as {@link Func}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of output
@@ -26,6 +26,7 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param proc The proc
      * @param result Result to return
      */
@@ -40,6 +41,7 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param scalar Origin scalar
      */
     public FuncOf(final Scalar<? extends Y> scalar) {
@@ -48,6 +50,7 @@ public final class FuncOf<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func
      */
     public FuncOf(final Func<? super X, ? extends Y> fnc) {

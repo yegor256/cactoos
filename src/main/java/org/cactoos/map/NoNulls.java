@@ -13,7 +13,7 @@ import org.cactoos.text.UncheckedText;
 /**
  * A decorator of {@link Map} that tolerates no NULLs.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <K> Type of key
  * @param <V> Type of value
@@ -28,6 +28,7 @@ public class NoNulls<K, V> implements Map<K, V> {
 
     /**
      * Ctor.
+     *
      * @param origin The scalar
      */
     public NoNulls(final Map<K, V> origin) {

@@ -18,6 +18,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Retry}.
+ *
  * @since 0.9
  */
 final class RetryTest {

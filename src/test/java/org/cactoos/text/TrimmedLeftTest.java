@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link TrimmedLeft}.
+ *
  * @since 0.12
  */
 final class TrimmedLeftTest {

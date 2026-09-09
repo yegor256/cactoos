@@ -10,7 +10,7 @@ import org.cactoos.Scalar;
 /**
  * Division result of two numbers.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
  */
@@ -23,6 +23,7 @@ public final class DivisionOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     *
      * @param dividend The dividend
      * @param divisor The divisor
      */
@@ -32,6 +33,7 @@ public final class DivisionOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     *
      * @param dividend The dividend
      * @param divisor The divisor
      */
@@ -45,6 +47,7 @@ public final class DivisionOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     *
      * @param result The result
      */
     private DivisionOf(final Scalar<BigDecimal> result) {
