@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link SlowInput}.
+ *
  * @since 0.12
  */
 final class SlowInputTest {

@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Iterable implementation for partitioning functionality.
+ *
  * @param <T> Partitions value type
  * @since 0.29
  */
@@ -15,6 +16,7 @@ public final class Partitioned<T> extends IterableEnvelope<List<T>> {
 
     /**
      * Ctor.
+     *
      * @param size The partitions size
      * @param items The source items
      */
@@ -25,6 +27,7 @@ public final class Partitioned<T> extends IterableEnvelope<List<T>> {
 
     /**
      * Ctor.
+     *
      * @param size The partitions size
      * @param iterable The source {@link Iterable}
      */

@@ -44,6 +44,7 @@ public final class Sliced<T> implements Iterator<T> {
 
     /**
      * Constructor.
+     *
      * @param start Starting index
      * @param count Maximum number of elements for resulted iterator
      * @param iterator Decorated iterator
@@ -56,6 +57,7 @@ public final class Sliced<T> implements Iterator<T> {
     /**
      * Constructor.
      * Constructs an iterator of start position and up to the end
+     *
      * @param start Starting index
      * @param iterator Decorated iterator
      */
@@ -65,6 +67,7 @@ public final class Sliced<T> implements Iterator<T> {
 
     /**
      * Constructor.
+     *
      * @param start Starting index
      * @param end Predicate that test whether iterating should stop
      * @param iterator Decorated iterator

@@ -18,6 +18,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Matcher for collection.
+ *
  * @param <E> Type of source item
  * @since 0.23
  */
@@ -31,6 +32,7 @@ public final class BehavesAsCollection<E> extends
 
     /**
      * Ctor.
+     *
      * @param item Sample item
      */
     public BehavesAsCollection(final E item) {

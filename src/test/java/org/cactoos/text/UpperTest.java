@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Upper}.
+ *
  * @since 0.1
  */
 final class UpperTest {

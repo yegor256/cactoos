@@ -14,6 +14,7 @@ import org.hamcrest.core.IsEqual;
 
 /**
  * Matcher for set.
+ *
  * @param <T> Type of source sample
  * @since 0.49.2
  */
@@ -26,6 +27,7 @@ public final class BehavesAsSet<T> extends TypeSafeMatcher<Set<T>> {
 
     /**
      * Ctor.
+     *
      * @param item Sample sample
      */
     public BehavesAsSet(final T item) {

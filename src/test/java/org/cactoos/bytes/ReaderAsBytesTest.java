@@ -13,8 +13,10 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link ReaderAsBytes}.
+ *
  * @since 0.12
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class ReaderAsBytesTest {
 
     @Test

@@ -9,7 +9,7 @@ import org.cactoos.Text;
 /**
  * Text padded at end to reach the given length.
  *
- * <p>There is thread safe.
+ * <p>There is thread safe.</p>
  *
  * @since 0.32
  */
@@ -17,6 +17,7 @@ public final class PaddedEnd extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param length The minimum length of the resulting string
      * @param symbol The padding symbol

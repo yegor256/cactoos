@@ -16,6 +16,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link AndWithIndex}.
+ *
  * @since 0.8
  */
 final class AndWithIndexTest {

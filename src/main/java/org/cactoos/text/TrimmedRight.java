@@ -9,7 +9,7 @@ import org.cactoos.Text;
 /**
  * Text without control characters (char &lt;= 32) only from right.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.12
  */
@@ -17,6 +17,7 @@ public final class TrimmedRight extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The text
      */
     public TrimmedRight(final Text text) {

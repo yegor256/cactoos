@@ -19,6 +19,7 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Sorted}.
+ *
  * @since 1.0.0
  */
 final class SortedTest {

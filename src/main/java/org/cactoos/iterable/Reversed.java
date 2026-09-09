@@ -8,9 +8,9 @@ package org.cactoos.iterable;
  * Reverse iterable.
  *
  * <p>This loads the whole wrapped {@link Iterable} in memory
- * each time {@link #iterator()} is called in order to be able to reverse it.
+ * each time {@link #iterator()} is called in order to be able to reverse it.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of item
  * @see Filtered
@@ -20,6 +20,7 @@ public final class Reversed<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
+     *
      * @param src Source iterable
      * @since 0.23
      */
@@ -30,6 +31,7 @@ public final class Reversed<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
+     *
      * @param src Source iterable
      * @since 0.23
      */

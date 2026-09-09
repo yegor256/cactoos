@@ -12,10 +12,11 @@ import java.util.concurrent.atomic.AtomicReference;
  * Decorator of {@link InputStream} to prevent it
  * to be closed.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 public final class CloseShieldInputStream extends InputStream {
 
     /**
@@ -25,6 +26,7 @@ public final class CloseShieldInputStream extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param origin Origin
      */
     public CloseShieldInputStream(final InputStream origin) {

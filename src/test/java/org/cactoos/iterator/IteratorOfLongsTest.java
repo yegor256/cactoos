@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link IteratorOfLongs}.
+ *
  * @since 0.34
  */
 final class IteratorOfLongsTest {

@@ -26,6 +26,7 @@ public final class Immutable<T> implements List<T> {
 
     /**
      * Ctor.
+     *
      * @param src Source collection
      */
     public Immutable(final List<? extends T> src) {

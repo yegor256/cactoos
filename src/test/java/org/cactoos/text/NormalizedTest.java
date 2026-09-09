@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Normalized}.
+ *
  * @since 0.9
  */
 final class NormalizedTest {

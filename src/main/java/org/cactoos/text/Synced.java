@@ -17,6 +17,7 @@ public final class Synced extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The text
      */
     public Synced(final Text text) {
@@ -25,6 +26,7 @@ public final class Synced extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param lck The lock
      */

@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Tests for {@link OffsetDateTimeOf}.
+ *
  * @since 1.0
  */
 final class OffsetDateTimeOfTest {

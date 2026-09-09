@@ -20,7 +20,7 @@ import org.cactoos.text.UncheckedText;
 /**
  * Array as iterable.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of item
  * @since 0.12
@@ -34,6 +34,7 @@ public final class IterableOf<X> implements Iterable<X> {
 
     /**
      * Ctor.
+     *
      * @param items The array
      */
     @SafeVarargs
@@ -43,6 +44,7 @@ public final class IterableOf<X> implements Iterable<X> {
 
     /**
      * Ctor.
+     *
      * @param list The list
      * @since 0.21
      */
@@ -52,6 +54,7 @@ public final class IterableOf<X> implements Iterable<X> {
 
     /**
      * Ctor.
+     *
      * @param sclr The encapsulated iterator of x
      */
     public IterableOf(final Scalar<? extends Iterator<? extends X>> sclr) {

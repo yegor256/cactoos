@@ -16,6 +16,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Matcher for collection.
+ *
  * @param <E> Type of source item
  * @since 0.23
  */
@@ -28,6 +29,7 @@ public final class BehavesAsList<E> extends TypeSafeMatcher<List<E>> {
 
     /**
      * Ctor.
+     *
      * @param item Sample item
      */
     public BehavesAsList(final E item) {

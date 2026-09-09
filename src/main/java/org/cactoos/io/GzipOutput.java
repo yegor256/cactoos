@@ -11,6 +11,7 @@ import org.cactoos.Output;
 
 /**
  * Output that writes compressed data in the GZIP file format.
+ *
  * @since 0.29
  */
 public final class GzipOutput implements Output {
@@ -27,6 +28,7 @@ public final class GzipOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param output The output
      */
     public GzipOutput(final Output output) {
@@ -35,6 +37,7 @@ public final class GzipOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param output The output
      * @param max Max length of the buffer
      */

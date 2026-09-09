@@ -13,7 +13,7 @@ import org.cactoos.Scalar;
 /**
  * Represents many possible inputs as {@link BiFunc}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of input
@@ -24,6 +24,7 @@ public final class BiFuncOf<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param scalar The scalar
      */
     public BiFuncOf(final Scalar<Z> scalar) {
@@ -32,6 +33,7 @@ public final class BiFuncOf<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param fnc The func
      */
     public BiFuncOf(final Func<X, Z> fnc) {
@@ -40,6 +42,7 @@ public final class BiFuncOf<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param proc The proc
      * @param result Result to return
      */
@@ -54,6 +57,7 @@ public final class BiFuncOf<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param proc The proc
      * @param result Result to return
      */
@@ -68,6 +72,7 @@ public final class BiFuncOf<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param fnc The func
      */
     public BiFuncOf(final BiFunc<X, Y, Z> fnc) {

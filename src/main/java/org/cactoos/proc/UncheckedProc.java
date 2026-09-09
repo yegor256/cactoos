@@ -11,7 +11,7 @@ import org.cactoos.Proc;
 /**
  * Proc that doesn't throw checked {@link Exception}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @since 0.2
@@ -25,6 +25,7 @@ public final class UncheckedProc<X> implements Proc<X> {
 
     /**
      * Ctor.
+     *
      * @param prc Encapsulated func
      */
     public UncheckedProc(final Proc<X> prc) {

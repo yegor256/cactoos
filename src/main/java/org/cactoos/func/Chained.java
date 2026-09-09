@@ -9,6 +9,7 @@ import org.cactoos.iterable.IterableOf;
 
 /**
  * Composed function.
+ *
  * @param <X> Type of input
  * @param <Y> Intermediate type
  * @param <Z> Type of output
@@ -33,6 +34,7 @@ public final class Chained<X, Y, Z> implements Func<X, Z> {
 
     /**
      * Ctor.
+     *
      * @param bfr Before function
      * @param atr After function
      */
@@ -42,6 +44,7 @@ public final class Chained<X, Y, Z> implements Func<X, Z> {
 
     /**
      * Ctor.
+     *
      * @param bfr Before function
      * @param list Functions
      * @param atr After function

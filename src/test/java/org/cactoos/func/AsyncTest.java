@@ -19,9 +19,10 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Async}.
+ *
  * @since 0.10
  */
-@SuppressWarnings("PMD.CloseResource")
+@SuppressWarnings({"PMD.CloseResource", "PMD.CloseInlineResourceRule"})
 final class AsyncTest {
 
     @Test

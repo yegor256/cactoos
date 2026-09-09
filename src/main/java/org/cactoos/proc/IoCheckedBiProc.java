@@ -11,7 +11,7 @@ import org.cactoos.BiProc;
  * BiProc that doesn't throw checked {@link Exception}, but throws
  * {@link IOException} instead.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of input
@@ -26,6 +26,7 @@ public final class IoCheckedBiProc<X, Y> implements BiProc<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param prc Encapsulated func
      */
     public IoCheckedBiProc(final BiProc<X, Y> prc) {

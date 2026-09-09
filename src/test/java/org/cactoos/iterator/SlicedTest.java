@@ -19,6 +19,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test for {@link Sliced}.
+ *
  * @since 1.0
  */
 final class SlicedTest {
@@ -127,6 +128,7 @@ final class SlicedTest {
 
     /**
      * Iterator that counts calls to hasNext and next.
+     *
      * @param <T> Type of items
      * @since 1.0
      */
@@ -144,6 +146,7 @@ final class SlicedTest {
 
         /**
          * Ctor.
+         *
          * @param hook Hook to run
          * @param origin Original iterator
          */

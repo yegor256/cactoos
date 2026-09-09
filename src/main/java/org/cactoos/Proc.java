@@ -15,7 +15,7 @@ import org.cactoos.proc.UncheckedProc;
  * {@link UncheckedProc} decorator. Also
  * you may try {@link IoCheckedProc}.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @see org.cactoos.func.FuncOf
@@ -26,6 +26,7 @@ public interface Proc<X> {
 
     /**
      * Execute it.
+     *
      * @param input The argument
      * @throws Exception If fails
      */

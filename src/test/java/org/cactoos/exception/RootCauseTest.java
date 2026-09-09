@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test Case for {@link RootCause}.
+ *
  * @since 0.56
  */
 final class RootCauseTest {

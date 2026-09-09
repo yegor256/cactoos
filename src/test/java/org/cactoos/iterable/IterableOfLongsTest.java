@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link IterableOfLongs}.
+ *
  * @since 1.0
  */
 final class IterableOfLongsTest {

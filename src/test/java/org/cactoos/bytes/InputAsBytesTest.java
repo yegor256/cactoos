@@ -20,6 +20,7 @@ import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link InputAsBytes}.
+ *
  * @since 0.1
  */
 @SuppressWarnings("unchecked")

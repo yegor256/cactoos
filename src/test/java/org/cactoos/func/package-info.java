@@ -5,6 +5,7 @@
 
 /**
  * Functions, tests.
+ *
  * @since 0.2
  */
 package org.cactoos.func;

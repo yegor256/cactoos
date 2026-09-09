@@ -27,6 +27,7 @@ public abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
 
     /**
      * Ctor.
+     *
      * @param list Encapsulated list
      */
     public ListEnvelope(final List<T> list) {

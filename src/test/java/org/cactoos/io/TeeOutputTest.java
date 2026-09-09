@@ -17,8 +17,10 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link TeeOutput}.
+ *
  * @since 0.16
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class TeeOutputTest {
 
     @Test

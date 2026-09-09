@@ -28,6 +28,7 @@ public final class IoCheckedBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param fnc Encapsulated func
      */
     public IoCheckedBiFunc(final BiFunc<X, Y, Z> fnc) {

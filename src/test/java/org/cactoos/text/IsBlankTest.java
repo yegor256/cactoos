@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link IsBlank}.
+ *
  * @since 0.1
  */
 final class IsBlankTest {

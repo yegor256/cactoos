@@ -11,8 +11,10 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test for {@link SlowInputStream}.
+ *
  * @since 0.47
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class SlowInputStreamTest {
 
     @Test

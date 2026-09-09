@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Tests for {@link TextEnvelope}.
+ *
  * @since 0.32
  */
 final class TextEnvelopeTest {
@@ -33,12 +34,14 @@ final class TextEnvelopeTest {
 
     /**
      * Dummy class for {@link TextEnvelope} testing.
+     *
      * @since 0.32
      */
     private static final class TextEnvelopeDummy extends TextEnvelope {
 
         /**
          * Ctor.
+         *
          * @param input The String
          */
         TextEnvelopeDummy(final String input) {
@@ -47,6 +50,7 @@ final class TextEnvelopeTest {
 
         /**
          * Ctor.
+         *
          * @param input The String
          * @param cset The Charset
          */
@@ -56,6 +60,7 @@ final class TextEnvelopeTest {
 
         /**
          * Ctor.
+         *
          * @param scalar Text to be enveloped
          */
         TextEnvelopeDummy(final Scalar<String> scalar) {

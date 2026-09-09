@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Sorted}.
+ *
  * @since 0.7
  */
 final class SortedTest {

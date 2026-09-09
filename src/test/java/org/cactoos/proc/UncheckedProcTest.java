@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link UncheckedProc}.
+ *
  * @since 0.2
  */
 final class UncheckedProcTest {

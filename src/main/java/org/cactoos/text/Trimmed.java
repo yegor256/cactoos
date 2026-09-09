@@ -13,7 +13,7 @@ import org.cactoos.Text;
  * {@link String#trim()}, removing whitespace characters
  * from both the beginning and the end of the text.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * <p>Example:</p>
  * <pre>{@code
@@ -28,7 +28,7 @@ public final class Trimmed extends TextEnvelope {
     /**
      * Ctor.
      *
-     * <p>Creates a trimmed text from the given
+     * <p>Creates a trimmed text from the given</p>
      *
      * @param text The text
      */

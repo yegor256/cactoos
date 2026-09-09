@@ -9,12 +9,14 @@ import org.cactoos.Text;
 /**
  * Swaps the case of a Text changing upper and title case to lower case,
  * and lower case to upper case.
+ *
  * @since 0.13.3
  */
 public final class SwappedCase extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The text
      */
     public SwappedCase(final Text text) {

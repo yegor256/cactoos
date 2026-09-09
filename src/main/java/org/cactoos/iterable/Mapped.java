@@ -9,7 +9,7 @@ import org.cactoos.Func;
 /**
  * Mapped iterable.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <Y> Type of target item
  * @since 0.1
@@ -18,6 +18,7 @@ public final class Mapped<Y> extends IterableEnvelope<Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func
      * @param src Source iterable
      * @param <X> Type of source item
@@ -29,6 +30,7 @@ public final class Mapped<Y> extends IterableEnvelope<Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func
      * @param src Source iterable
      * @param <X> Type of source item

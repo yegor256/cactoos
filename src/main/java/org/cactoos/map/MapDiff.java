@@ -24,6 +24,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
 
     /**
      * Ctor.
+     *
      * @param first First map
      * @param second Second map
      */
@@ -51,6 +52,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
 
     /**
      * Ctor.
+     *
      * @param first First iterator
      * @param second Second iterator
      */
@@ -64,6 +66,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
 
     /**
      * Ctor.
+     *
      * @param first First iterable supplier
      * @param second Second iterable supplier
      */
@@ -83,6 +86,7 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
 
     /**
      * Ctor.
+     *
      * @param first First map
      * @param second Second map
      */

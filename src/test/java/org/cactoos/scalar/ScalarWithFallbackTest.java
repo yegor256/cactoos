@@ -16,6 +16,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ScalarWithFallback}.
+ *
  * @since 0.31
  */
 @SuppressWarnings("unchecked")

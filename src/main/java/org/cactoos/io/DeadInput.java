@@ -10,11 +10,18 @@ import org.cactoos.Input;
 /**
  * Input with no data.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1
  */
 public final class DeadInput implements Input {
+
+    /**
+     * Ctor.
+     */
+    public DeadInput() {
+        // nothing to init
+    }
 
     @Override
     public InputStream stream() {

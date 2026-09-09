@@ -10,6 +10,7 @@ import org.cactoos.scalar.Checked;
 
 /**
  * BiProc that throws exception of specified type.
+ *
  * @param <X> Type of input
  * @param <Y> Type of input
  * @param <E> Exception's type
@@ -30,6 +31,7 @@ public final class CheckedBiProc<X, Y, E extends Exception> implements
 
     /**
      * Ctor.
+     *
      * @param original Original BiProc
      * @param fnc Function that wraps exceptions
      */

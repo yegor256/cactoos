@@ -23,6 +23,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link AndInThreads}.
+ *
  * @since 0.25
  */
 @SuppressWarnings({"unchecked", "PMD.CloseResource"})

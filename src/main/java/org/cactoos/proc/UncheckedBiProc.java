@@ -11,7 +11,7 @@ import org.cactoos.func.UncheckedBiFunc;
 /**
  * BiProc that doesn't throw checked {@link Exception}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of input
@@ -26,6 +26,7 @@ public final class UncheckedBiProc<X, Y> implements BiProc<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param prc Encapsulated proc
      */
     public UncheckedBiProc(final BiProc<X, Y> prc) {

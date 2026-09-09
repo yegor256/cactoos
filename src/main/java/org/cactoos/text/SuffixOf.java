@@ -11,7 +11,7 @@ import org.cactoos.scalar.Ternary;
 /**
  * Returns a text that is after given boundary.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0
  */
@@ -19,6 +19,7 @@ public final class SuffixOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text Text representing the text value
      * @param boundary String after which text will be split
      */
@@ -28,6 +29,7 @@ public final class SuffixOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text Text representing the text value
      * @param boundary String after which text will be split
      */

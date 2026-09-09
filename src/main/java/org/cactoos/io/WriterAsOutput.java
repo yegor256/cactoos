@@ -19,7 +19,7 @@ import org.cactoos.scalar.Unchecked;
  *
  * <p>This class is for internal use only. Use {@link OutputTo} instead.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.13
  */
@@ -42,6 +42,7 @@ final class WriterAsOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param wtr Writer
      */
     WriterAsOutput(final Writer wtr) {
@@ -50,6 +51,7 @@ final class WriterAsOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param wtr Writer
      * @param cset Charset
      */
@@ -59,6 +61,7 @@ final class WriterAsOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param cset Charset
      * @param max Buffer size
@@ -69,6 +72,7 @@ final class WriterAsOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param ddr Decoder
      * @param max Buffer size
@@ -79,6 +83,7 @@ final class WriterAsOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param ddr Decoder, deferred
      * @param max Buffer size

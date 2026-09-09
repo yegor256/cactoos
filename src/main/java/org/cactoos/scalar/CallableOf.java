@@ -18,7 +18,7 @@ import org.cactoos.Scalar;
  * );
  * </pre>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of output
  * @since 0.12
@@ -27,6 +27,7 @@ public final class CallableOf<T> extends CallableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param slr Encapsulated scalar
      * @since 0.41
      */

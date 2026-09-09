@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link Endless}.
+ *
  * @since 0.11
  */
 final class EndlessTest {

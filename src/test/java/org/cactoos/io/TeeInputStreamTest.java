@@ -18,8 +18,10 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link TeeInputStream}.
+ *
  * @since 0.1
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class TeeInputStreamTest {
 
     @Test
@@ -66,6 +68,7 @@ final class TeeInputStreamTest {
 
     /**
      * Mock object around StringWriter for checking closing state.
+     *
      * @since 0.1
      */
     private static final class StringWriterMock extends StringWriter {

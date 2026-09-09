@@ -15,7 +15,7 @@ import org.cactoos.func.UncheckedFunc;
  * Elements will continue to be provided so long as {@code next} produces
  * non-empty iterators.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of item
  * @since 0.49
@@ -34,6 +34,7 @@ public final class Paged<X> implements Iterator<X> {
 
     /**
      * Ctor.
+     *
      * @param first First element
      * @param next Function to get the next element
      */

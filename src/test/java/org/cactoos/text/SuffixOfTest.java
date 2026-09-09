@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link SuffixOf}.
+ *
  * @since 1.0
  */
 final class SuffixOfTest {

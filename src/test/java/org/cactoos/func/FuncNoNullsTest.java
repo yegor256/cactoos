@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link FuncNoNulls}.
+ *
  * @since 0.10
  */
 final class FuncNoNullsTest {

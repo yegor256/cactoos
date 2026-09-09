@@ -21,6 +21,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link GzipInput}.
+ *
  * @since 0.29
  */
 final class GzipInputTest {

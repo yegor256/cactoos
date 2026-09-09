@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link ForEachWithIndex}.
+ *
  * @since 1.0
  */
 final class ForEachWithIndexTest {

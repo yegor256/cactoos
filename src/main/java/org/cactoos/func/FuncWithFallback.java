@@ -18,12 +18,12 @@ import org.cactoos.scalar.ScalarWithFallback;
  * <p>You may register several fallbacks, each for any type of exception
  * whatsoever. If the decorated {@link Func} throws an exception that has
  * an IS-A relationship with a registered fallback's exception, then that
- * fallback's alternative {@link Func} will be used to provide a result.
+ * fallback's alternative {@link Func} will be used to provide a result.</p>
  *
  * <p><strong>Example scenario:</strong> you need to fetch product data
  * from a database which may potentially not be available (SQLException).
  * As a fallback, you then fetch the data from a local cache that is
- * guaranteed not to fail. This is a sketch of what this code may look like:
+ * guaranteed not to fail. This is a sketch of what this code may look like:</p>
  *
  * <pre>
  * {@code
@@ -39,12 +39,12 @@ import org.cactoos.scalar.ScalarWithFallback;
  *
  * <p>If you register several fallback plans for exception types belonging to
  * the same hierarchy, then the fallback plan whose exception type has the
- * closest {@link InheritanceLevel} to the exception thrown will be used.
+ * closest {@link InheritanceLevel} to the exception thrown will be used.</p>
  *
  * <p><strong>Example scenario:</strong> sometimes {@code SqlProduct} from
  * above will throw {@link SQLRecoverableException} (a sub class of
  * {@link SQLException}). In such cases you may want to simply retry the same
- * {@link Func}:
+ * {@link Func}:</p>
  *
  * <pre>
  * {@code
@@ -64,7 +64,7 @@ import org.cactoos.scalar.ScalarWithFallback;
  * }
  * </pre>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of output
@@ -85,6 +85,7 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc The func
      * @param fbks The fallbacks
      */
@@ -96,6 +97,7 @@ public final class FuncWithFallback<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc The func
      * @param fbks The fallbacks
      */

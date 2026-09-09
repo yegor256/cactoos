@@ -5,6 +5,7 @@
 
 /**
  * Iterables, tests.
+ *
  * @since 0.12
  */
 package org.cactoos.iterable;

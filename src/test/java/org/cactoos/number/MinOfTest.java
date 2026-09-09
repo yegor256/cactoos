@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link MinOf}.
+ *
  * @since 0.10
  */
 final class MinOfTest {

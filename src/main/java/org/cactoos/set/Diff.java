@@ -23,6 +23,7 @@ public final class Diff<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param first First set
      * @param second Second set
      */
@@ -32,6 +33,7 @@ public final class Diff<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param first First iterator
      * @param second Second iterator
      */
@@ -44,6 +46,7 @@ public final class Diff<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param first First iterable supplier
      * @param second Second iterable supplier
      */
@@ -67,6 +70,7 @@ public final class Diff<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param first First set
      * @param second Second set
      */

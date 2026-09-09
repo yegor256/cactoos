@@ -35,7 +35,7 @@ import org.cactoos.scalar.Unchecked;
  * the caller retains ownership and is responsible for shutting
  * it down.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of output
@@ -61,6 +61,7 @@ public final class Async<X, Y> implements
 
     /**
      * Ctor.
+     *
      * @param fnc The func
      */
     public Async(final Func<X, Y> fnc) {
@@ -75,6 +76,7 @@ public final class Async<X, Y> implements
 
     /**
      * Ctor.
+     *
      * @param fnc The func
      * @param fct Factory
      */
@@ -88,6 +90,7 @@ public final class Async<X, Y> implements
 
     /**
      * Ctor.
+     *
      * @param fnc The func
      * @param exec Executor Service
      */
@@ -97,6 +100,7 @@ public final class Async<X, Y> implements
 
     /**
      * Primary ctor.
+     *
      * @param fnc The func
      * @param exec Executor Service, deferred
      * @param sht Shut it down on close

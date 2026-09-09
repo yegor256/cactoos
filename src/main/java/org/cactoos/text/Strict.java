@@ -11,7 +11,7 @@ import org.cactoos.Text;
 /**
  * Validates encapsulated text using predicate
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0
  */
@@ -19,6 +19,7 @@ public final class Strict extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param pattern The Pattern for validating encapsulated text
      * @param origin The Text
      */
@@ -28,6 +29,7 @@ public final class Strict extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param predicate The Func as a predicate
      * @param origin The Text
      */

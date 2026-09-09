@@ -9,9 +9,9 @@ import org.cactoos.Scalar;
 /**
  * The number of superclasses between base and derived class.
  *
- * <p>This class is thread safe.
+ * <p>This class is thread safe.</p>
  *
- * <p>Result interpretation:
+ * <p>Result interpretation:</p>
  * <ul>
  * <li>{@link Integer#MIN_VALUE} -&gt; classes are not related.
  * (ex. matching FileNotFoundException with RuntimeException);
@@ -39,6 +39,7 @@ public final class InheritanceLevel implements Scalar<Integer> {
 
     /**
      * Ctor.
+     *
      * @param cderived Derived class
      * @param cbase Base class
      */

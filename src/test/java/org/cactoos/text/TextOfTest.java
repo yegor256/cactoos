@@ -25,9 +25,10 @@ import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link TextOf}.
+ *
  * @since 0.12
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "PMD.CloseInlineResourceRule"})
 final class TextOfTest {
 
     @Test

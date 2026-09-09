@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test Case for {@link Skipped}.
+ *
  * @since 0.34
  */
 final class SkippedTest {

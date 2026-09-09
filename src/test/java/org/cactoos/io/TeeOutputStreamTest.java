@@ -15,8 +15,10 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link TeeOutputStream}.
+ *
  * @since 0.16
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class TeeOutputStreamTest {
 
     @Test

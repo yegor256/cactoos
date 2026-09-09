@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Equality}.
+ *
  * @since 0.31
  */
 final class EqualityTest {
@@ -84,6 +85,7 @@ final class EqualityTest {
 
     /**
      * Weight.
+     *
      * @since 0.31
      */
     private static final class Letters implements Bytes {
@@ -95,6 +97,7 @@ final class EqualityTest {
 
         /**
          * Ctor.
+         *
          * @param txt Text
          */
         Letters(final String txt) {

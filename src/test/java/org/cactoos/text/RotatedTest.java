@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Rotated}.
+ *
  * @since 0.12
  */
 final class RotatedTest {

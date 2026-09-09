@@ -15,6 +15,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Mapped}.
+ *
  * @since 0.47
  */
 final class MatchedTest {

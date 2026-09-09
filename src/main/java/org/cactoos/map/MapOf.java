@@ -14,7 +14,7 @@ import org.cactoos.iterable.Mapped;
 /**
  * Implementation of {@link Map}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of key
  * @param <Y> Type of value
@@ -24,6 +24,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param key The key
      * @param value The value
      */
@@ -33,6 +34,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param list List of entries
      */
     @SafeVarargs
@@ -42,6 +44,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param src Map to extend
      * @param key New key
      * @param value New value
@@ -56,6 +59,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param src The map to extend
      * @param list List of entries
      * @since 0.12
@@ -70,6 +74,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param key Func to create key
      * @param value Func to create value
      * @param list List of items
@@ -86,6 +91,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param key Func to create key
      * @param value Func to create value
      * @param src The map to extend
@@ -108,6 +114,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param entry Func to create entry
      * @param list List of items
      * @param <Z> Type of items in the list
@@ -122,6 +129,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param entry Func to create entry
      * @param src The map to extend
      * @param list List of items
@@ -138,6 +146,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param src Map to extend
      * @param list List of the entries
      * @since 0.12
@@ -154,6 +163,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param entries List of the entries
      */
     public MapOf(final Iterable<Map.Entry<? extends X, ? extends Y>> entries) {

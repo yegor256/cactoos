@@ -23,6 +23,7 @@ public final class Skipped<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param skp Count skip elements
      * @param iterator Decorated iterator
      */

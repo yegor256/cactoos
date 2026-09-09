@@ -24,6 +24,7 @@ public final class ListIteratorNoNulls<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param src List iterator
      */
     public ListIteratorNoNulls(final ListIterator<T> src) {

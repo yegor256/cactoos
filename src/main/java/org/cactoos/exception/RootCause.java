@@ -12,7 +12,7 @@ import org.cactoos.iterator.TailOf;
 /**
  * Return root cause exception.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.56
  */
@@ -25,6 +25,7 @@ public final class RootCause implements Scalar<Throwable> {
 
     /**
      * Ctor.
+     *
      * @param exc The exception to iterate
      */
     public RootCause(final Throwable exc) {
@@ -33,6 +34,7 @@ public final class RootCause implements Scalar<Throwable> {
 
     /**
      * Ctor.
+     *
      * @param iter The exception Iterator
      */
     public RootCause(final Iterator<Throwable> iter) {
@@ -41,6 +43,7 @@ public final class RootCause implements Scalar<Throwable> {
 
     /**
      * Ctor.
+     *
      * @param itr Decorated iterator
      */
     public RootCause(final Scalar<Iterator<Throwable>> itr) {

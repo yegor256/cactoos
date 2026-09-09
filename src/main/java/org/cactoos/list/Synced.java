@@ -19,6 +19,7 @@ public final class Synced<X> extends ListEnvelope<X> {
 
     /**
      * Ctor.
+     *
      * @param list The underlying list
      */
     public Synced(final List<X> list) {

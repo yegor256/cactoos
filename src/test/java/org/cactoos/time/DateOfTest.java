@@ -14,6 +14,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Tests for DateOf.
+ *
  * @since 1.0
  */
 final class DateOfTest {

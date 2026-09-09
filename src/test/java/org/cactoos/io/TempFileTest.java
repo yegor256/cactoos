@@ -20,6 +20,7 @@ import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Unit tests for {@link TempFile}.
+ *
  * @since 1.0
  */
 final class TempFileTest {

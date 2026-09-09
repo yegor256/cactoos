@@ -13,7 +13,7 @@ import org.cactoos.scalar.Constant;
 /**
  * Extract a substring from a Text.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.11
  */
@@ -21,6 +21,7 @@ public final class Sub extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The String
      * @param strt Start position in the text
      */
@@ -30,6 +31,7 @@ public final class Sub extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The String
      * @param strt Start position in the text
      * @param finish End position in the text
@@ -40,6 +42,7 @@ public final class Sub extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The Text
      * @param strt Start position in the text
      */
@@ -49,6 +52,7 @@ public final class Sub extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The Text
      * @param strt Start position in the text
      */
@@ -58,6 +62,7 @@ public final class Sub extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The Text
      * @param strt Start position in the text
      */
@@ -67,6 +72,7 @@ public final class Sub extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The Text
      * @param strt Start position in the text
      * @param finish End position in the text
@@ -77,6 +83,7 @@ public final class Sub extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The Text
      * @param strt Start position in the text
      * @param finish End position in the text
@@ -87,6 +94,7 @@ public final class Sub extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The Text
      * @param strt Start position in the text
      * @param finish End position in the text
@@ -98,6 +106,7 @@ public final class Sub extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The Text
      * @param strt Start position in the text
      * @param finish End position in the text
@@ -109,6 +118,7 @@ public final class Sub extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The Text
      * @param strt Start position in the text
      * @param finish End position in the text
@@ -120,6 +130,7 @@ public final class Sub extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The Text
      * @param start Start position in the text
      * @param end End position in the text

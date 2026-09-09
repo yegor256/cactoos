@@ -11,7 +11,7 @@ import org.cactoos.Input;
  * A decorator of {@link Input} that prevents {@link InputStream}
  * to be closed by its performers.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
  */
@@ -24,6 +24,7 @@ public final class CloseShieldInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param origin Origin
      */
     public CloseShieldInput(final Input origin) {

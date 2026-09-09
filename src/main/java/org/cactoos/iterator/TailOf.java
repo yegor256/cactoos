@@ -18,6 +18,7 @@ public final class TailOf<T> extends IteratorEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param num Number of tail elements
      * @param iterator Decorated iterator
      */

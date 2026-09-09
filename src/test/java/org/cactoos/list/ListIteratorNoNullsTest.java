@@ -15,6 +15,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test cases for {@link ListIteratorNoNulls}.
+ *
  * @since 0.35
  */
 final class ListIteratorNoNullsTest {

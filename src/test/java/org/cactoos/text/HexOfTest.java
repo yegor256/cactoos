@@ -11,6 +11,7 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link HexOf}.
+ *
  * @since 0.28
  */
 final class HexOfTest {

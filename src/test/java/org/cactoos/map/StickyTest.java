@@ -17,6 +17,7 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test case for {@link Sticky}.
+ *
  * @since 0.56
  */
 final class StickyTest {

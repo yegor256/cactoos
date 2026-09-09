@@ -19,6 +19,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link AppendTo}.
+ *
  * @since 1.0
  */
 final class AppendToTest {
@@ -45,6 +46,7 @@ final class AppendToTest {
 
     /**
      * Ensures that AppendTo is appending to a given file.
+     *
      * @param wdir TempDir to work in
      * @throws Exception if fails
      * @todo #1586:1h Tests failed on Windows due to not closed streams.
@@ -72,6 +74,7 @@ final class AppendToTest {
 
     /**
      * Ensures that AppendTo is appending unicode text to a given file.
+     *
      * @param wdir TempDir to work in
      * @throws Exception if fails
      */

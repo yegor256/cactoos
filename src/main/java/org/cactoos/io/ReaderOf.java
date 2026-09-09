@@ -26,10 +26,11 @@ import org.cactoos.scalar.Unchecked;
 /**
  * A {@link Reader} that encapsulates other sources of data.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.13
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 public final class ReaderOf extends Reader {
 
     /**
@@ -39,6 +40,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param chars Chars
      */
     public ReaderOf(final char... chars) {
@@ -47,6 +49,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param chars Chars
      * @param charset Charset
      */
@@ -56,6 +59,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param chars Chars
      * @param charset Charset
      */
@@ -65,6 +69,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param bytes Bytes
      */
     public ReaderOf(final byte[] bytes) {
@@ -73,6 +78,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param bytes Bytes
      * @param charset Charset
      */
@@ -82,6 +88,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param bytes Bytes
      * @param charset Charset
      */
@@ -91,6 +98,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param path The path
      */
     public ReaderOf(final Path path) {
@@ -99,6 +107,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param file The file
      */
     public ReaderOf(final File file) {
@@ -107,6 +116,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param url The URL
      */
     public ReaderOf(final URL url) {
@@ -115,6 +125,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param uri The URI
      */
     public ReaderOf(final URI uri) {
@@ -123,6 +134,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param bytes The text
      */
     public ReaderOf(final Bytes bytes) {
@@ -131,6 +143,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param text The text
      */
     public ReaderOf(final Text text) {
@@ -139,6 +152,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param charset Charset
      */
@@ -148,6 +162,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param charset Charset
      */
@@ -157,6 +172,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param text The text
      */
     public ReaderOf(final CharSequence text) {
@@ -165,6 +181,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param charset Charset
      */
@@ -174,6 +191,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param charset Charset
      */
@@ -183,6 +201,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param input The input
      */
     public ReaderOf(final Input input) {
@@ -191,6 +210,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param charset The charset
      */
@@ -200,6 +220,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param charset The charset
      */
@@ -213,6 +234,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param decoder The decoder
      * @since 0.13.1
@@ -223,6 +245,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param stream The stream
      */
     public ReaderOf(final InputStream stream) {
@@ -231,6 +254,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param stream The stream
      * @param charset The charset
      */
@@ -240,6 +264,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param stream The stream
      * @param charset The charset
      * @throws UnsupportedEncodingException If fails
@@ -255,6 +280,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param stream The stream
      * @param decoder The charset decoder
      * @since 0.13.1
@@ -265,6 +291,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param rdr The reader
      */
     private ReaderOf(final Reader rdr) {
@@ -273,6 +300,7 @@ public final class ReaderOf extends Reader {
 
     /**
      * Ctor.
+     *
      * @param src Source
      */
     private ReaderOf(final Scalar<? extends Reader> src) {

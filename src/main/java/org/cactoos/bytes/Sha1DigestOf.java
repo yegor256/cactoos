@@ -9,7 +9,7 @@ import org.cactoos.Input;
 /**
  * SHA-1 checksum calculation of {@link Input}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.29
  */
@@ -17,6 +17,7 @@ public final class Sha1DigestOf extends DigestEnvelope {
 
     /**
      * Ctor.
+     *
      * @param input The input
      */
     public Sha1DigestOf(final Input input) {
@@ -25,6 +26,7 @@ public final class Sha1DigestOf extends DigestEnvelope {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param max Buffer size
      */

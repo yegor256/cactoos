@@ -20,6 +20,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Test case for {@link LoggingOutput}.
+ *
  * @since 0.29
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")

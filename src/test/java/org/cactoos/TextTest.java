@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Text}.
+ *
  * @since 0.11
  */
 final class TextTest {

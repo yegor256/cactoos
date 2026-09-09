@@ -14,7 +14,7 @@ import org.cactoos.Text;
 /**
  * Length.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1
  */
@@ -22,6 +22,7 @@ public final class LengthOf extends ScalarEnvelope<Long> {
 
     /**
      * Ctor.
+     *
      * @param items The array
      */
     public LengthOf(final Iterable<?> items) {
@@ -39,6 +40,7 @@ public final class LengthOf extends ScalarEnvelope<Long> {
     /**
      * Ctor.
      * Character-length of Text.
+     *
      * @param text The input
      */
     public LengthOf(final Text text) {
@@ -47,6 +49,7 @@ public final class LengthOf extends ScalarEnvelope<Long> {
 
     /**
      * Ctor.
+     *
      * @param input The input
      */
     public LengthOf(final Input input) {
@@ -55,6 +58,7 @@ public final class LengthOf extends ScalarEnvelope<Long> {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param max Buffer size
      */
@@ -78,6 +82,7 @@ public final class LengthOf extends ScalarEnvelope<Long> {
 
     /**
      * Ctor.
+     *
      * @param number Number
      */
     private LengthOf(final Scalar<Long> number) {

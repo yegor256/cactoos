@@ -13,7 +13,7 @@ import org.cactoos.text.FormattedText;
 /**
  * Input showing only last N bytes of the stream.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.30
  */
@@ -36,6 +36,7 @@ public final class TailOf implements Input {
 
     /**
      * Constructor.
+     *
      * @param data Input to decorate
      * @param bytes Number of last bytes to show from input
      */
@@ -45,6 +46,7 @@ public final class TailOf implements Input {
 
     /**
      * Constructor.
+     *
      * @param data Input to decorate
      * @param bytes Number of last bytes to show from input
      * @param maximum Maximum number of bytes to read at once

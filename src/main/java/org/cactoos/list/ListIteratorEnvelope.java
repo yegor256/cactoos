@@ -9,7 +9,7 @@ import java.util.ListIterator;
 /**
  * {@link ListIterator} envelope.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Items type
  * @since 0.47
@@ -23,6 +23,7 @@ public abstract class ListIteratorEnvelope<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param iter Original list iterator
      */
     public ListIteratorEnvelope(final ListIterator<T> iter) {

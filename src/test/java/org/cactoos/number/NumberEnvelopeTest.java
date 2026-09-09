@@ -16,6 +16,7 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link NumberEnvelope}.
+ *
  * @since 1.0.0
  */
 @SuppressWarnings("serial")

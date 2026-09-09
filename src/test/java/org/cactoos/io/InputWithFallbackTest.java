@@ -13,6 +13,7 @@ import org.llorllale.cactoos.matchers.EndsWith;
 
 /**
  * Test case for {@link InputWithFallback}.
+ *
  * @since 0.9
  */
 final class InputWithFallbackTest {

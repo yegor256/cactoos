@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link BiFuncNoNulls}.
+ *
  * @since 0.11
  */
 final class BiFuncNoNullsTest {

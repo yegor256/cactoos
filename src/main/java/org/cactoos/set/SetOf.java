@@ -11,7 +11,7 @@ import org.cactoos.iterable.IterableOf;
 /**
  * Iterable as {@link Set} based on {@link HashSet}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Set type
  * @since 0.49.2
@@ -20,6 +20,7 @@ public final class SetOf<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param array An array of some elements
      */
     @SafeVarargs
@@ -29,6 +30,7 @@ public final class SetOf<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param src An {@link Iterable}
      */
     public SetOf(final Iterable<? extends T> src) {

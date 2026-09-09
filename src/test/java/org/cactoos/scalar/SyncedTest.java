@@ -14,6 +14,7 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test case for {@link Synced}.
+ *
  * @since 0.24
  */
 final class SyncedTest {

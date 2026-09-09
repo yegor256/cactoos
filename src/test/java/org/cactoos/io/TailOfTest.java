@@ -14,6 +14,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link TailOf}.
+ *
  * @since 0.30
  */
 final class TailOfTest {

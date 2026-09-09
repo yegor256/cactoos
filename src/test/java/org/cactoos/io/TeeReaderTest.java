@@ -13,8 +13,10 @@ import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link TeeReader}.
+ *
  * @since 0.13
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class TeeReaderTest {
 
     @Test

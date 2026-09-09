@@ -13,8 +13,10 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link OutputStreamTo}.
+ *
  * @since 0.13
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class OutputStreamToTest {
 
     @Test

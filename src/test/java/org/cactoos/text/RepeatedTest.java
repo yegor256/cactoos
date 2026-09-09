@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Repeated}.
+ *
  * @since 0.9
  */
 final class RepeatedTest {

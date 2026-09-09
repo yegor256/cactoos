@@ -31,6 +31,7 @@ public final class SyncBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      */
     public SyncBiFunc(final BiFunc<X, Y, Z> fnc) {
@@ -39,6 +40,7 @@ public final class SyncBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      * @param lck Sync lock
      */
