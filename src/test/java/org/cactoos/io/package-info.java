@@ -5,7 +5,6 @@
 
 /**
  * Input/Output, tests.
- *
  * @since 0.1
  */
 package org.cactoos.io;

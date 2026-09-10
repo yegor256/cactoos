@@ -10,7 +10,7 @@ import org.cactoos.Proc;
 /**
  * Func as Proc.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of input
  * @since 0.12
@@ -19,7 +19,6 @@ public final class ProcOf<X> extends ProcEnvelope<X> {
 
     /**
      * Ctor.
-     *
      * @param fnc The proc
      */
     public ProcOf(final Func<? super X, ?> fnc) {
@@ -32,7 +31,6 @@ public final class ProcOf<X> extends ProcEnvelope<X> {
 
     /**
      * Ctor.
-     *
      * @param prc The proc
      */
     public ProcOf(final Proc<? super X> prc) {

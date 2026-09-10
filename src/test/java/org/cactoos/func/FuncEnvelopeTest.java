@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link FuncEnvelope}.
- *
  * @since 0.41
  */
 final class FuncEnvelopeTest {

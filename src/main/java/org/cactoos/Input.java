@@ -21,7 +21,7 @@ import java.io.InputStream;
  * one, providing read-only access to
  * the encapsulated {@link java.io.File}.</p>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @see org.cactoos.io.InputOf
  * @since 0.1
@@ -31,7 +31,6 @@ public interface Input {
 
     /**
      * Get read access to it.
-     *
      * @return InputStream to read from
      * @throws Exception If something goes wrong
      */

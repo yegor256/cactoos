@@ -20,7 +20,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * An {@link OutputStream} that encapsulates other destination for the data.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.13
  */
@@ -33,7 +33,6 @@ public final class OutputStreamTo extends OutputStream {
 
     /**
      * Ctor.
-     *
      * @param path The path
      */
     public OutputStreamTo(final Path path) {
@@ -42,7 +41,6 @@ public final class OutputStreamTo extends OutputStream {
 
     /**
      * Ctor.
-     *
      * @param file The file
      */
     public OutputStreamTo(final File file) {
@@ -51,7 +49,6 @@ public final class OutputStreamTo extends OutputStream {
 
     /**
      * Ctor.
-     *
      * @param wtr The writer
      */
     public OutputStreamTo(final Writer wtr) {
@@ -60,7 +57,6 @@ public final class OutputStreamTo extends OutputStream {
 
     /**
      * Ctor.
-     *
      * @param wtr Writer
      * @param charset Charset
      * @since 0.13.1
@@ -71,7 +67,6 @@ public final class OutputStreamTo extends OutputStream {
 
     /**
      * Ctor.
-     *
      * @param wtr Writer
      * @param charset Charset
      * @since 0.13.1
@@ -82,7 +77,6 @@ public final class OutputStreamTo extends OutputStream {
 
     /**
      * Ctor.
-     *
      * @param wtr Reader
      * @param charset Charset
      * @param size Buffer size
@@ -95,7 +89,6 @@ public final class OutputStreamTo extends OutputStream {
 
     /**
      * Ctor.
-     *
      * @param wtr Reader
      * @param charset Charset
      * @param size Buffer size
@@ -108,7 +101,6 @@ public final class OutputStreamTo extends OutputStream {
 
     /**
      * Ctor.
-     *
      * @param wtr Reader
      * @param ddr Charset decoder
      * @param size Buffer size
@@ -121,7 +113,6 @@ public final class OutputStreamTo extends OutputStream {
 
     /**
      * Ctor.
-     *
      * @param output The input
      */
     public OutputStreamTo(final Output output) {
@@ -130,7 +121,6 @@ public final class OutputStreamTo extends OutputStream {
 
     /**
      * Ctor.
-     *
      * @param tgt Target
      */
     private OutputStreamTo(final Scalar<? extends OutputStream> tgt) {

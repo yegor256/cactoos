@@ -9,18 +9,11 @@ import java.io.InputStream;
 /**
  * InputStream with no data.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.16
  */
 public final class DeadInputStream extends InputStream {
-
-    /**
-     * Ctor.
-     */
-    public DeadInputStream() {
-        // nothing to init
-    }
 
     @Override
     public int read() {

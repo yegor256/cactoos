@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link IterableOf}.
- *
  * @since 0.12
  */
 final class IterableOfTest {

@@ -15,7 +15,7 @@ import org.cactoos.text.FormattedText;
  *
  * <p>Iterates over 2 iterators at the same time and verify that elements with the
  * same position has correlation by the function. The function might be equals,
- * endsWith, greaterThen, nonNull, empty, negative, positive, etc.</p>
+ * endsWith, greaterThen, nonNull, empty, negative, positive, etc.
  *
  * @param <X> Type of item in first iterator.
  * @param <Y> Type of item in second iterator.
@@ -40,7 +40,6 @@ public final class Matched<X, Y> implements Iterator<X> {
 
     /**
      * Ctor.
-     *
      * @param fnc The function to detect the correlation between elements
      * @param fst The first part of duplex iterator
      * @param snd The second part of duplex iterator

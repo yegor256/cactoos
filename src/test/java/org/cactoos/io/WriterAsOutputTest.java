@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link WriterAsOutput}.
- *
  * @since 0.13
  */
 final class WriterAsOutputTest {

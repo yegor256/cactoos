@@ -11,7 +11,7 @@ import org.cactoos.Output;
  * A decorator of {@link Output} that prevents {@link OutputStream}
  * to be closed by its performers.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
  */
@@ -24,7 +24,6 @@ public final class CloseShieldOutput implements Output {
 
     /**
      * Ctor.
-     *
      * @param origin Output to preserve
      */
     public CloseShieldOutput(final Output origin) {

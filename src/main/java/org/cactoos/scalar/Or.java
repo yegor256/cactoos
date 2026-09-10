@@ -47,7 +47,7 @@ import org.cactoos.iterable.Mapped;
  * ).value(); // the result is false
  * }
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
@@ -66,7 +66,6 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param proc Proc to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -78,7 +77,6 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -90,7 +88,6 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param proc Proc to use
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -102,7 +99,6 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -118,7 +114,6 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param subject The subject
      * @param conditions Funcs to map
      * @param <X> Type of items in the iterable
@@ -135,7 +130,6 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param scalar The Scalar
      */
     @SafeVarargs
@@ -145,7 +139,6 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param iterable The iterable
      */
     public Or(final Iterable<? extends Scalar<Boolean>> iterable) {

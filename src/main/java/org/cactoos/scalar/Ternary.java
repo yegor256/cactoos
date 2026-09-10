@@ -11,7 +11,7 @@ import org.cactoos.func.FuncOf;
 /**
  * Ternary operation.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
@@ -35,7 +35,6 @@ public final class Ternary<T> extends ScalarEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param cnd The condition
      * @param cons The consequent
      * @param alter The alternative
@@ -47,7 +46,6 @@ public final class Ternary<T> extends ScalarEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param cnd The condition
      * @param cons The consequent
      * @param alter The alternative
@@ -58,7 +56,6 @@ public final class Ternary<T> extends ScalarEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param cnd The condition
      * @param cons The consequent
      * @param alter The alternative
@@ -74,7 +71,6 @@ public final class Ternary<T> extends ScalarEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param cnd The condition
      * @param cons The consequent
      * @param alter The alternative
@@ -95,7 +91,6 @@ public final class Ternary<T> extends ScalarEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param input The input to pass to all of them
      * @param cnd The condition
      * @param cons The consequent
@@ -115,7 +110,6 @@ public final class Ternary<T> extends ScalarEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param input The input to pass to all of them
      * @param cnd The condition
      * @param cons The consequent

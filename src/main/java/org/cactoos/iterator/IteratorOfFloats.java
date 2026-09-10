@@ -29,7 +29,6 @@ public final class IteratorOfFloats implements Iterator<Float> {
 
     /**
      * Ctor.
-     *
      * @param items Items to iterate
      */
     @SuppressWarnings("PMD.ArrayIsStoredDirectly")

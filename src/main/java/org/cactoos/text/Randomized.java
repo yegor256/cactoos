@@ -14,7 +14,7 @@ import org.cactoos.list.ListOf;
 /**
  * Randomized text.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.32
  */
@@ -38,7 +38,6 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param len Length of generated text
      */
     public Randomized(final Integer len) {
@@ -47,7 +46,6 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param len Length of generated text
      */
     public Randomized(final Scalar<Integer> len) {
@@ -61,7 +59,6 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param chrs Array of characters allowed for generating
      */
     public Randomized(final Character... chrs) {
@@ -70,7 +67,6 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param chrs List of characters allowed for generating
      */
     public Randomized(final List<Character> chrs) {
@@ -84,7 +80,6 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param len Length of generated text
      * @param chrs Array of characters allowed for generating
      */
@@ -94,7 +89,6 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param len Length of generated text
      * @param chrs Array of characters allowed for generating
      */
@@ -104,7 +98,6 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param chrs Characters allowed for generating
      * @param len Length of generated text
      */
@@ -114,7 +107,6 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param itr Characters allowed for generating
      * @param len Length of generated text
      * @param rnd Characters index randomizer

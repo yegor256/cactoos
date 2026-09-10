@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.IsNumber;
 
 /**
  * Test case for {@link DivisionOf}.
- *
  * @since 0.49.2
  */
 final class DivisionOfTest {

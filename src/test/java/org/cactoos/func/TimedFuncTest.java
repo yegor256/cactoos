@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Timed}.
- *
  * @since 0.29.3
  */
 @SuppressWarnings("PMD.AvoidCatchingGenericException")

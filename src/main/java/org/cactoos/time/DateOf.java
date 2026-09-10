@@ -15,7 +15,6 @@ import org.cactoos.scalar.Unchecked;
 
 /**
  * Parser for {@link Date} instances.
- *
  * @since 0.27
  */
 public final class DateOf implements Scalar<Date> {
@@ -27,7 +26,6 @@ public final class DateOf implements Scalar<Date> {
 
     /**
      * Parses the provided date as ISO formatted.
-     *
      * @param date The date to parse
      */
     public DateOf(final CharSequence date) {
@@ -36,7 +34,6 @@ public final class DateOf implements Scalar<Date> {
 
     /**
      * Parses the date using the provided format.
-     *
      * @param date The date to parse
      * @param format The format to use
      */
@@ -46,7 +43,6 @@ public final class DateOf implements Scalar<Date> {
 
     /**
      * Parsing the date using the provided formatter.
-     *
      * @param date The date to parse
      * @param formatter The formatter to use
      */
@@ -56,7 +52,6 @@ public final class DateOf implements Scalar<Date> {
 
     /**
      * Parses the date using a deferred formatter.
-     *
      * @param date The date to parse
      * @param fmt The formatter, deferred
      */

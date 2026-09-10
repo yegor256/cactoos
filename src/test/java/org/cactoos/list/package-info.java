@@ -5,7 +5,6 @@
 
 /**
  * Lists.
- *
  * @since 0.14
  */
 package org.cactoos.list;

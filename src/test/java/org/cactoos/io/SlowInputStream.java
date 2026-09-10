@@ -10,7 +10,6 @@ import java.io.InputStream;
 
 /**
  * InputStream that returns content in small portions.
- *
  * @since 0.12
  */
 public final class SlowInputStream extends InputStream {
@@ -22,7 +21,6 @@ public final class SlowInputStream extends InputStream {
 
     /**
      * Ctor.
-     *
      * @param size The size of the array to encapsulate
      */
     public SlowInputStream(final int size) {
@@ -31,7 +29,6 @@ public final class SlowInputStream extends InputStream {
 
     /**
      * Ctor.
-     *
      * @param stream Original stream to encapsulate and make slower
      */
     SlowInputStream(final InputStream stream) {

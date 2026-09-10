@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link LoggingInput}.
- *
  * @since 0.29
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")

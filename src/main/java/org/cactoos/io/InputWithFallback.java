@@ -14,7 +14,7 @@ import org.cactoos.func.IoCheckedFunc;
  * Input that returns an alternative input if the main one throws
  * {@link IOException}.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.9
  */
@@ -32,7 +32,6 @@ public final class InputWithFallback implements Input {
 
     /**
      * Ctor.
-     *
      * @param input Main input
      */
     public InputWithFallback(final Input input) {
@@ -41,7 +40,6 @@ public final class InputWithFallback implements Input {
 
     /**
      * Ctor.
-     *
      * @param input Main input
      * @param alt Alternative
      */
@@ -51,7 +49,6 @@ public final class InputWithFallback implements Input {
 
     /**
      * Ctor.
-     *
      * @param input Main input
      * @param alt Alternative
      */
@@ -62,7 +59,6 @@ public final class InputWithFallback implements Input {
 
     /**
      * Ctor.
-     *
      * @param input Main input
      * @param alt Alternative
      */

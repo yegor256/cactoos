@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link UncheckedText}.
- *
  * @since 0.3
  */
 final class UncheckedTextTest {

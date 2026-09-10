@@ -10,18 +10,11 @@ import org.cactoos.Output;
 /**
  * Output that accepts anything.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.1
  */
 public final class DeadOutput implements Output {
-
-    /**
-     * Ctor.
-     */
-    public DeadOutput() {
-        // nothing to init
-    }
 
     @Override
     public OutputStream stream() {

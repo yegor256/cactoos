@@ -18,7 +18,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Iterator that returns a set of bytes.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.34
  */
@@ -36,7 +36,6 @@ public final class IteratorOfBytes implements Iterator<Byte> {
 
     /**
      * Ctor.
-     *
      * @param txt Text to iterate
      */
     public IteratorOfBytes(final Text txt) {
@@ -45,7 +44,6 @@ public final class IteratorOfBytes implements Iterator<Byte> {
 
     /**
      * Ctor.
-     *
      * @param str String to iterate
      */
     public IteratorOfBytes(final String str) {
@@ -54,7 +52,6 @@ public final class IteratorOfBytes implements Iterator<Byte> {
 
     /**
      * Ctor.
-     *
      * @param bytes Bytes to iterate
      */
     public IteratorOfBytes(final Bytes bytes) {
@@ -63,7 +60,6 @@ public final class IteratorOfBytes implements Iterator<Byte> {
 
     /**
      * Ctor.
-     *
      * @param data Items to iterate
      */
     public IteratorOfBytes(final byte... data) {
@@ -72,7 +68,6 @@ public final class IteratorOfBytes implements Iterator<Byte> {
 
     /**
      * Ctor.
-     *
      * @param data Items to iterate, deferred
      */
     private IteratorOfBytes(final Scalar<byte[]> data) {

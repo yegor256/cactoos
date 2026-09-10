@@ -9,7 +9,7 @@ import org.cactoos.Scalar;
 /**
  * Cached and synchronized version of a Scalar.
  *
- * <p>Objects of this class are thread safe.</p>
+ * <p>Objects of this class are thread safe.
  *
  * @param <T> Type of result
  * @see Sticky
@@ -41,7 +41,6 @@ public final class Solid<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param origin The Scalar to cache and sync
      */
     public Solid(final Scalar<? extends T> origin) {

@@ -10,7 +10,6 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link PrefixOf}.
- *
  * @since 1.0
  */
 final class PrefixOfTest {

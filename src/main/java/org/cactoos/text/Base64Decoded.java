@@ -11,14 +11,12 @@ import org.cactoos.bytes.BytesOf;
 
 /**
  * Decodes the origin text using the Base64 encoding scheme.
- *
  * @since 0.20.2
  */
 public final class Base64Decoded extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param input The CharSequence
      */
     public Base64Decoded(final CharSequence input) {
@@ -27,7 +25,6 @@ public final class Base64Decoded extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param origin Origin text
      */
     public Base64Decoded(final Text origin) {

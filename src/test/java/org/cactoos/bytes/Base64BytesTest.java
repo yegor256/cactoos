@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Base64Bytes}.
- *
  * @since 0.20.2
  */
 final class Base64BytesTest {

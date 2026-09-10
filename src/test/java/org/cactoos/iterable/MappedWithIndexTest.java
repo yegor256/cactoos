@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link MappedWithIndex}.
- *
  * @since 1.0.0
  */
 final class MappedWithIndexTest {

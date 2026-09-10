@@ -9,7 +9,7 @@ import org.cactoos.Scalar;
 /**
  * Binary operation.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
@@ -41,7 +41,6 @@ public final class Binary implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param condition Boolean function
      * @param consequent Proc executed when condition is true
      */

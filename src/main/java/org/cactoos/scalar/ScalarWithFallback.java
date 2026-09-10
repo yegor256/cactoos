@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.Fallback;
 import org.cactoos.Scalar;
-import org.cactoos.func.Flattened;
 import org.cactoos.func.FuncWithFallback;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Filtered;
@@ -19,7 +18,7 @@ import org.cactoos.map.MapOf;
 /**
  * Scalar with fallbacks that enable it to recover from errors.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <T> Type of result
  * @see FuncWithFallback
@@ -40,7 +39,6 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param origin Original scalar
      * @param fbks The fallbacks
      */
@@ -54,7 +52,6 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param origin Original scalar
      * @param fbks Fallbacks
      */
@@ -85,7 +82,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
             new Sorted<>(
                 Comparator.comparing(Map.Entry::getValue),
                 new Filtered<>(
-                    new Flattened<>(
+                    new org.cactoos.func.Flattened<>(
                         entry -> new Not(
                             new Equals<Integer, Integer>(
                                 entry::getValue,

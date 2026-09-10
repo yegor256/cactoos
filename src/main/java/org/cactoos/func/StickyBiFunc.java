@@ -47,7 +47,6 @@ public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Ctor.
-     *
      * @param fnc Func original
      */
     public StickyBiFunc(final BiFunc<X, Y, Z> fnc) {
@@ -56,7 +55,6 @@ public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Ctor.
-     *
      * @param fnc Func original
      * @param max Maximum buffer size
      * @since 0.26

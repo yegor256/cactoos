@@ -13,13 +13,12 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
-import org.cactoos.Scalar;
 import org.cactoos.time.Iso;
 
 /**
  * Text of date time
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
  */
@@ -28,7 +27,6 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats date using ISO date time format.
-     *
      * @param date The date to format
      */
     public TextOfDateTime(final LocalDate date) {
@@ -41,7 +39,6 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats date using provided date time format string using default locale.
-     *
      * @param format The format to use
      * @param date The date to format
      */
@@ -58,7 +55,6 @@ public final class TextOfDateTime extends TextEnvelope {
     /**
      * Formats the date using the provided format string using the provided
      * locale.
-     *
      * @param format The format string to use
      * @param date The date to format
      * @param locale The locale to use
@@ -77,7 +73,6 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats date using ISO date time format.
-     *
      * @param date The date to format
      */
     public TextOfDateTime(final LocalDateTime date) {
@@ -88,7 +83,6 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats date using provided date time format string using default locale.
-     *
      * @param format The format to use
      * @param date The date to format
      */
@@ -103,7 +97,6 @@ public final class TextOfDateTime extends TextEnvelope {
     /**
      * Formats the date using the provided format string using the provided
      * locale.
-     *
      * @param format The format string to use
      * @param date The date to format
      * @param locale The locale to use
@@ -121,7 +114,6 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats the date with ISO format using the system zone.
-     *
      * @param date The date to format
      */
     public TextOfDateTime(final Date date) {
@@ -135,7 +127,6 @@ public final class TextOfDateTime extends TextEnvelope {
     /**
      * Formats the date with to format using the default locale and the system
      * zone.
-     *
      * @param format The format to use
      * @param date The date to format
      */
@@ -152,7 +143,6 @@ public final class TextOfDateTime extends TextEnvelope {
     /**
      * Formats the date using the format and locale using the system default
      * zone.
-     *
      * @param format The format to use
      * @param date The date to format
      * @param locale The locale to use
@@ -171,7 +161,6 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats date using ISO date time format.
-     *
      * @param date The date to format
      */
     public TextOfDateTime(final OffsetDateTime date) {
@@ -180,7 +169,6 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats date using provided date time format string using default locale.
-     *
      * @param format The format to use
      * @param date The date to format
      */
@@ -195,7 +183,6 @@ public final class TextOfDateTime extends TextEnvelope {
     /**
      * Formats the date using the provided format string using the provided
      * locale.
-     *
      * @param format The format string to use
      * @param date The date to format
      * @param locale The locale to use
@@ -210,7 +197,6 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats date using ISO date time format.
-     *
      * @param date The date to format
      */
     public TextOfDateTime(final ZonedDateTime date) {
@@ -219,7 +205,6 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats date using provided date time format string using default locale.
-     *
      * @param format The format to use
      * @param date The date to format
      */
@@ -234,7 +219,6 @@ public final class TextOfDateTime extends TextEnvelope {
     /**
      * Formats the date using the provided format string using the provided
      * locale.
-     *
      * @param format The format to use
      * @param date The date to format
      * @param locale The locale to use
@@ -249,7 +233,6 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats the date using the provided formatter.
-     *
      * @param formatter The formatter to use
      * @param date The date to format
      */
@@ -265,7 +248,6 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats the date using the provided formatter.
-     *
      * @param formatter The formatter to use
      * @param date The date to format
      */
@@ -279,7 +261,6 @@ public final class TextOfDateTime extends TextEnvelope {
     /**
      * Formats the date using the format and locale using the system default
      * zone.
-     *
      * @param formatter The formatter to use
      * @param date The date to format
      */
@@ -296,7 +277,6 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats the date using the provided formatter.
-     *
      * @param formatter The formatter to use
      * @param date The date to format
      */
@@ -309,7 +289,6 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats the date using the provided formatter.
-     *
      * @param formatter The formatter to use
      * @param date The date to format
      */
@@ -322,10 +301,9 @@ public final class TextOfDateTime extends TextEnvelope {
 
     /**
      * Formats the date using the provided scalar of formatted text.
-     *
      * @param scalar The scalar of formatted text
      */
-    private TextOfDateTime(final Scalar<? extends CharSequence> scalar) {
+    private TextOfDateTime(final org.cactoos.Scalar<? extends CharSequence> scalar) {
         super(new TextOfScalar(scalar));
     }
 }

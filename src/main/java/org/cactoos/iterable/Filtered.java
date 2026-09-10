@@ -22,7 +22,7 @@ import org.cactoos.Scalar;
  * );
  * </pre>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of item
  * @see Filtered
@@ -32,7 +32,6 @@ public final class Filtered<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
-     *
      * @param fnc Predicate
      * @param src Source iterable
      * @since 0.21
@@ -44,7 +43,6 @@ public final class Filtered<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
-     *
      * @param fnc Predicate
      * @param src Source iterable
      */
@@ -54,7 +52,6 @@ public final class Filtered<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
-     *
      * @param src Source iterable
      * @param fnc Predicate
      */

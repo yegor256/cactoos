@@ -11,7 +11,6 @@ import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.cactoos.Scalar;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.FormattedText;
@@ -20,7 +19,7 @@ import org.cactoos.text.UncheckedText;
 /**
  * Logged input stream.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.29
  */
@@ -58,7 +57,6 @@ public final class LoggingInputStream extends InputStream {
 
     /**
      * Ctor.
-     *
      * @param input Source of data
      * @param src The name of source data
      */
@@ -68,7 +66,6 @@ public final class LoggingInputStream extends InputStream {
 
     /**
      * Ctor.
-     *
      * @param input Source of data
      * @param src The name of source data
      * @param lgr The message logger
@@ -83,7 +80,6 @@ public final class LoggingInputStream extends InputStream {
 
     /**
      * Ctor.
-     *
      * @param input Source of data
      * @param src The name of source data
      * @param lgr The message logger, deferred
@@ -91,7 +87,7 @@ public final class LoggingInputStream extends InputStream {
     private LoggingInputStream(
         final InputStream input,
         final String src,
-        final Scalar<Logger> lgr
+        final org.cactoos.Scalar<Logger> lgr
     ) {
         super();
         this.origin = input;

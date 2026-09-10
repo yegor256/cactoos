@@ -7,7 +7,7 @@ package org.cactoos.number;
 /**
  * Envelope for the {@link Number}.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
  */
@@ -25,7 +25,6 @@ public abstract class NumberEnvelope extends Number {
 
     /**
      * Ctor.
-     *
      * @param wrapped Number
      */
     public NumberEnvelope(final Number wrapped) {

@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test case for {@link SolidBiFunc}.
- *
  * @since 1.0
  */
 final class SolidBiFuncTest {

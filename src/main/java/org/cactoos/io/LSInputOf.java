@@ -15,7 +15,7 @@ import org.w3c.dom.ls.LSInput;
 /**
  * Input as LSInput.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.6
  * @checkstyle AbbreviationAsWordInNameCheck (10 lines)
@@ -44,7 +44,6 @@ public final class LSInputOf implements LSInput {
 
     /**
      * Ctor.
-     *
      * @param data Input
      */
     public LSInputOf(final Input data) {
@@ -53,7 +52,6 @@ public final class LSInputOf implements LSInput {
 
     /**
      * Ctor.
-     *
      * @param data Input
      * @param pubid PublicID
      * @param sysid SystemID

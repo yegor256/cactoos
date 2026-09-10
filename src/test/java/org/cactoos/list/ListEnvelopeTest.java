@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link ListEnvelope}.
- *
  * @since 0.32
  */
 final class ListEnvelopeTest {

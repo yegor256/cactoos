@@ -25,7 +25,6 @@ public final class Immutable<T> implements Set<T> {
 
     /**
      * Ctor.
-     *
      * @param src Source set
      */
     public Immutable(final Set<? extends T> src) {

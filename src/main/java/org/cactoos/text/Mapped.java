@@ -28,7 +28,7 @@ public final class Mapped extends TextEnvelope {
     /**
      * Ctor.
      *
-     * <p>Creates a mapped text by applying a function to the given text.</p>
+     * <p>Creates a mapped text by applying a function to the given text.
      *
      * @param fnc Function to apply
      * @param txt Original text

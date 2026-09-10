@@ -28,7 +28,6 @@ public final class NoNulls<T> implements List<T> {
 
     /**
      * Ctor.
-     *
      * @param src Source
      */
     NoNulls(final List<T> src) {

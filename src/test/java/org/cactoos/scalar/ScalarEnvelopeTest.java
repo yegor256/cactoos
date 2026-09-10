@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ScalarEnvelope}.
- *
  * @since 0.41
  */
 final class ScalarEnvelopeTest {

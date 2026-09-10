@@ -30,7 +30,6 @@ import org.cactoos.text.TextOf;
  * This is ephemeral folder to be used in small scopes.
  * The physical folder is deleted from the filesystem when the temp folder is
  * closed.
- *
  * @since 1.0
  */
 public final class TempFolder implements Scalar<Path>, Closeable {
@@ -44,7 +43,6 @@ public final class TempFolder implements Scalar<Path>, Closeable {
      * Ctor.
      * Creates new folder in temporary directory
      * with a random name.
-     *
      * @since 1.0
      */
     @SuppressWarnings("unchecked")
@@ -69,7 +67,6 @@ public final class TempFolder implements Scalar<Path>, Closeable {
     /**
      * Ctor.
      * Creates new folder in temporary directory.
-     *
      * @param path Relative path to new directory
      * @since 1.0
      */
@@ -80,7 +77,6 @@ public final class TempFolder implements Scalar<Path>, Closeable {
     /**
      * Ctor.
      * Creates new folder in temporary directory.
-     *
      * @param path Relative path to new directory
      * @since 1.0
      */
@@ -102,7 +98,6 @@ public final class TempFolder implements Scalar<Path>, Closeable {
 
     /**
      * Primary ctor.
-     *
      * @param flr Creates the folder and returns the path to it
      * @since 1.0
      */

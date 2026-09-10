@@ -19,7 +19,7 @@ import org.cactoos.scalar.Folded;
  * int sum = new SumOf(numbers).intValue();
  * </pre>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
  */
@@ -32,7 +32,6 @@ public final class SumOf extends NumberEnvelope {
 
     /**
      * Ctor.
-     *
      * @param src Numbers
      * @since 0.22
      */
@@ -42,7 +41,6 @@ public final class SumOf extends NumberEnvelope {
 
     /**
      * Ctor.
-     *
      * @param src The iterable
      */
     public SumOf(final Iterable<? extends Number> src) {

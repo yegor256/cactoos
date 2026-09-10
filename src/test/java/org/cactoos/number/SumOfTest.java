@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link SumOf}.
- *
  * @since 0.9
  * @todo #1335:30min Following the rewrite of the Number implementations
  *  in cactoos, the three methods below prefixed by overflow where adapted

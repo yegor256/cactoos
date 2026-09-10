@@ -12,7 +12,7 @@ import org.cactoos.Text;
  * <p>This {@link Text} decorator technically is an in-memory
  * cache.</p>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @see org.cactoos.scalar.Sticky
  * @since 0.47
@@ -21,7 +21,6 @@ public final class Sticky extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param txt Text to cache
      */
     public Sticky(final Text txt) {

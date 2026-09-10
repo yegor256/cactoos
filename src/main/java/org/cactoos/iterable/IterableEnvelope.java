@@ -9,7 +9,7 @@ import java.util.Iterator;
 /**
  * Iterable envelope.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of item
  * @since 0.24
@@ -23,7 +23,6 @@ public abstract class IterableEnvelope<X> implements Iterable<X> {
 
     /**
      * Ctor.
-     *
      * @param iterable The wrapped iterable
      */
     public IterableEnvelope(final Iterable<X> iterable) {

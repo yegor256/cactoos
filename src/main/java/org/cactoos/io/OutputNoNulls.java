@@ -11,7 +11,6 @@ import org.cactoos.Output;
 
 /**
  * Output check for no nulls.
- *
  * @since 0.10
  */
 public final class OutputNoNulls implements Output {
@@ -23,7 +22,6 @@ public final class OutputNoNulls implements Output {
 
     /**
      * Ctor.
-     *
      * @param output The output
      */
     public OutputNoNulls(final Output output) {

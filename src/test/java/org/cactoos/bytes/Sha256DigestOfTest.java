@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Sha256DigestOf}.
- *
  * @since 0.29
  */
 final class Sha256DigestOfTest {

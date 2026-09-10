@@ -16,7 +16,7 @@ import org.cactoos.text.TextOf;
 /**
  * Map envelope.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of key
  * @param <Y> Type of value
@@ -31,7 +31,6 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param original The original map
      */
     public MapEnvelope(final Map<X, Y> original) {

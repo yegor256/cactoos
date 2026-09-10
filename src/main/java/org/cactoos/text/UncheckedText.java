@@ -14,7 +14,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Text that doesn't throw checked {@link Exception}.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.3
  */
@@ -32,7 +32,6 @@ public final class UncheckedText implements Text {
 
     /**
      * Ctor.
-     *
      * @param txt Encapsulated text
      * @since 0.9
      */
@@ -42,7 +41,6 @@ public final class UncheckedText implements Text {
 
     /**
      * Ctor.
-     *
      * @param txt Encapsulated text
      */
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
@@ -57,7 +55,6 @@ public final class UncheckedText implements Text {
 
     /**
      * Ctor.
-     *
      * @param txt Encapsulated text
      * @param fbk Fallback func if {@link Exception} happens
      * @since 0.5

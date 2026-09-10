@@ -10,18 +10,11 @@ import org.cactoos.Output;
 /**
  * Output that writes to {@code stderr}.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.6
  */
 public final class Stderr implements Output {
-
-    /**
-     * Ctor.
-     */
-    public Stderr() {
-        // nothing to init
-    }
 
     @Override
     public OutputStream stream() {

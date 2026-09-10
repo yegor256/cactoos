@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Equals}.
- *
  * @since 0.9
  */
 final class EqualsTest {

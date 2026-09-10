@@ -30,7 +30,7 @@ import org.cactoos.iterable.Mapped;
  * use the {@link Unchecked} decorator. Or you may use
  * {@link IoChecked} to wrap it in an IOException.</p>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <T> Scalar type
  * @see Unchecked
@@ -41,7 +41,6 @@ public final class HighestOf<T extends Comparable<? super T>> extends ScalarEnve
 
     /**
      * Ctor.
-     *
      * @param items The comparable items
      */
     @SafeVarargs
@@ -56,7 +55,6 @@ public final class HighestOf<T extends Comparable<? super T>> extends ScalarEnve
 
     /**
      * Ctor.
-     *
      * @param scalars The scalars
      */
     @SafeVarargs
@@ -66,7 +64,6 @@ public final class HighestOf<T extends Comparable<? super T>> extends ScalarEnve
 
     /**
      * Ctor.
-     *
      * @param iterable The items
      */
     public HighestOf(final Iterable<? extends Scalar<? extends T>> iterable) {

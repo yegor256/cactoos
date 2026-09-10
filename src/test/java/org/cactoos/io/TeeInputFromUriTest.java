@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.HasContent;
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
  * {@link java.net.URI} as an input.
- *
  * @since 1.0
  */
 final class TeeInputFromUriTest {

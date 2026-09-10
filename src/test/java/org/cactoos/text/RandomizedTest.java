@@ -13,7 +13,7 @@ import org.llorllale.cactoos.matchers.HasString;
 /**
  * Test for {@link Randomized}.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.32
  */

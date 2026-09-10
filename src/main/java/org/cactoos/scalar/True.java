@@ -9,18 +9,11 @@ import org.cactoos.Scalar;
 /**
  * Logical truth.
  *
- * <p>This class is thread-safe.</p>
+ * <p>This class is thread-safe.
  *
  * @since 0.7
  */
 public final class True implements Scalar<Boolean> {
-
-    /**
-     * Ctor.
-     */
-    public True() {
-        // nothing to init
-    }
 
     @Override
     public Boolean value() {

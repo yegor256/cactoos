@@ -8,14 +8,12 @@ import org.cactoos.iterator.IteratorOfFloats;
 
 /**
  * Iterable of float values.
- *
  * @since 1.0
  */
 public final class IterableOfFloats extends IterableEnvelope<Float> {
 
     /**
      * Ctor.
-     *
      * @param values Float values
      */
     public IterableOfFloats(final float... values) {

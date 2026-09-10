@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link AbbreviatedLeft}.
- *
  * @since 0.58.0
  */
 final class AbbreviatedLeftTest {

@@ -11,7 +11,7 @@ import org.cactoos.BiFunc;
  *
  * <p>Iterates over 2 iterables at the same time and verify that elements with the
  * same position has correlation by the function. The function might be equals,
- * endsWith, greaterThen, nonNull, empty, negative, positive, etc.</p>
+ * endsWith, greaterThen, nonNull, empty, negative, positive, etc.
  *
  * @param <X> Type of item.
  * @since 0.39
@@ -20,7 +20,6 @@ public final class Matched<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
-     *
      * @param fst The first part of duplex iterator
      * @param snd The second part of duplex iterator
      */
@@ -33,7 +32,6 @@ public final class Matched<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
-     *
      * @param fnc The function to detect the correlation between elements
      * @param fst The first part of duplex iterator
      * @param snd The second part of duplex iterator

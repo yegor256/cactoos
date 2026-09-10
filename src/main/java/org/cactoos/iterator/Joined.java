@@ -15,7 +15,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * A few Iterators joined together.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <T> Type of item
  * @since 0.1
@@ -34,7 +34,6 @@ public final class Joined<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     *
      * @param items Items to concatenate
      */
     @SafeVarargs
@@ -44,7 +43,6 @@ public final class Joined<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     *
      * @param item First item
      * @param items Iterable
      * @since 0.49
@@ -56,7 +54,6 @@ public final class Joined<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     *
      * @param items Iterable
      * @param item End item
      * @since 0.49
@@ -68,7 +65,6 @@ public final class Joined<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     *
      * @param items Items to concatenate
      */
     public Joined(final Iterable<Iterator<? extends T>> items) {

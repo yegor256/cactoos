@@ -14,14 +14,12 @@ import org.cactoos.iterator.IteratorOf;
 /**
  * Splits the Text into an array, including empty
  * tokens created by adjacent separators.
- *
  * @since 0.0
  */
 public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      */
     public SplitPreserveAllTokens(final CharSequence text) {
@@ -30,7 +28,6 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      */
     public SplitPreserveAllTokens(final Text text) {
@@ -39,7 +36,6 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param lmt The limit
      */
@@ -49,7 +45,6 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param lmt The limit
      */
@@ -59,7 +54,6 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param rgx The regex
      */
@@ -69,7 +63,6 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param rgx The regex
      * @param lmt The limit
@@ -80,7 +73,6 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param rgx The regex
      */
@@ -90,7 +82,6 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param rgx The regex
      * @param lmt The limit
@@ -101,7 +92,6 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param rgx The regex
      */
@@ -111,7 +101,6 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param rgx The regex
      * @param lmt The limit
@@ -122,7 +111,6 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param rgx The regex
      */
@@ -132,7 +120,6 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param rgx The regex
      * @param lmt The limit

@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link CheckedInput}.
- *
  * @since 0.31
  */
 final class CheckedInputTest {

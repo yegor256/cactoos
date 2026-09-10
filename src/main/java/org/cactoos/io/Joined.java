@@ -13,7 +13,6 @@ import org.cactoos.scalar.Reduced;
 
 /**
  * Concatenation of several inputs.
- *
  * @since 0.36
  */
 public final class Joined implements Input {
@@ -25,7 +24,6 @@ public final class Joined implements Input {
 
     /**
      * Ctor.
-     *
      * @param first First input
      * @param rest The other inputs
      */
@@ -40,7 +38,6 @@ public final class Joined implements Input {
 
     /**
      * Ctor.
-     *
      * @param ipts Iterable of inputs
      */
     public Joined(final Iterable<? extends Input> ipts) {

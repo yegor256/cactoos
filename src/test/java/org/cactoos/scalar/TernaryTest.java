@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Ternary}.
- *
  * @since 0.8
  */
 final class TernaryTest {

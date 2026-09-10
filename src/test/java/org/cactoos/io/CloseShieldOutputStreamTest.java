@@ -17,10 +17,8 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link CloseShieldOutputStream}.
- *
  * @since 1.0.0
  */
-@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class CloseShieldOutputStreamTest {
 
     @Test

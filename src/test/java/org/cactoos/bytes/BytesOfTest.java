@@ -31,10 +31,8 @@ import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link BytesOf}.
- *
  * @since 0.12
  */
-@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class BytesOfTest {
 
     @Test

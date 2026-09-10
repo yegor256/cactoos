@@ -16,7 +16,7 @@ import org.cactoos.text.FormattedText;
  * Element from position in {@link Iterable}
  * or fallback value if iterable doesn't have this position.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <T> Scalar type
  * @since 0.7
@@ -31,7 +31,6 @@ public final class ItemAt<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param position Position
      * @param iterable Iterable
      */
@@ -52,7 +51,6 @@ public final class ItemAt<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param position Position
      * @param fallback Fallback value
      * @param iterable Iterable
@@ -67,7 +65,6 @@ public final class ItemAt<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param position Position
      * @param fallback Fallback value
      * @param iterable Iterable

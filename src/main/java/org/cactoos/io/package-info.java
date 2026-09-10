@@ -5,7 +5,6 @@
 
 /**
  * Input/Output.
- *
  * @since 0.1
  * @todo #1449:30min We must find all the classes that closes stream of
  *  {@link org.cactoos.Input} or {@link org.cactoos.Output} that have been passed

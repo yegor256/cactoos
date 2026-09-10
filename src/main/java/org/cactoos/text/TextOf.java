@@ -26,16 +26,14 @@ import org.cactoos.iterable.Mapped;
 /**
  * TextOf
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.12
  */
-@SuppressWarnings("PMD.CloseInlineResourceRule")
 public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param input The Input
      */
     public TextOf(final Input input) {
@@ -44,7 +42,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param url The URL
      * @since 0.16
      */
@@ -54,7 +51,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param uri The URI
      * @since 0.16
      */
@@ -64,7 +60,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param path The Input
      * @since 0.13
      */
@@ -74,7 +69,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param file The Input
      * @since 0.13
      */
@@ -84,7 +78,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param input The input
      * @param max Max length of the buffer for reading
      */
@@ -94,7 +87,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param input The Input
      * @param cset The Charset
      */
@@ -104,7 +96,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param input The Input
      * @param cset The Charset
      */
@@ -114,7 +105,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param input The input
      * @param max Max length of the buffer for reading
      * @param cset The Charset
@@ -125,7 +115,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      */
     public TextOf(final Reader rdr) {
@@ -134,7 +123,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param cset Charset
      */
@@ -144,7 +132,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param max Buffer size
      * @param cset Charset
@@ -155,7 +142,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param str The CharSequence
      */
     public TextOf(final CharSequence str) {
@@ -164,7 +150,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param str The CharSequence
      * @param cset The Charset
      */
@@ -174,7 +159,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param chars The chars
      */
     public TextOf(final char... chars) {
@@ -183,7 +167,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param chars The chars
      * @param cset The charset
      */
@@ -193,7 +176,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param error The exception to serialize
      */
     public TextOf(final Throwable error) {
@@ -202,7 +184,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param error The exception to serialize
      * @param charset Charset
      * @since 0.29
@@ -213,7 +194,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param error The exception to serialize
      * @param charset Charset
      * @since 0.29
@@ -224,7 +204,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param strace The stacktrace to serialize
      * @since 0.29
      */
@@ -234,7 +213,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param strace The stacktrace to serialize
      * @param charset Charset
      * @since 0.29
@@ -245,7 +223,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param strace The stacktrace to serialize
      * @param charset Charset
      * @since 0.29
@@ -257,7 +234,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param bytes The array of bytes
      */
     public TextOf(final byte... bytes) {
@@ -266,7 +242,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param bytes The Bytes
      */
     public TextOf(final Bytes bytes) {
@@ -275,7 +250,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param bytes The Bytes
      * @param cset The Charset
      */
@@ -287,7 +261,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param bytes The Bytes
      * @param cset The Charset
      */
@@ -301,7 +274,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param input The String
      */
     public TextOf(final String input) {
@@ -310,7 +282,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param iterator The iterable to convert to string
      */
     public TextOf(final Iterator<Character> iterator) {
@@ -319,7 +290,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param iterable The iterable to convert to string
      */
     public TextOf(final Iterable<Character> iterable) {
@@ -335,7 +305,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param input The InputStream where the text is read from
      * @since 0.21
      */
@@ -345,7 +314,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param scalar The Scalar of String
      */
     public TextOf(final Scalar<? extends CharSequence> scalar) {
@@ -354,7 +322,6 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param text Text
      */
     private TextOf(final Text text) {

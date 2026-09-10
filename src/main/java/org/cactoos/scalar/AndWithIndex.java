@@ -40,7 +40,7 @@ import org.cactoos.iterable.Mapped;
  * use the {@link Unchecked} decorator. Or you may use
  * {@link IoChecked} to wrap it in an IOException.</p>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.20
  */
@@ -53,7 +53,6 @@ public final class AndWithIndex implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param proc Proc to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -65,7 +64,6 @@ public final class AndWithIndex implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -78,7 +76,6 @@ public final class AndWithIndex implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param proc Proc to use
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -91,7 +88,6 @@ public final class AndWithIndex implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -109,7 +105,6 @@ public final class AndWithIndex implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param src The iterable
      */
     @SafeVarargs
@@ -119,7 +114,6 @@ public final class AndWithIndex implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param src The iterable
      */
     public AndWithIndex(final Iterable<? extends Func<Integer, Boolean>> src) {

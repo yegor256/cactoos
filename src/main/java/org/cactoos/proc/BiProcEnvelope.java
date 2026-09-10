@@ -9,7 +9,7 @@ import org.cactoos.BiProc;
 /**
  * Envelope for BiProc.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of input
  * @param <Y> Type of output
@@ -24,7 +24,6 @@ public abstract class BiProcEnvelope<X, Y> implements BiProc<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param origin The procedure
      */
     public BiProcEnvelope(final BiProc<? super X, ? super Y> origin) {

@@ -13,7 +13,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Text of {@link Scalar}
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
  */
@@ -26,7 +26,6 @@ public final class TextOfScalar implements Text {
 
     /**
      * Ctor.
-     *
      * @param scalar The scalar of CharSequence
      */
     public TextOfScalar(final Scalar<? extends CharSequence> scalar) {

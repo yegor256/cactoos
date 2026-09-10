@@ -9,7 +9,7 @@ import java.util.Iterator;
 /**
  * A few Iterables joined together.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <T> Type of item
  * @since 0.1
@@ -18,7 +18,6 @@ public final class Joined<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param items Items to concatenate
      */
     @SafeVarargs
@@ -28,7 +27,6 @@ public final class Joined<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param item First item
      * @param items Iterable
      * @since 0.32
@@ -40,7 +38,6 @@ public final class Joined<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param items Items to concatenate
      */
     public Joined(final Iterable<? extends Iterable<? extends T>> items) {

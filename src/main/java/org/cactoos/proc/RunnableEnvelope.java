@@ -7,7 +7,7 @@ package org.cactoos.proc;
 /**
  * Envelope for Runnable.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.50
  */
@@ -20,7 +20,6 @@ public abstract class RunnableEnvelope implements Runnable {
 
     /**
      * Ctor.
-     *
      * @param runnable The Runnable
      */
     public RunnableEnvelope(final Runnable runnable) {

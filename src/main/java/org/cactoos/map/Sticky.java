@@ -30,7 +30,7 @@ import org.cactoos.iterable.Mapped;
  * );
  * }</pre>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of key
  * @param <Y> Type of value
@@ -40,7 +40,6 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param entries List of entries
      */
     @SafeVarargs
@@ -50,7 +49,6 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param src Map to extend
      * @param entries List of entries
      */
@@ -64,7 +62,6 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param key Func to create key
      * @param value Func to create value
      * @param list List of items
@@ -80,7 +77,6 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param key Func to create key
      * @param value Func to create value
      * @param src Map to extend
@@ -102,7 +98,6 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param entry Func to create entry
      * @param list List of items
      * @param <Z> Type of items in the list
@@ -116,7 +111,6 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param entry Func to create entry
      * @param src Map to extend
      * @param list List of items
@@ -132,7 +126,6 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param entries List of entries
      */
     public Sticky(final Iterable<Map.Entry<? extends X, ? extends Y>> entries) {
@@ -141,7 +134,6 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param src Map to extend
      * @param entries List of entries
      */
@@ -154,7 +146,6 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param map The map to cache
      */
     public Sticky(final Map<? extends X, ? extends Y> map) {

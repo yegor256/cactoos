@@ -21,7 +21,6 @@ import org.llorllale.cactoos.matchers.HasEntry;
 
 /**
  * Test case for {@link MapOf}.
- *
  * @since 0.4
  */
 final class MapOfTest {

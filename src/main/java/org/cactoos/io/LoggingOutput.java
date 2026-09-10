@@ -13,7 +13,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Logged output.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.29
  */
@@ -36,7 +36,6 @@ public final class LoggingOutput implements Output {
 
     /**
      * Ctor.
-     *
      * @param output Data output
      * @param dst The name of destination data
      */
@@ -46,7 +45,6 @@ public final class LoggingOutput implements Output {
 
     /**
      * Ctor.
-     *
      * @param output Data output
      * @param dst The name of destination data
      * @param lgr Message logger
@@ -61,7 +59,6 @@ public final class LoggingOutput implements Output {
 
     /**
      * Ctor.
-     *
      * @param output Data output
      * @param dst The name of destination data
      * @param lgr Message logger, deferred

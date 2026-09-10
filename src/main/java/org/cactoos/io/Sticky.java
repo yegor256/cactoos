@@ -18,7 +18,7 @@ import org.cactoos.scalar.LengthOf;
  * <p>Pay attention that this class is not thread-safe. It is highly
  * recommended to always decorate it with {@link SyncInput}.</p>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.6
  */
@@ -31,7 +31,6 @@ public final class Sticky implements Input {
 
     /**
      * Ctor.
-     *
      * @param input The input
      */
     public Sticky(final Input input) {

@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Matcher for collection.
- *
  * @param <K> Type of key
  * @param <V> Type of value
  * @since 0.24
@@ -32,7 +31,6 @@ public final class BehavesAsMap<K, V> extends TypeSafeMatcher<Map<K, V>> {
 
     /**
      * Ctor.
-     *
      * @param akey Sample key
      * @param val Sample value
      */

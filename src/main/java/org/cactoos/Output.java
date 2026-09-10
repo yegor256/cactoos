@@ -28,7 +28,7 @@ import org.cactoos.io.TeeInput;
  * input to the output. The {@link org.cactoos.scalar.LengthOf}
  * calculates the size of the copied data.</p>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @see OutputTo
  * @since 0.1
@@ -38,7 +38,6 @@ public interface Output {
 
     /**
      * Get write access to it.
-     *
      * @return OutputStream to write to
      * @throws Exception If something goes wrong
      */

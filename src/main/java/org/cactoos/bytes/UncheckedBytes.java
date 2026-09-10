@@ -12,7 +12,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Bytes that doesn't throw checked {@link Exception}.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.3
  * @todo #1615:30m Extract fallback logic for Bytes
@@ -29,7 +29,6 @@ public final class UncheckedBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param bts Encapsulated bytes
      */
     public UncheckedBytes(final Bytes bts) {
@@ -38,7 +37,6 @@ public final class UncheckedBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param bts Encapsulated bytes
      * @param fbk Fallback
      * @since 0.5

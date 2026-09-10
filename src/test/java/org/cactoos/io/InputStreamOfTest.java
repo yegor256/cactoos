@@ -22,10 +22,8 @@ import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link InputStreamOf}.
- *
  * @since 0.13
  */
-@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class InputStreamOfTest {
 
     @Test

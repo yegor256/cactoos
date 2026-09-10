@@ -10,7 +10,7 @@ import org.cactoos.Text;
 /**
  * Determines if text starts with a given prefix.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.44
  */
@@ -28,7 +28,6 @@ public final class StartsWith implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param prefix The prefix
      */
@@ -38,7 +37,6 @@ public final class StartsWith implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param prefix The prefix
      */
@@ -48,7 +46,6 @@ public final class StartsWith implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param prefix The prefix
      */
@@ -58,7 +55,6 @@ public final class StartsWith implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param prefix The prefix
      */

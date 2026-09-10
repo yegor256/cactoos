@@ -19,7 +19,7 @@ import org.cactoos.scalar.Reduced;
  * int min = new MinOf(numbers).intValue();
  * </pre>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
  */
@@ -32,7 +32,6 @@ public final class MinOf extends NumberEnvelope {
 
     /**
      * Ctor.
-     *
      * @param src Numbers
      */
     public MinOf(final Number... src) {
@@ -41,7 +40,6 @@ public final class MinOf extends NumberEnvelope {
 
     /**
      * Ctor.
-     *
      * @param src The iterable
      */
     public MinOf(final Iterable<? extends Number> src) {

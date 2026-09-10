@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Folded}.
- *
  * @since 0.30
  */
 final class FoldedTest {

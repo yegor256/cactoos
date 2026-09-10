@@ -29,7 +29,6 @@ public final class IteratorOfBooleans implements Iterator<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param items Items to iterate
      */
     @SuppressWarnings("PMD.ArrayIsStoredDirectly")

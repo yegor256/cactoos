@@ -23,7 +23,6 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link TextOfDateTime}.
- *
  * @since 1.0.0
  * @checkstyle StringLiteralsConcatenationCheck (1000 lines)
  */

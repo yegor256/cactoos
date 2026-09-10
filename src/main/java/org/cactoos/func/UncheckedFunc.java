@@ -10,7 +10,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Func that doesn't throw checked {@link Exception}.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of input
  * @param <Y> Type of output
@@ -25,7 +25,6 @@ public final class UncheckedFunc<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param fnc Encapsulated func
      */
     public UncheckedFunc(final Func<X, Y> fnc) {

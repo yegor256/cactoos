@@ -27,13 +27,6 @@ public final class TriFuncSplitPreserve
     implements TriFunc
         <String, String, Integer, Collection<String>> {
 
-    /**
-     * Ctor.
-     */
-    public TriFuncSplitPreserve() {
-        // nothing to init
-    }
-
     @Override
     public Collection<String> apply(
         final String str,

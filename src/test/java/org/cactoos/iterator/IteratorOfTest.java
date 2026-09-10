@@ -16,7 +16,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link IteratorOf}.
- *
  * @since 0.30
  */
 final class IteratorOfTest {

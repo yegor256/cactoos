@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link NoNulls}.
- *
  * @since 0.11
  */
 final class BytesTest {

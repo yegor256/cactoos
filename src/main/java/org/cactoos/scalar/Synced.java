@@ -43,7 +43,6 @@ public final class Synced<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param src The Scalar to cache
      */
     public Synced(final Scalar<? extends T> src) {
@@ -52,7 +51,6 @@ public final class Synced<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param scalar The Scalar to cache
      * @param lock Sync lock
      */

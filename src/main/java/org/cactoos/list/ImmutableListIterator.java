@@ -9,7 +9,7 @@ import java.util.ListIterator;
 /**
  * Immutable {@link ListIterator} that doesn't allow mutations.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <T> Items type
  * @since 1.0
@@ -23,7 +23,6 @@ public final class ImmutableListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
-     *
      * @param iter Original list iterator
      */
     public ImmutableListIterator(final ListIterator<? extends T> iter) {

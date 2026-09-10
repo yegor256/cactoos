@@ -10,7 +10,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link ScalarOfSupplier}.
- *
  * @since 0.47
  */
 final class ScalarOfSupplierTest {

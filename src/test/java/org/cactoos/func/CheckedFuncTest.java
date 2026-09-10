@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link CheckedFunc}.
- *
  * @since 0.32
  */
 final class CheckedFuncTest {

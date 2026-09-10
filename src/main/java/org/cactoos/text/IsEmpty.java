@@ -9,7 +9,6 @@ import org.cactoos.Text;
 
 /**
  * Determines if text is empty or not.
- *
  * @see IsBlank
  * @since 0.47
  */
@@ -22,7 +21,6 @@ public final class IsEmpty implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      */
     public IsEmpty(final Text text) {

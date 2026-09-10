@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link MapEnvelope}.
- *
  * @since 0.4
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")
@@ -273,7 +272,6 @@ final class MapEnvelopeTest {
 
     /**
      * Class derived from MapEnvelope to use in some tests.
-     *
      * @param <K> Key type
      * @param <V> Value type
      * @since 0.4

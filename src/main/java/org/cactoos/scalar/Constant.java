@@ -40,7 +40,6 @@ public final class Constant<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param value The pre-computed constant
      */
     public Constant(final T value) {

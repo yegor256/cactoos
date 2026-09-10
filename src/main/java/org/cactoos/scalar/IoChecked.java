@@ -11,7 +11,7 @@ import org.cactoos.Scalar;
  * Scalar that doesn't throw {@link Exception}, but throws
  * {@link IOException} instead.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link IOException}. This may not be convenient in many cases. To make
@@ -30,7 +30,6 @@ public final class IoChecked<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param scalar Encapsulated scalar
      */
     public IoChecked(final Scalar<? extends T> scalar) {

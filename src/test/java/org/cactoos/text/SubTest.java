@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Sub}.
- *
  * @since 0.11
  */
 final class SubTest {
