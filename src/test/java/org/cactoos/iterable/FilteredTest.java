@@ -17,7 +17,6 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link Filtered}.
- *
  * @since 0.1
  */
 final class FilteredTest {

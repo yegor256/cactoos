@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Iterator that returns a set of double values.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.34
  */
@@ -29,7 +29,6 @@ public final class IteratorOfDoubles implements Iterator<Double> {
 
     /**
      * Ctor.
-     *
      * @param items Items to iterate
      */
     @SuppressWarnings("PMD.ArrayIsStoredDirectly")

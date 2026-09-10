@@ -9,7 +9,7 @@ import org.cactoos.Text;
 /**
  * Text check for no nulls.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.11
  */
@@ -17,7 +17,6 @@ public final class NoNulls extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param text The text
      */
     public NoNulls(final Text text) {

@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Binary}.
- *
  * @since 1.0
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")

@@ -16,7 +16,6 @@ public final class HeadOf<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param num Number of head elements
      * @param src The underlying iterable
      */
@@ -27,7 +26,6 @@ public final class HeadOf<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param num Number of head elements
      * @param iterable Decorated iterable
      */

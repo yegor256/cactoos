@@ -29,7 +29,6 @@ public final class IteratorOfInts implements Iterator<Integer> {
 
     /**
      * Ctor.
-     *
      * @param items Items to iterate
      */
     @SuppressWarnings("PMD.ArrayIsStoredDirectly")

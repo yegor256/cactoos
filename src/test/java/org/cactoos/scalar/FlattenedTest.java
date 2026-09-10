@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Tests for {@link Flattened}.
- *
  * @since 0.49
  */
 final class FlattenedTest {

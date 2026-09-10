@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ProcNoNulls}.
- *
  * @since 0.11
  */
 final class ProcNoNullsTest {

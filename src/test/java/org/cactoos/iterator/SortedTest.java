@@ -11,7 +11,6 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test Case for {@link Sorted}.
- *
  * @since 0.19
  */
 final class SortedTest {

@@ -13,7 +13,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Logged input.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.29
  */
@@ -36,7 +36,6 @@ public final class LoggingInput implements Input {
 
     /**
      * Ctor.
-     *
      * @param input Data input
      * @param src The name of source data
      */
@@ -46,7 +45,6 @@ public final class LoggingInput implements Input {
 
     /**
      * Ctor.
-     *
      * @param input Data input
      * @param src The name of source data
      * @param lgr Message logger
@@ -61,7 +59,6 @@ public final class LoggingInput implements Input {
 
     /**
      * Ctor.
-     *
      * @param input Data input
      * @param src The name of source data
      * @param lgr Message logger, deferred

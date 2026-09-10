@@ -21,11 +21,10 @@ import org.cactoos.scalar.Unchecked;
 /**
  * A {@link Writer} that encapsulates other destination for the data.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.13
  */
-@SuppressWarnings("PMD.CloseInlineResourceRule")
 public final class WriterTo extends Writer {
 
     /**
@@ -35,7 +34,6 @@ public final class WriterTo extends Writer {
 
     /**
      * Ctor.
-     *
      * @param path The path
      */
     public WriterTo(final Path path) {
@@ -44,7 +42,6 @@ public final class WriterTo extends Writer {
 
     /**
      * Ctor.
-     *
      * @param file The file
      */
     public WriterTo(final File file) {
@@ -53,7 +50,6 @@ public final class WriterTo extends Writer {
 
     /**
      * Ctor.
-     *
      * @param stream The output
      */
     public WriterTo(final OutputStream stream) {
@@ -62,7 +58,6 @@ public final class WriterTo extends Writer {
 
     /**
      * Ctor.
-     *
      * @param output The input
      */
     public WriterTo(final Output output) {
@@ -71,7 +66,6 @@ public final class WriterTo extends Writer {
 
     /**
      * Ctor.
-     *
      * @param output The input
      * @param charset The charset
      */
@@ -81,7 +75,6 @@ public final class WriterTo extends Writer {
 
     /**
      * Ctor.
-     *
      * @param output The input
      * @param charset The charset
      */
@@ -95,7 +88,6 @@ public final class WriterTo extends Writer {
 
     /**
      * Ctor.
-     *
      * @param output The input
      * @param encoder Charset encoder
      * @since 0.13.1
@@ -106,7 +98,6 @@ public final class WriterTo extends Writer {
 
     /**
      * Ctor.
-     *
      * @param tgt Target
      */
     private WriterTo(final Scalar<Writer> tgt) {

@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Retry}.
- *
  * @since 0.8
  */
 final class RetryTest {

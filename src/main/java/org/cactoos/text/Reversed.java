@@ -8,14 +8,12 @@ import org.cactoos.Text;
 
 /**
  * Reverse the Text.
- *
  * @since 0.2
  */
 public final class Reversed extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param text The text
      */
     public Reversed(final Text text) {

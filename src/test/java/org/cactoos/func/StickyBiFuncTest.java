@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link StickyBiFunc}.
- *
  * @since 0.13
  */
 final class StickyBiFuncTest {

@@ -25,7 +25,6 @@ public abstract class CollectionEnvelope<X>
 
     /**
      * Ctor.
-     *
      * @param col The wrapped collection
      */
     public CollectionEnvelope(final Collection<X> col) {

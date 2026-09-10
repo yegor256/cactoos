@@ -19,7 +19,6 @@ public final class Sorted<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param src The underlying iterable
      */
     @SafeVarargs
@@ -47,7 +46,6 @@ public final class Sorted<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param cmp The comparator
      * @param src The underlying iterable
      */
@@ -58,7 +56,6 @@ public final class Sorted<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param cmp The comparator
      * @param src The underlying iterable
      */
@@ -68,7 +65,6 @@ public final class Sorted<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param cmp The comparator, deferred
      * @param src The underlying iterable
      */

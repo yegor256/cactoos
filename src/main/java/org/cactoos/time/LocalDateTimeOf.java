@@ -11,7 +11,6 @@ import org.cactoos.scalar.Unchecked;
 
 /**
  * Parser for {@link LocalDateTime} instances.
- *
  * @since 0.27
  */
 public final class LocalDateTimeOf implements Scalar<LocalDateTime> {
@@ -23,7 +22,6 @@ public final class LocalDateTimeOf implements Scalar<LocalDateTime> {
 
     /**
      * Parses ISO date to create {@link LocalDateTime} instances.
-     *
      * @param date The date to parse
      */
     public LocalDateTimeOf(final CharSequence date) {
@@ -33,7 +31,6 @@ public final class LocalDateTimeOf implements Scalar<LocalDateTime> {
     /**
      * Parses date using the provided format to create
      * {@link LocalDateTime} instances.
-     *
      * @param date The date to parse
      * @param format The format to use
      */
@@ -44,7 +41,6 @@ public final class LocalDateTimeOf implements Scalar<LocalDateTime> {
     /**
      * Parses the date using the formatter to create
      * {@link LocalDateTime} instances.
-     *
      * @param date The date to parse
      * @param formatter The formatter to use
      */
@@ -55,7 +51,6 @@ public final class LocalDateTimeOf implements Scalar<LocalDateTime> {
 
     /**
      * Parses the date using a deferred formatter.
-     *
      * @param date The date to parse
      * @param fmt The formatter, deferred
      */

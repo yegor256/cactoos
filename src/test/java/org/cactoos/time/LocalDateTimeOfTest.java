@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Tests for {@link LocalDateTimeOf}.
- *
  * @since 1.0
  */
 final class LocalDateTimeOfTest {

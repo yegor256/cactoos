@@ -7,7 +7,7 @@ package org.cactoos.number;
 /**
  * {@link Number} as {@link Comparable}.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
  */
@@ -26,7 +26,6 @@ public final class ComparableNumber extends Number
 
     /**
      * Ctor.
-     *
      * @param nbr Number
      */
     public ComparableNumber(final Number nbr) {

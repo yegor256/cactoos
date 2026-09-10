@@ -10,7 +10,7 @@ import org.cactoos.Text;
 /**
  * Text converted to upper case.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * <p>Example:</p>
  *

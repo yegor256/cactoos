@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link OutputNoNulls}.
- *
  * @since 0.10
  */
 final class OutputNoNullsTest {

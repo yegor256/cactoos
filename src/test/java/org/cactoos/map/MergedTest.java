@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Merged}.
- *
  * @since 1.0
  */
 final class MergedTest {

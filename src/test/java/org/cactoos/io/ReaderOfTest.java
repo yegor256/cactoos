@@ -17,10 +17,8 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link ReaderOf}.
- *
  * @since 0.13
  */
-@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class ReaderOfTest {
 
     @Test

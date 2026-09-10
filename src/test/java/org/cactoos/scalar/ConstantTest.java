@@ -10,7 +10,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Constant}.
- *
  * @since 0.30
  */
 final class ConstantTest {

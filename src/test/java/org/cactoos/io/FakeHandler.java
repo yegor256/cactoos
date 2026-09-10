@@ -14,7 +14,7 @@ import org.cactoos.text.UncheckedText;
 /**
  * Fake handler logger.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.29
  */

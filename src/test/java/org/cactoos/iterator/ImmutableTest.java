@@ -18,7 +18,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link Immutable}.
- *
  * @since 0.32
  */
 final class ImmutableTest {

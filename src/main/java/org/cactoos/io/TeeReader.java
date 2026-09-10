@@ -11,7 +11,7 @@ import java.io.Writer;
 /**
  * Input to Output copying reader.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.13
  */
@@ -30,7 +30,6 @@ public final class TeeReader extends Reader {
 
     /**
      * Ctor.
-     *
      * @param reader The source
      * @param writer The destination
      */

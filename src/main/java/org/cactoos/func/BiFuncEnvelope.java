@@ -8,7 +8,6 @@ import org.cactoos.BiFunc;
 
 /**
  * Envelope of {@link BiFunc}.
- *
  * @param <X> Type of input
  * @param <Y> Type of input
  * @param <Z> Type of output
@@ -23,7 +22,6 @@ public abstract class BiFuncEnvelope<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Ctor.
-     *
      * @param func The function
      */
     public BiFuncEnvelope(final BiFunc<X, Y, Z> func) {

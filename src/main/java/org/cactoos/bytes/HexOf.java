@@ -15,7 +15,6 @@ import org.cactoos.text.FormattedText;
 
 /**
  * Decodes origin {@link Text} using the hexadecimal encoding scheme.
- *
  * @since 0.30
  */
 public final class HexOf implements Bytes {
@@ -27,7 +26,6 @@ public final class HexOf implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param origin Hexadecimal text
      */
     public HexOf(final Text origin) {

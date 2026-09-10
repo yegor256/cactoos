@@ -53,7 +53,6 @@ import org.cactoos.list.ListOf;
  *
  * @since 0.12
  */
-@SuppressWarnings("PMD.CloseInlineResourceRule")
 public final class BytesOf implements Bytes {
 
     /**

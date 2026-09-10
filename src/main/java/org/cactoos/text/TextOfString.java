@@ -12,7 +12,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Text of {@link String}
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
  */
@@ -25,7 +25,6 @@ public final class TextOfString implements Text {
 
     /**
      * Ctor.
-     *
      * @param input The String
      */
     public TextOfString(final String input) {

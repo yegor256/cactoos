@@ -29,7 +29,6 @@ public final class SyncOutput implements Output {
 
     /**
      * Ctor.
-     *
      * @param output The output
      */
     public SyncOutput(final Output output) {
@@ -38,7 +37,6 @@ public final class SyncOutput implements Output {
 
     /**
      * Ctor.
-     *
      * @param output The output
      * @param lck The lock object
      */

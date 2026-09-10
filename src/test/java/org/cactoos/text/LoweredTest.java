@@ -10,7 +10,6 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Lowered}.
- *
  * @since 0.11
  */
 final class LoweredTest {

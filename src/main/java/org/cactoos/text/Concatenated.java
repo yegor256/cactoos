@@ -11,7 +11,7 @@ import org.cactoos.iterable.Mapped;
 /**
  * Concatenate a Text.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.47
  */
@@ -19,7 +19,6 @@ public final class Concatenated extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param txts Texts to be concatenated
      */
     public Concatenated(final Text... txts) {
@@ -28,7 +27,6 @@ public final class Concatenated extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param strs CharSequences to be concatenated
      */
     public Concatenated(final CharSequence... strs) {
@@ -42,7 +40,6 @@ public final class Concatenated extends TextEnvelope {
 
     /**
      * Ctor.
-     *
      * @param txts Texts to be concatenated
      */
     public Concatenated(final Iterable<? extends Text> txts) {

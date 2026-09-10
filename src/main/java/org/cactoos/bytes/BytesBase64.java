@@ -10,7 +10,6 @@ import org.cactoos.Bytes;
 
 /**
  * Encodes all origin bytes using the Base64 encoding scheme.
- *
  * @since 0.20.2
  */
 public final class BytesBase64 implements Bytes {
@@ -32,7 +31,6 @@ public final class BytesBase64 implements Bytes {
 
     /**
      * Ctor uses a RFC4648 {@link Base64.Encoder}.
-     *
      * @param origin Origin bytes
      */
     public BytesBase64(final Bytes origin) {
@@ -41,7 +39,6 @@ public final class BytesBase64 implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param origin Origin bytes
      * @param enc The encoder to use
      */

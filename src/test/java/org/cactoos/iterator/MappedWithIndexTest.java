@@ -19,7 +19,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link MappedWithIndex}.
- *
  * @since 1.0.0
  */
 final class MappedWithIndexTest {

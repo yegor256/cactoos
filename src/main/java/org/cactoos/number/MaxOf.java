@@ -19,7 +19,7 @@ import org.cactoos.scalar.Reduced;
  * int max = new MaxOf(numbers).intValue();
  * </pre>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
  */
@@ -32,7 +32,6 @@ public final class MaxOf extends NumberEnvelope {
 
     /**
      * Ctor.
-     *
      * @param src Numbers
      */
     public MaxOf(final Number... src) {
@@ -41,7 +40,6 @@ public final class MaxOf extends NumberEnvelope {
 
     /**
      * Ctor.
-     *
      * @param src The iterable
      */
     public MaxOf(final Iterable<? extends Number> src) {

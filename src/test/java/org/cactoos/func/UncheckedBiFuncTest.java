@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link UncheckedBiFunc}.
- *
  * @since 0.13
  */
 final class UncheckedBiFuncTest {

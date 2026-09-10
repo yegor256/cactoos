@@ -11,7 +11,6 @@ import org.cactoos.func.Repeated;
 
 /**
  * Proc that runs repeatedly for a number of times.
- *
  * @param <X> Type of input
  * @since 0.49.2
  */

@@ -9,17 +9,9 @@ import org.cactoos.Scalar;
 
 /**
  * The formatter.
- *
  * @since 0.27
  */
 public final class Iso implements Scalar<DateTimeFormatter> {
-
-    /**
-     * Ctor.
-     */
-    public Iso() {
-        // nothing to init
-    }
 
     @Override
     public DateTimeFormatter value() {

@@ -30,7 +30,6 @@ public final class IteratorOf<X> implements Iterator<X> {
 
     /**
      * Ctor.
-     *
      * @param items Items to iterate
      */
     @SafeVarargs

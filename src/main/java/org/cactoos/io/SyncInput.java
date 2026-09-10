@@ -29,7 +29,6 @@ public final class SyncInput implements Input {
 
     /**
      * Ctor.
-     *
      * @param input The input
      */
     public SyncInput(final Input input) {
@@ -38,7 +37,6 @@ public final class SyncInput implements Input {
 
     /**
      * Ctor.
-     *
      * @param input The input
      * @param lck The lock object
      */

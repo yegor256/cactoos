@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link TailOf}.
- *
  * @since 0.31
  */
 final class TailOfTest {

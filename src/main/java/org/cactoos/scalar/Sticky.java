@@ -32,7 +32,7 @@ import org.cactoos.func.StickyFunc;
  * ).value()
  * }</pre>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <T> Type of result
  * @see StickyFunc
@@ -47,7 +47,6 @@ public final class Sticky<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param scalar The Scalar to cache
      */
     public Sticky(final Scalar<? extends T> scalar) {

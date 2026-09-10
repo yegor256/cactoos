@@ -20,7 +20,7 @@ import org.cactoos.scalar.Unchecked;
  * make sure it doesn't calculate anything twice, you can use
  * {@link Sticky} decorator.</p>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <T> Type of result
  * @see Sticky
@@ -33,7 +33,6 @@ public interface Scalar<T> {
 
     /**
      * Convert it to the value.
-     *
      * @return The value
      * @throws Exception If fails
      */

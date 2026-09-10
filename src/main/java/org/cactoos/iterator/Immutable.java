@@ -23,7 +23,6 @@ public final class Immutable<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     *
      * @param iter Iterator to make immutable
      */
     public Immutable(final Iterator<? extends T> iter) {

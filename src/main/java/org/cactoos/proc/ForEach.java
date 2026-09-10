@@ -23,7 +23,7 @@ import org.cactoos.scalar.And;
  * ); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
  * }
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> The type to iterate over
  * @since 1.0
@@ -37,7 +37,6 @@ public final class ForEach<X> implements Proc<Iterable<? extends X>> {
 
     /**
      * Ctor.
-     *
      * @param proc The proc to execute
      */
     public ForEach(final Proc<? super X> proc) {

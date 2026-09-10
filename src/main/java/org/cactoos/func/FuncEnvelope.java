@@ -9,7 +9,7 @@ import org.cactoos.Func;
 /**
  * Envelope for Func.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of input
  * @param <Y> Type of output
@@ -24,7 +24,6 @@ public abstract class FuncEnvelope<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param func The function
      */
     public FuncEnvelope(final Func<X, Y> func) {

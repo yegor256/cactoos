@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link ScalarOf}.
- *
  * @since 0.48
  */
 final class ScalarOfTest {

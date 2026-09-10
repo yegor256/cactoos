@@ -29,7 +29,6 @@ public final class IteratorOfLongs implements Iterator<Long> {
 
     /**
      * Ctor.
-     *
      * @param items Items to iterate
      */
     @SuppressWarnings("PMD.ArrayIsStoredDirectly")

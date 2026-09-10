@@ -15,7 +15,7 @@ import org.cactoos.Scalar;
  *
  * <p>This class is for internal use only. Use {@link BytesOf} instead.</p>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.12
  */
@@ -38,7 +38,6 @@ final class ReaderAsBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      */
     ReaderAsBytes(final Reader rdr) {
@@ -47,7 +46,6 @@ final class ReaderAsBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param cset Charset
      */
@@ -57,7 +55,6 @@ final class ReaderAsBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param cset Charset
      * @since 0.13.2
@@ -68,7 +65,6 @@ final class ReaderAsBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param cset Charset
      * @param max Buffer size
@@ -79,7 +75,6 @@ final class ReaderAsBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param max Buffer size
      * @since 0.13.3
@@ -90,7 +85,6 @@ final class ReaderAsBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param cset Charset
      * @param max Buffer size
@@ -101,7 +95,6 @@ final class ReaderAsBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param cset Charset, deferred
      * @param max Buffer size

@@ -23,7 +23,7 @@ import org.cactoos.Scalar;
  * ).value() // will try to run 5 times before throwing an exception
  * }</pre>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
@@ -53,7 +53,6 @@ public final class Retry<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param scalar Scalar original
      */
     public Retry(final Scalar<? extends T> scalar) {
@@ -62,7 +61,6 @@ public final class Retry<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param scalar Scalar original
      * @param wait The {@link Duration} to wait between attempts
      */
@@ -72,7 +70,6 @@ public final class Retry<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param scalar Scalar original
      * @param attempts Maximum number of attempts
      */
@@ -82,7 +79,6 @@ public final class Retry<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param scalar Scalar original
      * @param attempts Maximum number of attempts
      * @param wait The {@link Duration} to wait between attempts
@@ -94,7 +90,6 @@ public final class Retry<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param scalar Func original
      * @param exit Exit condition, returns TRUE if there is no reason to try
      */
@@ -105,7 +100,6 @@ public final class Retry<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param scalar Func original
      * @param exit Exit condition, returns TRUE if there is no reason to try
      * @param wait The {@link Duration} to wait between attempts

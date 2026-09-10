@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Tests for {@link HashCode}.
- *
  * @since 1.0
  */
 final class HashCodeTest {

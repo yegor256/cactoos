@@ -5,7 +5,6 @@
 
 /**
  * Time, tests.
- *
  * @since 1.0
  */
 package org.cactoos.time;

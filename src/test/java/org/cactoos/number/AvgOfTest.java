@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link AvgOf}.
- *
  * @since 0.24
  */
 final class AvgOfTest {

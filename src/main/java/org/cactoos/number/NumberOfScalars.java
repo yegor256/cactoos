@@ -11,7 +11,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * {@link Number} from {@link Scalar}s.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
  */
@@ -41,7 +41,6 @@ public final class NumberOfScalars extends Number {
 
     /**
      * Ctor.
-     *
      * @param nbr Number
      */
     public NumberOfScalars(final Scalar<? extends Number> nbr) {
@@ -55,7 +54,6 @@ public final class NumberOfScalars extends Number {
 
     /**
      * Ctor.
-     *
      * @param lnm Long scalar
      * @param inm Integer scalar
      * @param fnm Float scalar

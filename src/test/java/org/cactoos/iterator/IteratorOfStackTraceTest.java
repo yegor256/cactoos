@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link StackTraceIterator}.
- *
  * @since 0.56
  */
 final class IteratorOfStackTraceTest {

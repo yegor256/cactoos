@@ -8,7 +8,6 @@ import org.cactoos.Text;
 
 /**
  * {@link Text} envelope.
- *
  * @since 0.32
  */
 public abstract class TextEnvelope implements Text {
@@ -20,7 +19,6 @@ public abstract class TextEnvelope implements Text {
 
     /**
      * Ctor.
-     *
      * @param text Text representing the text value
      */
     public TextEnvelope(final Text text) {

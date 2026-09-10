@@ -15,7 +15,6 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link HexOf}.
- *
  * @since 0.29
  */
 final class HexOfTest {
@@ -38,7 +37,6 @@ final class HexOfTest {
         MatcherAssert.assertThat(
             "Must convert hexadecimal text to bytes",
             new HexOf(
-                // @checkstyle FullyQualifiedTypeCheck (1 line)
                 new org.cactoos.text.HexOf(
                     new BytesOf(bytes)
                 )

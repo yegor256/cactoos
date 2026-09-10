@@ -15,7 +15,7 @@ import org.cactoos.proc.UncheckedBiProc;
  * {@link UncheckedBiProc} decorator. Also
  * you may try {@link IoCheckedBiProc}.</p>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of input
  * @param <Y> Type of input
@@ -26,7 +26,6 @@ public interface BiProc<X, Y> {
 
     /**
      * Execute it.
-     *
      * @param first The first argument
      * @param second The second argument
      * @throws Exception If fails

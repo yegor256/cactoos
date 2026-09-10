@@ -21,7 +21,7 @@ import org.cactoos.iterable.IterableOf;
  * // ... more attributes
  * return hash;
  * }
- * }</p>
+ * }
  *
  * <p>With this:
  * {@code
@@ -31,9 +31,9 @@ import org.cactoos.iterable.IterableOf;
  * this.attr1, this.attr2, this.attr3, ...
  * ).value();
  * }
- * }</p>
+ * }
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0
  */
@@ -48,7 +48,7 @@ public final class HashCode implements Scalar<Integer> {
      * Ctor.
      *
      * <p>The {@code initial} and {@code multiplier} values are arbitrarily
-     * set to 17 and 31 respectively.</p>
+     * set to 17 and 31 respectively.
      *
      * @param attributes The object's attributes
      */
@@ -60,7 +60,7 @@ public final class HashCode implements Scalar<Integer> {
      * Ctor.
      *
      * <p>The {@code initial} and {@code multiplier} values are arbitrarily
-     * set to 17 and 31 respectively.</p>
+     * set to 17 and 31 respectively.
      *
      * @param attributes The object's attributes
      */
@@ -70,7 +70,6 @@ public final class HashCode implements Scalar<Integer> {
 
     /**
      * Ctor.
-     *
      * @param initial Initial value (non-zero recommended)
      * @param multiplier Step multiplier (odd prime recommended)
      * @param attributes The object's attributes
@@ -83,7 +82,6 @@ public final class HashCode implements Scalar<Integer> {
 
     /**
      * Ctor.
-     *
      * @param initial Initial value (non-zero recommended)
      * @param multiplier Step multiplier (odd prime recommended)
      * @param attributes The object's attributes
@@ -104,7 +102,6 @@ public final class HashCode implements Scalar<Integer> {
 
     /**
      * Ctor.
-     *
      * @param hash Hashcode
      */
     private HashCode(final Scalar<Integer> hash) {

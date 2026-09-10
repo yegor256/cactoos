@@ -32,7 +32,6 @@ public final class NoNulls<X> implements Collection<X> {
      * <li>The client queries items of original Collection of ? extends X</li>
      * <li>Runtime exception occurs</li>
      * </ol>
-     *
      * @param items Original one
      */
     public NoNulls(final Collection<X> items) {

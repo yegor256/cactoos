@@ -24,7 +24,7 @@ import org.cactoos.scalar.AndWithIndex;
  * ); // will print 1: 'Mary' 2: 'John' 3: 'William' 4: 'Napkin' to standard output
  * }
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> The type to iterate over
  * @since 1.0
@@ -38,7 +38,6 @@ public final class ForEachWithIndex<X> implements Proc<Iterable<X>> {
 
     /**
      * Ctor.
-     *
      * @param proc The proc to execute
      */
     public ForEachWithIndex(final BiProc<X, Integer> proc) {

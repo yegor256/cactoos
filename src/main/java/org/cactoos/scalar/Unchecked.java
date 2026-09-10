@@ -11,7 +11,7 @@ import org.cactoos.Scalar;
 /**
  * Scalar that doesn't throw checked {@link Exception}.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <T> Type of result
  * @since 0.3
@@ -25,7 +25,6 @@ public final class Unchecked<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     *
      * @param scalar Encapsulated origin
      */
     public Unchecked(final Scalar<? extends T> scalar) {

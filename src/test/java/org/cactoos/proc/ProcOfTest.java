@@ -12,7 +12,6 @@ import org.llorllale.cactoos.matchers.Satisfies;
 
 /**
  * Test case for {@link ProcOf}.
- *
  * @since 0.3
  */
 final class ProcOfTest {

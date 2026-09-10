@@ -29,7 +29,7 @@ import org.cactoos.text.FormattedText;
  * use the {@link Unchecked} decorator. Or you may use
  * {@link IoChecked} to wrap it in an IOException.</p>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @see Unchecked
  * @see IoChecked
@@ -54,7 +54,6 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -66,7 +65,6 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -83,7 +81,6 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param src The iterable
      */
     @SafeVarargs
@@ -93,7 +90,6 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param src The iterable
      */
     public AndInThreads(final Iterable<? extends Scalar<Boolean>> src) {
@@ -102,7 +98,6 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param svc Executable service to run thread in
      * @param proc Proc to map
      * @param src The iterable
@@ -119,7 +114,6 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param svc Executable service to run thread in
      * @param func Func to map
      * @param src The iterable
@@ -136,7 +130,6 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param svc Executable service to run thread in
      * @param proc Proc to use
      * @param src The iterable
@@ -152,7 +145,6 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param svc Executable service to run thread in
      * @param func Func to map
      * @param src The iterable
@@ -174,7 +166,6 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param svc Executable service to run thread in
      * @param src The iterable
      */
@@ -186,7 +177,6 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param svc Executable service to run thread in
      * @param src The iterable
      */
@@ -197,7 +187,6 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param svc Executable service, deferred
      * @param src The iterable
      * @param sht Shut it down

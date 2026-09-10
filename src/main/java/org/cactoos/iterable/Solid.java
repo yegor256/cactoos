@@ -16,7 +16,6 @@ public final class Solid<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
-     *
      * @param src The underlying iterable
      */
     @SafeVarargs
@@ -26,7 +25,6 @@ public final class Solid<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
-     *
      * @param iterable The iterable
      */
     public Solid(final Iterable<? extends X> iterable) {

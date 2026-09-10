@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 /**
  * Testing correctness of SplitPreserveAllTokens.
  * Compare with Split class in specified cases.
- *
  * @since 0.0
  */
 final class SplitPreserveTest {

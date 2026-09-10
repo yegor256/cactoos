@@ -6,7 +6,6 @@ package org.cactoos;
 
 /**
  * Function that accepts three arguments.
- *
  * @param <X> Type of input
  * @param <Y> Type of input
  * @param <Z> Type of input
@@ -18,7 +17,6 @@ public interface TriFunc<X, Y, Z, W> {
 
     /**
      * Apply it.
-     *
      * @param first The first argument
      * @param second The second argument
      * @param third The third argument

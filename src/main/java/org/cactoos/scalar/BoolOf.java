@@ -11,7 +11,7 @@ import org.cactoos.text.TextOf;
 /**
  * Text as {@link Boolean}.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
@@ -30,7 +30,6 @@ public final class BoolOf implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param txt True or false string
      */
     public BoolOf(final String txt) {
@@ -39,7 +38,6 @@ public final class BoolOf implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     *
      * @param text True or false text
      */
     public BoolOf(final Text text) {

@@ -13,7 +13,6 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test Case for {@link Solid}.
- *
  * @since 0.24
  */
 final class SolidTest {

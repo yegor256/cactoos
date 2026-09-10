@@ -10,7 +10,6 @@ import org.cactoos.Input;
 
 /**
  * Input that returns content in small portions.
- *
  * @since 0.12
  */
 final class SlowInput implements Input {
@@ -22,7 +21,6 @@ final class SlowInput implements Input {
 
     /**
      * Ctor.
-     *
      * @param size The size of the array to encapsulate
      */
     SlowInput(final long size) {
@@ -31,7 +29,6 @@ final class SlowInput implements Input {
 
     /**
      * Ctor.
-     *
      * @param size The size of the array to encapsulate
      */
     SlowInput(final int size) {
@@ -40,7 +37,6 @@ final class SlowInput implements Input {
 
     /**
      * Ctor.
-     *
      * @param input Original input to encapsulate and make slower
      */
     SlowInput(final Input input) {

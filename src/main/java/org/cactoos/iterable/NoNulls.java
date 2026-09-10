@@ -9,7 +9,7 @@ import java.util.Iterator;
 /**
  * A decorator for {@link Iterable} that doesn't allow any NULL.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of item
  * @since 0.27
@@ -23,7 +23,6 @@ public final class NoNulls<X> implements Iterable<X> {
 
     /**
      * Ctor.
-     *
      * @param items The items
      */
     public NoNulls(final Iterable<? extends X> items) {

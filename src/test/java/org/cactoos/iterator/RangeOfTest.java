@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test of range implementation.
- *
  * @since 1.0
  */
 @SuppressWarnings("PMD.UnnecessaryLocalRule")

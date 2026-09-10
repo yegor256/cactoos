@@ -25,7 +25,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param list List of entries
      */
     @SafeVarargs
@@ -35,7 +34,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param map The map to extend
      * @param list List of entries
      */
@@ -46,7 +44,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param key Func to create key
      * @param value Func to create value
      * @param map The map to extend
@@ -68,7 +65,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param list List of items
      * @param key Func to create key
      * @param value Func to create value
@@ -84,7 +80,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param entry Func to create entry
      * @param list List of items
      * @param <Z> Type of items in the list
@@ -99,7 +94,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param entry Func to create entry
      * @param list List of items
      * @param <Z> Type of items in the list
@@ -113,7 +107,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param entry Func to create entry
      * @param map The map to extend
      * @param list List of items
@@ -129,7 +122,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param list Entries for the entries
      */
     public Synced(final Iterable<Map.Entry<? extends X, ? extends Y>> list) {
@@ -138,7 +130,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param map Pre-existing map we want to extend
      * @param list Entries for the entries
      */
@@ -151,7 +142,6 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param map The map
      */
     public Synced(final Map<? extends X, ? extends Y> map) {

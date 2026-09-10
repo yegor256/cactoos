@@ -25,11 +25,10 @@ import org.cactoos.scalar.Unchecked;
 /**
  * An {@link Input} that encapsulates other sources of data.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.11.8
  */
-@SuppressWarnings("PMD.CloseInlineResourceRule")
 public final class InputOf implements Input {
 
     /**
@@ -39,7 +38,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param file The file
      */
     @SuppressWarnings("PMD.AvoidFileStream")
@@ -53,7 +51,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param path The path
      */
     @SuppressWarnings("PMD.AvoidFileStream")
@@ -63,7 +60,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param uri The URI
      */
     public InputOf(final URI uri) {
@@ -72,7 +68,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param url The URL
      */
     public InputOf(final URL url) {
@@ -81,7 +76,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param url The url
      * @param proxy The proxy through which the connection is made
      */
@@ -91,7 +85,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param scalar The url
      */
     public InputOf(final Scalar<URL> scalar) {
@@ -100,7 +93,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      */
     public InputOf(final Reader rdr) {
@@ -109,7 +101,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param charset Charset
      */
@@ -119,7 +110,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param charset Charset
      */
@@ -129,7 +119,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param max Buffer size
      * @since 0.13.3
@@ -140,7 +129,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param charset Charset
      * @param max Buffer size
@@ -151,7 +139,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param rdr Reader
      * @param charset Charset
      * @param max Buffer size
@@ -163,7 +150,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param chars The chars
      */
     public InputOf(final char... chars) {
@@ -172,7 +158,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param chars The chars
      * @param charset The charset
      */
@@ -182,7 +167,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param chars The chars
      * @param charset The charset
      */
@@ -192,7 +176,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param source The string
      */
     public InputOf(final CharSequence source) {
@@ -201,7 +184,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param source The string
      * @param charset The charset
      */
@@ -211,7 +193,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param source The string
      * @param charset The charset
      */
@@ -221,7 +202,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param text The text
      */
     public InputOf(final Text text) {
@@ -230,7 +210,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param charset The charset
      */
@@ -240,7 +219,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param text The text
      * @param charset The charset
      */
@@ -250,7 +228,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param error The exception to serialize
      */
     public InputOf(final Throwable error) {
@@ -259,7 +236,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param error The exception to serialize
      * @param charset Charset
      */
@@ -269,7 +245,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param error The exception to serialize
      * @param charset Charset
      */
@@ -279,7 +254,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param bytes The bytes
      */
     public InputOf(final byte[] bytes) {
@@ -288,7 +262,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param src The bytes
      */
     public InputOf(final Bytes src) {
@@ -301,7 +274,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param stream The stream
      */
     public InputOf(final InputStream stream) {
@@ -310,7 +282,6 @@ public final class InputOf implements Input {
 
     /**
      * Ctor.
-     *
      * @param input The input
      */
     private InputOf(final Input input) {

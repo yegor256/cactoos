@@ -23,7 +23,6 @@ public final class Union<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param first First set
      * @param second Second set
      */
@@ -33,7 +32,6 @@ public final class Union<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param first First iterator
      * @param second Second iterator
      */
@@ -46,7 +44,6 @@ public final class Union<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param first First iterable supplier
      * @param second Second iterable supplier
      */
@@ -70,7 +67,6 @@ public final class Union<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
-     *
      * @param first First set
      * @param second Second set
      */

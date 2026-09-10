@@ -13,7 +13,7 @@ import org.cactoos.scalar.IoChecked;
  * Bytes that doesn't throw checked {@link Exception},
  * but only throws {@link IOException}.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.52
  */
@@ -27,7 +27,6 @@ public final class IoCheckedBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param bts Encapsulated bytes
      */
     public IoCheckedBytes(final Bytes bts) {
@@ -36,7 +35,6 @@ public final class IoCheckedBytes implements Bytes {
 
     /**
      * Ctor.
-     *
      * @param bts Encapsulated bytes
      * @param fbk Fallback
      * @since 0.5

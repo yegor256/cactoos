@@ -8,7 +8,6 @@ import org.cactoos.BiProc;
 
 /**
  * BiProc check for no nulls.
- *
  * @param <X> Type of input
  * @param <Y> Type of input
  * @since 0.20
@@ -22,7 +21,6 @@ public final class BiProcNoNulls<X, Y> implements BiProc<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param proc The function
      */
     public BiProcNoNulls(final BiProc<? super X, ? super Y> proc) {

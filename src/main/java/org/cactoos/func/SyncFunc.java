@@ -30,7 +30,6 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param fnc Func original
      */
     public SyncFunc(final Func<X, Y> fnc) {
@@ -39,7 +38,6 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
-     *
      * @param fnc Func original
      * @param lck Sync lock
      */

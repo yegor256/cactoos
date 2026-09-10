@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 /**
  * Fake logger.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.29
  */
@@ -36,7 +36,6 @@ public final class FakeLogger extends Logger {
 
     /**
      * Ctor.
-     *
      * @param lvl Logging level
      */
     public FakeLogger(final Level lvl) {
@@ -45,7 +44,6 @@ public final class FakeLogger extends Logger {
 
     /**
      * Ctor.
-     *
      * @param name Logger name
      */
     public FakeLogger(final String name) {
@@ -54,7 +52,6 @@ public final class FakeLogger extends Logger {
 
     /**
      * Ctor.
-     *
      * @param name Logger name
      * @param lvl Logging level
      */

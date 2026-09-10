@@ -21,7 +21,7 @@ import org.cactoos.scalar.Ternary;
  * int avg = new AvgOf(numbers).intValue();
  * </pre>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 1.0.0
  */
@@ -34,7 +34,6 @@ public final class AvgOf extends NumberEnvelope {
 
     /**
      * Ctor.
-     *
      * @param src Numbers
      */
     public AvgOf(final Number... src) {
@@ -43,7 +42,6 @@ public final class AvgOf extends NumberEnvelope {
 
     /**
      * Ctor.
-     *
      * @param src The iterable
      */
     public AvgOf(final Iterable<? extends Number> src) {

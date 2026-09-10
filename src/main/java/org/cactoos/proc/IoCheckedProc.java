@@ -11,7 +11,7 @@ import org.cactoos.Proc;
  * Proc that doesn't throw checked {@link Exception}, but
  * throws {@link IOException} instead.
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @param <X> Type of input
  * @since 0.4
@@ -25,7 +25,6 @@ public final class IoCheckedProc<X> implements Proc<X> {
 
     /**
      * Ctor.
-     *
      * @param prc Encapsulated func
      */
     public IoCheckedProc(final Proc<X> prc) {

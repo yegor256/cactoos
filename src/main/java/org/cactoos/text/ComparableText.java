@@ -19,7 +19,7 @@ import org.cactoos.scalar.Unchecked;
  * )
  * }</pre>
  *
- * <p>There is no thread-safety guarantee.</p>
+ * <p>There is no thread-safety guarantee.
  *
  * @since 0.27
  */
@@ -32,7 +32,6 @@ public final class ComparableText implements Text, Comparable<ComparableText> {
 
     /**
      * Ctor.
-     *
      * @param text The text
      */
     public ComparableText(final Text text) {

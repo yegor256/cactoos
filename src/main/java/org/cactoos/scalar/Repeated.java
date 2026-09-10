@@ -9,7 +9,6 @@ import org.cactoos.func.FuncOf;
 
 /**
  * Scalar that runs repeatedly for a number of times.
- *
  * @param <X> Type of output
  * @since 0.49.2
  */
