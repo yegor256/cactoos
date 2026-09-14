@@ -4,6 +4,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -18,6 +19,16 @@ import org.cactoos.Text;
  * @since 0.47
  */
 public final class Sticky extends TextEnvelope {
+
+    /**
+     * Ctor.
+     *
+     * @param input Input to cache
+     * @since 0.73.2
+     */
+    public Sticky(final Input input) {
+        this(new TextOf(input));
+    }
 
     /**
      * Ctor.

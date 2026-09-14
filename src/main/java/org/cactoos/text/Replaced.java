@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import org.cactoos.Func;
+import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 
@@ -18,6 +19,25 @@ import org.cactoos.Text;
  * @since 0.2
  */
 public final class Replaced extends TextEnvelope {
+
+    /**
+     * Ctor.
+     *
+     * <p>Will replace all instances of the substring matched by {@code find}
+     * with {@code replace}.</p>
+     *
+     * @param input The input
+     * @param find The regular expression
+     * @param replace The replacement string
+     * @since 0.73.2
+     */
+    public Replaced(
+        final Input input,
+        final CharSequence find,
+        final CharSequence replace
+    ) {
+        this(new TextOf(input), find, replace);
+    }
 
     /**
      * Ctor.
@@ -35,6 +55,40 @@ public final class Replaced extends TextEnvelope {
         final CharSequence replace
     ) {
         this(text, () -> Pattern.compile(find.toString()), matcher -> replace);
+    }
+
+    /**
+     * Ctor.
+     *
+     * <p>The given {@link Pattern regex} is used to produce a
+     * {@link Pattern#matcher(CharSequence) matcher} that will be
+     * transformed by {@code func} into a replacement string to replace each
+     * {@link Matcher#find() matching} substring.</p>
+     *
+     * <p>Example usage:</p>
+     * <pre>{@code
+     * final String result = new Replaced(
+     *      new TextOf("one two THREE four FIVE six"),
+     *      () -> Pattern.compile("[a-z]+"),
+     *      matcher -> String.valueOf(matcher.group().length())
+     * ).asString();  //will return the string "3 3 THREE 4 FIVE 3"
+     * }</pre>
+     *
+     * <p>Note: a {@link PatternSyntaxException} will be thrown if the
+     * regular expression's syntax is invalid.</p>
+     *
+     * @param input The input
+     * @param regex The regular expression
+     * @param func Transforms the resulting matcher object into a replacement
+     *  string; any exceptions will be wrapped in an {@link IOException}
+     * @since 0.73.2
+     */
+    public Replaced(
+        final Input input,
+        final Scalar<Pattern> regex,
+        final Func<? super Matcher, ? extends CharSequence> func
+    ) {
+        this(new TextOf(input), regex, func);
     }
 
     /**

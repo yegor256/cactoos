@@ -6,6 +6,7 @@ package org.cactoos.text;
 
 import java.util.regex.Pattern;
 import org.cactoos.Func;
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -21,10 +22,32 @@ public final class Strict extends TextEnvelope {
      * Ctor.
      *
      * @param pattern The Pattern for validating encapsulated text
+     * @param origin The Input
+     * @since 0.73.2
+     */
+    public Strict(final Pattern pattern, final Input origin) {
+        this(pattern, new TextOf(origin));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param pattern The Pattern for validating encapsulated text
      * @param origin The Text
      */
     public Strict(final Pattern pattern, final Text origin) {
         this(str -> pattern.matcher(str).matches(), origin);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param predicate The Func as a predicate
+     * @param origin The Input
+     * @since 0.73.2
+     */
+    public Strict(final Func<? super String, Boolean> predicate, final Input origin) {
+        this(predicate, new TextOf(origin));
     }
 
     /**

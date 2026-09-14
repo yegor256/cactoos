@@ -4,6 +4,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -13,6 +14,16 @@ import org.cactoos.Text;
  * @since 0.13.3
  */
 public final class SwappedCase extends TextEnvelope {
+
+    /**
+     * Ctor.
+     *
+     * @param input The input
+     * @since 0.73.2
+     */
+    public SwappedCase(final Input input) {
+        this(new TextOf(input));
+    }
 
     /**
      * Ctor.
