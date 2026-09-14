@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.Text;
+import org.cactoos.io.ResourceOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
@@ -30,7 +31,7 @@ final class UncheckedTextTest {
         MatcherAssert.assertThat(
             "Must throw an exception when something goes wrong",
             new UncheckedText(
-                () -> {
+                (Text) () -> {
                     throw new IOException("intended");
                 }
             )::asString,
@@ -99,6 +100,17 @@ final class UncheckedTextTest {
                 new TextOf("is not equals to not Text object")
             ),
             new IsNot<>(new IsEqual<>(null))
+        );
+    }
+
+    @Test
+    void readsFromInput() {
+        MatcherAssert.assertThat(
+            "Must read text from an input",
+            new UncheckedText(
+                new ResourceOf("org/cactoos/small-text.txt")
+            ).asString(),
+            new StringContains("Lorem ipsum")
         );
     }
 
