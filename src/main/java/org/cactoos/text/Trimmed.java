@@ -4,6 +4,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -24,6 +25,16 @@ import org.cactoos.Text;
  * @since 0.1
  */
 public final class Trimmed extends TextEnvelope {
+
+    /**
+     * Ctor.
+     *
+     * @param input The input
+     * @since 0.73.2
+     */
+    public Trimmed(final Input input) {
+        this(new TextOf(input));
+    }
 
     /**
      * Ctor.
