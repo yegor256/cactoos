@@ -5,7 +5,10 @@
 package org.cactoos.text;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.io.File;
+import java.nio.file.Path;
 import org.cactoos.Func;
+import org.cactoos.Input;
 import org.cactoos.Text;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.scalar.And;
@@ -38,6 +41,36 @@ public final class UncheckedText implements Text {
      */
     public UncheckedText(final CharSequence txt) {
         this(new TextOf(txt));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param input Encapsulated input
+     * @since 0.73.2
+     */
+    public UncheckedText(final Input input) {
+        this(new TextOf(input));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param path Encapsulated path
+     * @since 0.73.2
+     */
+    public UncheckedText(final Path path) {
+        this(new TextOf(path));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param file Encapsulated file
+     * @since 0.73.2
+     */
+    public UncheckedText(final File file) {
+        this(new TextOf(file));
     }
 
     /**

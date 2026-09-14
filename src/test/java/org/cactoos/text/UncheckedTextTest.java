@@ -5,13 +5,18 @@
 package org.cactoos.text;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.cactoos.Text;
+import org.cactoos.io.ResourceOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.StringContains;
 import org.hamcrest.object.HasToString;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -26,7 +31,7 @@ final class UncheckedTextTest {
         MatcherAssert.assertThat(
             "Must throw an exception when something goes wrong",
             new UncheckedText(
-                () -> {
+                (Text) () -> {
                     throw new IOException("intended");
                 }
             )::asString,
@@ -95,6 +100,41 @@ final class UncheckedTextTest {
                 new TextOf("is not equals to not Text object")
             ),
             new IsNot<>(new IsEqual<>(null))
+        );
+    }
+
+    @Test
+    void readsFromInput() {
+        MatcherAssert.assertThat(
+            "Must read text from an input",
+            new UncheckedText(
+                new ResourceOf("org/cactoos/small-text.txt")
+            ).asString(),
+            new StringContains("Lorem ipsum")
+        );
+    }
+
+    @Test
+    void readsFromPath(@TempDir final Path wdir) throws IOException {
+        final String message = "Hello, path!";
+        final Path path = wdir.resolve("unchecked-text-path.txt");
+        Files.write(path, message.getBytes(StandardCharsets.UTF_8));
+        MatcherAssert.assertThat(
+            "Must read text from a path",
+            new UncheckedText(path).asString(),
+            new IsEqual<>(message)
+        );
+    }
+
+    @Test
+    void readsFromFile(@TempDir final Path wdir) throws IOException {
+        final String message = "Hello, file!";
+        final Path path = wdir.resolve("unchecked-text-file.txt");
+        Files.write(path, message.getBytes(StandardCharsets.UTF_8));
+        MatcherAssert.assertThat(
+            "Must read text from a file",
+            new UncheckedText(path.toFile()).asString(),
+            new IsEqual<>(message)
         );
     }
 
