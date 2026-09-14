@@ -4,6 +4,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasString;
@@ -21,6 +22,17 @@ final class TrimmedLeftTest {
             "Can't left trim a text",
             new TrimmedLeft(new TextOf("  Hello!   \t ")),
             new HasString("Hello!   \t ")
+        );
+    }
+
+    @Test
+    void convertsInput() {
+        MatcherAssert.assertThat(
+            "Can't left trim an input",
+            new TrimmedLeft(
+                new InputOf("  Hello, input!   \t ")
+            ),
+            new HasString("Hello, input!   \t ")
         );
     }
 
