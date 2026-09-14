@@ -7,6 +7,7 @@ package org.cactoos.text;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasString;
@@ -18,6 +19,31 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.2
  */
 final class ReplacedTest {
+
+    @Test
+    void replacesInputWithConstant() {
+        MatcherAssert.assertThat(
+            "Can't replace an input",
+            new Replaced(
+                new InputOf("Hello!"),
+                "ello", "i"
+            ),
+            new HasString("Hi!")
+        );
+    }
+
+    @Test
+    void replacesInputWithRegex() {
+        MatcherAssert.assertThat(
+            "Can't replace an input with regex",
+            new Replaced(
+                new InputOf("one cow two cows in the yard"),
+                () -> Pattern.compile("cow"),
+                matcher -> "pig"
+            ),
+            new HasString("one pig two pigs in the yard")
+        );
+    }
 
     @Test
     void replaceText() {

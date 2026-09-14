@@ -4,6 +4,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -12,6 +13,17 @@ import org.cactoos.Text;
  * @since 0.12
  */
 public final class Rotated extends TextEnvelope {
+
+    /**
+     * Ctor.
+     *
+     * @param input The input
+     * @param shift The shift
+     * @since 0.73.2
+     */
+    public Rotated(final Input input, final int shift) {
+        this(new TextOf(input), shift);
+    }
 
     /**
      * Ctor.

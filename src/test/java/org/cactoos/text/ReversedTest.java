@@ -4,6 +4,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasString;
@@ -14,6 +15,17 @@ import org.llorllale.cactoos.matchers.HasString;
  * @since 0.2
  */
 final class ReversedTest {
+
+    @Test
+    void reverseInput() {
+        MatcherAssert.assertThat(
+            "Can't reverse an input",
+            new Reversed(
+                new InputOf("Hello!")
+            ),
+            new HasString("!olleH")
+        );
+    }
 
     @Test
     void reverseText() {

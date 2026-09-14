@@ -4,6 +4,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -14,6 +15,16 @@ import org.cactoos.Text;
  * @since 0.11
  */
 public final class NoNulls extends TextEnvelope {
+
+    /**
+     * Ctor.
+     *
+     * @param input The input
+     * @since 0.73.2
+     */
+    public NoNulls(final Input input) {
+        this(new TextOf(input));
+    }
 
     /**
      * Ctor.

@@ -6,6 +6,7 @@ package org.cactoos.text;
 
 import java.util.regex.Pattern;
 import org.cactoos.func.FuncOf;
+import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.IsText;
@@ -17,6 +18,27 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 1.0
  */
 final class StrictTest {
+
+    @Test
+    void returnsUnchangedInputIfPredicateIsPositive() {
+        MatcherAssert.assertThat(
+            "Given strings are not equal",
+            new Strict(s -> true, new InputOf("text")),
+            new IsText("text")
+        );
+    }
+
+    @Test
+    void returnsUnchangedInputIfMatchedWithPattern() {
+        MatcherAssert.assertThat(
+            "Given strings are not equal",
+            new Strict(
+                Pattern.compile("^[a-zA-Z0-9]+$"),
+                new InputOf("text1")
+            ),
+            new IsText("text1")
+        );
+    }
 
     /**
      * Ensures that Strict accepts a CharSequence predicate.

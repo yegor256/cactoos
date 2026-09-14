@@ -4,6 +4,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -14,6 +15,18 @@ import org.cactoos.Text;
  * @since 0.32
  */
 public final class PaddedStart extends TextEnvelope {
+
+    /**
+     * Ctor.
+     *
+     * @param input The input
+     * @param length The minimum length of the resulting string
+     * @param symbol The padding symbol
+     * @since 0.73.2
+     */
+    public PaddedStart(final Input input, final int length, final char symbol) {
+        this(new TextOf(input), length, symbol);
+    }
 
     /**
      * Ctor.

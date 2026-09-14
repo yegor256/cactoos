@@ -4,6 +4,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -18,10 +19,31 @@ public final class Synced extends TextEnvelope {
     /**
      * Ctor.
      *
+     * @param input The input
+     * @since 0.73.2
+     */
+    public Synced(final Input input) {
+        this(new TextOf(input));
+    }
+
+    /**
+     * Ctor.
+     *
      * @param text The text
      */
     public Synced(final Text text) {
         this(text, text);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param input The input
+     * @param lck The lock
+     * @since 0.73.2
+     */
+    public Synced(final Input input, final Object lck) {
+        this(new TextOf(input), lck);
     }
 
     /**

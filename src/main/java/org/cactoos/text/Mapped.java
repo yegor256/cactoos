@@ -5,6 +5,7 @@
 package org.cactoos.text;
 
 import org.cactoos.Func;
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -24,6 +25,18 @@ import org.cactoos.Text;
  * @since 0.47
  */
 public final class Mapped extends TextEnvelope {
+
+    /**
+     * Ctor.
+     *
+     * @param fnc Function to apply
+     * @param input Original input
+     * @since 0.73.2
+     */
+    public Mapped(final Func<? super String, ? extends CharSequence> fnc,
+        final Input input) {
+        this(fnc, new TextOf(input));
+    }
 
     /**
      * Ctor.
