@@ -401,7 +401,7 @@ An `IterableOf<>` wrapping a transformation does no work until iterated.
 This contrasts with [Guava's `ImmutableList.copyOf()`][guava-imm] and
   [Apache Commons Collections][commons-col], which materialize elements at
   construction time.
-Explicit caching requires opting in with `Sticky` or `StickyList`.
+Explicit caching requires opting in with `Sticky`.
 
 **Checked exceptions as first-class interface contracts.**
 All core interfaces declare `throws Exception`; the library never silently
