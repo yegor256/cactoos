@@ -27,9 +27,9 @@ import org.cactoos.iterable.IterableOf;
 public final class Procs<X> implements Proc<X> {
 
     /**
-     * The procs.
+     * The origin.
      */
-    private final Iterable<Proc<? super X>> procs;
+    private final Iterable<Proc<? super X>> origin;
 
     /**
      * Ctor.
@@ -47,12 +47,12 @@ public final class Procs<X> implements Proc<X> {
      * @param procs The procs to execute
      */
     public Procs(final Iterable<Proc<? super X>> procs) {
-        this.procs = procs;
+        this.origin = procs;
     }
 
     @Override
     public void exec(final X input) throws Exception {
-        for (final Proc<? super X> proc : this.procs) {
+        for (final Proc<? super X> proc : this.origin) {
             proc.exec(input);
         }
     }

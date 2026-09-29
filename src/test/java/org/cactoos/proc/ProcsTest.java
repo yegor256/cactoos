@@ -7,9 +7,9 @@ package org.cactoos.proc;
 import java.util.List;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Assertions;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Procs}.
@@ -29,28 +29,48 @@ final class ProcsTest {
         MatcherAssert.assertThat(
             "Must run all procs on the same argument, in order",
             visited,
-            Matchers.contains(5, 10, 15)
+            new IsEqual<>(new ListOf<>(5, 10, 15))
         );
     }
 
     @Test
-    void stopsAtFirstFailure() {
+    void throwsFromFailingProc() {
+        MatcherAssert.assertThat(
+            "Must throw the exception of the first proc that fails",
+            () -> {
+                new Procs<Integer>(
+                    input -> { },
+                    input -> {
+                        throw new IllegalStateException("Intentionally failed");
+                    },
+                    input -> { }
+                ).exec(1);
+                return 1;
+            },
+            new Throws<>(IllegalStateException.class)
+        );
+    }
+
+    @Test
+    void stopsAtFirstFailure() throws Exception {
         final List<Integer> visited = new ListOf<>();
-        Assertions.assertThrows(
-            IllegalStateException.class,
-            () -> new Procs<Integer>(
+        try {
+            new Procs<Integer>(
                 visited::add,
                 input -> {
                     throw new IllegalStateException("Intentionally failed");
                 },
                 input -> visited.add(-1)
-            ).exec(1),
-            "Must stop at the first proc that throws"
-        );
-        MatcherAssert.assertThat(
-            "Must not run procs after the failure",
-            visited,
-            Matchers.contains(1)
-        );
+            ).exec(1);
+        } catch (final IllegalStateException failure) {
+            MatcherAssert.assertThat(
+                String.format(
+                    "Must not run procs after %s was thrown",
+                    failure.getMessage()
+                ),
+                visited,
+                new IsEqual<>(new ListOf<>(1))
+            );
+        }
     }
 }
