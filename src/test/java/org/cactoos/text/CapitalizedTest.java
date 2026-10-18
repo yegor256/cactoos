@@ -70,6 +70,23 @@ final class CapitalizedTest {
     }
 
     @Test
+    void capitalizeTextStartingWithSupplementaryCharacter() {
+        final String text = new StringBuilder()
+            .appendCodePoint(0x10428)
+            .append("bc")
+            .toString();
+        final String expected = new StringBuilder()
+            .appendCodePoint(0x10400)
+            .append("bc")
+            .toString();
+        MatcherAssert.assertThat(
+            "Must preserve text after a supplementary first character",
+            new Capitalized(text),
+            new IsText(expected)
+        );
+    }
+
+    @Test
     void capitalizeString() {
         MatcherAssert.assertThat(
             "Must capitalize string",
