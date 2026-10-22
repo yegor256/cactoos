@@ -47,7 +47,9 @@ public final class Capitalized extends TextEnvelope {
                                 )
                             )
                         ),
-                        new Sub(t, 1)
+                        new Sub(
+                            t, Character.charCount(t.asString().codePointAt(0))
+                        )
                     )
                 )
             )
