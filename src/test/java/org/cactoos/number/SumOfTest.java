@@ -146,4 +146,96 @@ final class SumOfTest {
             new IsEqual<>(4_294_967_300.0f)
         );
     }
+
+    @Test
+    void propagatesNanFromDouble() {
+        MatcherAssert.assertThat(
+            "sum with NaN should be NaN, just like double addition",
+            new SumOf(Double.NaN, 1.0d).doubleValue(),
+            new IsEqual<>(Double.NaN)
+        );
+    }
+
+    @Test
+    void propagatesNanWhenItIsNotFirst() {
+        MatcherAssert.assertThat(
+            "NaN should stay NaN when more finite numbers follow it",
+            new SumOf(1.0d, Double.NaN, 2.0d).doubleValue(),
+            new IsEqual<>(Double.NaN)
+        );
+    }
+
+    @Test
+    void propagatesPositiveInfinity() {
+        MatcherAssert.assertThat(
+            "sum with positive infinity should be positive infinity",
+            new SumOf(Double.POSITIVE_INFINITY, 1.0d).doubleValue(),
+            new IsEqual<>(Double.POSITIVE_INFINITY)
+        );
+    }
+
+    @Test
+    void propagatesNegativeInfinity() {
+        MatcherAssert.assertThat(
+            "sum with negative infinity should be negative infinity",
+            new SumOf(1.0d, Double.NEGATIVE_INFINITY, 2.0d).doubleValue(),
+            new IsEqual<>(Double.NEGATIVE_INFINITY)
+        );
+    }
+
+    @Test
+    void oppositeInfinitiesGiveNan() {
+        MatcherAssert.assertThat(
+            "sum of opposite infinities should be NaN",
+            new SumOf(
+                Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY
+            ).doubleValue(),
+            new IsEqual<>(Double.NaN)
+        );
+    }
+
+    @Test
+    void propagatesNanFromFloat() {
+        MatcherAssert.assertThat(
+            "sum with float NaN should be NaN",
+            new SumOf(Float.NaN, 1.0f).floatValue(),
+            new IsEqual<>(Float.NaN)
+        );
+    }
+
+    @Test
+    void propagatesInfinityFromFloat() {
+        MatcherAssert.assertThat(
+            "sum with float infinity should be infinity",
+            new SumOf(Float.POSITIVE_INFINITY, 1.0f).floatValue(),
+            new IsEqual<>(Float.POSITIVE_INFINITY)
+        );
+    }
+
+    @Test
+    void propagatesNanThroughNestedSum() {
+        MatcherAssert.assertThat(
+            "NaN should propagate through a sum of sums",
+            new SumOf(new SumOf(Double.NaN, 1.0d), 2.0d).doubleValue(),
+            new IsEqual<>(Double.NaN)
+        );
+    }
+
+    @Test
+    void nanSumHasZeroIntValue() {
+        MatcherAssert.assertThat(
+            "NaN sum should narrow to zero like (int) Double.NaN",
+            new SumOf(Double.NaN, 1.0d).intValue(),
+            new IsEqual<>(0)
+        );
+    }
+
+    @Test
+    void keepsExactPrecisionForFiniteValues() {
+        MatcherAssert.assertThat(
+            "finite values should still be summed with BigDecimal precision",
+            new SumOf(0.1d, 0.2d).doubleValue(),
+            new IsEqual<>(0.3d)
+        );
+    }
 }
