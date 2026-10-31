@@ -73,4 +73,13 @@ final class SubTest {
             new HasString("wor")
         );
     }
+
+    @Test
+    void cutsNothingWhenStartIsBeyondLength() {
+        MatcherAssert.assertThat(
+            "Must not fail when start is beyond the length of the text",
+            new Sub("hi", 10, -1),
+            new HasString("")
+        );
+    }
 }

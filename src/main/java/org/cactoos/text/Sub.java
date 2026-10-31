@@ -144,20 +144,14 @@ public final class Sub extends TextEnvelope {
                     if (begin < 0) {
                         begin = origin.length() + begin;
                     }
-                    if (begin < 0) {
-                        begin = 0;
-                    }
                     int finish = end.apply(origin);
                     if (finish < 0) {
                         finish = origin.length() + finish;
                     }
-                    if (finish > origin.length()) {
-                        finish = origin.length();
-                    }
-                    if (finish < 0) {
-                        finish = 0;
-                    }
-                    return origin.substring(begin, finish);
+                    finish = Math.max(0, Math.min(finish, origin.length()));
+                    return origin.substring(
+                        Math.max(0, Math.min(begin, finish)), finish
+                    );
                 },
                 text
             )
