@@ -15,6 +15,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.cactoos.Input;
 import org.cactoos.bytes.BytesOf;
+import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.Ternary;
+import org.cactoos.text.Joined;
 
 /**
  * Zip files and directory.
@@ -53,7 +56,16 @@ public final class Zip implements Input {
         try (ZipOutputStream zip = new ZipOutputStream(out)) {
             for (final Path path : this.origin) {
                 final File file = path.toFile();
-                zip.putNextEntry(new ZipEntry(file.getPath()));
+                zip.putNextEntry(
+                    new ZipEntry(
+                        new Joined(
+                            "/",
+                            new Mapped<>(Object::toString, path)
+                        ).asString().concat(
+                            new Ternary<>(file.isDirectory(), "/", "").value()
+                        )
+                    )
+                );
                 if (file.isFile()) {
                     try (
                         FileInputStream input = new FileInputStream(file)
