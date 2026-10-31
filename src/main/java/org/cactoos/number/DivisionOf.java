@@ -5,6 +5,7 @@
 package org.cactoos.number;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import org.cactoos.Scalar;
 
 /**
@@ -28,7 +29,7 @@ public final class DivisionOf extends NumberEnvelope {
      * @param divisor The divisor
      */
     public DivisionOf(final BigDecimal dividend, final BigDecimal divisor) {
-        this(() -> dividend.divide(divisor));
+        this(() -> dividend.divide(divisor, MathContext.DECIMAL128));
     }
 
     /**
@@ -40,7 +41,8 @@ public final class DivisionOf extends NumberEnvelope {
     public DivisionOf(final Number dividend, final Number divisor) {
         this(
             () -> new BigDecimal(dividend.toString()).divide(
-                new BigDecimal(divisor.toString())
+                new BigDecimal(divisor.toString()),
+                MathContext.DECIMAL128
             )
         );
     }

@@ -7,6 +7,7 @@ package org.cactoos.number;
 import java.math.BigDecimal;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.number.IsCloseTo;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.IsNumber;
 
@@ -59,6 +60,24 @@ final class DivisionOfTest {
             "Must divide BigDecimal numbers",
             new DivisionOf(BigDecimal.valueOf(2d), BigDecimal.valueOf(4d)),
             new IsNumber(0.5)
+        );
+    }
+
+    @Test
+    void dividesIntoNonTerminatingQuotient() {
+        MatcherAssert.assertThat(
+            "Must divide numbers whose quotient does not terminate",
+            new DivisionOf(1, 3).doubleValue(),
+            new IsCloseTo(1d / 3d, 1e-15)
+        );
+    }
+
+    @Test
+    void dividesBigDecimalsIntoNonTerminatingQuotient() {
+        MatcherAssert.assertThat(
+            "Must divide BigDecimal numbers whose quotient does not terminate",
+            new DivisionOf(BigDecimal.valueOf(22), BigDecimal.valueOf(7)),
+            new IsNumber(22d / 7d)
         );
     }
 }
