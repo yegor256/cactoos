@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -9,7 +9,7 @@ import org.cactoos.Bytes;
 /**
  * Hexadecimal representation of Bytes.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.28
  */
@@ -25,6 +25,7 @@ public final class HexOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param bytes The bytes
      */
     public HexOf(final Bytes bytes) {
@@ -33,11 +34,12 @@ public final class HexOf extends TextEnvelope {
                 () -> {
                     final byte[] bts = bytes.asBytes();
                     final char[] hex = new char[bts.length * 2];
-                    int chr = -1;
-                    for (final byte currentbyte: bts) {
-                        final int value = 0xff & (int) currentbyte;
-                        hex[++chr] = HexOf.HEX_CHARS[value >>> 4];
-                        hex[++chr] = HexOf.HEX_CHARS[value & 0x0f];
+                    int chr = 0;
+                    for (final byte currentbyte : bts) {
+                        final int value = 0xFF & currentbyte;
+                        hex[chr] = HexOf.HEX_CHARS[value >>> 4];
+                        hex[chr + 1] = HexOf.HEX_CHARS[value & 0x0F];
+                        chr += 2;
                     }
                     return new String(hex);
                 }

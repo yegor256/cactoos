@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.func;
@@ -15,6 +15,7 @@ import org.cactoos.Func;
  * @param <Y> Type of output
  * @since 0.4
  */
+@SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class SyncFunc<X, Y> implements Func<X, Y> {
 
     /**
@@ -29,6 +30,7 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      */
     public SyncFunc(final Func<X, Y> fnc) {
@@ -37,6 +39,7 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      * @param lck Sync lock
      */

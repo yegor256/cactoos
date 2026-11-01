@@ -1,14 +1,14 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
 
 import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 
 /**
@@ -20,7 +20,7 @@ final class ReversedTest {
 
     @Test
     void reversesIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must reverse the iterator",
             new ListOf<>(
                 new Reversed<>(
@@ -32,12 +32,12 @@ final class ReversedTest {
                     new IteratorOf<>("s", "o", "o", "t", "c", "a", "c")
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
     void reversesEmptyList() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must reverse empty list",
             new ListOf<>(
                 new Reversed<>(
@@ -45,12 +45,12 @@ final class ReversedTest {
                 )
             ),
             new IsEmptyCollection<>()
-        ).affirm();
+        );
     }
 
     @Test
     void iteratorSizeReversed() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must be the same size",
             new ListOf<>(
                 new Reversed<>(
@@ -58,7 +58,6 @@ final class ReversedTest {
                 )
             ),
             new HasSize(7)
-        ).affirm();
+        );
     }
-
 }

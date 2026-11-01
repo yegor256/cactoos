@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -13,7 +13,7 @@ import org.cactoos.func.UncheckedFunc;
  * Text that doesn't throw checked {@link Exception}, but only
  * throws {@link IOException}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.51
  */
@@ -31,6 +31,7 @@ public final class IoCheckedText implements Text {
 
     /**
      * Ctor.
+     *
      * @param txt Encapsulated text
      * @since 0.9
      */
@@ -40,6 +41,7 @@ public final class IoCheckedText implements Text {
 
     /**
      * Ctor.
+     *
      * @param txt Encapsulated text
      */
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
@@ -54,6 +56,7 @@ public final class IoCheckedText implements Text {
 
     /**
      * Ctor.
+     *
      * @param txt Encapsulated text
      * @param fbk Fallback func if {@link Exception} happens
      * @since 0.5
@@ -64,7 +67,7 @@ public final class IoCheckedText implements Text {
     }
 
     @Override
-    @SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.AvoidRethrowingException"})
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public String asString() throws IOException {
         String txt;
         try {
@@ -92,5 +95,4 @@ public final class IoCheckedText implements Text {
     public int hashCode() {
         return this.toString().hashCode();
     }
-
 }

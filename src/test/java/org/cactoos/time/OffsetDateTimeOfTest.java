@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.time;
@@ -7,21 +7,20 @@ package org.cactoos.time;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Tests for {@link OffsetDateTimeOf}.
+ *
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class OffsetDateTimeOfTest {
 
     @Test
-    void testParsingIsoFormattedStringToOffsetDateTime() {
-        new Assertion<>(
+    void parsesIsoFormattedStringToOffsetDateTime() {
+        MatcherAssert.assertThat(
             "Can't parse a OffsetDateTime with default/ISO format.",
             new OffsetDateTimeOf("2017-12-13T14:15:16.000000017+01:00"),
             new HasValue<>(
@@ -29,12 +28,12 @@ final class OffsetDateTimeOfTest {
                     2017, 12, 13, 14, 15, 16, 17, ZoneOffset.ofHours(1)
                 )
             )
-        ).affirm();
+        );
     }
 
     @Test
-    void testParsingFormattedStringWithOffsetToOffsetDateTime() {
-        new Assertion<>(
+    void parsesFormattedStringWithOffsetToOffsetDateTime() {
+        MatcherAssert.assertThat(
             "Can't parse a OffsetDateTime with custom format.",
             new OffsetDateTimeOf(
                 "2017-12-13 14:15:16",
@@ -47,7 +46,6 @@ final class OffsetDateTimeOfTest {
                     ZoneOffset.ofHours(1)
                 )
             )
-        ).affirm();
+        );
     }
-
 }

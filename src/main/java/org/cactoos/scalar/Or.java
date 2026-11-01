@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -24,10 +24,10 @@ import org.cactoos.iterable.Mapped;
  *
  * {@code
  * new Or(
- *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input) ),
- *    new IterableOf<>("Mary", "John", "William", "Napkin")
+ * new ProcOf<>(input -> System.out.printf("\'%s\' ", input) ),
+ * new IterableOf<>("Mary", "John", "William", "Napkin")
  * ).value(); // will print 'Mary' 'John' 'William' 'Napkin' to standard output
- *            // the result of this operation is always false
+ * // the result of this operation is always false
  * }
  *
  * <p>This class could be also used for matching multiple boolean
@@ -35,19 +35,19 @@ import org.cactoos.iterable.Mapped;
  *
  * {@code
  * new Or(
- *    new False(),
- *    new True(),
- *    new True()
+ * new False(),
+ * new True(),
+ * new True()
  * ).value(); // the result is true
  *
  * new Or(
- *    new False(),
- *    new False(),
- *    new False()
+ * new False(),
+ * new False(),
+ * new False()
  * ).value(); // the result is false
  * }
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
@@ -66,6 +66,7 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param proc Proc to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -77,6 +78,7 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -88,6 +90,7 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param proc Proc to use
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -99,6 +102,7 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -114,6 +118,7 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param subject The subject
      * @param conditions Funcs to map
      * @param <X> Type of items in the iterable
@@ -130,7 +135,8 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param scalar The Scalar.
+     *
+     * @param scalar The Scalar
      */
     @SafeVarargs
     public Or(final Scalar<Boolean>... scalar) {
@@ -139,7 +145,8 @@ public final class Or implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param iterable The iterable.
+     *
+     * @param iterable The iterable
      */
     public Or(final Iterable<? extends Scalar<Boolean>> iterable) {
         this.origin = iterable;

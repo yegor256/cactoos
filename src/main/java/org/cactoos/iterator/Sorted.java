@@ -1,13 +1,14 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import org.cactoos.Scalar;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 
@@ -37,23 +38,37 @@ public final class Sorted<T> implements Iterator<T> {
      */
     @SuppressWarnings("unchecked")
     public Sorted(final Iterator<? extends T> items) {
-        this((Comparator<T>) Comparator.naturalOrder(), items);
+        this(() -> (Comparator<T>) Comparator.naturalOrder(), items);
     }
 
     /**
      * Ctor.
+     *
      * @param comparator The comparator
      * @param iterator The underlying iterator
      */
     public Sorted(final Comparator<? super T> comparator, final Iterator<? extends T> iterator) {
+        this(() -> comparator, iterator);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param cmp The comparator, deferred
+     * @param iterator The underlying iterator
+     */
+    private Sorted(
+        final Scalar<Comparator<? super T>> cmp,
+        final Iterator<? extends T> iterator
+    ) {
         this.scalar = new Unchecked<>(
             new Sticky<>(
                 () -> {
-                    final List<T> items = new LinkedList<>();
+                    final List<T> items = new ArrayList<>(0);
                     while (iterator.hasNext()) {
                         items.add(iterator.next());
                     }
-                    items.sort(comparator);
+                    items.sort(cmp.value());
                     return items.iterator();
                 }
             )

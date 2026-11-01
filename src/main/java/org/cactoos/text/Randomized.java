@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -14,7 +14,7 @@ import org.cactoos.list.ListOf;
 /**
  * Randomized text.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.32
  */
@@ -38,7 +38,8 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param len Length of generated text.
+     *
+     * @param len Length of generated text
      */
     public Randomized(final Integer len) {
         this(() -> len);
@@ -46,7 +47,8 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param len Length of generated text.
+     *
+     * @param len Length of generated text
      */
     public Randomized(final Scalar<Integer> len) {
         this(
@@ -59,7 +61,8 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param chrs Array of characters allowed for generating.
+     *
+     * @param chrs Array of characters allowed for generating
      */
     public Randomized(final Character... chrs) {
         this(new ListOf<>(chrs));
@@ -67,7 +70,8 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param chrs List of characters allowed for generating.
+     *
+     * @param chrs List of characters allowed for generating
      */
     public Randomized(final List<Character> chrs) {
         this(
@@ -80,8 +84,9 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param len Length of generated text.
-     * @param chrs Array of characters allowed for generating.
+     *
+     * @param len Length of generated text
+     * @param chrs Array of characters allowed for generating
      */
     public Randomized(final Integer len, final Character... chrs) {
         this(() -> len, chrs);
@@ -89,8 +94,9 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param len Length of generated text.
-     * @param chrs Array of characters allowed for generating.
+     *
+     * @param len Length of generated text
+     * @param chrs Array of characters allowed for generating
      */
     public Randomized(final Scalar<Integer> len, final Character... chrs) {
         this(new ListOf<>(chrs), len);
@@ -98,8 +104,9 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param chrs Characters allowed for generating.
-     * @param len Length of generated text.
+     *
+     * @param chrs Characters allowed for generating
+     * @param len Length of generated text
      */
     public Randomized(final Iterable<Character> chrs, final Scalar<Integer> len) {
         this(chrs, len, new SecureRandom());
@@ -107,9 +114,10 @@ public final class Randomized extends TextEnvelope {
 
     /**
      * Ctor.
-     * @param itr Characters allowed for generating.
-     * @param len Length of generated text.
-     * @param rnd Characters index randomizer.
+     *
+     * @param itr Characters allowed for generating
+     * @param len Length of generated text
+     * @param rnd Characters index randomizer
      */
     public Randomized(final Iterable<Character> itr, final Scalar<Integer> len, final Random rnd) {
         super(
@@ -118,9 +126,8 @@ public final class Randomized extends TextEnvelope {
                     final List<Character> chrs = new ListOf<>(itr);
                     final int length = len.value();
                     final StringBuilder builder = new StringBuilder(length);
-                    final int bound = chrs.size();
                     for (int index = 0; index < length; index += 1) {
-                        builder.append(chrs.get(rnd.nextInt(bound)));
+                        builder.append(chrs.get(rnd.nextInt(chrs.size())));
                     }
                     return builder.toString();
                 }

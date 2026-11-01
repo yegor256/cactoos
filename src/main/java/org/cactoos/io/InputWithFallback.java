@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -14,7 +14,7 @@ import org.cactoos.func.IoCheckedFunc;
  * Input that returns an alternative input if the main one throws
  * {@link IOException}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.9
  */
@@ -32,6 +32,7 @@ public final class InputWithFallback implements Input {
 
     /**
      * Ctor.
+     *
      * @param input Main input
      */
     public InputWithFallback(final Input input) {
@@ -40,6 +41,7 @@ public final class InputWithFallback implements Input {
 
     /**
      * Ctor.
+     *
      * @param input Main input
      * @param alt Alternative
      */
@@ -49,6 +51,7 @@ public final class InputWithFallback implements Input {
 
     /**
      * Ctor.
+     *
      * @param input Main input
      * @param alt Alternative
      */
@@ -59,6 +62,7 @@ public final class InputWithFallback implements Input {
 
     /**
      * Ctor.
+     *
      * @param input Main input
      * @param alt Alternative
      */
@@ -78,5 +82,4 @@ public final class InputWithFallback implements Input {
         }
         return stream;
     }
-
 }

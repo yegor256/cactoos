@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -11,102 +11,101 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.proc.ForEach;
 import org.cactoos.proc.ProcOf;
 import org.cactoos.text.Randomized;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link TempFolder}.
  *
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class TempFolderTest {
 
     @Test
     void createsDirectory() throws Exception {
         try (TempFolder folder = new TempFolder()) {
             final File dir = folder.value().toFile();
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "must create new directory",
                 dir.exists() && dir.isDirectory(),
                 new IsTrue()
-            ).affirm();
+            );
         }
     }
 
     @Test
-    @SuppressWarnings("PMD.CloseResource")
     void deletesDirectory() throws Exception {
-        final TempFolder dir = new TempFolder(
-            new Randomized('d', 'e', 'g').asString()
-        );
-        dir.close();
-        new Assertion<>(
+        final Path path;
+        try (
+            TempFolder dir = new TempFolder(
+                new Randomized('d', 'e', 'g').asString()
+            )
+        ) {
+            path = dir.value();
+        }
+        MatcherAssert.assertThat(
             "Can't delete folder while closing",
-            !dir.value().toFile().exists(),
+            !path.toFile().exists(),
             new IsTrue()
-        ).affirm();
+        );
     }
 
     @Test
-    @SuppressWarnings("PMD.CloseResource")
     void deletesNonEmptyDirectory() throws Exception {
-        final TempFolder temp = new TempFolder();
-        final Path root = temp.value();
-        new ForEach<>(
-            new ProcOf<String>(
-                name -> {
-                    final Path dir = Files.createDirectories(
-                        new File(root.toFile(), name).toPath()
-                    );
-                    new ForEach<>(
-                        new ProcOf<String>(
-                            filename -> {
-                                new TempFile(
-                                    () -> dir,
-                                    filename,
-                                    ""
-                                ).value();
-                            }
-                        )
-                    ).exec(
-                        new IterableOf<>(
-                            "file1.txt", "file2.txt", "file3.txt"
-                        )
-                    );
-                }
-            )
-        ).exec(
-            new IterableOf<>(
-                "a", "b", "c", "d", "e"
-            )
-        );
-        temp.close();
-        new Assertion<>(
+        final Path path;
+        try (TempFolder temp = new TempFolder()) {
+            path = temp.value();
+            new ForEach<>(
+                new ProcOf<String>(
+                    name -> {
+                        new ForEach<>(
+                            new ProcOf<String>(
+                                filename -> {
+                                    new TempFile(
+                                        () -> Files.createDirectories(
+                                            new File(path.toFile(), name).toPath()
+                                        ),
+                                        filename,
+                                        ""
+                                    ).value();
+                                }
+                            )
+                        ).exec(
+                            new IterableOf<>(
+                                "file1.txt", "file2.txt", "file3.txt"
+                            )
+                        );
+                    }
+                )
+            ).exec(
+                new IterableOf<>(
+                    "a", "b", "c", "d", "e"
+                )
+            );
+        }
+        MatcherAssert.assertThat(
             "Can't delete not empty folder while closing",
-            temp.value().toFile().exists(),
+            path.toFile().exists(),
             new IsNot<>(new IsTrue())
-        ).affirm();
+        );
     }
 
     @Test
     void createDirectoryWithDirectoriesAndFiles() throws Exception {
         try (TempFolder temp = new TempFolder()) {
-            final Path root = temp.value();
             new ForEach<>(
                 new ProcOf<String>(
                     name -> {
-                        final Path dir = Files.createDirectories(
-                            new File(root.toFile(), name).toPath()
-                        );
                         new ForEach<>(
                             new ProcOf<String>(
                                 filename -> {
                                     new TempFile(
-                                        () -> dir,
+                                        () -> Files.createDirectories(
+                                            new File(temp.value().toFile(), name).toPath()
+                                        ),
                                         filename,
                                         ""
                                     ).value();
@@ -124,11 +123,11 @@ final class TempFolderTest {
                     "1", "2", "3", "4", "5"
                 )
             );
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Directory contains files and sub directories",
                 temp.value().toFile().exists(),
                 new IsTrue()
-            ).affirm();
+            );
         }
     }
 }

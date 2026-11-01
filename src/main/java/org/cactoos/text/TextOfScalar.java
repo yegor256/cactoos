@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -8,13 +8,12 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.scalar.And;
-import org.cactoos.scalar.Or;
 import org.cactoos.scalar.Unchecked;
 
 /**
  * Text of {@link Scalar}
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
  */
@@ -52,15 +51,12 @@ public final class TextOfScalar implements Text {
     @Override
     @SuppressFBWarnings("EQ_UNUSUAL")
     public boolean equals(final Object obj) {
-        return new Unchecked<>(
-            new Or(
-                () -> this == obj,
-                new And(
-                    () -> obj instanceof Text,
-                    () -> new UncheckedText(this)
-                        .asString()
-                        .equals(new UncheckedText((Text) obj).asString())
-                )
+        return this == obj || new Unchecked<>(
+            new And(
+                () -> obj instanceof Text,
+                () -> new UncheckedText(this)
+                    .asString()
+                    .equals(new UncheckedText((Text) obj).asString())
             )
         ).value();
     }

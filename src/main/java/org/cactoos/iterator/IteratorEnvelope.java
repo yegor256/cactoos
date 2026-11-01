@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
@@ -24,7 +24,8 @@ public abstract class IteratorEnvelope<X> implements Iterator<X> {
 
     /**
      * Ctor.
-     * @param iter The {@link Iterator} to wrap.
+     *
+     * @param iter The {@link Iterator} to wrap
      */
     public IteratorEnvelope(final Iterator<? extends X> iter) {
         this.wrapped = iter;

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -11,22 +11,19 @@ import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.UncheckedText;
 
 /**
  * Logged output stream.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.29
  */
-@SuppressWarnings(
-    {
-        "PMD.AvoidDuplicateLiterals",
-        "PMD.LoggerIsNotStaticFinal"
-    }
-)
 public final class LoggingOutputStream extends OutputStream {
 
     /**
@@ -40,9 +37,9 @@ public final class LoggingOutputStream extends OutputStream {
     private final String destination;
 
     /**
-     * The logger.
+     * The logger, deferred.
      */
-    private final Logger logger;
+    private final Unchecked<Logger> logger;
 
     /**
      * The bytes read.
@@ -56,15 +53,17 @@ public final class LoggingOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param output Destination of data
      * @param dst The name of source data
      */
     public LoggingOutputStream(final OutputStream output, final String dst) {
-        this(output, dst, Logger.getLogger(dst));
+        this(output, dst, () -> Logger.getLogger(dst));
     }
 
     /**
      * Ctor.
+     *
      * @param output Destination of data
      * @param dst The name of source data
      * @param lgr Message logger
@@ -74,18 +73,32 @@ public final class LoggingOutputStream extends OutputStream {
         final String dst,
         final Logger lgr
     ) {
+        this(output, dst, () -> lgr);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param output Destination of data
+     * @param dst The name of source data
+     * @param lgr Message logger, deferred
+     */
+    private LoggingOutputStream(
+        final OutputStream output,
+        final String dst,
+        final Scalar<Logger> lgr
+    ) {
         super();
         this.origin = output;
         this.destination = dst;
-        this.logger = lgr;
+        this.logger = new Unchecked<>(new Sticky<>(lgr));
         this.bytes = new AtomicLong();
         this.time = new AtomicLong();
     }
 
     @Override
     public void write(final int data) throws IOException {
-        final byte[] buf = {(byte) data};
-        this.write(buf, 0, 1);
+        this.write(new byte[]{(byte) data}, 0, 1);
     }
 
     @Override
@@ -98,13 +111,11 @@ public final class LoggingOutputStream extends OutputStream {
         final int len) throws IOException {
         final Instant start = Instant.now();
         this.origin.write(buf, offset, len);
-        final Instant end = Instant.now();
         this.bytes.getAndAdd((long) len);
-        final long millis = Duration.between(start, end).toMillis();
-        this.time.getAndAdd(millis);
-        final Level level = this.logger.getLevel();
+        this.time.getAndAdd(Duration.between(start, Instant.now()).toMillis());
+        final Level level = this.logger.value().getLevel();
         if (!level.equals(Level.INFO)) {
-            this.logger.log(
+            this.logger.value().log(
                 level,
                 new UncheckedText(
                     new FormattedText(
@@ -121,9 +132,9 @@ public final class LoggingOutputStream extends OutputStream {
     @Override
     public void close() throws IOException {
         this.origin.close();
-        final Level level = this.logger.getLevel();
+        final Level level = this.logger.value().getLevel();
         if (level.equals(Level.INFO)) {
-            this.logger.log(
+            this.logger.value().log(
                 level,
                 new UncheckedText(
                     new FormattedText(
@@ -135,7 +146,7 @@ public final class LoggingOutputStream extends OutputStream {
                 ).asString()
             );
         }
-        this.logger.log(
+        this.logger.value().log(
             level,
             new UncheckedText(
                 new FormattedText(
@@ -149,9 +160,9 @@ public final class LoggingOutputStream extends OutputStream {
     @Override
     public void flush() throws IOException {
         this.origin.flush();
-        final Level level = this.logger.getLevel();
+        final Level level = this.logger.value().getLevel();
         if (level.equals(Level.INFO)) {
-            this.logger.log(
+            this.logger.value().log(
                 level,
                 new UncheckedText(
                     new FormattedText(
@@ -163,7 +174,7 @@ public final class LoggingOutputStream extends OutputStream {
                 ).asString()
             );
         }
-        this.logger.log(
+        this.logger.value().log(
             level,
             new UncheckedText(
                 new FormattedText(

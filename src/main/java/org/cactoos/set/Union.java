@@ -1,10 +1,12 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.set;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.Unchecked;
@@ -21,20 +23,17 @@ public final class Union<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param first First set
      * @param second Second set
      */
     public Union(final Iterable<T> first, final Iterable<T> second) {
-        super(
-            computeUnion(
-                new SetOf<>(first),
-                new SetOf<>(second)
-            )
-        );
+        this(new SetOf<>(first), new SetOf<>(second));
     }
 
     /**
      * Ctor.
+     *
      * @param first First iterator
      * @param second Second iterator
      */
@@ -47,6 +46,7 @@ public final class Union<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param first First iterable supplier
      * @param second Second iterable supplier
      */
@@ -55,33 +55,31 @@ public final class Union<T> extends SetEnvelope<T> {
         final Scalar<Iterable<T>> second
     ) {
         this(
-            new Unchecked<>(first).value(),
-            new Unchecked<>(second).value()
+            new SetOf<>(
+                new IterableOf<>(
+                    () -> new Unchecked<>(first).value().iterator()
+                )
+            ),
+            new SetOf<>(
+                new IterableOf<>(
+                    () -> new Unchecked<>(second).value().iterator()
+                )
+            )
         );
     }
 
     /**
      * Ctor.
+     *
      * @param first First set
      * @param second Second set
      */
-    public Union(final SetOf<T> first, final SetOf<T> second) {
-        super(computeUnion(first, second));
-    }
-
-    /**
-     * Compute the union of two sets.
-     * @param first The first set
-     * @param second The second set
-     * @param <E> Type of elements
-     * @return The union set (elements in either first or second)
-     */
-    private static <E> SetOf<E> computeUnion(
-        final SetOf<E> first,
-        final SetOf<E> second
-    ) {
-        final SetOf<E> result = new SetOf<>(first);
-        result.addAll(second);
-        return result;
+    public Union(final Set<T> first, final Set<T> second) {
+        super(new HashSet<>(first) {
+            private static final long serialVersionUID = 1L;
+            {
+                this.addAll(second);
+            }
+        });
     }
 }

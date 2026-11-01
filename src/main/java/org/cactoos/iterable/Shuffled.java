@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -19,6 +19,7 @@ public final class Shuffled<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param src The underlying iterable
      * @since 0.23
      */
@@ -29,6 +30,7 @@ public final class Shuffled<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param src The underlying iterable
      */
     public Shuffled(final Iterable<? extends T> src) {
@@ -37,7 +39,8 @@ public final class Shuffled<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param rnd Randomizer.
+     *
+     * @param rnd Randomizer
      * @param src The underlying iterable
      */
     public Shuffled(final Random rnd, final Iterable<? extends T> src) {
@@ -50,5 +53,4 @@ public final class Shuffled<T> extends IterableEnvelope<T> {
             )
         );
     }
-
 }

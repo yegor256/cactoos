@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
@@ -7,8 +7,8 @@ package org.cactoos.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -18,9 +18,10 @@ import org.llorllale.cactoos.matchers.Throws;
  * @since 0.47
  */
 final class MappedTest {
+
     @Test
     void iteratatesOver() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must map values of iterator",
             new IterableOf<>(
                 new Mapped<>(
@@ -29,20 +30,20 @@ final class MappedTest {
                 )
             ),
             new HasValues<>("1", "2", "0")
-        ).affirm();
+        );
     }
 
     @Test
     void failsIfIteratorExhausted() {
         final Iterator<String> iterator = new Mapped<>(
             Number::toString,
-            new IteratorOf<Number>(1)
+            new IteratorOf<>(1)
         );
         iterator.next();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must throw NSEE",
             iterator::next,
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 }

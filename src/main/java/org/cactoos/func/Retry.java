@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.func;
@@ -10,7 +10,7 @@ import org.cactoos.Func;
 /**
  * Func that will try a few times before throwing an exception.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of output
@@ -35,6 +35,7 @@ public final class Retry<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      */
     public Retry(final Func<X, Y> fnc) {
@@ -43,6 +44,7 @@ public final class Retry<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      * @param attempts Maximum number of attempts
      */
@@ -116,5 +118,4 @@ public final class Retry<X, Y> implements Func<X, Y> {
         }
         throw error;
     }
-
 }

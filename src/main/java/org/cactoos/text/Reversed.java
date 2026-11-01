@@ -1,9 +1,10 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -12,6 +13,16 @@ import org.cactoos.Text;
  * @since 0.2
  */
 public final class Reversed extends TextEnvelope {
+
+    /**
+     * Ctor.
+     *
+     * @param input The input
+     * @since 0.73.2
+     */
+    public Reversed(final Input input) {
+        this(new TextOf(input));
+    }
 
     /**
      * Ctor.

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.set;
@@ -9,18 +9,13 @@ import java.util.SortedSet;
 
 /**
  * SortedSet envelope.
+ *
  * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Element type
  * @since 0.45
- * @checkstyle AbstractClassNameCheck (500 lines)
  */
-@SuppressWarnings(
-    {
-        "PMD.TooManyMethods",
-        "PMD.AbstractNaming"
-    }
-)
+@SuppressWarnings("JdkObsolete")
 public abstract class SortedSetEnvelope<T> extends SetEnvelope<T> implements
     SortedSet<T> {
 
@@ -31,7 +26,8 @@ public abstract class SortedSetEnvelope<T> extends SetEnvelope<T> implements
 
     /**
      * Primary ctor.
-     * @param origin The original SortedSet to delegate to.
+     *
+     * @param origin The original SortedSet to delegate to
      */
     protected SortedSetEnvelope(final SortedSet<T> origin) {
         super(origin);
@@ -67,5 +63,4 @@ public abstract class SortedSetEnvelope<T> extends SetEnvelope<T> implements
     public final T last() {
         return this.origin.last();
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.bytes;
@@ -14,13 +14,11 @@ import org.cactoos.Input;
 /**
  * Digest Envelope.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.29
- * @checkstyle AbstractClassNameCheck (500 lines)
  * @checkstyle DesignForExtensionCheck (500 lines)
  */
-@SuppressWarnings("PMD.AbstractNaming")
 public abstract class DigestEnvelope implements Bytes {
 
     /**
@@ -40,6 +38,7 @@ public abstract class DigestEnvelope implements Bytes {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param algrthm The algorithm
      */
@@ -49,6 +48,7 @@ public abstract class DigestEnvelope implements Bytes {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param max Buffer size
      * @param algrthm The algorithm

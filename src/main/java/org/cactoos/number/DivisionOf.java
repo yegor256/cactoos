@@ -1,16 +1,17 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.number;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import org.cactoos.Scalar;
 
 /**
  * Division result of two numbers.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
  */
@@ -23,28 +24,32 @@ public final class DivisionOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     *
      * @param dividend The dividend
      * @param divisor The divisor
      */
     public DivisionOf(final BigDecimal dividend, final BigDecimal divisor) {
-        this(() -> dividend.divide(divisor));
+        this(() -> dividend.divide(divisor, MathContext.DECIMAL128));
     }
 
     /**
      * Ctor.
+     *
      * @param dividend The dividend
      * @param divisor The divisor
      */
     public DivisionOf(final Number dividend, final Number divisor) {
         this(
             () -> new BigDecimal(dividend.toString()).divide(
-                new BigDecimal(divisor.toString())
+                new BigDecimal(divisor.toString()),
+                MathContext.DECIMAL128
             )
         );
     }
 
     /**
      * Ctor.
+     *
      * @param result The result
      */
     private DivisionOf(final Scalar<BigDecimal> result) {

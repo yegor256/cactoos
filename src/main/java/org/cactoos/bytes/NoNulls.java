@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -13,6 +13,7 @@ import org.cactoos.Bytes;
  * @since 0.11
  */
 public final class NoNulls implements Bytes {
+
     /**
      * The input.
      */
@@ -20,6 +21,7 @@ public final class NoNulls implements Bytes {
 
     /**
      * Ctor.
+     *
      * @param bytes The input
      */
     public NoNulls(final Bytes bytes) {

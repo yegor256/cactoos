@@ -1,16 +1,17 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
 package org.cactoos.text;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for  {@link Base64Encoded}.
+ *
  * @since 0.20.2
  */
 final class Base64EncodedTest {
@@ -20,7 +21,7 @@ final class Base64EncodedTest {
      */
     @Test
     void checkEncode() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't encodes text using the Base64 encoding scheme",
             new Base64Encoded(
                 "Hello!"
@@ -28,6 +29,6 @@ final class Base64EncodedTest {
             new HasString(
                 "SGVsbG8h"
             )
-        ).affirm();
+        );
     }
 }

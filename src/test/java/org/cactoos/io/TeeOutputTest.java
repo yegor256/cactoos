@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -9,24 +9,24 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link TeeOutput}.
+ *
  * @since 0.16
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class TeeOutputTest {
 
     @Test
     void copiesContent() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't copy Output to Output and return Input",
             new TeeInput(
                 new InputOf("Hello, товарищ!"),
@@ -38,13 +38,13 @@ final class TeeOutputTest {
             new HasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void copiesWithWriter() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't copy Output with writer",
             new TeeInput(
                 new InputOf("Hello, товарищ! writer"),
@@ -56,13 +56,13 @@ final class TeeOutputTest {
             new HasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void copiesWithWriterAndCharset() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't copy Output with writer and charset",
             new TeeInput(
                 new InputOf(
@@ -77,20 +77,19 @@ final class TeeOutputTest {
             new HasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void copiesWithPath(@TempDir final Path wdir) {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final File file = wdir.resolve("tree1.txt").toFile();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy Output with path",
             new TextOf(
                 new TeeInput(
                     new InputOf("Hello, товарищ! with path"),
                     new TeeOutput(
-                        new OutputTo(baos),
+                        new OutputTo(new ByteArrayOutputStream()),
                         file.toPath()
                     )
                 )
@@ -98,20 +97,19 @@ final class TeeOutputTest {
             new IsText(
                 new TextOf(file.toPath())
             )
-        ).affirm();
+        );
     }
 
     @Test
     void copiesWithFile(@TempDir final Path wdir) {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final File file = wdir.resolve("tree2.txt").toFile();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy Output with file",
             new TextOf(
                 new TeeInput(
                     new InputOf("Hello, товарищ! with file"),
                     new TeeOutput(
-                        new OutputTo(baos),
+                        new OutputTo(new ByteArrayOutputStream()),
                         file
                     )
                 )
@@ -119,13 +117,13 @@ final class TeeOutputTest {
             new IsText(
                 new TextOf(file.toPath())
             )
-        ).affirm();
+        );
     }
 
     @Test
     void copiesWithOutputStream() {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't copy Output with output stream",
             new TeeInput(
                 new InputOf(
@@ -139,7 +137,6 @@ final class TeeOutputTest {
             new HasContent(
                 new TextOf(baos::toByteArray, StandardCharsets.UTF_8)
             )
-        ).affirm();
+        );
     }
-
 }

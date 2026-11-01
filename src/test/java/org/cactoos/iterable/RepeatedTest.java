@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -14,7 +14,6 @@ import org.llorllale.cactoos.matchers.HasValue;
  * Test case for {@link Repeated}.
  *
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class RepeatedTest {
 
@@ -44,15 +43,22 @@ final class RepeatedTest {
     }
 
     @Test
-    void repeatsIntegerTwice() {
-        final Iterable<Integer> list = new Repeated<>(5, 1);
+    void repeatsInteger() {
         MatcherAssert.assertThat(
             "Can't repeat an integer",
-            list, Matchers.iterableWithSize(5)
+            new Repeated<>(5, 1),
+            Matchers.iterableWithSize(5)
         );
+    }
+
+    @Test
+    void repeatsIntegerOnSecondTraversal() {
+        final Iterable<Integer> list = new Repeated<>(5, 1);
+        list.iterator().next();
         MatcherAssert.assertThat(
-            "Can't repeat an integer, again",
-            list, Matchers.iterableWithSize(5)
+            "Can't repeat an integer on second traversal",
+            list,
+            Matchers.iterableWithSize(5)
         );
     }
 }

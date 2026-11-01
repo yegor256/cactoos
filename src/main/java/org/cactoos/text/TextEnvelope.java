@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -10,7 +10,6 @@ import org.cactoos.Text;
  * {@link Text} envelope.
  *
  * @since 0.32
- * @checkstyle AbstractClassNameCheck (500 lines)
  */
 public abstract class TextEnvelope implements Text {
 
@@ -21,7 +20,8 @@ public abstract class TextEnvelope implements Text {
 
     /**
      * Ctor.
-     * @param text Text representing the text value.
+     *
+     * @param text Text representing the text value
      */
     public TextEnvelope(final Text text) {
         this.origin = text;

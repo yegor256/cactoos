@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -28,6 +28,7 @@ public final class Capitalized extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The text
      */
     public Capitalized(final Text text) {
@@ -35,6 +36,7 @@ public final class Capitalized extends TextEnvelope {
             new Flattened(
                 new Ternary<>(
                     new ScalarOf<>(() -> new Sticky(text)),
+                    // @checkstyle FullyQualifiedTypeCheck (1 line)
                     new org.cactoos.func.Flattened<>(IsBlank::new),
                     t -> t,
                     t -> new Concatenated(

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
@@ -15,7 +15,7 @@ import org.cactoos.func.UncheckedFunc;
  * Elements will continue to be provided so long as {@code next} produces
  * non-empty iterators.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of item
  * @since 0.49
@@ -34,8 +34,9 @@ public final class Paged<X> implements Iterator<X> {
 
     /**
      * Ctor.
-     * @param first First element.
-     * @param next Function to get the next element.
+     *
+     * @param first First element
+     * @param next Function to get the next element
      */
     public Paged(
         final Iterator<? extends X> first,
@@ -48,10 +49,9 @@ public final class Paged<X> implements Iterator<X> {
     @Override
     public boolean hasNext() {
         if (!this.current.get().hasNext()) {
-            final Iterator<? extends X> next = new UncheckedFunc<>(this.subsequent).apply(
-                this.current.get()
+            this.current.set(
+                new UncheckedFunc<>(this.subsequent).apply(this.current.get())
             );
-            this.current.set(next);
         }
         return this.current.get().hasNext();
     }

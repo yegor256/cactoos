@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.proc;
@@ -11,7 +11,7 @@ import org.cactoos.Proc;
 /**
  * Proc that doesn't throw checked {@link Exception}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @since 0.2
@@ -25,6 +25,7 @@ public final class UncheckedProc<X> implements Proc<X> {
 
     /**
      * Ctor.
+     *
      * @param prc Encapsulated func
      */
     public UncheckedProc(final Proc<X> prc) {
@@ -39,5 +40,4 @@ public final class UncheckedProc<X> implements Proc<X> {
             throw new UncheckedIOException(ex);
         }
     }
-
 }

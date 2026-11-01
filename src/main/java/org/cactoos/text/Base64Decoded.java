@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -11,6 +11,7 @@ import org.cactoos.bytes.BytesOf;
 
 /**
  * Decodes the origin text using the Base64 encoding scheme.
+ *
  * @since 0.20.2
  */
 public final class Base64Decoded extends TextEnvelope {

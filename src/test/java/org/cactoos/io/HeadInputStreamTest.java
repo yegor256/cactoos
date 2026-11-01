@@ -1,13 +1,13 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
 
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.IsText;
 
@@ -15,85 +15,132 @@ import org.llorllale.cactoos.matchers.IsText;
  * Test cases for {@link HeadInputStream}.
  *
  * @since 0.31
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals",
-    "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class HeadInputStreamTest {
 
     @Test
-    void testSkippingLessThanTotal() throws Exception {
-        try (HeadInputStream stream = new HeadInputStream(
-            new InputOf("testSkippingLessThanTotal").stream(),
-            5
-        )) {
-            final long skipped = stream.skip(3L);
-            new Assertion<>(
+    void skipsLessThanTotal() throws Exception {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testSkippingLessThanTotal").stream(),
+                5
+            )
+        ) {
+            MatcherAssert.assertThat(
                 "Incorrect number of bytes skipped",
-                skipped,
+                stream.skip(3L),
                 new IsEqual<>(3L)
-            ).affirm();
-            new Assertion<>(
-                "Incorrect head of the input stream has been read",
+            );
+        }
+    }
+
+    @Test
+    void readsHeadAfterSkip() throws Exception {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testSkippingLessThanTotal").stream(),
+                5
+            )
+        ) {
+            final long skipped = stream.skip(3L);
+            MatcherAssert.assertThat(
+                String.format(
+                    "Incorrect head after skipping %d bytes",
+                    skipped
+                ),
                 new InputOf(stream),
                 new HasContent("tS")
-            ).affirm();
+            );
         }
     }
 
     @Test
-    void testSkippingMoreThanTotal() throws Exception {
-        try (HeadInputStream stream = new HeadInputStream(
-            new InputOf("testSkippingMoreThanTotal").stream(),
-            5
-        )) {
-            final long skipped = stream.skip(7L);
-            new Assertion<>(
+    void skipsMoreThanTotal() throws Exception {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testSkippingMoreThanTotal").stream(),
+                5
+            )
+        ) {
+            MatcherAssert.assertThat(
                 "Incorrect number of bytes skipped",
-                skipped,
+                stream.skip(7L),
                 new IsEqual<>(5L)
-            ).affirm();
-            final String input = new TextOf(stream).asString();
-            new Assertion<>(
-                "The result text wasn't empty",
-                new TextOf(input),
+            );
+        }
+    }
+
+    @Test
+    void readsEmptyAfterSkipMoreThanTotal() throws Exception {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testSkippingMoreThanTotal").stream(),
+                5
+            )
+        ) {
+            final long skipped = stream.skip(7L);
+            MatcherAssert.assertThat(
+                String.format(
+                    "The result text wasn't empty after skipping %d bytes",
+                    skipped
+                ),
+                new TextOf(new TextOf(stream).asString()),
                 new IsText("")
-            ).affirm();
+            );
         }
     }
 
     @Test
-    void testResetting() throws Exception {
-        try (HeadInputStream stream = new HeadInputStream(
-            new InputOf("testResetting").stream(),
-            5
-        )) {
-            final long skipped = stream.skip(7L);
-            new Assertion<>(
+    void skipsBeforeReset() throws Exception {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testResetting").stream(),
+                5
+            )
+        ) {
+            MatcherAssert.assertThat(
                 "Incorrect number of bytes skipped",
-                skipped,
+                stream.skip(7L),
                 new IsEqual<>(5L)
-            ).affirm();
+            );
+        }
+    }
+
+    @Test
+    void resetRestoresStream() throws Exception {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testResetting").stream(),
+                5
+            )
+        ) {
+            final long skipped = stream.skip(7L);
             stream.reset();
-            new Assertion<>(
-                "Reset didn't change the state",
+            MatcherAssert.assertThat(
+                String.format(
+                    "Reset didn't change the state after skipping %d bytes",
+                    skipped
+                ),
                 new InputOf(stream),
                 new HasContent("testR")
-            ).affirm();
+            );
         }
     }
 
     @Test
-    void testAvailableLessThanTotal() throws Exception {
-        try (HeadInputStream stream = new HeadInputStream(
-            new InputOf("testAvailableLessThanTotal").stream(),
-            5
-        )) {
-            new Assertion<>(
+    void countsAvailableBytesLessThanTotal() throws Exception {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new InputOf("testAvailableLessThanTotal").stream(),
+                5
+            )
+        ) {
+            MatcherAssert.assertThat(
                 "must count available bytes",
                 stream.available(),
                 new IsEqual<>(5)
-            ).affirm();
+            );
         }
     }
 }

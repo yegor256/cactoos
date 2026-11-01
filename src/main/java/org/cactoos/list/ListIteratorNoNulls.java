@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -25,7 +25,7 @@ public final class ListIteratorNoNulls<T> implements ListIterator<T> {
     /**
      * Ctor.
      *
-     * @param src List iterator.
+     * @param src List iterator
      */
     public ListIteratorNoNulls(final ListIterator<T> src) {
         this.listiterator = src;
@@ -93,5 +93,4 @@ public final class ListIteratorNoNulls<T> implements ListIterator<T> {
         }
         this.listiterator.add(item);
     }
-
 }

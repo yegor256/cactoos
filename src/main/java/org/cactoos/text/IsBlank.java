@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -10,7 +10,8 @@ import org.cactoos.Text;
 /**
  * Determines if text is blank (consists of spaces) or not.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
+ *
  * @see IsEmpty
  * @since 0.1
  */
@@ -23,6 +24,7 @@ public final class IsBlank implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param text The text
      */
     public IsBlank(final Text text) {

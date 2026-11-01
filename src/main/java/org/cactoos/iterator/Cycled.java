@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Cycled Iterator.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of item
  * @since 0.8
@@ -31,20 +31,18 @@ public final class Cycled<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     * @param iterable Iterable.
+     *
+     * @param iterable Iterable
      */
     public Cycled(final Iterable<? extends T> iterable) {
         this.origin = iterable;
-        this.reference = new AtomicReference<>(iterable.iterator());
+        this.reference = new AtomicReference<>();
     }
 
     @Override
     public boolean hasNext() {
-        if (!this.reference.get().hasNext()) {
-            this.reference.compareAndSet(
-                this.reference.get(),
-                this.origin.iterator()
-            );
+        if (this.reference.get() == null || !this.reference.get().hasNext()) {
+            this.reference.set(this.origin.iterator());
         }
         return this.reference.get().hasNext();
     }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.proc;
@@ -16,6 +16,7 @@ import org.cactoos.func.Repeated;
  * @since 0.49.2
  */
 public final class RepeatedProc<X> implements Proc<X> {
+
     /**
      * The repeated func.
      */
@@ -27,8 +28,8 @@ public final class RepeatedProc<X> implements Proc<X> {
      * <p>If {@code count} is equal or less than zero {@link #exec(Object)}
      * will return an exception.</p>
      *
-     * @param prc Proc to repeat.
-     * @param count How many times.
+     * @param prc Proc to repeat
+     * @param count How many times
      */
     public RepeatedProc(final Proc<? super X> prc, final int count) {
         this.func = new Repeated<>(

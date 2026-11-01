@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -18,6 +18,7 @@ public final class IterableOfBytes extends IterableEnvelope<Byte> {
 
     /**
      * Ctor.
+     *
      * @param txt Text
      */
     public IterableOfBytes(final Text txt) {
@@ -26,6 +27,7 @@ public final class IterableOfBytes extends IterableEnvelope<Byte> {
 
     /**
      * Ctor.
+     *
      * @param str String
      */
     public IterableOfBytes(final String str) {
@@ -34,6 +36,7 @@ public final class IterableOfBytes extends IterableEnvelope<Byte> {
 
     /**
      * Ctor.
+     *
      * @param bytes Bytes
      */
     public IterableOfBytes(final byte... bytes) {
@@ -42,6 +45,7 @@ public final class IterableOfBytes extends IterableEnvelope<Byte> {
 
     /**
      * Ctor.
+     *
      * @param bytes Bytes to iterate
      */
     public IterableOfBytes(final Bytes bytes) {

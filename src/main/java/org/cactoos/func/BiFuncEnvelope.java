@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.func;
@@ -23,6 +23,7 @@ public abstract class BiFuncEnvelope<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param func The function
      */
     public BiFuncEnvelope(final BiFunc<X, Y, Z> func) {

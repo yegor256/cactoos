@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -10,12 +10,12 @@ import org.cactoos.Scalar;
 /**
  * Equality.
  *
- * Returns:
- *         the value {@code 0} if {@code x == y};
- *         the value {@code -1} if {@code x < y};
- *         the value {@code 1} if {@code x > y}
+ * <p>Returns:
+ * the value {@code 0} if {@code x == y};
+ * the value {@code -1} if {@code x < y};
+ * the value {@code 1} if {@code x > y}</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of input
  * @since 0.31
@@ -34,6 +34,7 @@ public final class Equality<T extends Bytes> implements Scalar<Integer> {
 
     /**
      * Ctor.
+     *
      * @param lft Left
      * @param rght Right
      */
@@ -51,7 +52,7 @@ public final class Equality<T extends Bytes> implements Scalar<Integer> {
             () -> {
                 int result = 0;
                 for (int idx = rght.length - 1; idx >= 0; --idx) {
-                    result = (int) lft[idx] - (int) rght[idx];
+                    result = lft[idx] - rght[idx];
                     if (result != 0) {
                         break;
                     }

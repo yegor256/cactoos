@@ -1,13 +1,13 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
 package org.cactoos.scalar;
 
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -19,35 +19,33 @@ final class ThrowsOnFalseTest {
 
     @Test
     void throwsOnFalse() {
-        final String message = "test message";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Throws an exception",
             () -> new ThrowsOnFalse(
-                () -> false, message
+                () -> false, "test message"
             ).value(),
-            new Throws<>(message, IllegalArgumentException.class)
-        ).affirm();
+            new Throws<>("test message", IllegalArgumentException.class)
+        );
     }
 
     @Test
     void throwsSuppliedExceptionOnFalse() {
-        final String message = "illegal state";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Throws supplied exception",
             () -> new ThrowsOnFalse(
                 () -> false,
-                () -> new IllegalStateException(message)
+                () -> new IllegalStateException("illegal state")
             ).value(),
-            new Throws<>(message, IllegalStateException.class)
-        ).affirm();
+            new Throws<>("illegal state", IllegalStateException.class)
+        );
     }
 
     @Test
     void returnsTrueOnTrue() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return true on true statement",
             new ThrowsOnFalse(() -> true, "test").value(),
             new IsEqual<>(true)
-        ).affirm();
+        );
     }
 }

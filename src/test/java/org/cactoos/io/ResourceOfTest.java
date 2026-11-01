@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -10,9 +10,9 @@ import org.cactoos.Text;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.text.FormattedText;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 import org.llorllale.cactoos.matchers.StartsWith;
 import org.llorllale.cactoos.matchers.Throws;
@@ -21,14 +21,12 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link ResourceOf}.
  *
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class ResourceOfTest {
 
     @Test
     void readsBinaryResource() throws Exception {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read bytes from a classpath resource",
             Arrays.copyOfRange(
                 new BytesOf(
@@ -44,30 +42,30 @@ final class ResourceOfTest {
                     (byte) 0xCA, (byte) 0xFE, (byte) 0xBA, (byte) 0xBE,
                 }
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsTextResource() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read a text resource from classpath",
             ResourceOfTest.large(),
-            new EndsWith("est laborum.\n")
-        ).affirm();
+            new EndsWith(String.format("est laborum.%c", (char) 10))
+        );
     }
 
     @Test
     void readsTextResourceThroughClassloader() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read a text resource from classloader",
             ResourceOfTest.large(),
-            new EndsWith(" laborum.\n")
-        ).affirm();
+            new EndsWith(String.format(" laborum.%c", (char) 10))
+        );
     }
 
     @Test
     void readAbsentResourceTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't replace an absent resource with a text",
             new TextOf(
                 new BytesOf(
@@ -78,12 +76,12 @@ final class ResourceOfTest {
                 )
             ),
             new EndsWith("replacement")
-        ).affirm();
+        );
     }
 
     @Test
     void throwsWhenResourceIsAbsent() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Doesn't fail for absent resource",
             () -> new TextOf(
                 new ResourceOf(
@@ -91,25 +89,25 @@ final class ResourceOfTest {
                 )
             ).asString(),
             new Throws<>(IOException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void acceptsTextAsResourceName() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't accept Text as resource name",
             new TextOf(
                 new ResourceOf(
                     new TextOf("org/cactoos/small-text.txt")
                 )
             ),
-            new EndsWith("ex ea commodo\n")
-        ).affirm();
+            new EndsWith(String.format("ex ea commodo%c", (char) 10))
+        );
     }
 
     @Test
     void acceptsTextsAsResourceNameAndFallback() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't use Texts as parameters",
             new TextOf(
                 new ResourceOf(
@@ -118,13 +116,9 @@ final class ResourceOfTest {
                 )
             ),
             new StartsWith("another")
-        ).affirm();
+        );
     }
 
-    /**
-     * Large text resource.
-     * @return The content of the large resource
-     */
     private static Text large() {
         return new TextOf(
             new ResourceOf(
@@ -133,5 +127,4 @@ final class ResourceOfTest {
             )
         );
     }
-
 }

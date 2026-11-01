@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.list;
@@ -9,7 +9,7 @@ import java.util.ListIterator;
 /**
  * Immutable {@link ListIterator} that doesn't allow mutations.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Items type
  * @since 1.0
@@ -23,7 +23,8 @@ public final class ImmutableListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
-     * @param iter Original list iterator.
+     *
+     * @param iter Original list iterator
      */
     public ImmutableListIterator(final ListIterator<? extends T> iter) {
         this.origin = iter;

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -34,6 +34,7 @@ public final class Folded<X, T> implements Scalar<X> {
 
     /**
      * Ctor.
+     *
      * @param ipt Input
      * @param fnc Func original
      * @param list Array of items
@@ -46,6 +47,7 @@ public final class Folded<X, T> implements Scalar<X> {
 
     /**
      * Ctor.
+     *
      * @param ipt Input
      * @param fnc Func original
      * @param list List of items
@@ -65,5 +67,4 @@ public final class Folded<X, T> implements Scalar<X> {
         }
         return memo;
     }
-
 }

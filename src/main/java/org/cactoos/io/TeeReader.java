@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -11,9 +11,11 @@ import java.io.Writer;
 /**
  * Input to Output copying reader.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
+ *
  * @since 0.13
  */
+@SuppressWarnings("PMD.UseTryWithResources")
 public final class TeeReader extends Reader {
 
     /**
@@ -28,6 +30,7 @@ public final class TeeReader extends Reader {
 
     /**
      * Ctor.
+     *
      * @param reader The source
      * @param writer The destination
      */
@@ -55,5 +58,4 @@ public final class TeeReader extends Reader {
             this.destination.close();
         }
     }
-
 }

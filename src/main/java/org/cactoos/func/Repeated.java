@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.func;
@@ -53,5 +53,4 @@ public final class Repeated<X, Y> implements Func<X, Y> {
         }
         return result;
     }
-
 }

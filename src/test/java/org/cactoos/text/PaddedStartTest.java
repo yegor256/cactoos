@@ -1,24 +1,37 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
 
+import org.cactoos.io.InputOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link PaddedStart}.
  *
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class PaddedStartTest {
 
     @Test
+    void padsInput() {
+        MatcherAssert.assertThat(
+            "Should pad an input at start",
+            new PaddedStart(
+                new InputOf("x"),
+                2,
+                '-'
+            ),
+            new HasString("-x")
+        );
+    }
+
+    @Test
     void noPaddingIfOrigTextIsAsLongAsRequestedLength() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Shouldn't pad the text",
             new PaddedStart(
                 new TextOf("x"),
@@ -26,12 +39,12 @@ final class PaddedStartTest {
                 '-'
             ),
             new HasString("x")
-        ).affirm();
+        );
     }
 
     @Test
     void somePaddingIfOrigTextIsShorterThanRequestedLength() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Should pad chars at start",
             new PaddedStart(
                 new TextOf("x"),
@@ -39,12 +52,12 @@ final class PaddedStartTest {
                 '-'
             ),
             new HasString("-x")
-        ).affirm();
+        );
     }
 
     @Test
-    void noPaddingIfRequestedLengthIsNegative()  {
-        new Assertion<>(
+    void noPaddingIfRequestedLengthIsNegative() {
+        MatcherAssert.assertThat(
             "Shouldn't consider negative min length",
             new PaddedStart(
                 new TextOf("x"),
@@ -52,6 +65,6 @@ final class PaddedStartTest {
                 '-'
             ),
             new HasString("x")
-        ).affirm();
+        );
     }
 }

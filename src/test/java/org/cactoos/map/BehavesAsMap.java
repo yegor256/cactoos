@@ -1,24 +1,24 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.map;
 
 import java.util.Map;
 import org.hamcrest.Description;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.TypeSafeMatcher;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasEntry;
 import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Matcher for collection.
+ *
  * @param <K> Type of key
  * @param <V> Type of value
  * @since 0.24
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class BehavesAsMap<K, V> extends TypeSafeMatcher<Map<K, V>>  {
+public final class BehavesAsMap<K, V> extends TypeSafeMatcher<Map<K, V>> {
 
     /**
      * Sample key.
@@ -32,6 +32,7 @@ public final class BehavesAsMap<K, V> extends TypeSafeMatcher<Map<K, V>>  {
 
     /**
      * Ctor.
+     *
      * @param akey Sample key
      * @param val Sample value
      */
@@ -44,21 +45,21 @@ public final class BehavesAsMap<K, V> extends TypeSafeMatcher<Map<K, V>>  {
     @Override
     @SuppressWarnings("unchecked")
     public boolean matchesSafely(final Map<K, V> map) {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must contain the key/value entry",
             map,
             new HasEntry<>(this.key, this.value)
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Must contain the key in #keySet()",
             map.keySet(),
             new HasValues<>(this.key)
-        ).affirm();
-        new Assertion<>(
+        );
+        MatcherAssert.assertThat(
             "Must contain the value in #values()",
             map.values(),
             new HasValues<>(this.value)
-        ).affirm();
+        );
         return true;
     }
 

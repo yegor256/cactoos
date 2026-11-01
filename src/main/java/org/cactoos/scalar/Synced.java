@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -28,6 +28,7 @@ import org.cactoos.Scalar;
  * @param <T> Type of result
  * @since 0.3
  */
+@SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class Synced<T> implements Scalar<T> {
 
     /**
@@ -42,6 +43,7 @@ public final class Synced<T> implements Scalar<T> {
 
     /**
      * Ctor.
+     *
      * @param src The Scalar to cache
      */
     public Synced(final Scalar<? extends T> src) {
@@ -50,6 +52,7 @@ public final class Synced<T> implements Scalar<T> {
 
     /**
      * Ctor.
+     *
      * @param scalar The Scalar to cache
      * @param lock Sync lock
      */

@@ -1,10 +1,11 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.map;
 
 import java.util.Map;
+import java.util.Objects;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.HashCode;
 import org.cactoos.text.FormattedText;
@@ -13,13 +14,14 @@ import org.cactoos.text.UncheckedText;
 /**
  * MapEntry as {@link java.util.AbstractMap.Entry}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <K> Key type
  * @param <V> Value type
  * @since 0.9
  */
 public final class MapEntry<K, V> implements Map.Entry<K, V> {
+
     /**
      * The key.
      */
@@ -32,8 +34,9 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
 
     /**
      * Ctor.
-     * @param src The key of the entry's map.
-     * @param trgt The value associated to the key of the entry's map.
+     *
+     * @param src The key of the entry's map
+     * @param trgt The value associated to the key of the entry's map
      */
     public MapEntry(final K src, final V trgt) {
         this.key = src;
@@ -71,8 +74,8 @@ public final class MapEntry<K, V> implements Map.Entry<K, V> {
     @Override
     public boolean equals(final Object obj) {
         return obj instanceof Map.Entry
-            && Map.Entry.class.cast(obj).getKey().equals(this.key)
-            && Map.Entry.class.cast(obj).getValue().equals(this.value);
+            && Objects.equals(Map.Entry.class.cast(obj).getKey(), this.key)
+            && Objects.equals(Map.Entry.class.cast(obj).getValue(), this.value);
     }
 
     @Override

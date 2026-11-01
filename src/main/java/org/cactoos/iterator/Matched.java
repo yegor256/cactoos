@@ -1,10 +1,11 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import org.cactoos.BiFunc;
 import org.cactoos.func.UncheckedBiFunc;
 import org.cactoos.text.FormattedText;
@@ -12,9 +13,9 @@ import org.cactoos.text.FormattedText;
 /**
  * Matched iterator.
  *
- * Iterates over 2 iterators at the same time and verify that elements with the
+ * <p>Iterates over 2 iterators at the same time and verify that elements with the
  * same position has correlation by the function. The function might be equals,
- * endsWith, greaterThen, nonNull, empty, negative, positive, etc.
+ * endsWith, greaterThen, nonNull, empty, negative, positive, etc.</p>
  *
  * @param <X> Type of item in first iterator.
  * @param <Y> Type of item in second iterator.
@@ -39,9 +40,10 @@ public final class Matched<X, Y> implements Iterator<X> {
 
     /**
      * Ctor.
-     * @param fnc The function to detect the correlation between elements.
-     * @param fst The first part of duplex iterator.
-     * @param snd The second part of duplex iterator.
+     *
+     * @param fnc The function to detect the correlation between elements
+     * @param fst The first part of duplex iterator
+     * @param snd The second part of duplex iterator
      */
     public Matched(
         final BiFunc<? super X, ? super Y, Boolean> fnc,
@@ -61,7 +63,7 @@ public final class Matched<X, Y> implements Iterator<X> {
     @Override
     public X next() {
         if (!this.first.hasNext() || !this.second.hasNext()) {
-            throw new IllegalStateException("Size mismatch of iterators");
+            throw new NoSuchElementException("Size mismatch of iterators");
         }
         final X fvl = this.first.next();
         final Y svl = this.second.next();
@@ -75,5 +77,4 @@ public final class Matched<X, Y> implements Iterator<X> {
         }
         return fvl;
     }
-
 }

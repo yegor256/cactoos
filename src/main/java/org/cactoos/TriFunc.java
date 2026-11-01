@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos;
@@ -18,6 +18,7 @@ public interface TriFunc<X, Y, Z, W> {
 
     /**
      * Apply it.
+     *
      * @param first The first argument
      * @param second The second argument
      * @param third The third argument

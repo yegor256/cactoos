@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.bytes;
@@ -53,7 +53,7 @@ import org.cactoos.list.ListOf;
  *
  * @since 0.12
  */
-@SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 public final class BytesOf implements Bytes {
 
     /**
@@ -75,7 +75,7 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(input).asBytes();
      * }</pre>
      *
-     * @param input The input source to read bytes from.
+     * @param input The input source to read bytes from
      */
     public BytesOf(final Input input) {
         this(new InputAsBytes(input));
@@ -94,7 +94,7 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(stream).asBytes();
      * }</pre>
      *
-     * @param input The {@link InputStream} to read bytes from.
+     * @param input The {@link InputStream} to read bytes from
      * @since 0.29.2
      */
     public BytesOf(final InputStream input) {
@@ -113,7 +113,7 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(file).asBytes();
      * }</pre>
      *
-     * @param file The {@link File} to read bytes from.
+     * @param file The {@link File} to read bytes from
      * @since 0.13
      */
     public BytesOf(final File file) {
@@ -133,7 +133,7 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(path).asBytes();
      * }</pre>
      *
-     * @param path The {@link Path} to read bytes from.
+     * @param path The {@link Path} to read bytes from
      * @since 0.13
      */
     public BytesOf(final Path path) {
@@ -153,8 +153,8 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(input, 10).asBytes();
      * }</pre>
      *
-     * @param input The input source to read bytes from.
-     * @param max The maximum buffer size for reading bytes.
+     * @param input The input source to read bytes from
+     * @param max The maximum buffer size for reading bytes
      */
     public BytesOf(final Input input, final int max) {
         this(new InputAsBytes(input, max));
@@ -174,7 +174,7 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(reader).asBytes();
      * }</pre>
      *
-     * @param rdr The {@link Reader} to read bytes from.
+     * @param rdr The {@link Reader} to read bytes from
      */
     public BytesOf(final Reader rdr) {
         this(new ReaderAsBytes(rdr));
@@ -194,8 +194,8 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(reader, StandardCharsets.UTF_8).asBytes();
      * }</pre>
      *
-     * @param rdr The {@link Reader} to read bytes from.
-     * @param charset The {@link Charset} used to encode the characters.
+     * @param rdr The {@link Reader} to read bytes from
+     * @param charset The {@link Charset} used to encode the characters
      */
     public BytesOf(final Reader rdr, final Charset charset) {
         this(new ReaderAsBytes(rdr, charset));
@@ -215,8 +215,8 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(reader, "UTF-8").asBytes();
      * }</pre>
      *
-     * @param rdr The {@link Reader} to read bytes from.
-     * @param charset The charset as a {@link CharSequence}.
+     * @param rdr The {@link Reader} to read bytes from
+     * @param charset The charset as a {@link CharSequence}
      */
     public BytesOf(final Reader rdr, final CharSequence charset) {
         this(new ReaderAsBytes(rdr, charset));
@@ -236,9 +236,9 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(reader, StandardCharsets.UTF_8, 10).asBytes();
      * }</pre>
      *
-     * @param rdr The {@link Reader} to read bytes from.
-     * @param charset The {@link Charset} used to encode the characters.
-     * @param max The maximum buffer size for reading bytes.
+     * @param rdr The {@link Reader} to read bytes from
+     * @param charset The {@link Charset} used to encode the characters
+     * @param max The maximum buffer size for reading bytes
      */
     public BytesOf(final Reader rdr, final Charset charset, final int max) {
         this(new ReaderAsBytes(rdr, charset, max));
@@ -258,8 +258,8 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(reader, 1024).asBytes();
      * }</pre>
      *
-     * @param rdr The {@link Reader} to read bytes from.
-     * @param max The maximum buffer size for reading bytes.
+     * @param rdr The {@link Reader} to read bytes from
+     * @param max The maximum buffer size for reading bytes
      * @since 0.13.3
      */
     public BytesOf(final Reader rdr, final int max) {
@@ -279,9 +279,9 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(reader, "UTF-8", 512).asBytes();
      * }</pre>
      *
-     * @param rdr The {@link Reader} to read bytes from.
-     * @param charset The charset as a {@link CharSequence}.
-     * @param max The maximum buffer size for reading bytes.
+     * @param rdr The {@link Reader} to read bytes from
+     * @param charset The charset as a {@link CharSequence}
+     * @param max The maximum buffer size for reading bytes
      */
     public BytesOf(final Reader rdr, final CharSequence charset, final int max) {
         this(new ReaderAsBytes(rdr, charset, max));
@@ -299,7 +299,7 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(sequence).asBytes();
      * }</pre>
      *
-     * @param input The {@link CharSequence} source to convert into bytes.
+     * @param input The {@link CharSequence} source to convert into bytes
      */
     public BytesOf(final CharSequence input) {
         this(input, StandardCharsets.UTF_8);
@@ -318,8 +318,8 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(sequence, StandardCharsets.UTF_8).asBytes();
      * }</pre>
      *
-     * @param input The {@link CharSequence} source to convert into bytes.
-     * @param charset The {@link Charset} used to encode the characters into bytes.
+     * @param input The {@link CharSequence} source to convert into bytes
+     * @param charset The {@link Charset} used to encode the characters into bytes
      */
     public BytesOf(final CharSequence input, final Charset charset) {
         this(() -> input.toString().getBytes(charset));
@@ -338,11 +338,11 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(sequence, "ISO-8859-1").asBytes();
      * }</pre>
      *
-     * @param input The {@link CharSequence} source to convert into bytes.
-     * @param charset The {@link CharSequence} representation of the charset used for encoding.
+     * @param input The {@link CharSequence} source to convert into bytes
+     * @param charset The {@link CharSequence} representation of the charset used for encoding
      */
     public BytesOf(final CharSequence input, final CharSequence charset) {
-        this(() -> input.toString().getBytes(charset.toString()));
+        this(() -> input.toString().getBytes(Charset.forName(charset.toString())));
     }
 
     /**
@@ -356,7 +356,7 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf('a', 'b', 'c').asBytes();
      * }</pre>
      *
-     * @param chars The sequence of characters to be converted into bytes.
+     * @param chars The sequence of characters to be converted into bytes
      */
     public BytesOf(final char... chars) {
         this(chars, StandardCharsets.UTF_8);
@@ -375,8 +375,8 @@ public final class BytesOf implements Bytes {
      * StandardCharsets.UTF_16).asBytes();
      * }</pre>
      *
-     * @param chars The sequence of characters to be converted into bytes.
-     * @param charset The {@link Charset} used to encode the characters into bytes.
+     * @param chars The sequence of characters to be converted into bytes
+     * @param charset The {@link Charset} used to encode the characters into bytes
      */
     public BytesOf(final char[] chars, final Charset charset) {
         this(new String(chars), charset);
@@ -394,8 +394,8 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(new char[]{'П', 'р', 'и', 'в', 'е', 'т'}, "UTF-8").asBytes();
      * }</pre>
      *
-     * @param chars The sequence of characters to be converted into bytes.
-     * @param charset The charset represented as a {@link CharSequence}.
+     * @param chars The sequence of characters to be converted into bytes
+     * @param charset The charset represented as a {@link CharSequence}
      */
     public BytesOf(final char[] chars, final CharSequence charset) {
         this(new String(chars), charset);
@@ -412,7 +412,7 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(text).asBytes();
      * }</pre>
      *
-     * @param text The {@link Text} source to be converted into bytes.
+     * @param text The {@link Text} source to be converted into bytes
      */
     public BytesOf(final Text text) {
         this(text, StandardCharsets.UTF_8);
@@ -430,8 +430,8 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(text, StandardCharsets.UTF_8).asBytes();
      * }</pre>
      *
-     * @param text The {@link Text} source to be converted into bytes.
-     * @param charset The {@link Charset} used to encode the text into bytes.
+     * @param text The {@link Text} source to be converted into bytes
+     * @param charset The {@link Charset} used to encode the text into bytes
      */
     public BytesOf(final Text text, final Charset charset) {
         this(() -> text.asString().getBytes(charset));
@@ -450,11 +450,11 @@ public final class BytesOf implements Bytes {
      * byte[] bytes = new BytesOf(text, "ISO-8859-1").asBytes();
      * }</pre>
      *
-     * @param text The {@link Text} source to be converted into bytes.
-     * @param charset The charset represented as a {@link CharSequence}.
+     * @param text The {@link Text} source to be converted into bytes
+     * @param charset The charset represented as a {@link CharSequence}
      */
     public BytesOf(final Text text, final CharSequence charset) {
-        this(() -> text.asString().getBytes(charset.toString()));
+        this(() -> text.asString().getBytes(Charset.forName(charset.toString())));
     }
 
     /**
@@ -473,7 +473,7 @@ public final class BytesOf implements Bytes {
      * }
      * }</pre>
      *
-     * @param error The exception or error to serialize into bytes.
+     * @param error The exception or error to serialize into bytes
      */
     public BytesOf(final Throwable error) {
         this(error, StandardCharsets.UTF_8);
@@ -496,11 +496,23 @@ public final class BytesOf implements Bytes {
      * }
      * }</pre>
      *
-     * @param error The exception or error to serialize into bytes.
-     * @param charset The {@link Charset} used to encode the stack trace into bytes.
+     * @param error The exception or error to serialize into bytes
+     * @param charset The {@link Charset} used to encode the stack trace into bytes
      */
     public BytesOf(final Throwable error, final Charset charset) {
-        this(error, charset.name());
+        this(
+            () -> {
+                try (
+                    ByteArrayOutputStream baos =
+                        new ByteArrayOutputStream()
+                ) {
+                    error.printStackTrace(
+                        new PrintStream(baos, true, charset)
+                    );
+                    return baos.toByteArray();
+                }
+            }
+        );
     }
 
     /**
@@ -520,10 +532,9 @@ public final class BytesOf implements Bytes {
      * }
      * }</pre>
      *
-     * @param error The exception or error to serialize into bytes.
-     * @param charset The charset represented as a {@link CharSequence}.
+     * @param error The exception or error to serialize into bytes
+     * @param charset The charset represented as a {@link CharSequence}
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public BytesOf(final Throwable error, final CharSequence charset) {
         this(
             () -> {
@@ -532,7 +543,7 @@ public final class BytesOf implements Bytes {
                         new ByteArrayOutputStream()
                 ) {
                     error.printStackTrace(
-                        new PrintStream(baos, true, charset.toString())
+                        new PrintStream(baos, true, Charset.forName(charset.toString()))
                     );
                     return baos.toByteArray();
                 }
@@ -553,7 +564,7 @@ public final class BytesOf implements Bytes {
      * System.out.println(new String(bytes, StandardCharsets.UTF_8));
      * }</pre>
      *
-     * @param strace The array of stack trace elements to serialize.
+     * @param strace The array of stack trace elements to serialize
      * @since 0.29
      */
     public BytesOf(final StackTraceElement... strace) {
@@ -574,12 +585,28 @@ public final class BytesOf implements Bytes {
      * System.out.println(new String(bytes, StandardCharsets.UTF_8));
      * }</pre>
      *
-     * @param strace The stack trace elements to serialize.
-     * @param charset The {@link Charset} used to encode the stack trace into bytes.
+     * @param strace The stack trace elements to serialize
+     * @param charset The {@link Charset} used to encode the stack trace into bytes
      * @since 0.29
      */
     public BytesOf(final StackTraceElement[] strace, final Charset charset) {
-        this(strace, charset.name());
+        this(
+            () -> {
+                try (
+                    ByteArrayOutputStream baos =
+                        new ByteArrayOutputStream();
+                    PrintStream stream = new PrintStream(
+                        baos, true, charset
+                    )
+                ) {
+                    for (final StackTraceElement element : strace) {
+                        stream.append(element.toString());
+                        stream.append((char) 10);
+                    }
+                    return baos.toByteArray();
+                }
+            }
+        );
     }
 
     /**
@@ -596,11 +623,10 @@ public final class BytesOf implements Bytes {
      * System.out.println(new String(bytes, "UTF-16"));
      * }</pre>
      *
-     * @param strace The stack trace elements to serialize.
-     * @param charset The charset represented as a {@link CharSequence}.
+     * @param strace The stack trace elements to serialize
+     * @param charset The charset represented as a {@link CharSequence}
      * @since 0.29
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public BytesOf(final StackTraceElement[] strace,
         final CharSequence charset) {
         this(
@@ -609,12 +635,12 @@ public final class BytesOf implements Bytes {
                     ByteArrayOutputStream baos =
                         new ByteArrayOutputStream();
                     PrintStream stream = new PrintStream(
-                        baos, true, charset.toString()
+                        baos, true, Charset.forName(charset.toString())
                     )
                 ) {
                     for (final StackTraceElement element : strace) {
                         stream.append(element.toString());
-                        stream.append("\n");
+                        stream.append((char) 10);
                     }
                     return baos.toByteArray();
                 }
@@ -633,7 +659,7 @@ public final class BytesOf implements Bytes {
      * System.out.println(Arrays.toString(data));
      * }</pre>
      *
-     * @param bytes The bytes to encapsulate.
+     * @param bytes The bytes to encapsulate
      */
     public BytesOf(final byte... bytes) {
         this(() -> bytes);
@@ -652,7 +678,7 @@ public final class BytesOf implements Bytes {
      * System.out.println(Arrays.toString(data));
      * }</pre>
      *
-     * @param iterator The iterator of bytes to encapsulate.
+     * @param iterator The iterator of bytes to encapsulate
      */
     public BytesOf(final Iterator<Byte> iterator) {
         this(new IterableOf<>(iterator));
@@ -671,7 +697,7 @@ public final class BytesOf implements Bytes {
      * System.out.println(Arrays.toString(data));
      * }</pre>
      *
-     * @param bytes The iterable collection of bytes to encapsulate.
+     * @param bytes The iterable collection of bytes to encapsulate
      */
     public BytesOf(final Iterable<Byte> bytes) {
         this(() -> {
@@ -697,7 +723,7 @@ public final class BytesOf implements Bytes {
      * System.out.println(new String(data, StandardCharsets.UTF_8));
      * }</pre>
      *
-     * @param bytes The collection of bytes to encapsulate.
+     * @param bytes The collection of bytes to encapsulate
      */
     public BytesOf(final Collection<Byte> bytes) {
         this(() -> {
@@ -721,7 +747,7 @@ public final class BytesOf implements Bytes {
      * System.out.println(Arrays.toString(data));
      * }</pre>
      *
-     * @param bytes The {@link Bytes} instance to encapsulate.
+     * @param bytes The {@link Bytes} instance to encapsulate
      */
     private BytesOf(final Bytes bytes) {
         this.origin = bytes;

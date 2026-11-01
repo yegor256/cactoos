@@ -1,19 +1,33 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
  * Rotate (circular shift) a String of shift characters.
+ *
  * @since 0.12
  */
 public final class Rotated extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * @param input The input
+     * @param shift The shift
+     * @since 0.73.2
+     */
+    public Rotated(final Input input, final int shift) {
+        this(new TextOf(input), shift);
+    }
+
+    /**
+     * Ctor.
+     *
      * @param text The text
      * @param shift The shift
      */
@@ -27,13 +41,9 @@ public final class Rotated extends TextEnvelope {
                         if (offset < 0) {
                             offset = origin.length() + offset;
                         }
-                        final StringBuilder builder = new StringBuilder(length);
-                        // @checkstyle ParameterAssignmentCheck (6 lines)
-                        origin = builder.append(
-                            origin.substring(offset)
-                        ).append(
-                            origin.substring(0, offset)
-                        ).toString();
+                        // @checkstyle ParameterAssignmentCheck (2 lines)
+                        origin = origin.substring(offset)
+                            + origin.substring(0, offset);
                     }
                     return origin;
                 },

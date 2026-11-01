@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -11,9 +11,9 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import org.cactoos.text.Concatenated;
 import org.cactoos.text.Randomized;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -22,7 +22,6 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.0
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class AppendToTest {
 
     /**
@@ -35,18 +34,19 @@ final class AppendToTest {
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'
             ).asString()
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't throw exception with proper message",
             () -> new AppendTo(source).stream(),
             new Throws<>(
                 source.getPath(),
                 NoSuchFileException.class
             )
-        ).affirm();
+        );
     }
 
     /**
      * Ensures that AppendTo is appending to a given file.
+     *
      * @param wdir TempDir to work in
      * @throws Exception if fails
      * @todo #1586:1h Tests failed on Windows due to not closed streams.
@@ -57,23 +57,24 @@ final class AppendToTest {
         final File source = wdir.resolve("apptest.txt").toFile();
         final String first = "abdcd";
         try (OutputStream out = new OutputTo(source).stream()) {
-            out.write(first.getBytes());
+            out.write(first.getBytes(StandardCharsets.UTF_8));
             out.flush();
         }
         final String second = "efgh";
         try (OutputStream out = new AppendTo(source).stream()) {
-            out.write(second.getBytes());
+            out.write(second.getBytes(StandardCharsets.UTF_8));
             out.flush();
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Does not contain expected text",
             new InputOf(source),
             new HasContent(new Concatenated(first, second))
-        ).affirm();
+        );
     }
 
     /**
      * Ensures that AppendTo is appending unicode text to a given file.
+     *
      * @param wdir TempDir to work in
      * @throws Exception if fails
      */
@@ -81,21 +82,19 @@ final class AppendToTest {
     void appendsUnicodeToFile(@TempDir final Path wdir) throws Exception {
         final File source = wdir.resolve("appunitest.txt").toFile();
         final String first = "Hello, товарищ output #3 äÄ ";
-        try (OutputStream out = new OutputTo(source)
-            .stream()) {
+        try (OutputStream out = new OutputTo(source).stream()) {
             out.write(first.getBytes(StandardCharsets.UTF_8));
             out.flush();
         }
         final String second = "#4 äÄ üÜ öÖ and ß";
-        try (OutputStream out = new AppendTo(source)
-            .stream()) {
+        try (OutputStream out = new AppendTo(source).stream()) {
             out.write(second.getBytes(StandardCharsets.UTF_8));
             out.flush();
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't find expected unicode text content",
             new InputOf(source),
             new HasContent(new Concatenated(first, second))
-        ).affirm();
+        );
     }
 }

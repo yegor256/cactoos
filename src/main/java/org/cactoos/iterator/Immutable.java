@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
@@ -23,6 +23,7 @@ public final class Immutable<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param iter Iterator to make immutable
      */
     public Immutable(final Iterator<? extends T> iter) {

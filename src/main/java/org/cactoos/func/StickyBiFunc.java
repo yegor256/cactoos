@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.func;
@@ -20,7 +20,8 @@ import org.cactoos.scalar.Sticky;
  * <p>This {@link BiFunc} decorator technically is an in-memory
  * cache.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
+ *
  * @param <X> Type of input
  * @param <Y> Type of input
  * @param <Z> Type of output
@@ -46,6 +47,7 @@ public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      */
     public StickyBiFunc(final BiFunc<X, Y, Z> fnc) {
@@ -54,6 +56,7 @@ public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      * @param max Maximum buffer size
      * @since 0.26
@@ -75,5 +78,4 @@ public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
         }
         return this.cache.get(key);
     }
-
 }

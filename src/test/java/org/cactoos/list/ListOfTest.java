@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.list;
@@ -11,7 +11,6 @@ import org.cactoos.iterable.Mapped;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -19,11 +18,7 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link ListOf}.
  *
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods",
-    "PMD.AvoidDuplicateLiterals",
-    "PMD.JUnitTestsShouldIncludeAssert"})
 final class ListOfTest {
 
     @Test
@@ -70,37 +65,47 @@ final class ListOfTest {
 
     @Test
     void lowBoundTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected for negative index",
             () -> new ListOf<>(Collections.nCopies(10, 0)).get(-1),
             new Throws<>(IndexOutOfBoundsException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void highBoundTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected for index larger then size",
             () -> new ListOf<>(Collections.nCopies(10, 0)).get(11),
             new Throws<>(IndexOutOfBoundsException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void makesListFromMappedIterable() {
+        MatcherAssert.assertThat(
+            "Can't turn a mapped iterable into a list",
+            new ListOf<>(
+                new Mapped<>(
+                    i -> i + 1,
+                    new IterableOf<>(1, -1, 0, 1)
+                )
+            ),
+            new HasSize(4)
+        );
+    }
+
+    @Test
+    void makesListFromMappedIterableOnSecondAccess() {
         final List<Integer> list = new ListOf<>(
             new Mapped<>(
                 i -> i + 1,
                 new IterableOf<>(1, -1, 0, 1)
             )
         );
+        list.iterator().next();
         MatcherAssert.assertThat(
-            "Can't turn a mapped iterable into a list",
-            list,
-            new HasSize(4)
-        );
-        MatcherAssert.assertThat(
-            "Can't turn a mapped iterable into a list, again",
+            "Can't turn a mapped iterable into a list on second access",
             list,
             new HasSize(4)
         );
@@ -134,7 +139,7 @@ final class ListOfTest {
     }
 
     @Test
-    void toStringUsesListContent() {
+    void printsListContent() {
         MatcherAssert.assertThat(
             "Can't print content using toString.",
             new ListOf<>(1, 2).toString(),
@@ -150,5 +155,4 @@ final class ListOfTest {
             new IsEqual<>(new ListOf<>(1, 2).hashCode())
         );
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -13,9 +13,11 @@ import org.cactoos.scalar.Reduced;
 
 /**
  * Concatenation of several inputs.
+ *
  * @since 0.36
  */
 public final class Joined implements Input {
+
     /**
      * The inputs.
      */
@@ -23,14 +25,7 @@ public final class Joined implements Input {
 
     /**
      * Ctor.
-     * @param ipts Iterable of inputs
-     */
-    public Joined(final Iterable<? extends Input> ipts) {
-        this.inputs = ipts;
-    }
-
-    /**
-     * Ctor.
+     *
      * @param first First input
      * @param rest The other inputs
      */
@@ -41,6 +36,15 @@ public final class Joined implements Input {
                 new IterableOf<>(rest)
             )
         );
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param ipts Iterable of inputs
+     */
+    public Joined(final Iterable<? extends Input> ipts) {
+        this.inputs = ipts;
     }
 
     @Override

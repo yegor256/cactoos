@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos;
@@ -21,7 +21,7 @@ import java.io.InputStream;
  * one, providing read-only access to
  * the encapsulated {@link java.io.File}.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @see org.cactoos.io.InputOf
  * @since 0.1
@@ -31,9 +31,9 @@ public interface Input {
 
     /**
      * Get read access to it.
+     *
      * @return InputStream to read from
      * @throws Exception If something goes wrong
      */
     InputStream stream() throws Exception;
-
 }

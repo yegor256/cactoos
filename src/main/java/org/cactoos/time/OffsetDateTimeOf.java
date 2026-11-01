@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.time;
@@ -13,9 +13,11 @@ import org.cactoos.scalar.Unchecked;
 
 /**
  * Parser for {@link OffsetDateTime} instances.
+ *
  * @since 0.27
  */
 public final class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
+
     /**
      * The parsed date.
      */
@@ -23,36 +25,51 @@ public final class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
 
     /**
      * Parses ISO date to create {@link OffsetDateTime} instances.
-     * @param date The date to parse.
+     *
+     * @param date The date to parse
      */
     public OffsetDateTimeOf(final CharSequence date) {
-        this(date, new Iso().value());
+        this(date, new Iso());
     }
 
     /**
      * Parses date using the provided format to create
-     *  {@link OffsetDateTime} instances.
-     * @param date The date to parse.
-     * @param format The format to use.
-     * @param offset The offset to use.
+     * {@link OffsetDateTime} instances.
+     *
+     * @param date The date to parse
+     * @param format The format to use
+     * @param offset The offset to use
      */
     public OffsetDateTimeOf(final CharSequence date, final String format,
         final ZoneOffset offset) {
-        this(date,
-            DateTimeFormatter.ofPattern(format).withZone(offset.normalized())
+        this(
+            date,
+            () -> DateTimeFormatter.ofPattern(format).withZone(offset.normalized())
         );
     }
 
     /**
      * Parses the date using the formatter to create
-     *  {@link OffsetDateTime} instances.
-     * @param date The date to parse.
-     * @param formatter The formatter to use.
+     * {@link OffsetDateTime} instances.
+     *
+     * @param date The date to parse
+     * @param formatter The formatter to use
      */
     public OffsetDateTimeOf(final CharSequence date,
         final DateTimeFormatter formatter) {
+        this(date, () -> formatter);
+    }
+
+    /**
+     * Parses the date using a deferred formatter.
+     *
+     * @param date The date to parse
+     * @param fmt The formatter to use, deferred
+     */
+    private OffsetDateTimeOf(final CharSequence date,
+        final Scalar<DateTimeFormatter> fmt) {
         this.parsed = new Unchecked<>(
-            () -> ZonedDateTime.from(formatter.parse(date)).toOffsetDateTime()
+            () -> ZonedDateTime.from(fmt.value().parse(date)).toOffsetDateTime()
         );
     }
 
@@ -60,5 +77,4 @@ public final class OffsetDateTimeOf implements Scalar<OffsetDateTime> {
     public OffsetDateTime value() {
         return this.parsed.value();
     }
-
 }

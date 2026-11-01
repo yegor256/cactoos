@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -14,7 +14,7 @@ import org.cactoos.text.UncheckedText;
  * Scalar that wraps an original checked exception thrown by the origin using
  * the given wrapping function.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of result
  * @param <E> Type of exception
@@ -34,6 +34,7 @@ public final class Checked<T, E extends Exception> implements Scalar<T> {
 
     /**
      * Ctor.
+     *
      * @param scalar Encapsulated scalar
      * @param fnc Func that wraps exception
      */
@@ -44,13 +45,7 @@ public final class Checked<T, E extends Exception> implements Scalar<T> {
     }
 
     @Override
-    @SuppressWarnings(
-        {
-            "PMD.AvoidCatchingGenericException",
-            "PMD.AvoidRethrowingException",
-            "PMD.PreserveStackTrace"
-        }
-    )
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public T value() throws E {
         try {
             return this.origin.value();
@@ -66,32 +61,20 @@ public final class Checked<T, E extends Exception> implements Scalar<T> {
         }
     }
 
-    /**
-     * Wraps exception.
-     * Skips unnecessary wrapping of exceptions of the same type.
-     * Allows wrapping of exceptions of the same type if the error message
-     * has been changed.
-     *
-     * @param exp Exception
-     * @return E Wrapped exception
-     */
     @SuppressWarnings("unchecked")
     private E wrappedException(final Exception exp) {
         E wrapped = new UncheckedFunc<>(this.func).apply(exp);
-        final int level = new InheritanceLevel(
-            exp.getClass(), wrapped.getClass()
-        ).value();
-        final String message = wrapped.getMessage()
-            .replaceFirst(
-                new UncheckedText(
-                    new FormattedText(
-                        "%s: ",
-                        exp.getClass().getName()
-                    )
-                ).asString(),
-                ""
-            );
-        if (level >= 0 && message.equals(exp.getMessage())) {
+        final String message = wrapped.getMessage().replaceFirst(
+            new UncheckedText(
+                new FormattedText(
+                    "%s: ",
+                    exp.getClass().getName()
+                )
+            ).asString(),
+            ""
+        );
+        if (new InheritanceLevel(exp.getClass(), wrapped.getClass()).value() >= 0
+            && message.equals(exp.getMessage())) {
             wrapped = (E) exp;
         }
         return wrapped;

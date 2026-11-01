@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -19,25 +19,50 @@ import org.cactoos.scalar.Unchecked;
  * )
  * }</pre>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.27
  */
-public final class ComparableText extends TextEnvelope
-    implements Comparable<Text> {
+public final class ComparableText implements Text, Comparable<ComparableText> {
+
+    /**
+     * Wrapped text.
+     */
+    private final Text origin;
 
     /**
      * Ctor.
+     *
      * @param text The text
      */
     public ComparableText(final Text text) {
-        super(text);
+        this.origin = text;
     }
 
     @Override
-    public int compareTo(final Text other) {
+    public String asString() throws Exception {
+        return this.origin.asString();
+    }
+
+    @Override
+    public int compareTo(final ComparableText other) {
         return new Unchecked<>(
             () -> this.asString().compareTo(other.asString())
         ).value();
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return this == obj || this.origin.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.origin.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return this.origin.toString();
     }
 }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.func;
@@ -30,8 +30,9 @@ public final class CheckedFunc<X, Y, E extends Exception> implements
 
     /**
      * Ctor.
+     *
      * @param original Original func
-     * @param fnc Function that wraps exceptions.
+     * @param fnc Function that wraps exceptions
      */
     public CheckedFunc(final Func<X, Y> original,
         final Func<Exception, E> fnc) {

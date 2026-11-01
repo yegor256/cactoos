@@ -1,29 +1,29 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Satisfies;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test cases for {@link NoNulls}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
+ *
  * @since 0.35
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class NoNullsTest {
 
     @Test
     void nextThrowsErrorIfNull() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw exception",
             () -> new NoNulls<>(
-                new IteratorOf<>(new String[]{null})
+                new IteratorOf<>((String) null)
             ).next(),
             new Throws<>(
                 new Satisfies<>(
@@ -31,12 +31,12 @@ final class NoNullsTest {
                 ),
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void nthThrowsErrorIfNull() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw exception",
             () -> new TailOf<>(
                 1,
@@ -50,6 +50,6 @@ final class NoNullsTest {
                 ),
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.proc;
@@ -31,8 +31,9 @@ public final class CheckedBiProc<X, Y, E extends Exception> implements
 
     /**
      * Ctor.
+     *
      * @param original Original BiProc
-     * @param fnc Function that wraps exceptions.
+     * @param fnc Function that wraps exceptions
      */
     public CheckedBiProc(final BiProc<X, Y> original,
         final Func<Exception, E> fnc) {

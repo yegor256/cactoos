@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.bytes;
@@ -8,13 +8,14 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import org.cactoos.Bytes;
+import org.cactoos.Scalar;
 
 /**
  * Reader as {@link Bytes}.
  *
  * <p>This class is for internal use only. Use {@link BytesOf} instead.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.12
  */
@@ -28,7 +29,7 @@ final class ReaderAsBytes implements Bytes {
     /**
      * The charset.
      */
-    private final CharSequence charset;
+    private final Scalar<? extends CharSequence> charset;
 
     /**
      * The buffer size.
@@ -73,11 +74,12 @@ final class ReaderAsBytes implements Bytes {
      * @param max Buffer size
      */
     ReaderAsBytes(final Reader rdr, final Charset cset, final int max) {
-        this(rdr, cset.name(), max);
+        this(rdr, cset::name, max);
     }
 
     /**
      * Ctor.
+     *
      * @param rdr Reader
      * @param max Buffer size
      * @since 0.13.3
@@ -94,6 +96,21 @@ final class ReaderAsBytes implements Bytes {
      * @param max Buffer size
      */
     ReaderAsBytes(final Reader rdr, final CharSequence cset, final int max) {
+        this(rdr, () -> cset, max);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param rdr Reader
+     * @param cset Charset, deferred
+     * @param max Buffer size
+     */
+    private ReaderAsBytes(
+        final Reader rdr,
+        final Scalar<? extends CharSequence> cset,
+        final int max
+    ) {
         this.reader = rdr;
         this.charset = cset;
         this.size = max;
@@ -111,7 +128,8 @@ final class ReaderAsBytes implements Bytes {
             builder.append(buffer, 0, done);
         }
         this.reader.close();
-        return builder.toString().getBytes(this.charset.toString());
+        return builder.toString().getBytes(
+            Charset.forName(this.charset.value().toString())
+        );
     }
-
 }

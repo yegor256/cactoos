@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -8,16 +8,15 @@ import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link Sticky}.
  *
  * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class StickyTest {
 
@@ -29,28 +28,31 @@ final class StickyTest {
                 () -> Collections.nCopies(size.incrementAndGet(), 0).iterator()
             )
         );
-        new Assertion<>(
-            "Must ignore the changes in the underlying iterable",
+        MatcherAssert.assertThat(
+            String.format(
+                "Must ignore the changes in the underlying iterable, size=%d",
+                size.get()
+            ),
             new LengthOf(list).value(),
             new IsEqual<>(new LengthOf(list).value())
-        ).affirm();
+        );
     }
 
     @Test
-    void testEmpty() {
-        new Assertion<>(
+    void isEmptyOnEmpty() {
+        MatcherAssert.assertThat(
             "Must be empty",
             new Sticky<>(),
             new IsEmptyIterable<>()
-        ).affirm();
+        );
     }
 
     @Test
-    void testEqualsIterable() {
-        new Assertion<>(
+    void equalsIterable() {
+        MatcherAssert.assertThat(
             "Must be equals to equivalent iterable",
             new Sticky<>(1, 2),
             new IsEqual<>(new IterableOf<>(1, 2))
-        ).affirm();
+        );
     }
 }

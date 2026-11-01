@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
@@ -8,81 +8,80 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link HeadOf}.
+ *
  * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class HeadOfTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    void headIterator() {
-        new Assertion<>(
+        void headIterator() {
+        MatcherAssert.assertThat(
             "Must skip elements in iterator",
             new IterableOf<>(
                 new HeadOf<>(
                     2,
                     new IteratorOf<>(
-                        "one", "two", "three", "four"
+                        "alpha", "beta", "gamma", "delta"
                     )
                 )
             ),
             new HasValues<>(
-                "one",
-                "two"
+                "alpha",
+                "beta"
             )
-        ).affirm();
+        );
     }
 
     @Test
     void returnsIntactIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must return an intact iterator",
             new IterableOf<>(
                 new HeadOf<>(
                     3,
                     new IteratorOf<>(
-                        "one", "two"
+                        "epsilon", "zeta"
                     )
                 )
             ),
             new HasSize(2)
-        ).affirm();
+        );
     }
 
     @Test
     void returnsEmptyIterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw an exception if empty",
             () -> new HeadOf<>(
                 0,
                 new IteratorOf<>(
-                    "one", "two"
+                    "eta", "theta"
                 )
             ).next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void emptyIteratorForNegativeSize() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw an exception for negative size",
             () -> new HeadOf<>(
                 -1,
                 new IteratorOf<>(
-                    "one", "two"
+                    "iota", "kappa"
                 )
             ).next(),
             new Throws<>(NoSuchElementException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -91,36 +90,35 @@ final class HeadOfTest {
         new HeadOf<>(
             2,
             new IteratorOf<>(
-                "one", "two", "three", "four"
+                "lambda", "mu", "nu", "xi"
             )
         ).forEachRemaining(
             lst::add
         );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Should iterate over 2 head elements",
             lst,
             new HasValues<>(
-                "one",
-                "two"
+                "lambda",
+                "mu"
             )
-        ).affirm();
+        );
     }
 
     @Test
     void removeNotSupported() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Remove should not be supported",
             () -> {
                 new HeadOf<>(
                     1,
                     new IteratorOf<>(
-                        "one", "two", "three", "four"
+                        "omicron", "pi", "rho", "sigma"
                     )
                 ).remove();
                 return "Should have thrown exception";
             },
             new Throws<>(UnsupportedOperationException.class)
-        ).affirm();
+        );
     }
-
 }

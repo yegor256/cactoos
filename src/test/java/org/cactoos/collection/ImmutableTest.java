@@ -1,13 +1,15 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.collection;
 
+import java.util.Collection;
+import java.util.List;
 import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -16,23 +18,22 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.16
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class ImmutableTest {
 
     @Test
     void size() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "size() must be equals to original",
             new Immutable<>(
                 new ListOf<>(1, 2)
             ).size(),
             new IsEqual<>(2)
-        ).affirm();
+        );
     }
 
     @Test
     void isEmpty() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "isEmpty() must be equals to original",
             new Immutable<>(
                 new ListOf<>(1, 2)
@@ -40,23 +41,23 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>(1, 2).isEmpty()
             )
-        ).affirm();
+        );
     }
 
     @Test
     void iterator() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "iterator() is equal to original",
             () -> new Immutable<>(
                 new ListOf<>(1, 2)
             ).iterator(),
             new HasValues<>(1, 2)
-        ).affirm();
+        );
     }
 
     @Test
     void contains() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "contains() must be equals to original",
             new Immutable<>(
                 new ListOf<>(1, 2)
@@ -64,12 +65,12 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>(1, 2).contains(1)
             )
-        ).affirm();
+        );
     }
 
     @Test
-    void toArray() {
-        new Assertion<>(
+    void convertsToArray() {
+        MatcherAssert.assertThat(
             "toArray() must be equals to original",
             new Immutable<>(
                 new ListOf<>(1, 2)
@@ -77,25 +78,25 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>(1, 2).toArray()
             )
-        ).affirm();
+        );
     }
 
     @Test
-    void testToArray() {
-        new Assertion<>(
+    void convertsToTypedArray() {
+        MatcherAssert.assertThat(
             "toArray(T[]) must be equals to original",
             new Immutable<>(
                 new ListOf<>(1, 2, 3)
-            ).toArray(new Integer[3]),
+            ).toArray(new Integer[0]),
             new IsEqual<>(
-                new ListOf<>(1, 2, 3).toArray(new Integer[3])
+                new ListOf<>(1, 2, 3).toArray(new Integer[0])
             )
-        ).affirm();
+        );
     }
 
     @Test
     void add() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "add() must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2)
@@ -104,12 +105,12 @@ final class ImmutableTest {
                 "#add(): the collection is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void remove() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "remove() must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2)
@@ -118,13 +119,13 @@ final class ImmutableTest {
                 "#remove(): the collection is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void containsAll() {
-        final ListOf<Integer> another = new ListOf<>(3, 4, 5);
-        new Assertion<>(
+        final List<Integer> another = new ListOf<>(3, 4, 5);
+        MatcherAssert.assertThat(
             "containsAll() must be equals to original",
             new Immutable<>(
                 new ListOf<>(1, 2, 3)
@@ -132,12 +133,12 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>(1, 2, 3).containsAll(another)
             )
-        ).affirm();
+        );
     }
 
     @Test
     void addAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "addAll() must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2)
@@ -146,12 +147,12 @@ final class ImmutableTest {
                 "#addAll(): the collection is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void removeAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "removeAll() must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2, 3)
@@ -160,12 +161,12 @@ final class ImmutableTest {
                 "#removeAll(): the collection is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void retainAll() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "retainAll() must throw exception",
             () -> new Immutable<>(
                 new ListOf<>(1, 2, 3)
@@ -174,12 +175,12 @@ final class ImmutableTest {
                 "#retainAll(): the collection is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void clear() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "clear() must throw exception",
             () -> {
                 new Immutable<>(
@@ -191,12 +192,12 @@ final class ImmutableTest {
                 "#clear(): the collection is read-only",
                 UnsupportedOperationException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
-    void testToString() {
-        new Assertion<>(
+    void stringRepresentation() {
+        MatcherAssert.assertThat(
             "toString() must be equals to original",
             new Immutable<>(
                 new ListOf<>(1, 2, 3)
@@ -204,12 +205,12 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>(1, 2, 3).toString()
             )
-        ).affirm();
+        );
     }
 
     @Test
-    void testHashCode() {
-        new Assertion<>(
+    void hashes() {
+        MatcherAssert.assertThat(
             "hashCode() must be equals to original",
             new Immutable<>(
                 new ListOf<>(1, 2, 3)
@@ -217,13 +218,14 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>(1, 2, 3).hashCode()
             )
-        ).affirm();
+        );
     }
 
     @Test
-    void testEquals() {
-        final ListOf<Integer> another = new ListOf<>(4, 5, 6);
-        new Assertion<>(
+    @SuppressWarnings("EqualsIncompatibleType")
+    void equalsToOriginal() {
+        final List<Integer> another = new ListOf<>(4, 5, 6);
+        MatcherAssert.assertThat(
             "equals() must be equals to original",
             new Immutable<>(
                 new ListOf<>(1, 2, 3)
@@ -231,6 +233,20 @@ final class ImmutableTest {
             new IsEqual<>(
                 new ListOf<>(1, 2, 3).equals(another)
             )
-        ).affirm();
+        );
+    }
+
+    @Test
+    @SuppressWarnings("UndefinedEquals")
+    void equalsIsSymmetricWithPlainList() {
+        final List<Integer> plain = new ListOf<>(1, 2, 3);
+        final Collection<Integer> wrapper = new Immutable<>(
+            new ListOf<>(1, 2, 3)
+        );
+        MatcherAssert.assertThat(
+            "equals() must be symmetric between wrapper and plain list",
+            wrapper.equals(plain),
+            new IsEqual<>(plain.equals(wrapper))
+        );
     }
 }

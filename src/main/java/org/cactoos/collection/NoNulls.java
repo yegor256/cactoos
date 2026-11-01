@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.collection;
@@ -17,7 +17,6 @@ import org.cactoos.text.UncheckedText;
  * @param <X> Element type
  * @since 0.27
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public final class NoNulls<X> implements Collection<X> {
 
     /**
@@ -27,13 +26,14 @@ public final class NoNulls<X> implements Collection<X> {
 
     /**
      * Ctor without '? extends X' wildcard because of the issue:
-     *  <ol>
-     *      <li>The client gets Collection of X</li>
-     *      <li>The client adds item of X to it</li>
-     *      <li>The client queries items of original Collection of ? extends X</li>
-     *      <li>Runtime exception occurs</li>
-     *  </ol>
-     * @param items Original one.
+     * <ol>
+     * <li>The client gets Collection of X</li>
+     * <li>The client adds item of X to it</li>
+     * <li>The client queries items of original Collection of ? extends X</li>
+     * <li>Runtime exception occurs</li>
+     * </ol>
+     *
+     * @param items Original one
      */
     public NoNulls(final Collection<X> items) {
         this.col = items;
@@ -82,11 +82,10 @@ public final class NoNulls<X> implements Collection<X> {
     }
 
     @Override
-    @SuppressWarnings("PMD.UseVarargs")
     public <T> T[] toArray(final T[] array) {
-        this.col.toArray((Object[]) array);
-        for (int idx = 0; idx < array.length; ++idx) {
-            if (array[idx] == null) {
+        final T[] result = this.col.toArray(array);
+        for (int idx = 0; idx < result.length; ++idx) {
+            if (result[idx] == null) {
                 throw new IllegalStateException(
                     new UncheckedText(
                         new FormattedText(
@@ -96,7 +95,7 @@ public final class NoNulls<X> implements Collection<X> {
                 );
             }
         }
-        return array;
+        return result;
     }
 
     @Override
@@ -121,22 +120,22 @@ public final class NoNulls<X> implements Collection<X> {
 
     @Override
     public boolean containsAll(final Collection<?> items) {
-        return this.col.containsAll(new NoNulls<>(items));
+        return this.col.containsAll(new org.cactoos.collection.NoNulls<>(items));
     }
 
     @Override
     public boolean addAll(final Collection<? extends X> items) {
-        return this.col.addAll(new NoNulls<>(items));
+        return this.col.addAll(new org.cactoos.collection.NoNulls<>(items));
     }
 
     @Override
     public boolean removeAll(final Collection<?> items) {
-        return this.col.removeAll(new NoNulls<>(items));
+        return this.col.removeAll(new org.cactoos.collection.NoNulls<>(items));
     }
 
     @Override
     public boolean retainAll(final Collection<?> items) {
-        return this.col.retainAll(new NoNulls<>(items));
+        return this.col.retainAll(new org.cactoos.collection.NoNulls<>(items));
     }
 
     @Override
@@ -150,6 +149,7 @@ public final class NoNulls<X> implements Collection<X> {
     }
 
     @Override
+    @SuppressWarnings("UndefinedEquals")
     public boolean equals(final Object obj) {
         return this.col.equals(obj);
     }

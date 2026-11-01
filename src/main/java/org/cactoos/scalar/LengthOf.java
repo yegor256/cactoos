@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -14,8 +14,7 @@ import org.cactoos.Text;
 /**
  * Length.
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1
  */
@@ -23,6 +22,7 @@ public final class LengthOf extends ScalarEnvelope<Long> {
 
     /**
      * Ctor.
+     *
      * @param items The array
      */
     public LengthOf(final Iterable<?> items) {
@@ -49,6 +49,7 @@ public final class LengthOf extends ScalarEnvelope<Long> {
 
     /**
      * Ctor.
+     *
      * @param input The input
      */
     public LengthOf(final Input input) {
@@ -57,10 +58,10 @@ public final class LengthOf extends ScalarEnvelope<Long> {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param max Buffer size
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public LengthOf(final Input input, final int max) {
         this(() -> {
             if (max == 0) {
@@ -71,14 +72,8 @@ public final class LengthOf extends ScalarEnvelope<Long> {
             try (InputStream stream = input.stream()) {
                 final byte[] buf = new byte[max];
                 long length = 0L;
-                while (true) {
-                    final int len = stream.read(buf);
-                    if (len > 0) {
-                        length += (long) len;
-                    }
-                    if (len < 0) {
-                        break;
-                    }
+                for (int len = stream.read(buf); len >= 0; len = stream.read(buf)) {
+                    length += len;
                 }
                 return length;
             }
@@ -87,7 +82,8 @@ public final class LengthOf extends ScalarEnvelope<Long> {
 
     /**
      * Ctor.
-     * @param number Number.
+     *
+     * @param number Number
      */
     private LengthOf(final Scalar<Long> number) {
         super(number);

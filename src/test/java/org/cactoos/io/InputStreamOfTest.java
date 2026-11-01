@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -13,9 +13,9 @@ import java.nio.file.Path;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.Satisfies;
@@ -24,10 +24,8 @@ import org.llorllale.cactoos.matchers.Satisfies;
  * Test case for {@link InputStreamOf}.
  *
  * @since 0.13
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods",
-    "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class InputStreamOfTest {
 
     @Test
@@ -35,41 +33,40 @@ final class InputStreamOfTest {
         final Path temp = wdir.resolve("cactoos-1.txt-1");
         final String content = "Hello, товарищ!";
         Files.write(temp, content.getBytes(StandardCharsets.UTF_8));
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read file content",
             new InputOf(new InputStreamOf(temp)),
             new HasContent(content)
-        ).affirm();
+        );
     }
 
     @Test
     void readsFromReader() {
         final String content = "Hello, дорогой товарищ!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from reader",
             new InputOf(new InputStreamOf(new StringReader(content))),
             new HasContent(content)
-        ).affirm();
+        );
     }
 
     @Test
     void readsFromReaderThroughSmallBuffer() {
         final String content = "Hello, صديق!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from reader through small buffer",
             new InputOf(new InputStreamOf(new StringReader(content), 1)),
             new HasContent(content)
-        ).affirm();
+        );
     }
 
     @Test
     void makesDataAvailable() throws IOException {
-        final String content = "Hello,חבר!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must show that data is available",
-            new InputStreamOf(content).available(),
+            new InputStreamOf("Hello,חבר!").available(),
             new Satisfies<>(x -> x > 0)
-        ).affirm();
+        );
     }
 
     @Test
@@ -79,42 +76,40 @@ final class InputStreamOfTest {
         new LengthOf(
             new TeeInput(content, file)
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from file",
             new TextOf(new InputStreamOf(file)),
             new IsText(content)
-        ).affirm();
+        );
     }
 
     @Test
     void readsBytes() {
         final String content = "Bytes content";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from bytes",
             new TextOf(new InputStreamOf(new BytesOf(content))),
             new IsText(content)
-        ).affirm();
+        );
     }
 
     @Test
     void readsBytesArray() throws Exception {
-        final String content = "Bytes array content";
-        final byte[] bytes = new BytesOf(content).asBytes();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from byte array",
-            new TextOf(new InputStreamOf(bytes)),
-            new IsText(content)
-        ).affirm();
+            new TextOf(new InputStreamOf(new BytesOf("Bytes array content").asBytes())),
+            new IsText("Bytes array content")
+        );
     }
 
     @Test
     void readsText() {
         final String content = "Text content";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from text",
             new TextOf(new InputStreamOf(new TextOf(content))),
             new IsText(content)
-        ).affirm();
+        );
     }
 
     @Test
@@ -124,11 +119,11 @@ final class InputStreamOfTest {
         new LengthOf(
             new TeeInput(content, file)
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from URI",
             new TextOf(new InputStreamOf(file.toURI())),
             new IsText(content)
-        ).affirm();
+        );
     }
 
     @Test
@@ -138,34 +133,32 @@ final class InputStreamOfTest {
         new LengthOf(
             new TeeInput(content, file)
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from URL",
             new TextOf(new InputStreamOf(file.toURI().toURL())),
             new IsText(content)
-        ).affirm();
+        );
     }
 
     @Test
     void readsFromReaderWithMax() {
-        final String content = "Reading with charset name and buffer size";
-        final int max = 3;
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from reader with charset name and buffer size",
             new TextOf(
                 new InputStreamOf(
-                    new StringReader(content),
+                    new StringReader("Reading with charset name and buffer size"),
                     StandardCharsets.UTF_8.name(),
-                    max
+                    3
                 )
             ),
-            new IsText(content)
-        ).affirm();
+            new IsText("Reading with charset name and buffer size")
+        );
     }
 
     @Test
     void readsFromReaderWithCharsetWithMax() {
         final String content = "Reading with charset and buffer size";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from reader with charset and buffer size",
             new TextOf(
                 new InputStreamOf(
@@ -175,13 +168,13 @@ final class InputStreamOfTest {
                 )
             ),
             new IsText(content)
-        ).affirm();
+        );
     }
 
     @Test
     void readsFromReaderWithCharset() {
         final String content = "Content for reading with charset";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from reader with charset name",
             new TextOf(
                 new InputStreamOf(
@@ -190,7 +183,7 @@ final class InputStreamOfTest {
                 )
             ),
             new IsText(content)
-        ).affirm();
+        );
     }
 
     @Test
@@ -200,7 +193,7 @@ final class InputStreamOfTest {
         new LengthOf(
             new TeeInput(content, file)
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from text with charset",
             new TextOf(
                 new InputStreamOf(
@@ -209,13 +202,13 @@ final class InputStreamOfTest {
                 )
             ),
             new IsText(content)
-        ).affirm();
+        );
     }
 
     @Test
     void readsFromCharSequenceWithCharsetName() {
         final String content = "Simple content";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from char sequence with charset name",
             new TextOf(
                 new InputStreamOf(
@@ -224,13 +217,13 @@ final class InputStreamOfTest {
                 )
             ),
             new IsText(content)
-        ).affirm();
+        );
     }
 
     @Test
     void readsFromCharSequenceWithCharset() {
         final String content = "Another simple content";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read from char sequence with charset",
             new TextOf(
                 new InputStreamOf(
@@ -239,6 +232,6 @@ final class InputStreamOfTest {
                 )
             ),
             new IsText(content)
-        ).affirm();
+        );
     }
 }

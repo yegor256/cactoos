@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.map;
@@ -12,13 +12,20 @@ import org.hamcrest.core.IsEqual;
 
 /**
  * Check a clear method.
+ *
  * @param <K> Type of key
  * @param <V> Type of value
  * @since 0.30
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class ClearDeletesAllValues<K, V> extends
-    TypeSafeMatcher<Map<K, V>>  {
+    TypeSafeMatcher<Map<K, V>> {
+
+    /**
+     * Ctor.
+     */
+    public ClearDeletesAllValues() {
+        // nothing to init
+    }
 
     @Override
     public boolean matchesSafely(final Map<K, V> map) {

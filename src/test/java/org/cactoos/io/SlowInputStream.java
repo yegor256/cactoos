@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -22,6 +22,7 @@ public final class SlowInputStream extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param size The size of the array to encapsulate
      */
     public SlowInputStream(final int size) {
@@ -30,6 +31,7 @@ public final class SlowInputStream extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param stream Original stream to encapsulate and make slower
      */
     SlowInputStream(final InputStream stream) {
@@ -65,5 +67,4 @@ public final class SlowInputStream extends InputStream {
     public int read(final byte[] buf) throws IOException {
         return this.read(buf, 0, buf.length);
     }
-
 }

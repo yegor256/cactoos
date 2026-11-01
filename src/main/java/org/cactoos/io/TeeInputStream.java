@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -14,7 +14,7 @@ import java.io.OutputStream;
  * This class closes {@link TeeInputStream#output}
  * after {@link TeeInputStream#close()}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1
  */
@@ -32,6 +32,7 @@ public final class TeeInputStream extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param src Source of data
      * @param tgt Destination of data
      */
@@ -95,5 +96,4 @@ public final class TeeInputStream extends InputStream {
     public boolean markSupported() {
         return this.input.markSupported();
     }
-
 }

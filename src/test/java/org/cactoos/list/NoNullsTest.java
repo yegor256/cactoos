@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.list;
@@ -7,24 +7,23 @@ package org.cactoos.list;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test cases for {@link NoNulls}.
+ *
  * @since 0.35
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class NoNullsTest {
 
     @Test
-    void getThrowsErrorIfNull() {
-        new Assertion<>(
+    void throwsErrorIfNullInGet() {
+        MatcherAssert.assertThat(
             "must throw error if contains null",
             () -> new NoNulls<>(
                 new ListOf<>(1, null, 3)
@@ -33,12 +32,12 @@ final class NoNullsTest {
                 "Item #1 of [1, null, 3] is NULL",
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void setThrowsErrorIfArgumentNull() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must throw error if set null",
             () -> new NoNulls<>(
                 new ListOf<>(1, null, 3)
@@ -47,26 +46,26 @@ final class NoNullsTest {
                 "Item can't be NULL in #set(2,T)",
                 IllegalArgumentException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void setThrowsErrorIfPreviousValueNull() {
-        final ArrayList<Integer> list = new ArrayList<>(1);
+        final List<Integer> list = new ArrayList<>(1);
         list.add(null);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must throw error if previous value is null",
             () -> new NoNulls<>(list).set(0, 2),
             new Throws<>(
                 "Result of #set(0,T) is NULL",
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void addThrowsErrorIfArgumentNull() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must throw error if add null",
             () -> {
                 new NoNulls<>(new ArrayList<>(1)).add(0, null);
@@ -76,26 +75,26 @@ final class NoNullsTest {
                 "Item can't be NULL in #add(0,T)",
                 IllegalArgumentException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void removeThrowsErrorIfValueNull() {
-        final ArrayList<Integer> list = new ArrayList<>(1);
+        final List<String> list = new ArrayList<>(1);
         list.add(null);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must throw error if removed value is null",
             () -> new NoNulls<>(list).remove(0),
             new Throws<>(
                 "Result of #remove(0) is NULL",
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
-    void getThrowsErrorIfListIteratorNextValueIsNullValue() {
-        new Assertion<>(
+    void throwsErrorIfListIteratorNextValueIsNull() {
+        MatcherAssert.assertThat(
             "must throw error if removed value in iterator is null",
             () -> new NoNulls<>(
                 new ListOf<>(null, 2, 3)
@@ -104,11 +103,11 @@ final class NoNullsTest {
                 "Next item is NULL",
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
-    void getThrowsErrorIfListIteratorPreviousValueIsNullValue() {
+    void throwsErrorIfListIteratorPreviousValueIsNull() {
         final List<Integer> list = new ArrayList<>(2);
         list.add(1);
         list.add(2);
@@ -117,19 +116,19 @@ final class NoNullsTest {
         ).listIterator();
         listiterator.next();
         list.set(0, null);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must throw error if previous value in iterator is null",
             listiterator::previous,
             new Throws<>(
                 "Previous item is NULL",
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void indexOfThrowsErrorIfArgumentIsNull() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must throw error if searched value is null",
             () -> new NoNulls<>(
                 new ListOf<>(1, 2, 3)
@@ -138,23 +137,23 @@ final class NoNullsTest {
                 "Item can't be NULL in #indexOf(T)",
                 IllegalArgumentException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void indexOfTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must return first index",
             new NoNulls<>(
                 new ListOf<>(1, 2, 2, 2, 5)
             ).indexOf(2),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
     @Test
     void lastIndexOfThrowsErrorIfArgumentIsNull() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must throw error if searched value is null",
             () -> new NoNulls<>(
                 new ListOf<>(1, 2, 3)
@@ -163,51 +162,51 @@ final class NoNullsTest {
                 "Item can't be NULL in #lastIndexOf(T)",
                 IllegalArgumentException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void lastIndexOfTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must return last index",
             new NoNulls<>(
                 new ListOf<>(1, 2, 2, 2, 5)
             ).lastIndexOf(2),
             new IsEqual<>(3)
-        ).affirm();
+        );
     }
 
     @Test
     void sizeTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must return list size",
             new NoNulls<>(
                 new ListOf<>(1, 2, 2, 2, 5)
             ).size(),
             new IsEqual<>(5)
-        ).affirm();
+        );
     }
 
     @Test
     void isEmptyTrueTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must return true if list is empty",
             new NoNulls<>(
                 new ListOf<>()
             ).isEmpty(),
             new IsTrue()
-        ).affirm();
+        );
     }
 
     @Test
     void isEmptyFalseTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must return false if list is not empty",
             new NoNulls<>(
                 new ListOf<>(1, 2, 3)
             ).isEmpty(),
             new IsEqual<>(false)
-        ).affirm();
+        );
     }
 
     @Test
@@ -216,33 +215,33 @@ final class NoNullsTest {
             new ListOf<>(1, 2, 3)
         );
         list.clear();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must be empty",
             list.isEmpty(),
             new IsTrue()
-        ).affirm();
+        );
     }
 
     @Test
     void containsTrueTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must return true if elements is in list",
             new NoNulls<>(
                 new ListOf<>(1, 2, 3)
             ).contains(2),
             new IsTrue()
-        ).affirm();
+        );
     }
 
     @Test
     void containsFalseTest() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must return false if elements is not in list",
             new NoNulls<>(
                 new ListOf<>(1, 2, 3)
             ).contains(4),
             new IsEqual<>(false)
-        ).affirm();
+        );
     }
 
     @Test
@@ -251,13 +250,13 @@ final class NoNullsTest {
             new ListOf<>(1, 2, 3)
         );
         list.set(1, 5);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must update the list",
             list.toArray(),
             new IsEqual<>(
                 new Integer[]{1, 5, 3}
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -266,80 +265,150 @@ final class NoNullsTest {
             new ListOf<>(1, 2, 3)
         );
         list.add(1, 5);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must update the list",
             list.toArray(),
             new IsEqual<>(
                 new Integer[]{1, 5, 2, 3}
             )
-        ).affirm();
+        );
     }
 
     @Test
-    void addAllTest() {
+    void addAllReturnsTrue() {
+        MatcherAssert.assertThat(
+            "must return true on success",
+            new NoNulls<>(new ListOf<>(1, 2, 3)).addAll(new ListOf<>(4, 5, 6)),
+            new IsTrue()
+        );
+    }
+
+    @Test
+    void addAllAddsItemsToEnd() {
         final List<Integer> list = new NoNulls<>(
             new ListOf<>(1, 2, 3)
         );
-        new Assertion<>(
-            "must return true on success",
-            list.addAll(new ListOf<>(4, 5, 6)),
-            new IsTrue()
-        ).affirm();
-        new Assertion<>(
+        list.addAll(new ListOf<>(4, 5, 6));
+        MatcherAssert.assertThat(
             "must add items to the end of the list",
             list,
             Matchers.contains(1, 2, 3, 4, 5, 6)
-        ).affirm();
+        );
     }
 
     @Test
-    void addAllWithIndexTest() {
+    void addAllWithIndexReturnsTrue() {
+        MatcherAssert.assertThat(
+            "must return true on success",
+            new NoNulls<>(new ListOf<>(1, 2, 3)).addAll(1, new ListOf<>(4, 5, 6)),
+            new IsTrue()
+        );
+    }
+
+    @Test
+    void addAllWithIndexAddsAtIndex() {
         final List<Integer> list = new NoNulls<>(
             new ListOf<>(1, 2, 3)
         );
-        new Assertion<>(
-            "must return true on success",
-            list.addAll(1, new ListOf<>(4, 5, 6)),
-            new IsTrue()
-        ).affirm();
-        new Assertion<>(
+        list.addAll(1, new ListOf<>(4, 5, 6));
+        MatcherAssert.assertThat(
             "must add items to list at specified index",
             list,
             Matchers.contains(1, 4, 5, 6, 2, 3)
-        ).affirm();
+        );
     }
 
     @Test
-    void removeAllChangedTest() {
+    void removeAllReturnsTrueWhenChanged() {
+        MatcherAssert.assertThat(
+            "must return true if list changed",
+            new NoNulls<>(new ListOf<>(1, 2, 3, 4, 5, 6))
+                .removeAll(new ListOf<>(10, 4, 2, 9, -3)),
+            new IsTrue()
+        );
+    }
+
+    @Test
+    void removeAllRemovesItems() {
         final List<Integer> list = new NoNulls<>(
             new ListOf<>(1, 2, 3, 4, 5, 6)
         );
-        new Assertion<>(
-            "must return true if list changed",
-            list.removeAll(new ListOf<>(10, 4, 2, 9, -3)),
-            new IsTrue()
-        ).affirm();
-        new Assertion<>(
+        list.removeAll(new ListOf<>(10, 4, 2, 9, -3));
+        MatcherAssert.assertThat(
             "must remove specified items",
             list,
             Matchers.contains(1, 3, 5, 6)
-        ).affirm();
+        );
     }
 
     @Test
-    void removeAllDidNotChangeTest() {
+    void removeAllReturnsFalseWhenUnchanged() {
+        MatcherAssert.assertThat(
+            "must return false if list did not change",
+            new NoNulls<>(new ListOf<>(1, 2, 3, 4, 5, 6))
+                .removeAll(new ListOf<>(10, 0, 7, 9, -3)),
+            new IsEqual<>(false)
+        );
+    }
+
+    @Test
+    void removeAllKeepsListUnchanged() {
         final List<Integer> list = new NoNulls<>(
             new ListOf<>(1, 2, 3, 4, 5, 6)
         );
-        new Assertion<>(
-            "must return false if list did not change",
-            list.removeAll(new ListOf<>(10, 0, 7, 9, -3)),
-            new IsEqual<>(false)
-        ).affirm();
-        new Assertion<>(
+        list.removeAll(new ListOf<>(10, 0, 7, 9, -3));
+        MatcherAssert.assertThat(
             "list must be the same",
             list,
             Matchers.contains(1, 2, 3, 4, 5, 6)
-        ).affirm();
+        );
+    }
+
+    @Test
+    void equalsReturnsTrueForSameContent() {
+        MatcherAssert.assertThat(
+            "two NoNulls with same content must be equal",
+            new NoNulls<>(new ArrayList<>(new ListOf<>("a", "b"))),
+            new IsEqual<>(
+                new NoNulls<>(new ArrayList<>(new ListOf<>("a", "b")))
+            )
+        );
+    }
+
+    @Test
+    void equalsIsSymmetricWithPlainList() {
+        final List<Integer> plain = new ArrayList<>(new ListOf<>(1, 2, 3));
+        final List<Integer> wrapped = new NoNulls<>(
+            new ArrayList<>(new ListOf<>(1, 2, 3))
+        );
+        MatcherAssert.assertThat(
+            "wrapper.equals(plain) must match plain.equals(wrapper)",
+            wrapped.equals(plain),
+            new IsEqual<>(plain.equals(wrapped))
+        );
+    }
+
+    @Test
+    void hashCodeMatchesPlainList() {
+        MatcherAssert.assertThat(
+            "hashCode() must follow List contract",
+            new NoNulls<>(
+                new ArrayList<>(new ListOf<>(1, 2, 3))
+            ).hashCode(),
+            new IsEqual<>(
+                new ArrayList<>(new ListOf<>(1, 2, 3)).hashCode()
+            )
+        );
+    }
+
+    @Test
+    void equalsReturnsFalseForDifferentContent() {
+        MatcherAssert.assertThat(
+            "two NoNulls with different content must not be equal",
+            new NoNulls<>(new ArrayList<>(new ListOf<>("a", "b"))).equals(
+                new NoNulls<>(new ArrayList<>(new ListOf<>("a", "c")))
+            ),
+            new IsEqual<>(false)
+        );
     }
 }

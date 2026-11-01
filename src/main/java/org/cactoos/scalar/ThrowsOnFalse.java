@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -26,13 +26,11 @@ public final class ThrowsOnFalse implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param sclr Scalar
      * @param message Error Message
      */
-    public ThrowsOnFalse(
-        final Scalar<Boolean> sclr,
-        final String message
-    ) {
+    public ThrowsOnFalse(final Scalar<Boolean> sclr, final String message) {
         this(
             sclr, () -> new IllegalArgumentException(message)
         );
@@ -40,6 +38,7 @@ public final class ThrowsOnFalse implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param sclr Scalar
      * @param exc Exception
      */

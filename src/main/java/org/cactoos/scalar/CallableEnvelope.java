@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -9,7 +9,7 @@ import java.util.concurrent.Callable;
 /**
  * Envelope for Callable.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of output
  * @since 0.50
@@ -23,6 +23,7 @@ public abstract class CallableEnvelope<T> implements Callable<T> {
 
     /**
      * Ctor.
+     *
      * @param callable The Callable
      */
     public CallableEnvelope(final Callable<? extends T> callable) {

@@ -1,13 +1,14 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.number;
 
 import java.math.BigDecimal;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.number.IsCloseTo;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsNumber;
 
 /**
@@ -19,46 +20,64 @@ final class DivisionOfTest {
 
     @Test
     void dividesIntNumbers() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must divide int numbers",
             new DivisionOf(4, 2).intValue(),
             new IsEqual<>(2)
-        ).affirm();
+        );
     }
 
     @Test
     void dividesLongNumbers() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must divide long numbers",
             new DivisionOf(4L, 2L).longValue(),
             new IsEqual<>(2L)
-        ).affirm();
+        );
     }
 
     @Test
     void dividesFloatNumbers() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must divide float numbers",
             new DivisionOf(2f, 4f).floatValue(),
             new IsEqual<>(0.5f)
-        ).affirm();
+        );
     }
 
     @Test
     void dividesDoubleNumbers() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must divide double numbers",
             new DivisionOf(2d, 4d).doubleValue(),
             new IsEqual<>(0.5d)
-        ).affirm();
+        );
     }
 
     @Test
     void dividesBigDecimalNumbers() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must divide BigDecimal numbers",
             new DivisionOf(BigDecimal.valueOf(2d), BigDecimal.valueOf(4d)),
             new IsNumber(0.5)
-        ).affirm();
+        );
+    }
+
+    @Test
+    void dividesIntoNonTerminatingQuotient() {
+        MatcherAssert.assertThat(
+            "Must divide numbers whose quotient does not terminate",
+            new DivisionOf(1, 3).doubleValue(),
+            new IsCloseTo(1d / 3d, 1e-15)
+        );
+    }
+
+    @Test
+    void dividesBigDecimalsIntoNonTerminatingQuotient() {
+        MatcherAssert.assertThat(
+            "Must divide BigDecimal numbers whose quotient does not terminate",
+            new DivisionOf(BigDecimal.valueOf(22), BigDecimal.valueOf(7)),
+            new IsNumber(22d / 7d)
+        );
     }
 }

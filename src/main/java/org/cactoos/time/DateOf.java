@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.time;
@@ -15,6 +15,7 @@ import org.cactoos.scalar.Unchecked;
 
 /**
  * Parser for {@link Date} instances.
+ *
  * @since 0.27
  */
 public final class DateOf implements Scalar<Date> {
@@ -26,33 +27,46 @@ public final class DateOf implements Scalar<Date> {
 
     /**
      * Parses the provided date as ISO formatted.
-     * @param date The date to parse.
+     *
+     * @param date The date to parse
      */
     public DateOf(final CharSequence date) {
-        this(date, new Iso().value());
+        this(date, new Iso());
     }
 
     /**
      * Parses the date using the provided format.
-     * @param date The date to parse.
-     * @param format The format to use.
+     *
+     * @param date The date to parse
+     * @param format The format to use
      */
     public DateOf(final CharSequence date, final String format) {
-        this(date, DateTimeFormatter.ofPattern(format));
+        this(date, () -> DateTimeFormatter.ofPattern(format));
     }
 
     /**
      * Parsing the date using the provided formatter.
-     * @param date The date to parse.
-     * @param formatter The formatter to use.
+     *
+     * @param date The date to parse
+     * @param formatter The formatter to use
      */
     public DateOf(final CharSequence date, final DateTimeFormatter formatter) {
+        this(date, () -> formatter);
+    }
+
+    /**
+     * Parses the date using a deferred formatter.
+     *
+     * @param date The date to parse
+     * @param fmt The formatter, deferred
+     */
+    private DateOf(final CharSequence date, final Scalar<DateTimeFormatter> fmt) {
         this.parsed = new Unchecked<>(
             () -> Date.from(
                 LocalDateTime.parse(
                     date,
                     new DateTimeFormatterBuilder()
-                        .append(formatter)
+                        .append(fmt.value())
                         .parseDefaulting(ChronoField.HOUR_OF_DAY, 0L)
                         .toFormatter()
                 ).toInstant(ZoneOffset.UTC)
@@ -64,5 +78,4 @@ public final class DateOf implements Scalar<Date> {
     public Date value() {
         return this.parsed.value();
     }
-
 }

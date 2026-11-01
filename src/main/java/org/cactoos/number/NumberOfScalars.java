@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.number;
@@ -11,7 +11,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * {@link Number} from {@link Scalar}s.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
  */
@@ -41,6 +41,7 @@ public final class NumberOfScalars extends Number {
 
     /**
      * Ctor.
+     *
      * @param nbr Number
      */
     public NumberOfScalars(final Scalar<? extends Number> nbr) {
@@ -54,11 +55,11 @@ public final class NumberOfScalars extends Number {
 
     /**
      * Ctor.
+     *
      * @param lnm Long scalar
      * @param inm Integer scalar
      * @param fnm Float scalar
      * @param dnm Long scalar
-     * @checkstyle ParameterNumberCheck (5 lines)
      */
     public NumberOfScalars(final Scalar<Long> lnm, final Scalar<Integer> inm,
         final Scalar<Float> fnm, final Scalar<Double> dnm) {
@@ -96,9 +97,9 @@ public final class NumberOfScalars extends Number {
 
     @Override
     public boolean equals(final Object obj) {
-        return obj instanceof Number && Double.compare(
+        return obj instanceof Number number && Double.compare(
             this.doubleValue(),
-            ((Number) obj).doubleValue()
+            number.doubleValue()
         ) == 0;
     }
 

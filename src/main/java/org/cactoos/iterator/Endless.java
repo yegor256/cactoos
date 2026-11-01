@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
@@ -27,6 +27,7 @@ public final class Endless<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param element Element to repeat
      */
     public Endless(final T element) {
@@ -35,6 +36,7 @@ public final class Endless<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param scalar Scalar to repeat
      */
     public Endless(final Scalar<? extends T> scalar) {
@@ -43,6 +45,7 @@ public final class Endless<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param scalar Scalar to repeat
      */
     private Endless(final Unchecked<? extends T> scalar) {

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.experimental;
@@ -22,15 +22,16 @@ import org.cactoos.scalar.CallableOf;
 /**
  * Allows to execute the tasks concurrently, optionally within given timeout.
  *
- * @param <T> The type of task result item.
+ * @param <T> The type of task result item
  * @since 1.0.0
  */
 public final class Threads<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param exc The executor.
-     * @param tasks The tasks to be executed concurrently.
+     *
+     * @param exc The executor
+     * @param tasks The tasks to be executed concurrently
      */
     @SafeVarargs
     public Threads(final ExecutorService exc, final Scalar<? extends T>... tasks) {
@@ -39,8 +40,9 @@ public final class Threads<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param exc The executor.
-     * @param tasks The tasks to be executed concurrently.
+     *
+     * @param exc The executor
+     * @param tasks The tasks to be executed concurrently
      */
     public Threads(final ExecutorService exc, final Iterable<? extends Scalar<? extends T>> tasks) {
         this(input -> exc.invokeAll(new ListOf<>(input)), tasks);
@@ -48,9 +50,10 @@ public final class Threads<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param threads The quantity of threads which will be used within the
-     *  {@link ExecutorService}.
-     * @param tasks The tasks to be executed concurrently.
+     *  {@link ExecutorService}
+     * @param tasks The tasks to be executed concurrently
      * @see Executors#newFixedThreadPool(int)
      */
     @SafeVarargs
@@ -60,9 +63,10 @@ public final class Threads<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param threads The quantity of threads which will be used within the
-     *  {@link ExecutorService}.
-     * @param tasks The tasks to be executed concurrently.
+     *  {@link ExecutorService}
+     * @param tasks The tasks to be executed concurrently
      */
     public Threads(final int threads, final Iterable<? extends Scalar<? extends T>> tasks) {
         this(
@@ -82,9 +86,10 @@ public final class Threads<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param exc The executor.
-     * @param timeout The maximum time to wait.
-     * @param tasks The tasks to be executed concurrently.
+     *
+     * @param exc The executor
+     * @param timeout The maximum time to wait
+     * @param tasks The tasks to be executed concurrently
      */
     @SafeVarargs
     public Threads(
@@ -97,9 +102,10 @@ public final class Threads<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param exc The executor.
-     * @param timeout The maximum time to wait.
-     * @param tasks The tasks to be executed concurrently.
+     *
+     * @param exc The executor
+     * @param timeout The maximum time to wait
+     * @param tasks The tasks to be executed concurrently
      */
     public Threads(
         final ExecutorService exc,
@@ -117,10 +123,11 @@ public final class Threads<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param threads The quantity of threads which will be used within the
-     *  {@link ExecutorService}.
-     * @param timeout The maximum time to wait.
-     * @param tasks The tasks to be executed concurrently.
+     *  {@link ExecutorService}
+     * @param timeout The maximum time to wait
+     * @param tasks The tasks to be executed concurrently
      * @see Executors#newFixedThreadPool(int)
      */
     @SafeVarargs
@@ -134,10 +141,11 @@ public final class Threads<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param threads The quantity of threads which will be used within the
-     *  {@link ExecutorService}.
-     * @param timeout The maximum time to wait.
-     * @param tasks The tasks to be executed concurrently.
+     *  {@link ExecutorService}
+     * @param timeout The maximum time to wait
+     * @param tasks The tasks to be executed concurrently
      * @see Executors#newFixedThreadPool(int)
      */
     public Threads(
@@ -165,8 +173,9 @@ public final class Threads<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
-     * @param fnc The function to map each task into {@link Future}.
-     * @param tasks The tasks to be executed concurrently.
+     *
+     * @param fnc The function to map each task into {@link Future}
+     * @param tasks The tasks to be executed concurrently
      */
     private Threads(
         final Func<Iterable<Callable<T>>, Iterable<Future<T>>> fnc,

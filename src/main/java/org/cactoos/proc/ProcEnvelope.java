@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.proc;
@@ -9,7 +9,7 @@ import org.cactoos.Proc;
 /**
  * Envelope for {@link Proc}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @since 0.50
@@ -23,6 +23,7 @@ public abstract class ProcEnvelope<X> implements Proc<X> {
 
     /**
      * Ctor.
+     *
      * @param origin The procedure
      */
     public ProcEnvelope(final Proc<? super X> origin) {

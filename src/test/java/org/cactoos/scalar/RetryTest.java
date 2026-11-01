@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -11,22 +11,21 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Retry}.
  *
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class RetryTest {
 
     @Test
     void runsScalarMultipleTimes() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must retry in case of failure",
             new Retry<>(
                 () -> {
@@ -38,48 +37,46 @@ final class RetryTest {
                 Integer.MAX_VALUE
             ),
             new HasValue<>(0)
-        ).affirm();
+        );
     }
 
     @Test
     void runsScalarTwiceWithDefaults() {
         final AtomicInteger tries = new AtomicInteger(0);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Should run twice with defaults",
             new Retry<>(
                 () -> {
                     if (tries.getAndIncrement() <= 1) {
                         throw new IllegalArgumentException("Not enough tries");
                     }
-                    return 0;
+                    return tries.get();
                 }
             ),
-            new HasValue<>(0)
-        ).affirm();
+            new HasValue<>(3)
+        );
     }
 
     @Test
     void runsScalarMultipleTimesIgnoringNegativeDuration() {
-        final int times = 2;
         final AtomicInteger tries = new AtomicInteger(0);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Should ignore negative duration",
             new Retry<>(
                 () -> {
-                    if (tries.getAndIncrement() < times) {
+                    if (tries.getAndIncrement() < 2) {
                         throw new IllegalArgumentException("Not yet");
                     }
-                    return 0;
+                    return tries.get();
                 },
                 Integer.MAX_VALUE,
                 Duration.of(-5L, ChronoUnit.DAYS)
             ),
-            new HasValue<>(0)
-        ).affirm();
+            new HasValue<>(3)
+        );
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     void runsScalarMultipleTimesWithWait() throws Exception {
         final int times = 3;
         final long wait = 500L;
@@ -91,20 +88,20 @@ final class RetryTest {
                     executions.add(Instant.now());
                     throw new IllegalArgumentException("Not done yet");
                 }
-                return 0;
+                return tries.get();
             },
             Integer.MAX_VALUE,
             Duration.ofMillis(wait)
         ).value();
         for (int position = 0; position < times - 1; position += 1) {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 String.format(
                     "Should wait the given time between attempts on attempt %d",
                     position
                 ),
                 executions.get(position).plusMillis(wait),
                 Matchers.lessThanOrEqualTo(executions.get(position + 1))
-            ).affirm();
+            );
         }
     }
 }

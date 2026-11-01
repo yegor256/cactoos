@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -18,6 +18,7 @@ public final class Repeated<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param total The total number of repetitions
      * @param elm The element to repeat
      */
@@ -27,6 +28,7 @@ public final class Repeated<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param total The total number of repetitions
      * @param elm The element to repeat
      */
@@ -37,5 +39,4 @@ public final class Repeated<T> extends IterableEnvelope<T> {
             )
         );
     }
-
 }

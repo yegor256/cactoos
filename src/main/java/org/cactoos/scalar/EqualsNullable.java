@@ -1,18 +1,22 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
 
+import java.util.Objects;
 import org.cactoos.Scalar;
 
 /**
  * Checks 2 objects for equality.
  * Null values are accepted.
- * <p>There is no thread-safety guarantee.
+ *
+ * <p>There is no thread-safety guarantee.</p>
+ *
  * @since 1.0
  */
 public final class EqualsNullable implements Scalar<Boolean> {
+
     /**
      * The first object for comparison.
      */
@@ -25,6 +29,7 @@ public final class EqualsNullable implements Scalar<Boolean> {
 
     /**
      * Accepts 2 objects to compare.
+     *
      * @param first Object to compare
      * @param second Object to compare with
      */
@@ -34,6 +39,7 @@ public final class EqualsNullable implements Scalar<Boolean> {
 
     /**
      * Accepts scalar to get value from and object to compare with.
+     *
      * @param first Scalar to get value to compare
      * @param second Object to compare with
      */
@@ -43,6 +49,7 @@ public final class EqualsNullable implements Scalar<Boolean> {
 
     /**
      * Accepts object to compare with and scalar to get value from.
+     *
      * @param first Object to compare
      * @param second Scalar to get value to compare
      */
@@ -52,6 +59,7 @@ public final class EqualsNullable implements Scalar<Boolean> {
 
     /**
      * Accepts 2 scalars to get get values from.
+     *
      * @param first Scalar to get value to compare
      * @param second Scalar to get value to compare with
      */
@@ -62,11 +70,7 @@ public final class EqualsNullable implements Scalar<Boolean> {
     }
 
     @Override
-    @SuppressWarnings("PMD.CompareObjectsWithEquals")
     public Boolean value() throws Exception {
-        final Object source = this.first.value();
-        final Object compared = this.second.value();
-        return source == compared
-            || source != null && source.equals(compared);
+        return Objects.equals(this.first.value(), this.second.value());
     }
 }

@@ -1,26 +1,26 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
 
 import java.io.IOException;
+import java.text.ParseException;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link IoChecked}.
  *
  * @since 0.4
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class IoCheckedTest {
 
     @Test
     void rethrowsIoException() {
         final IOException exception = new IOException("intended");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must rethrow IOException",
             () -> new IoChecked<>(
                 () -> {
@@ -28,27 +28,26 @@ final class IoCheckedTest {
                 }
             ).value(),
             new Throws<>(exception.getMessage(), exception.getClass())
-        ).affirm();
+        );
     }
 
     @Test
-    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     void throwsException() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must throw IOException from Exception",
             () -> new IoChecked<>(
                 () -> {
-                    throw new Exception("intended to fail");
+                    throw new ParseException("intended to fail", 0);
                 }
             ).value(),
             new Throws<>(IOException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void runtimeExceptionGoesOut() {
         final RuntimeException exception = new IllegalStateException("intended to fail here");
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must rethrow RuntimeException",
             () -> new IoChecked<>(
                 () -> {
@@ -56,7 +55,6 @@ final class IoCheckedTest {
                 }
             ).value(),
             new Throws<>(exception.getMessage(), exception.getClass())
-        ).affirm();
+        );
     }
-
 }

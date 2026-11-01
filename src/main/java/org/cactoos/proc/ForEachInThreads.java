@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.proc;
@@ -12,22 +12,20 @@ import org.cactoos.scalar.AndInThreads;
  * Executes a {@link Proc} in a new Thread for each element of an
  * {@link Iterable}
  *
- * <p>
- * This class can be effectively used to iterate through a collection, just like
+ * <p>This class can be effectively used to iterate through a collection, just like
  * {@link java.util.stream.Stream#forEach(java.util.function.Consumer)} works,
- * but with no guarantee on the output sorting:
- * </p>
+ * but with no guarantee on the output sorting:</p>
  *
  * {@code
  * new ForEachInThreads(
- *    new ProcOf<>(input -> System.out.printf("\'%s\' ", input)),
+ * new ProcOf<>(input -> System.out.printf("\'%s\' ", input)),
  * ).execute(
- *    new IterableOf<>("Mary", "John", "William", "Napkin")
+ * new IterableOf<>("Mary", "John", "William", "Napkin")
  * ); // Will print 'Mary' 'John' 'William' 'Napkin' to standard output.
- *    // Order of printing can be random.
+ * // Order of printing can be random.
  * }
- * <p>
- * There is no thread-safety guarantee.
+ *
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> The type to iterate over
  * @since 1.0
@@ -54,5 +52,4 @@ public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
             new FuncOf<>(this.proc, true), input
         ).value();
     }
-
 }

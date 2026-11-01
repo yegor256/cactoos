@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.bytes;
@@ -16,7 +16,8 @@ import org.cactoos.io.TeeInput;
  *
  * <p>This class is for internal use only. Use {@link BytesOf} instead.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
+ *
  * @since 0.1
  */
 public final class InputAsBytes implements Bytes {
@@ -33,6 +34,7 @@ public final class InputAsBytes implements Bytes {
 
     /**
      * Ctor.
+     *
      * @param input The input
      */
     InputAsBytes(final Input input) {
@@ -41,6 +43,7 @@ public final class InputAsBytes implements Bytes {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param max Max length of the buffer for reading
      */
@@ -58,9 +61,8 @@ public final class InputAsBytes implements Bytes {
                 new OutputTo(baos)
             ).stream()
         ) {
-            final byte[] buf = new byte[this.size];
             while (true) {
-                if (stream.read(buf) < 0) {
+                if (stream.read(new byte[this.size]) < 0) {
                     break;
                 }
             }

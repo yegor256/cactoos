@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -28,7 +28,8 @@ public final class GzipInput implements Input {
 
     /**
      * Ctor.
-     * @param input The input.
+     *
+     * @param input The input
      */
     public GzipInput(final Input input) {
         this(input, 16 << 10);
@@ -36,6 +37,7 @@ public final class GzipInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param max Max length of the buffer
      */

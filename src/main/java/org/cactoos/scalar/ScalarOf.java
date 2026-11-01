@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -16,8 +16,10 @@ import org.cactoos.func.FuncOf;
  * @since 0.4
  */
 public final class ScalarOf<T> extends ScalarEnvelope<T> {
+
     /**
      * Ctor.
+     *
      * @param runnable Encapsulated proc
      * @param result Result to return
      * @since 0.48
@@ -31,6 +33,7 @@ public final class ScalarOf<T> extends ScalarEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param proc Encapsulated proc
      * @param ipt Input
      * @param result Result to return
@@ -43,6 +46,7 @@ public final class ScalarOf<T> extends ScalarEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param fnc Encapsulated func
      * @param ipt Input
      * @param <X> Type of input

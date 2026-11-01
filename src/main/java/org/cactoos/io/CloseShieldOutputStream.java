@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -12,10 +12,11 @@ import java.util.concurrent.atomic.AtomicReference;
  * Decorator of {@link OutputStream} to prevent it
  * to be closed.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 public final class CloseShieldOutputStream extends OutputStream {
 
     /**
@@ -25,6 +26,7 @@ public final class CloseShieldOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param origin Origin
      */
     public CloseShieldOutputStream(final OutputStream origin) {
@@ -57,5 +59,4 @@ public final class CloseShieldOutputStream extends OutputStream {
     public void close() {
         this.inner.set(new DeadOutputStream());
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -9,7 +9,7 @@ import org.cactoos.Text;
 /**
  * Repeat an text count times.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.9
  */
@@ -17,6 +17,7 @@ public final class Repeated extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text A String
      * @param count How many times repeat the Text
      */
@@ -26,6 +27,7 @@ public final class Repeated extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text The Text
      * @param count How many times repeat the Text
      */

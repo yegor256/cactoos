@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -20,11 +20,10 @@ import org.cactoos.text.TextOf;
 /**
  * Map as {@link Properties}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.12
  */
-@SuppressWarnings("PMD.OnlyOneConstructorShouldDoInitialization")
 public final class PropertiesOf implements Scalar<Properties> {
 
     /**
@@ -34,6 +33,7 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param content String
      */
     public PropertiesOf(final String content) {
@@ -42,6 +42,7 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param text Text
      */
     public PropertiesOf(final Text text) {
@@ -50,14 +51,15 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param input Input
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public PropertiesOf(final Input input) {
         this(
             () -> {
                 final Properties props = new Properties();
-                try (InputStream stream = input.stream()) {
+                final InputStream stream = input.stream();
+                try (stream) {
                     props.load(stream);
                 }
                 return props;
@@ -67,6 +69,7 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param entries The map with properties
      */
     public PropertiesOf(final Map.Entry<?, ?>... entries) {
@@ -75,6 +78,7 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param entries The map with properties
      * @since 0.23
      */
@@ -91,6 +95,7 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param map The map with properties
      */
     public PropertiesOf(final Map<?, ?> map) {
@@ -110,6 +115,7 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param sclr The underlying properties
      */
     private PropertiesOf(final Scalar<? extends Properties> sclr) {

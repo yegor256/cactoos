@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -26,6 +26,7 @@ public final class Contains implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param origin The origin
      * @param other The other
      */
@@ -35,6 +36,7 @@ public final class Contains implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param origin The origin
      * @param other The other
      */
@@ -44,6 +46,7 @@ public final class Contains implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param origin The origin
      * @param other The other
      */
@@ -53,6 +56,7 @@ public final class Contains implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param origin The origin
      * @param other The other
      */

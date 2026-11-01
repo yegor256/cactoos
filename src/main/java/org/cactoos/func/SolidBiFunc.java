@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.func;
@@ -20,6 +20,7 @@ public final class SolidBiFunc<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      */
     public SolidBiFunc(final BiFunc<X, Y, Z> fnc) {
@@ -28,6 +29,7 @@ public final class SolidBiFunc<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      * @param max Max buffer length
      * @since 0.26

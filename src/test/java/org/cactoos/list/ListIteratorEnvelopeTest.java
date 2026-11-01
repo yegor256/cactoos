@@ -1,75 +1,69 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.list;
 
+import java.util.ListIterator;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test cases for {@link ListIteratorEnvelope}.
  *
  * @since 0.35
- * @checkstyle JavadocMethodCheck (500 lines)
- * @checkstyle JavadocTypeCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class ListIteratorEnvelopeTest {
+
     @Test
     void mustReturnPreviousIndex() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "List Iterator must return previous index",
-            new StringListIterator(
-                "1"
+            new ListIteratorEnvelopeTest.StringListIterator(
+                new ListOf<>("1").listIterator(0)
             ).previousIndex(),
             new IsEqual<>(-1)
-        ).affirm();
+        );
     }
 
     @Test
     void mustReturnPreviousElement() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "List Iterator must return previous element",
-            new StringListIterator(
-                1,
-                "3", "7"
+            new ListIteratorEnvelopeTest.StringListIterator(
+                new ListOf<>("3", "7").listIterator(1)
             ).previous(),
             new IsEqual<>("3")
-        ).affirm();
+        );
     }
 
     @Test
     void mustReturnNextIndex() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "List iterator must return next index",
-            new StringListIterator(
-                "1"
+            new ListIteratorEnvelopeTest.StringListIterator(
+                new ListOf<>("1").listIterator(0)
             ).nextIndex(),
             new IsEqual<>(0)
-        ).affirm();
+        );
     }
 
     @Test
     void mustReturnNextElement() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "List iterator must return next item",
-            new StringListIterator(
-                1,
-                "5", "11", "13"
+            new ListIteratorEnvelopeTest.StringListIterator(
+                new ListOf<>("5", "11", "13").listIterator(1)
             ).next(),
             new IsEqual<>("11")
-        ).affirm();
+        );
     }
 
     private static final class StringListIterator extends ListIteratorEnvelope<String> {
-        StringListIterator(final int index, final String... elements) {
-            super(new ListOf<>(elements).listIterator(index));
-        }
 
-        StringListIterator(final String... elements) {
-            super(new ListOf<>(elements).listIterator());
+        StringListIterator(final ListIterator<String> origin) {
+            super(origin);
         }
     }
 }

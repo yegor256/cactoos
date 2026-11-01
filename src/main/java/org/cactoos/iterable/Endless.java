@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -17,10 +17,10 @@ public final class Endless<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param item The item to repeat
      */
     public Endless(final T item) {
         super(new IterableOf<>(() -> new org.cactoos.iterator.Endless<>(item)));
     }
-
 }

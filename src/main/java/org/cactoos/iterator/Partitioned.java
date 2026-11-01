@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
@@ -31,8 +31,8 @@ public final class Partitioned<T> implements Iterator<List<T>> {
     /**
      * Ctor.
      *
-     * @param sze Size of the partitions.
-     * @param src Source iterator.
+     * @param sze Size of the partitions
+     * @param src Source iterator
      */
     public Partitioned(final int sze, final Iterator<? extends T> src) {
         this.size = sze;
@@ -56,5 +56,4 @@ public final class Partitioned<T> implements Iterator<List<T>> {
             new ListOf<>(new Sliced<>(0, this.size, this.decorated))
         );
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.list;
@@ -9,11 +9,14 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * A few {@link ListIterator} joined together.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Items type
  * @since 1.0.0
@@ -22,13 +25,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  *  when the cursor is in between two listerators should be well documented in this
  *  class (because there are multiple options in that case).
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
-     * {@link List} of {@link ListIterator}.
+     * {@link List} of {@link ListIterator}, deferred.
      */
-    private final List<? extends ListIterator<? extends T>> listiters;
+    private final Unchecked<List<? extends ListIterator<? extends T>>> listiters;
 
     /**
      * Cursor of the {@link List} of {@link ListIterator}.
@@ -42,6 +44,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param items Items to concatenate
      */
     @SafeVarargs
@@ -51,30 +54,50 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param item First item
      * @param items ListIterator
      */
     @SuppressWarnings("unchecked")
     public JoinedListIterator(final T item, final ListIterator<? extends T> items) {
-        this(new ListOf<>(new ListOf<>(item).listIterator(), items));
+        this(
+            (Scalar<List<? extends ListIterator<? extends T>>>) () ->
+                new ListOf<>(new ListOf<>(item).listIterator(), items)
+        );
     }
 
     /**
      * Ctor.
+     *
      * @param items ListIterators
      * @param item End item
      */
     @SuppressWarnings("unchecked")
     public JoinedListIterator(final ListIterator<? extends T> items, final T item) {
-        this(new ListOf<>(items, new ListOf<>(item).listIterator()));
+        this(
+            (Scalar<List<? extends ListIterator<? extends T>>>) () ->
+                new ListOf<>(items, new ListOf<>(item).listIterator())
+        );
     }
 
     /**
      * Ctor.
+     *
      * @param items Items to concatenate
      */
     public JoinedListIterator(final List<? extends ListIterator<? extends T>> items) {
-        this.listiters = items;
+        this((Scalar<List<? extends ListIterator<? extends T>>>) () -> items);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param items Items to concatenate, deferred
+     */
+    private JoinedListIterator(
+        final Scalar<List<? extends ListIterator<? extends T>>> items
+    ) {
+        this.listiters = new Unchecked<>(new Sticky<>(items));
         this.cursorlit = new AtomicInteger(-1);
         this.cursor = new AtomicInteger(-1);
     }
@@ -92,9 +115,11 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
         if (!this.hasNext()) {
             throw new NoSuchElementException();
         }
-        final T next = this.currentListIterator().next();
-        this.cursor.getAndIncrement();
-        return next;
+        try {
+            return this.currentListIterator().next();
+        } finally {
+            this.cursor.getAndIncrement();
+        }
     }
 
     @Override
@@ -110,9 +135,11 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
         if (!this.hasPrevious()) {
             throw new NoSuchElementException();
         }
-        final T previous = this.currentListIterator().previous();
-        this.cursor.getAndDecrement();
-        return previous;
+        try {
+            return this.currentListIterator().previous();
+        } finally {
+            this.cursor.getAndDecrement();
+        }
     }
 
     @Override
@@ -144,32 +171,20 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * If {@link List} of {@link ListIterator} has next element.
-     * @return Has or no
-     */
     private boolean listHasNextElt() {
-        return this.cursorlit.get() + 1 <= this.listiters.size() - 1;
+        return this.cursorlit.get() + 1 <= this.listiters.value().size() - 1;
     }
 
-    /**
-     * If {@link List} of {@link ListIterator} has previous element.
-     * @return Has or no
-     */
     private boolean listHasPreviousElt() {
         return this.cursorlit.get() - 1 >= 0;
     }
 
-    /**
-     * Get current {@link ListIterator}.
-     * @return Current element
-     */
     private ListIterator<? extends T> currentListIterator() {
         final ListIterator<? extends T> current;
         if (this.cursorlit.get() == -1) {
             current = Collections.emptyListIterator();
         } else {
-            current = this.listiters.get(this.cursorlit.get());
+            current = this.listiters.value().get(this.cursorlit.get());
         }
         return current;
     }

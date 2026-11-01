@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -12,7 +12,22 @@ import org.cactoos.iterable.Mapped;
 /**
  * Join a Text.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>This class joins multiple {@link Text} instances into a single
+ * text using a specified delimiter between elements.</p>
+ *
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * <p>Example:</p>
+ *
+ * <pre>{@code
+ * Text joined = new Joined(
+ *     ", ",
+ *     new TextOf("apple"),
+ *     new TextOf("banana"),
+ *     new TextOf("orange")
+ * );
+ * joined.asString(); // "apple, banana, orange"
+ * }</pre>
  *
  * @since 0.9
  */
@@ -20,6 +35,9 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * <p>Creates a joined text from character sequences</p>
+     *
      * @param delimit Delimit among strings
      * @param strs Strings to be joined
      */
@@ -29,6 +47,9 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * <p>Creates a joined text from an iterable of character</p>
+     *
      * @param delimit Delimit among strings
      * @param strs Strings to be joined
      */
@@ -41,6 +62,9 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * <p>Creates a joined text from {@link Text} instances</p>
+     *
      * @param delimit Delimit among texts
      * @param txts Texts to be joined
      */
@@ -50,6 +74,9 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * <p>Creates a joined text from {@link Text} instances</p>
+     *
      * @param delimit Delimit among texts
      * @param txts Texts to be joined
      */
@@ -59,6 +86,9 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * <p>Creates a joined text from an iterable of {@link Text}</p>
+     *
      * @param delimit Delimit among texts
      * @param txts Texts to be joined
      */

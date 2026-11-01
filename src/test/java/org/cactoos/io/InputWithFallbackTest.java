@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -7,22 +7,20 @@ package org.cactoos.io;
 import java.io.File;
 import java.io.IOException;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.EndsWith;
 
 /**
  * Test case for {@link InputWithFallback}.
  *
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class InputWithFallbackTest {
 
     @Test
     void readsAlternativeInput() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read alternative source",
             new TextOf(
                 new InputWithFallback(
@@ -33,12 +31,12 @@ final class InputWithFallbackTest {
                 )
             ),
             new EndsWith("world!")
-        ).affirm();
+        );
     }
 
     @Test
     void readsAlternativeInputUri() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read alternative source from URI",
             new TextOf(
                 new InputWithFallback(
@@ -49,7 +47,6 @@ final class InputWithFallbackTest {
                 )
             ),
             new EndsWith("works!")
-        ).affirm();
+        );
     }
-
 }

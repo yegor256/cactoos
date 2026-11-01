@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
@@ -14,10 +14,12 @@ import org.cactoos.text.UncheckedText;
 /**
  * Fake handler logger.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
+ *
  * @since 0.29
  */
 public final class FakeHandler extends Handler {
+
     /**
      * Lines.
      */
@@ -28,7 +30,7 @@ public final class FakeHandler extends Handler {
      */
     FakeHandler() {
         super();
-        this.entries = new LinkedList<>();
+        this.entries = new ArrayList<>(0);
     }
 
     @Override

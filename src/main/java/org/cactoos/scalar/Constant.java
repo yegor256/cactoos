@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -40,7 +40,8 @@ public final class Constant<T> implements Scalar<T> {
 
     /**
      * Ctor.
-     * @param value The pre-computed constant.
+     *
+     * @param value The pre-computed constant
      */
     public Constant(final T value) {
         this.val = value;

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -22,7 +22,7 @@ import org.cactoos.Scalar;
  * );
  * </pre>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of item
  * @see Filtered
@@ -32,6 +32,7 @@ public final class Filtered<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
+     *
      * @param fnc Predicate
      * @param src Source iterable
      * @since 0.21
@@ -43,19 +44,17 @@ public final class Filtered<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
+     *
      * @param fnc Predicate
      * @param src Source iterable
      */
     public Filtered(final Func<? super X, Boolean> fnc, final Iterable<? extends X> src) {
-        super(
-            new IterableOf<>(
-                () -> new org.cactoos.iterator.Filtered<>(fnc, src.iterator())
-            )
-        );
+        this(src, x -> () -> fnc.apply(x));
     }
 
     /**
      * Ctor.
+     *
      * @param src Source iterable
      * @param fnc Predicate
      */

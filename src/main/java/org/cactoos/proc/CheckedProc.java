@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.proc;
@@ -29,8 +29,9 @@ public final class CheckedProc<X, E extends Exception> implements Proc<X> {
 
     /**
      * Ctor.
+     *
      * @param original Original proc
-     * @param fnc Function that wraps exceptions.
+     * @param fnc Function that wraps exceptions
      */
     public CheckedProc(final Proc<X> original, final Func<Exception, E> fnc) {
         this.origin = original;

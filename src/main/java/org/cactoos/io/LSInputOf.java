@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -15,7 +15,7 @@ import org.w3c.dom.ls.LSInput;
 /**
  * Input as LSInput.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.6
  * @checkstyle AbbreviationAsWordInNameCheck (10 lines)
@@ -44,26 +44,27 @@ public final class LSInputOf implements LSInput {
 
     /**
      * Ctor.
-     * @param inpt Input
+     *
+     * @param data Input
      */
-    public LSInputOf(final Input inpt) {
-        this(inpt, "#public", "#system", "#base");
+    public LSInputOf(final Input data) {
+        this(data, "#public", "#system", "#base");
     }
 
     /**
      * Ctor.
-     * @param inpt Input
+     *
+     * @param data Input
      * @param pubid PublicID
      * @param sysid SystemID
-     * @param bse Base
-     * @checkstyle ParameterNumberCheck (3 lines)
+     * @param uri Base URI
      */
-    public LSInputOf(final Input inpt, final String pubid,
-        final String sysid, final String bse) {
-        this.input = inpt;
+    public LSInputOf(final Input data, final String pubid,
+        final String sysid, final String uri) {
+        this.input = data;
         this.pid = pubid;
         this.sid = sysid;
-        this.base = bse;
+        this.base = uri;
     }
 
     @Override
@@ -153,7 +154,6 @@ public final class LSInputOf implements LSInput {
     }
 
     @Override
-    @SuppressWarnings("PMD.BooleanGetMethodName")
     public boolean getCertifiedText() {
         return true;
     }

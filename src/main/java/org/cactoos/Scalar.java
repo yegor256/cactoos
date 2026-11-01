@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos;
@@ -20,7 +20,7 @@ import org.cactoos.scalar.Unchecked;
  * make sure it doesn't calculate anything twice, you can use
  * {@link Sticky} decorator.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of result
  * @see Sticky
@@ -33,9 +33,9 @@ public interface Scalar<T> {
 
     /**
      * Convert it to the value.
+     *
      * @return The value
      * @throws Exception If fails
      */
     T value() throws Exception;
-
 }

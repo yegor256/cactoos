@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos;
@@ -15,7 +15,7 @@ import org.cactoos.proc.UncheckedBiProc;
  * {@link UncheckedBiProc} decorator. Also
  * you may try {@link IoCheckedBiProc}.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of input
@@ -26,6 +26,7 @@ public interface BiProc<X, Y> {
 
     /**
      * Execute it.
+     *
      * @param first The first argument
      * @param second The second argument
      * @throws Exception If fails

@@ -1,25 +1,28 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
 
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import org.cactoos.list.ListOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Mapped}.
+ *
  * @since 0.47
  */
 final class MatchedTest {
+
     @Test
     void failsWhenElementsNotMatch() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "All elements have correlation function 'equals'",
             () -> new ListOf<>(
                 new Matched<>(
@@ -34,12 +37,12 @@ final class MatchedTest {
                 ),
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void failsOnSizeMismatch() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "must fail if sizes of iterators are different",
             () -> new ListOf<>(
                 new Matched<>(
@@ -50,14 +53,29 @@ final class MatchedTest {
             ),
             new Throws<>(
                 new IsEqual<>("Size mismatch of iterators"),
-                IllegalStateException.class
+                NoSuchElementException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
-    void shouldProduceValuesOfFirstIterator() {
-        new Assertion<>(
+    void throwsNoSuchElementWhenExhausted() {
+        MatcherAssert.assertThat(
+            "must throw NoSuchElementException when both iterators are exhausted",
+            () -> new Matched<Integer, Integer>(
+                Objects::equals,
+                new IteratorOf<>(),
+                new IteratorOf<>()
+            ).next(),
+            new Throws<>(
+                NoSuchElementException.class
+            )
+        );
+    }
+
+    @Test
+    void producesValuesOfFirstIterator() {
+        MatcherAssert.assertThat(
             "must match all items of first iterator",
             new ListOf<>(
                 new Matched<>(
@@ -67,7 +85,6 @@ final class MatchedTest {
                 )
             ),
             new HasValues<>(1f, 2f, 3f)
-        ).affirm();
+        );
     }
-
 }

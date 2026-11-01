@@ -1,18 +1,17 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.number;
 
 import java.util.stream.Stream;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
-import org.junit.jupiter.params.provider.ArgumentsSource;
-import org.llorllale.cactoos.matchers.Assertion;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
@@ -20,11 +19,121 @@ import org.llorllale.cactoos.matchers.IsTrue;
  *
  * @since 1.0.0
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class NumberOfScalarsTest implements ArgumentsProvider {
 
-    @Override
-    public Stream<Arguments> provideArguments(final ExtensionContext ctx) {
+    @ParameterizedTest
+    @MethodSource("arguments")
+    void floatValue(final Number nbr) {
+        MatcherAssert.assertThat(
+            "Must implement floatValue",
+            new NumberOfScalars(() -> nbr).floatValue(),
+            new IsEqual<>(nbr.floatValue())
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("arguments")
+    void intValue(final Number nbr) {
+        MatcherAssert.assertThat(
+            "Must implement intValue",
+            new NumberOfScalars(() -> nbr).intValue(),
+            new IsEqual<>(nbr.intValue())
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("arguments")
+    void doubleValue(final Number nbr) {
+        MatcherAssert.assertThat(
+            "Must implement doubleValue",
+            new NumberOfScalars(() -> nbr).doubleValue(),
+            new IsEqual<>(nbr.doubleValue())
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("arguments")
+    void longValue(final Number nbr) {
+        MatcherAssert.assertThat(
+            "Must implement longValue",
+            new NumberOfScalars(() -> nbr).longValue(),
+            new IsEqual<>(nbr.longValue())
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("arguments")
+    void byteValue(final Number nbr) {
+        MatcherAssert.assertThat(
+            "Must implement byteValue",
+            new NumberOfScalars(() -> nbr).byteValue(),
+            new IsEqual<>(nbr.byteValue())
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("arguments")
+    void shortValue(final Number nbr) {
+        MatcherAssert.assertThat(
+            "Must implement shortValue",
+            new NumberOfScalars(() -> nbr).shortValue(),
+            new IsEqual<>(nbr.shortValue())
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("arguments")
+    void hashCode(final Number nbr) {
+        MatcherAssert.assertThat(
+            "Must implement hashCode via doubleValue",
+            new NumberOfScalars(() -> nbr).hashCode(),
+            new IsEqual<>(Double.hashCode(nbr.doubleValue()))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("arguments")
+    @SuppressWarnings({"unlikely-arg-type", "EqualsIncompatibleType"})
+    void equalsNumber(final Number nbr) {
+        MatcherAssert.assertThat(
+            "Must implement equals doubleValue",
+            new NumberOfScalars(() -> nbr).equals(nbr.doubleValue()),
+            new IsTrue()
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("arguments")
+    void notEquals(final Number nbr) {
+        MatcherAssert.assertThat(
+            "Must implement not equals Object",
+            new NumberOfScalars(() -> nbr).equals(new Object()),
+            new IsNot<>(new IsTrue())
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("arguments")
+    @SuppressWarnings({"unlikely-arg-type", "EqualsIncompatibleType"})
+    void notEqualsObject(final Number nbr) {
+        MatcherAssert.assertThat(
+            "Must implement not equals incorrect value",
+            new NumberOfScalars(() -> nbr).equals(-1.0),
+            new IsNot<>(new IsTrue())
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("arguments")
+    void printsItself(final Number nbr) {
+        MatcherAssert.assertThat(
+            "Must implement toString via doubleValue",
+            new NumberOfScalars(() -> nbr).toString(),
+            new IsEqual<>(Double.toString(nbr.doubleValue()))
+        );
+    }
+
+    private static Stream<Arguments> arguments() {
         return Stream.of(
             Arguments.of(4),
             Arguments.of(8.2d),
@@ -33,117 +142,5 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
             Arguments.of((short) 2),
             Arguments.of((byte) 9)
         );
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
-    void floatValue(final Number nbr) {
-        new Assertion<>(
-            "Must implement floatValue",
-            new NumberOfScalars(() -> nbr).floatValue(),
-            new IsEqual<>(nbr.floatValue())
-        ).affirm();
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
-    void intValue(final Number nbr) {
-        new Assertion<>(
-            "Must implement intValue",
-            new NumberOfScalars(() -> nbr).intValue(),
-            new IsEqual<>(nbr.intValue())
-        ).affirm();
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
-    void doubleValue(final Number nbr) {
-        new Assertion<>(
-            "Must implement doubleValue",
-            new NumberOfScalars(() -> nbr).doubleValue(),
-            new IsEqual<>(nbr.doubleValue())
-        ).affirm();
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
-    void longValue(final Number nbr) {
-        new Assertion<>(
-            "Must implement longValue",
-            new NumberOfScalars(() -> nbr).longValue(),
-            new IsEqual<>(nbr.longValue())
-        ).affirm();
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
-    void byteValue(final Number nbr) {
-        new Assertion<>(
-            "Must implement byteValue",
-            new NumberOfScalars(() -> nbr).byteValue(),
-            new IsEqual<>(nbr.byteValue())
-        ).affirm();
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
-    void shortValue(final Number nbr) {
-        new Assertion<>(
-            "Must implement shortValue",
-            new NumberOfScalars(() -> nbr).shortValue(),
-            new IsEqual<>(nbr.shortValue())
-        ).affirm();
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
-    void hashCode(final Number nbr) {
-        new Assertion<>(
-            "Must implement hashCode via doubleValue",
-            new NumberOfScalars(() -> nbr).hashCode(),
-            new IsEqual<>(Double.hashCode(nbr.doubleValue()))
-        ).affirm();
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
-    @SuppressWarnings("unlikely-arg-type")
-    void equalsNumber(final Number nbr) {
-        new Assertion<>(
-            "Must implement equals doubleValue",
-            new NumberOfScalars(() -> nbr).equals(nbr.doubleValue()),
-            new IsTrue()
-        ).affirm();
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
-    void notEquals(final Number nbr) {
-        new Assertion<>(
-            "Must implement not equals Object",
-            new NumberOfScalars(() -> nbr).equals(new Object()),
-            new IsNot<>(new IsTrue())
-        ).affirm();
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
-    @SuppressWarnings("unlikely-arg-type")
-    void notEqualsObject(final Number nbr) {
-        new Assertion<>(
-            "Must implement not equals incorrect value",
-            new NumberOfScalars(() -> nbr).equals(-1.0),
-            new IsNot<>(new IsTrue())
-        ).affirm();
-    }
-
-    @ParameterizedTest
-    @ArgumentsSource(NumberEnvelopeTest.class)
-    void toString(final Number nbr) {
-        new Assertion<>(
-            "Must implement toString via doubleValue",
-            new NumberOfScalars(() -> nbr).toString(),
-            new IsEqual<>(Double.toString(nbr.doubleValue()))
-        ).affirm();
     }
 }

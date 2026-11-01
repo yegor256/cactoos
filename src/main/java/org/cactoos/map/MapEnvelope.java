@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.map;
@@ -16,19 +16,12 @@ import org.cactoos.text.TextOf;
 /**
  * Map envelope.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of key
  * @param <Y> Type of value
  * @since 0.24
- * @checkstyle AbstractClassNameCheck (500 lines)
  */
-@SuppressWarnings(
-    {
-        "PMD.TooManyMethods",
-        "PMD.AbstractNaming"
-    }
-)
 public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
 
     /**
@@ -38,7 +31,8 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
 
     /**
      * Ctor.
-     * @param original The original map.
+     *
+     * @param original The original map
      */
     public MapEnvelope(final Map<X, Y> original) {
         this.map = original;
@@ -125,5 +119,4 @@ public abstract class MapEnvelope<X, Y> implements Map<X, Y> {
     public final int hashCode() {
         return new HashCode(this.map).value();
     }
-
 }

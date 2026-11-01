@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -18,6 +18,7 @@ import org.cactoos.iterator.IteratorOf;
  * @since 0.9
  */
 public final class Split extends IterableEnvelope<Text> {
+
     /**
      * Ctor.
      *
@@ -43,6 +44,7 @@ public final class Split extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param rgx The regex
      * @see String#split(String)
@@ -53,6 +55,7 @@ public final class Split extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param rgx The regex
      * @param lmt The limit
@@ -64,6 +67,7 @@ public final class Split extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param rgx The regex
      * @see String#split(String)
@@ -74,6 +78,7 @@ public final class Split extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param rgx The regex
      * @param lmt The limit
@@ -85,6 +90,7 @@ public final class Split extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param rgx The regex
      * @see String#split(String)
@@ -95,6 +101,7 @@ public final class Split extends IterableEnvelope<Text> {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param rgx The regex
      * @param lmt The limit

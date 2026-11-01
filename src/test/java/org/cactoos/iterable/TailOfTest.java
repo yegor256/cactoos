@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -10,14 +10,13 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link TailOf}.
+ *
  * @since 0.31
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TailOfTest {
 
     @Test
-    @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-    void tailIterable() {
+        void tailIterable() {
         MatcherAssert.assertThat(
             "Can't get tail portion of iterable",
             new TailOf<>(

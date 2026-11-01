@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -16,7 +16,7 @@ import org.cactoos.text.FormattedText;
  * Element from position in {@link Iterable}
  * or fallback value if iterable doesn't have this position.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Scalar type
  * @since 0.7
@@ -25,7 +25,7 @@ public final class ItemAt<T> implements Scalar<T> {
 
     /**
      * {@link Sticky} that holds the value of the {@link Scalar}
-     *  at the position specified in the constructor.
+     * at the position specified in the constructor.
      */
     private final Scalar<T> saved;
 
@@ -81,10 +81,7 @@ public final class ItemAt<T> implements Scalar<T> {
             () -> {
                 if (position < 0) {
                     throw new IOException(
-                        new FormattedText(
-                            "The position must be non-negative: %d",
-                            position
-                        ).asString()
+                        String.format("The position must be non-negative: %d", position)
                     );
                 }
                 final Iterator<? extends T> src = iterable.iterator();
@@ -92,13 +89,13 @@ public final class ItemAt<T> implements Scalar<T> {
                 for (cur = 0; cur < position && src.hasNext(); ++cur) {
                     src.next();
                 }
-                final T ret;
+                final T result;
                 if (cur == position && src.hasNext()) {
-                    ret = src.next();
+                    result = src.next();
                 } else {
-                    ret = fallback.apply(new IterableOf<>(src));
+                    result = fallback.apply(new IterableOf<>(src));
                 }
-                return ret;
+                return result;
             }
         );
     }
@@ -107,5 +104,4 @@ public final class ItemAt<T> implements Scalar<T> {
     public T value() throws Exception {
         return this.saved.value();
     }
-
 }

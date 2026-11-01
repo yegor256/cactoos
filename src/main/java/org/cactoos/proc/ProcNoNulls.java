@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.proc;
@@ -13,6 +13,7 @@ import org.cactoos.Proc;
  * @since 0.11
  */
 public final class ProcNoNulls<X> implements Proc<X> {
+
     /**
      * The procedure.
      */
@@ -20,6 +21,7 @@ public final class ProcNoNulls<X> implements Proc<X> {
 
     /**
      * Ctor.
+     *
      * @param proc The procedure
      */
     public ProcNoNulls(final Proc<? super X> proc) {

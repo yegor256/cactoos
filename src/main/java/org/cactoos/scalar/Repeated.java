@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -31,8 +31,8 @@ public final class Repeated<X> implements Scalar<X> {
      * <p>If {@code max} is equal or less than zero {@link #value()} will return
      * an exception.</p>
      *
-     * @param scalar Scalar to repeat.
-     * @param times How many times.
+     * @param scalar Scalar to repeat
+     * @param times How many times
      */
     public Repeated(final Scalar<? extends X> scalar, final int times) {
         this.scalar = scalar;

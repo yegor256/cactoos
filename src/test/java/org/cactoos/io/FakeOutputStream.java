@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Fake {@link OutptStream} with ability to check if
  * it is closed.
+ *
  * @since 1.0.0
  */
 final class FakeOutputStream extends OutputStream {
@@ -27,9 +28,9 @@ final class FakeOutputStream extends OutputStream {
     }
 
     @Override
-    @SuppressWarnings("PMD.UncommentedEmptyMethodBody")
     // @checkstyle ParameterNameCheck (1 lines)
     public void write(final int b) {
+        // Intentionally empty, this is a fake stream for testing
     }
 
     @Override
@@ -39,9 +40,10 @@ final class FakeOutputStream extends OutputStream {
 
     /**
      * If stream is closed.
+     *
      * @return Closed or not
      */
-    public boolean isClosed() {
+    boolean isClosed() {
         return this.closed.get();
     }
 }

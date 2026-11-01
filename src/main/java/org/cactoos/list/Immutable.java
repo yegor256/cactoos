@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.list;
@@ -17,13 +17,6 @@ import java.util.ListIterator;
  * @param <T> Element type
  * @since 1.16
  */
-@SuppressWarnings(
-    {
-        "PMD.TooManyMethods",
-        "PMD.AbstractNaming",
-        "PMD.AvoidDuplicateLiterals"
-    }
-)
 public final class Immutable<T> implements List<T> {
 
     /**
@@ -33,6 +26,7 @@ public final class Immutable<T> implements List<T> {
 
     /**
      * Ctor.
+     *
      * @param src Source collection
      */
     public Immutable(final List<? extends T> src) {
@@ -65,7 +59,6 @@ public final class Immutable<T> implements List<T> {
     }
 
     @Override
-    @SuppressWarnings("PMD.UseVarargs")
     public <X> X[] toArray(final X[] array) {
         return this.list.toArray(array);
     }
@@ -176,7 +169,7 @@ public final class Immutable<T> implements List<T> {
 
     @Override
     public List<T> subList(final int start, final int end) {
-        return new Immutable<>(
+        return new org.cactoos.list.Immutable<>(
             this.list.subList(start, end)
         );
     }

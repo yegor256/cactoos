@@ -37,7 +37,7 @@ Maven:
 <dependency>
   <groupId>org.cactoos</groupId>
   <artifactId>cactoos</artifactId>
-  <version>0.57.0</version>
+  <version>0.62.0</version>
 </dependency>
 ```
 
@@ -45,14 +45,20 @@ Gradle:
 
 ```groovy
 dependencies {
-  compile 'org.cactoos:cactoos::0.57.0
+  compile 'org.cactoos:cactoos::0.62.0
 }
 ```
 
-Java version required: 1.8+.
+Java version required: 17+.
 
 StackOverflow tag is
 [cactoos](https://stackoverflow.com/questions/tagged/cactoos).
+
+**Note:** please, don't forget to update `cactoos` version in your
+libraries, cause newer versions may break backwards compatibility and
+projects with newer version of `cactoos` may fail to even compile with
+your library then (due to Maven uses the newest version only for the
+whole compile context).
 
 ## Input/Output
 
@@ -326,30 +332,30 @@ final String text = new TextOfDateTime(date).asString();
 
 ## Our Objects vs. Their Static Methods
 
-Cactoos | Guava | Apache Commons | JDK 8
------- | ------ | ------ | ------
-`And` | `Iterables.all()` | - | -
-`Filtered` | `Iterables.filter()` | ? | -
-`FormattedText` | - | - | `String.format()`
-`IsBlank` | - | `StringUtils.isBlank()`| -
-`Joined` | - | - | `String.join()`
-`LengthOf` | - | - | `String#length()`
-`Lowered` | - | - | `String#toLowerCase()`
-`Normalized` | - | `StringUtils.normalize()` | -
-`Or` | `Iterables.any()` | - | -
-`Repeated` | - | `StringUtils.repeat()` | -
-`Replaced` | - | - | `String#replace()`
-`Reversed` | - | - | `StringBuilder#reverse()`
-`Rotated` | - | `StringUtils.rotate()`| -
-`Split` | - | - | `String#split()`
-`StickyList` | `Lists.newArrayList()` | ? | `Arrays.asList()`
-`Sub` | - | - | `String#substring()`
-`SwappedCase` | - | `StringUtils.swapCase()` | -
-`TextOf` | ? | `IOUtils.toString()` | -
-`TrimmedLeft` | - | `StringUtils.stripStart()` | -
-`TrimmedRight` | - | `StringUtils.stripEnd()` | -
-`Trimmed` | - | `StringUtils.stripAll()` | `String#trim()`
-`Upper` | - | - | `String#toUpperCase()`
+| Cactoos | Guava | Apache Commons | JDK 17 |
+| ------ | ------ | ------ | ------ |
+| `And` | `Iterables.all()` | - | - |
+| `Filtered` | `Iterables.filter()` | ? | - |
+| `FormattedText` | - | - | `String.format()` |
+| `IsBlank` | - | `StringUtils.isBlank()` | - |
+| `Joined` | - | - | `String.join()` |
+| `LengthOf` | - | - | `String#length()` |
+| `Lowered` | - | - | `String#toLowerCase()` |
+| `Normalized` | - | `StringUtils.normalize()` | - |
+| `Or` | `Iterables.any()` | - | - |
+| `Repeated` | - | `StringUtils.repeat()` | - |
+| `Replaced` | - | - | `String#replace()` |
+| `Reversed` | - | - | `StringBuilder#reverse()` |
+| `Rotated` | - | `StringUtils.rotate()` | - |
+| `Split` | - | - | `String#split()` |
+| `StickyList` | `Lists.newArrayList()` | ? | `Arrays.asList()` |
+| `Sub` | - | - | `String#substring()` |
+| `SwappedCase` | - | `StringUtils.swapCase()` | - |
+| `TextOf` | ? | `IOUtils.toString()` | - |
+| `TrimmedLeft` | - | `StringUtils.stripStart()` | - |
+| `TrimmedRight` | - | `StringUtils.stripEnd()` | - |
+| `Trimmed` | - | `StringUtils.stripAll()` | `String#trim()` |
+| `Upper` | - | - | `String#toUpperCase()` |
 
 ## Questions
 
@@ -357,7 +363,62 @@ Ask your questions related to cactoos library on
 [Stackoverflow](https://stackoverflow.com/questions/ask)
 with the [cactoos](https://stackoverflow.com/tags/cactoos/info) tag.
 
-## How to contribute?
+## Architecture
+
+**Interfaces as the sole public abstraction.**
+Every primitive is declared as a Java [`@FunctionalInterface`][fi]—`Scalar<T>`,
+  `Text`, `Func<X,Y>`, `Input`, `Output`, `Bytes`, and `Proc`—with no static
+  utility classes at this level.
+This contrasts with [Guava][guava] and [Apache Commons][commons], where
+  functionality is delivered through static methods on utility classes
+  (`Iterables.filter()`, `StringUtils.isBlank()`).
+Because every concept is a real object, it can be subclassed, mocked, and
+  composed without reflection or special tooling.
+
+**Decorator pattern for all behavior extension.**
+Thread safety, memoization, null validation, and exception translation are
+  each added by wrapping one object in another, not by modifying the class.
+`Sticky<T>` caches a `Scalar<T>` result; `Synced<T>` makes it thread-safe;
+  `NoNulls` rejects null inputs; `Unchecked<T>` rethrows checked exceptions
+  as unchecked ones.
+This follows the [Decorator pattern][decorator] from GoF: every class has
+  exactly one responsibility, and capabilities are composed at call sites
+  rather than inherited.
+
+**Envelope pattern for safe inheritance.**
+Abstract base classes—`IterableEnvelope`, `TextEnvelope`, `ScalarEnvelope`,
+  and others—accept an inner object through the constructor and delegate to
+  it via `final` methods.
+Concrete classes extend an envelope and supply only the inner object; no
+  method bodies are overridden.
+This eliminates the [fragile base class][fbc] problem: because delegation
+  methods are `final`, a subclass cannot accidentally alter delegated behavior.
+
+**Lazy evaluation as the default.**
+No computation occurs until the caller explicitly requests it—`.value()`,
+  `.asString()`, or `.iterator()`.
+An `IterableOf<>` wrapping a transformation does no work until iterated.
+This contrasts with [Guava's `ImmutableList.copyOf()`][guava-imm] and
+  [Apache Commons Collections][commons-col], which materialize elements at
+  construction time.
+Explicit caching requires opting in with `Sticky`.
+
+**Checked exceptions as first-class interface contracts.**
+All core interfaces declare `throws Exception`; the library never silently
+  converts checked exceptions to unchecked ones at the interface boundary.
+When a caller needs unchecked access, it wraps with `Unchecked<T>` (rethrows
+  as `UncheckedIOException`), `IoChecked<T>` (narrows to `IOException`), or
+  `Checked<T,E>` (converts to any target exception type).
+The decision about exception handling stays with the call site, not the library.
+
+**Zero runtime dependencies.**
+The library ships with no runtime dependencies.
+[Guava][guava] adds a ~3 MB JAR; [Apache Commons][commons] splits across
+  multiple JARs (`commons-lang3`, `commons-io`, etc.).
+Cactoos requires only [JDK 17][jdk17]+, making it suitable for environments
+  where classpath size and dependency audits matter.
+
+## How to Contribute
 
 Just fork the repo and send us a pull request.
 
@@ -377,7 +438,7 @@ docker run \
   --volume=${PWD}:/main \
   --volume=cactoos-mvn-cache:/root/.m2 \
   --rm \
-  maven:3-jdk-8 \
+  maven:3-eclipse-temurin-17 \
   bash -c "mvn clean install -Pqulice; chown -R $(id -u):$(id -g) target/"
 ```
 
@@ -394,18 +455,14 @@ in GitHub precommits.
 
 ## Contributors
 
-* [@yegor256](https://github.com/yegor256)
-as Yegor Bugayenko ([Blog](http://www.yegor256.com))
-* [@g4s8](https://github.com/g4s8)
-as [Kirill Che.](mailto:g4s8.public@gmail.com)
+* [@yegor256](https://github.com/yegor256) as Yegor Bugayenko ([Blog](http://www.yegor256.com))
+* [@g4s8](https://github.com/g4s8) as [Kirill Che.](mailto:g4s8.public@gmail.com)
 * [@fabriciofx](https://github.com/fabriciofx) as Fabrício Cabral
 * [@englishman](https://github.com/englishman) as Andriy Kryvtsun
 * [@VsSekorin](https://github.com/VsSekorin) as Vseslav Sekorin
 * [@DronMDF](https://github.com/DronMDF) as Andrey Valyaev
-* [@dusan-rychnovsky](https://github.com/dusan-rychnovsky)
-as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
-* [@timmeey](https://github.com/timmeey)
-as Tim Hinkes ([Blog](https://blog.timmeey.de))
+* [@dusan-rychnovsky](https://github.com/dusan-rychnovsky) as Dušan Rychnovský ([Blog](http://blog.dusanrychnovsky.cz/))
+* [@timmeey](https://github.com/timmeey) as Tim Hinkes ([Blog](https://blog.timmeey.de))
 * [@alex-semenyuk](https://github.com/alex-semenyuk) as Alexey Semenyuk
 * [@smallcreep](https://github.com/smallcreep) as Ilia Rogozhin
 * [@memoyil](https://github.com/memoyil) as Mehmet Yildirim
@@ -422,3 +479,11 @@ as Tim Hinkes ([Blog](https://blog.timmeey.de))
 [blog]: http://www.yegor256.com/2017/06/22/object-oriented-input-output-in-cactoos.html
 [OffsetDateTime]: https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html
 [lazy-blog]: http://www.yegor256.com/2017/10/17/lazy-loading-caching-sticky-cactoos.html
+[fi]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/FunctionalInterface.html
+[guava]: https://github.com/google/guava
+[commons]: https://commons.apache.org/
+[decorator]: https://en.wikipedia.org/wiki/Decorator_pattern
+[fbc]: https://en.wikipedia.org/wiki/Fragile_base_class
+[guava-imm]: https://guava.dev/releases/snapshot/api/docs/com/google/common/collect/ImmutableList.html
+[commons-col]: https://commons.apache.org/proper/commons-collections/
+[jdk17]: https://openjdk.org/projects/jdk/17/

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -18,7 +18,7 @@ import org.cactoos.Scalar;
  * );
  * </pre>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of output
  * @since 0.12
@@ -27,6 +27,7 @@ public final class CallableOf<T> extends CallableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param slr Encapsulated scalar
      * @since 0.41
      */

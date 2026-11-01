@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -13,6 +13,7 @@ import org.cactoos.Scalar;
  * @since 0.11
  */
 public final class NoNulls<T> implements Scalar<T> {
+
     /**
      * The scalar.
      */
@@ -20,6 +21,7 @@ public final class NoNulls<T> implements Scalar<T> {
 
     /**
      * Ctor.
+     *
      * @param sclr The scalar
      */
     public NoNulls(final Scalar<? extends T> sclr) {

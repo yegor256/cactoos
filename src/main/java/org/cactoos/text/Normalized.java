@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -16,6 +16,7 @@ public final class Normalized extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text A Text
      */
     public Normalized(final CharSequence text) {
@@ -24,6 +25,7 @@ public final class Normalized extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param text A Text
      */
     public Normalized(final Text text) {

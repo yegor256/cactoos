@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
@@ -18,11 +18,11 @@ public final class HeadOf<T> extends IteratorEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param num Num of head elements
      * @param iterator Decorated iterator
      */
     public HeadOf(final int num, final Iterator<? extends T> iterator) {
         super(new Sliced<>(0, num, iterator));
     }
-
 }

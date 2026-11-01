@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.map;
@@ -7,20 +7,18 @@ package org.cactoos.map;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link MapEntry}.
  *
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class MapEntryTest {
 
     @Test
-    void getKey() {
+    void retrievesKey() {
         final String key = "hello";
         final String value = "world";
         MatcherAssert.assertThat(
@@ -31,7 +29,7 @@ final class MapEntryTest {
     }
 
     @Test
-    void getValue() {
+    void retrievesValue() {
         final String key = "foo";
         final String value = "bar";
         MatcherAssert.assertThat(
@@ -43,11 +41,11 @@ final class MapEntryTest {
 
     @Test
     void cantSetValue() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Exception is expected on change operations",
             () -> new MapEntry<>("one", "two").setValue("three"),
             new Throws<>(UnsupportedOperationException.class)
-        ).affirm();
+        );
     }
 
     @Test
@@ -62,6 +60,33 @@ final class MapEntryTest {
     }
 
     @Test
+    void equalsWithNullKey() {
+        MatcherAssert.assertThat(
+            "MapEntries with null keys are not equal",
+            new MapEntry<>(null, "v").equals(new MapEntry<>(null, "v")),
+            new IsEqual<>(true)
+        );
+    }
+
+    @Test
+    void equalsWithNullValue() {
+        MatcherAssert.assertThat(
+            "MapEntries with null values are not equal",
+            new MapEntry<>("k", null).equals(new MapEntry<>("k", null)),
+            new IsEqual<>(true)
+        );
+    }
+
+    @Test
+    void notEqualsWhenOneKeyIsNull() {
+        MatcherAssert.assertThat(
+            "MapEntries with different keys must not be equal",
+            new MapEntry<>(null, "v").equals(new MapEntry<>("k", "v")),
+            new IsEqual<>(false)
+        );
+    }
+
+    @Test
     void compareHash() {
         MatcherAssert.assertThat(
             "the hash code are not equals",
@@ -71,7 +96,7 @@ final class MapEntryTest {
     }
 
     @Test
-    void toStringMethod() {
+    void printsKeyAndValue() {
         MatcherAssert.assertThat(
             "ToString method returns unexpected value",
             new MapEntry<>("somekey", "somevalue").toString(),

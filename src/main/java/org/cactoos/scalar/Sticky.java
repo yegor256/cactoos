@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -32,7 +32,7 @@ import org.cactoos.func.StickyFunc;
  * ).value()
  * }</pre>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of result
  * @see StickyFunc
@@ -47,6 +47,7 @@ public final class Sticky<T> implements Scalar<T> {
 
     /**
      * Ctor.
+     *
      * @param scalar The Scalar to cache
      */
     public Sticky(final Scalar<? extends T> scalar) {

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.bytes;
@@ -11,7 +11,7 @@ import org.cactoos.scalar.Checked;
 /**
  * Bytes that throws exception of specified type.
  *
- * @param <E> Exception's type.
+ * @param <E> Exception's type
  * @since 0.31
  */
 public final class CheckedBytes<E extends Exception> implements Bytes {
@@ -28,8 +28,9 @@ public final class CheckedBytes<E extends Exception> implements Bytes {
 
     /**
      * Ctor.
-     * @param orig Origin bytes.
-     * @param fnc Function that wraps exceptions.
+     *
+     * @param orig Origin bytes
+     * @param fnc Function that wraps exceptions
      */
     public CheckedBytes(final Bytes orig, final Func<? super Exception, ? extends E> fnc) {
         this.origin = orig;

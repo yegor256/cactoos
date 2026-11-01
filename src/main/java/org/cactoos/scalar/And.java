@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -20,15 +20,15 @@ import org.cactoos.iterable.Mapped;
  *
  * {@code
  * new And(
- *    new True(),
- *    new True(),
- *    new True()
+ * new True(),
+ * new True(),
+ * new True()
  * ).value(); // the result is true
  *
  * new And(
- *    new True(),
- *    new False(),
- *    new True()
+ * new True(),
+ * new False(),
+ * new True()
  * ).value(); // the result is false
  * }
  *
@@ -38,7 +38,7 @@ import org.cactoos.iterable.Mapped;
  * use the {@link Unchecked} decorator. Or you may use
  * {@link IoChecked} to wrap it in an IOException.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @see Unchecked
  * @see IoChecked
@@ -53,6 +53,7 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -64,6 +65,7 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -83,6 +85,7 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param subject The subject
      * @param conditions Funcs to map
      * @param <X> Type of items in the iterable
@@ -95,6 +98,7 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param subject The subject
      * @param conditions Funcs to map
      * @param <X> Type of items in the iterable
@@ -111,7 +115,8 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param scalar The Scalar.
+     *
+     * @param scalar The Scalar
      */
     @SafeVarargs
     public And(final Scalar<Boolean>... scalar) {
@@ -120,7 +125,8 @@ public final class And implements Scalar<Boolean> {
 
     /**
      * Ctor.
-     * @param iterable The iterable.
+     *
+     * @param iterable The iterable
      */
     public And(final Iterable<? extends Scalar<Boolean>> iterable) {
         this.origin = iterable;

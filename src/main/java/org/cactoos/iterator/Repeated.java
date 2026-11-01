@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
@@ -31,6 +31,7 @@ public final class Repeated<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param max How many times to repeat
      * @param element Element to repeat
      */
@@ -40,6 +41,7 @@ public final class Repeated<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param max How many times to repeat
      * @param scalar Scalar to repeat
      */

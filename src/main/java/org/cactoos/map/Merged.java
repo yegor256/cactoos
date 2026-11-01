@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.map;
@@ -18,9 +18,11 @@ import org.cactoos.iterable.Mapped;
  * @since 1.0
  */
 public final class Merged<K, V> extends MapEnvelope<K, V> {
+
     /**
      * Ctor.
-     * @param maps Maps to merge.
+     *
+     * @param maps Maps to merge
      */
     @SafeVarargs
     public Merged(final Map<? extends K, ? extends V>... maps) {
@@ -29,7 +31,8 @@ public final class Merged<K, V> extends MapEnvelope<K, V> {
 
     /**
      * Ctor.
-     * @param maps Iterable of {@link Map}s to merge.
+     *
+     * @param maps Iterable of {@link Map}s to merge
      */
     public Merged(final Iterable<? extends Map<? extends K, ? extends V>> maps) {
         super(

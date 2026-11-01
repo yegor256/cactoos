@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -7,31 +7,44 @@ package org.cactoos.iterable;
 import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test Case for {@link Solid}.
+ *
  * @since 0.24
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class SolidTest {
 
     @Test
     void makesListFromMappedIterable() {
+        MatcherAssert.assertThat(
+            "Can't turn a mapped iterable into a list",
+            new Solid<>(
+                new Mapped<>(
+                    i -> i + 1,
+                    new IterableOf<>(1, -1, 0, 1)
+                )
+            ),
+            Matchers.iterableWithSize(4)
+        );
+    }
+
+    @Test
+    void returnsListOnSecondTraversal() {
         final Iterable<Integer> list = new Solid<>(
             new Mapped<>(
                 i -> i + 1,
                 new IterableOf<>(1, -1, 0, 1)
             )
         );
-        MatcherAssert.assertThat(
-            "Can't turn a mapped iterable into a list",
-            list, Matchers.iterableWithSize(4)
-        );
+        list.iterator().next();
         MatcherAssert.assertThat(
             "Can't turn a mapped iterable into a list, again",
-            list, Matchers.iterableWithSize(4)
+            list,
+            Matchers.iterableWithSize(4)
         );
     }
 
@@ -49,14 +62,7 @@ final class SolidTest {
         );
     }
 
-    @Test
-    void worksInThreadsMultipleTimes() {
-        for (int count = 0; count < 10; ++count) {
-            this.worksInThreads();
-        }
-    }
-
-    @Test
+    @RepeatedTest(10)
     void worksInThreads() {
         MatcherAssert.assertThat(
             "Can't behave as an iterable in multiple threads",
@@ -71,5 +77,4 @@ final class SolidTest {
             new RunsInThreads<>(new Solid<>(1, 0, -1, -1, 2))
         );
     }
-
 }

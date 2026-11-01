@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -10,7 +10,18 @@ import org.cactoos.Text;
 /**
  * Text in lower case.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>This class converts the original text to lower case
+ * using a specified {@link Locale}. If no locale is provided,
+ * {@link Locale#ENGLISH} is used by default.</p>
+ *
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * <p>Example:</p>
+ *
+ * <pre>{@code
+ * Text text1 = new Lowered(new TextOf("HELLO"));
+ * text1.asString(); // "hello"
+ * }</pre>
  *
  * @since 0.1
  */
@@ -18,6 +29,9 @@ public final class Lowered extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * <p>Creates a lower-case text from a character sequence</p>
+     *
      * @param text The text
      */
     public Lowered(final CharSequence text) {
@@ -26,6 +40,9 @@ public final class Lowered extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * <p>Creates a lower-case text from a {@link Text}</p>
+     *
      * @param text The text
      */
     public Lowered(final Text text) {
@@ -34,6 +51,9 @@ public final class Lowered extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * <p>Creates a lower-case text from a {@link Text}</p>
+     *
      * @param text The text
      * @param locale The locale
      */

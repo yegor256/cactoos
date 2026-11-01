@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -16,6 +16,7 @@ public final class Solid<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
+     *
      * @param src The underlying iterable
      */
     @SafeVarargs
@@ -25,10 +26,10 @@ public final class Solid<X> extends IterableEnvelope<X> {
 
     /**
      * Ctor.
+     *
      * @param iterable The iterable
      */
     public Solid(final Iterable<? extends X> iterable) {
         super(new Synced<>(new Sticky<>(iterable)));
     }
-
 }

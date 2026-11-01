@@ -1,11 +1,11 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -29,7 +29,7 @@ import org.cactoos.text.FormattedText;
  * use the {@link Unchecked} decorator. Or you may use
  * {@link IoChecked} to wrap it in an IOException.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @see Unchecked
  * @see IoChecked
@@ -38,9 +38,9 @@ import org.cactoos.text.FormattedText;
 public final class AndInThreads implements Scalar<Boolean> {
 
     /**
-     * The service.
+     * The service, deferred.
      */
-    private final ExecutorService service;
+    private final Unchecked<ExecutorService> service;
 
     /**
      * The iterator.
@@ -54,6 +54,7 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -65,6 +66,7 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param func Func to map
      * @param src The iterable
      * @param <X> Type of items in the iterable
@@ -81,6 +83,7 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param src The iterable
      */
     @SafeVarargs
@@ -90,14 +93,16 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param src The iterable
      */
     public AndInThreads(final Iterable<? extends Scalar<Boolean>> src) {
-        this(Executors.newCachedThreadPool(), src, true);
+        this((Scalar<ExecutorService>) Executors::newCachedThreadPool, src, true);
     }
 
     /**
      * Ctor.
+     *
      * @param svc Executable service to run thread in
      * @param proc Proc to map
      * @param src The iterable
@@ -114,6 +119,7 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param svc Executable service to run thread in
      * @param func Func to map
      * @param src The iterable
@@ -130,6 +136,7 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param svc Executable service to run thread in
      * @param proc Proc to use
      * @param src The iterable
@@ -145,6 +152,7 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param svc Executable service to run thread in
      * @param func Func to map
      * @param src The iterable
@@ -166,6 +174,7 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param svc Executable service to run thread in
      * @param src The iterable
      */
@@ -177,41 +186,43 @@ public final class AndInThreads implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param svc Executable service to run thread in
      * @param src The iterable
      */
     public AndInThreads(final ExecutorService svc,
         final Iterable<? extends Scalar<Boolean>> src) {
-        this(svc, src, false);
+        this((Scalar<ExecutorService>) () -> svc, src, false);
     }
 
     /**
      * Ctor.
-     * @param svc Executable service to run thread in
+     *
+     * @param svc Executable service, deferred
      * @param src The iterable
      * @param sht Shut it down
      */
-    private AndInThreads(final ExecutorService svc,
+    private AndInThreads(final Scalar<ExecutorService> svc,
         final Iterable<? extends Scalar<Boolean>> src, final boolean sht) {
-        this.service = svc;
+        this.service = new Unchecked<>(new Sticky<>(svc));
         this.iterable = src;
         this.shut = sht;
     }
 
     @Override
     public Boolean value() throws Exception {
-        final Collection<Future<Boolean>> futures = new LinkedList<>();
+        final Collection<Future<Boolean>> futures = new ArrayList<>(0);
         for (final Scalar<Boolean> item : this.iterable) {
-            futures.add(this.service.submit(item::value));
+            futures.add(this.service.value().submit(item::value));
         }
         final boolean result = new And(
             Future::get,
             futures
         ).value();
         if (this.shut) {
-            this.service.shutdown();
+            this.service.value().shutdown();
             try {
-                if (!this.service.awaitTermination(1L, TimeUnit.MINUTES)) {
+                if (!this.service.value().awaitTermination(1L, TimeUnit.MINUTES)) {
                     throw new IllegalStateException(
                         new FormattedText(
                             "Can't terminate the service, result=%b",

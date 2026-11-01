@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -12,10 +12,11 @@ package org.cactoos.iterable;
  * @param <T> Element type
  * @since 0.31
  */
-public final class TailOf<T> extends IterableEnvelope<T>  {
+public final class TailOf<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param num Number of tail elements
      * @param src The underlying iterable
      */
@@ -26,6 +27,7 @@ public final class TailOf<T> extends IterableEnvelope<T>  {
 
     /**
      * Ctor.
+     *
      * @param num Number of tail elements
      * @param iterable Decorated iterable
      */

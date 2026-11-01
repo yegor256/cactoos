@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.set;
@@ -11,7 +11,7 @@ import org.cactoos.iterable.IterableOf;
 /**
  * Iterable as {@link Set} based on {@link HashSet}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Set type
  * @since 0.49.2
@@ -30,11 +30,15 @@ public final class SetOf<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param src An {@link Iterable}
      */
-    @SuppressWarnings("PMD.ConstructorOnlyInitializesOrCallOtherConstructors")
     public SetOf(final Iterable<? extends T> src) {
-        super(new HashSet<>());
-        src.forEach(super::add);
+        super(new HashSet<>() {
+            private static final long serialVersionUID = 1L;
+            {
+                src.forEach(this::add);
+            }
+        });
     }
 }

@@ -1,58 +1,69 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos;
 
+import org.cactoos.io.InputOf;
 import org.cactoos.text.NoNulls;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Text}.
+ *
  * @since 0.11
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class TextTest {
 
     @Test
     void failForNullArgument() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail for null argument",
-            () -> new NoNulls(null).asString(),
+            () -> new NoNulls((Text) null).asString(),
             new Throws<>(
                 "NULL instead of a valid text",
                 IllegalArgumentException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void failForNullResult() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail for null result",
-            () -> new NoNulls(() -> null).asString(),
+            () -> new NoNulls((Text) () -> null).asString(),
             new Throws<>(
                 "NULL instead of a valid result string",
                 IllegalStateException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void okForNoNulls() {
         final String message = "Hello";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must work with NoNulls",
             new NoNulls(
                 new TextOf(message)
             ),
             new IsText(message)
-        ).affirm();
+        );
     }
 
+    @Test
+    void okForNoNullsFromInput() {
+        final String message = "Hello";
+        MatcherAssert.assertThat(
+            "Must work with NoNulls from an input",
+            new NoNulls(
+                new InputOf(message)
+            ),
+            new IsText(message)
+        );
+    }
 }

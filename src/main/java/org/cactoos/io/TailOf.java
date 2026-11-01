@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -13,7 +13,7 @@ import org.cactoos.text.FormattedText;
 /**
  * Input showing only last N bytes of the stream.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.30
  */
@@ -36,21 +36,23 @@ public final class TailOf implements Input {
 
     /**
      * Constructor.
-     * @param inpt Input to decorate
+     *
+     * @param data Input to decorate
      * @param bytes Number of last bytes to show from input
      */
-    public TailOf(final Input inpt, final int bytes) {
-        this(inpt, bytes, 16_384);
+    public TailOf(final Input data, final int bytes) {
+        this(data, bytes, 16_384);
     }
 
     /**
      * Constructor.
-     * @param inpt Input to decorate
+     *
+     * @param data Input to decorate
      * @param bytes Number of last bytes to show from input
      * @param maximum Maximum number of bytes to read at once
      */
-    public TailOf(final Input inpt, final int bytes, final int maximum) {
-        this.input = inpt;
+    public TailOf(final Input data, final int bytes, final int maximum) {
+        this.input = data;
         this.count = bytes;
         this.max = maximum;
     }
@@ -80,13 +82,6 @@ public final class TailOf implements Input {
         return new ByteArrayInputStream(response, 0, num);
     }
 
-    /**
-     * Copy full buffer to response.
-     * @param buffer The buffer array
-     * @param response The response array
-     * @param read Number of bytes read in buffer
-     * @return Number of bytes in the response buffer
-     */
     private int copy(final byte[] buffer, final byte[] response,
         final int read) {
         System.arraycopy(
@@ -95,15 +90,6 @@ public final class TailOf implements Input {
         return new MinOf(this.count, read).intValue();
     }
 
-    /**
-     * Copy buffer to response for read count smaller then buffer size.
-     * @param buffer The buffer array
-     * @param response The response array
-     * @param num Number of bytes in response array from previous read
-     * @param read Number of bytes read in the buffer
-     * @return New count of bytes in the response array
-     * @checkstyle ParameterNumberCheck (3 lines)
-     */
     private int copyPartial(final byte[] buffer, final byte[] response,
         final int num, final int read) {
         final int result;

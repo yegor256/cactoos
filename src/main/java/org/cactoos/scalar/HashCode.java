@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -11,33 +11,34 @@ import org.cactoos.iterable.IterableOf;
 /**
  * Object HashCode.
  *
- * Replace this code:
+ * <p>Replace this code:
  * {@code
- *  public int hashCode() {
- *      int hash = 5;
- *      hash = 67 * hash + Objects.hashCode(this.attr1);
- *      hash = 67 * hash + Objects.hashCode(this.attr2);
- *      hash = 67 * hash + Objects.hashCode(this.attr3);
- *      // ... more attributes
- *      return hash;
- *  }
+ * public int hashCode() {
+ * int hash = 5;
+ * hash = 67 * hash + Objects.hashCode(this.attr1);
+ * hash = 67 * hash + Objects.hashCode(this.attr2);
+ * hash = 67 * hash + Objects.hashCode(this.attr3);
+ * // ... more attributes
+ * return hash;
  * }
+ * }</p>
  *
- * With this:
+ * <p>With this:
  * {@code
- *  public int hashCode() {
- *      return new HashCode(
- *          5, 67,
- *          this.attr1, this.attr2, this.attr3, ...
- *      ).value();
- *  }
+ * public int hashCode() {
+ * return new HashCode(
+ * 5, 67,
+ * this.attr1, this.attr2, this.attr3, ...
+ * ).value();
  * }
+ * }</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0
  */
 public final class HashCode implements Scalar<Integer> {
+
     /**
      * Hash code.
      */
@@ -47,7 +48,8 @@ public final class HashCode implements Scalar<Integer> {
      * Ctor.
      *
      * <p>The {@code initial} and {@code multiplier} values are arbitrarily
-     * set to 17 and 31 respectively.
+     * set to 17 and 31 respectively.</p>
+     *
      * @param attributes The object's attributes
      */
     public HashCode(final Object... attributes) {
@@ -58,7 +60,8 @@ public final class HashCode implements Scalar<Integer> {
      * Ctor.
      *
      * <p>The {@code initial} and {@code multiplier} values are arbitrarily
-     * set to 17 and 31 respectively.
+     * set to 17 and 31 respectively.</p>
+     *
      * @param attributes The object's attributes
      */
     public HashCode(final Iterable<?> attributes) {
@@ -67,6 +70,7 @@ public final class HashCode implements Scalar<Integer> {
 
     /**
      * Ctor.
+     *
      * @param initial Initial value (non-zero recommended)
      * @param multiplier Step multiplier (odd prime recommended)
      * @param attributes The object's attributes
@@ -79,6 +83,7 @@ public final class HashCode implements Scalar<Integer> {
 
     /**
      * Ctor.
+     *
      * @param initial Initial value (non-zero recommended)
      * @param multiplier Step multiplier (odd prime recommended)
      * @param attributes The object's attributes
@@ -99,6 +104,7 @@ public final class HashCode implements Scalar<Integer> {
 
     /**
      * Ctor.
+     *
      * @param hash Hashcode
      */
     private HashCode(final Scalar<Integer> hash) {

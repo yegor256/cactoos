@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -10,20 +10,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPOutputStream;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link GzipInput}.
+ *
  * @since 0.29
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class GzipInputTest {
 
     @Test
@@ -33,30 +33,30 @@ final class GzipInputTest {
         try (
             Writer writer = new BufferedWriter(
                 new OutputStreamWriter(
-                    new GZIPOutputStream(out)
+                    new GZIPOutputStream(out),
+                    StandardCharsets.UTF_8
                 )
             )
         ) {
             writer.write(content);
         }
-        final byte[] bytes = out.toByteArray();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read from a gzip input",
             new TextOf(
-                new GzipInput(new InputOf(bytes))
+                new GzipInput(new InputOf(out.toByteArray()))
             ),
             new IsText(content)
-        ).affirm();
+        );
     }
 
     @Test
     void readFromDeadGzipInput() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't read from empty input",
             () -> new LengthOf(
                 new GzipInput(new DeadInput())
             ).value(),
             new Throws<>(EOFException.class)
-        ).affirm();
+        );
     }
 }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -19,6 +19,7 @@ import org.cactoos.text.FormattedText;
  * @since 0.30
  */
 public final class HexOf implements Bytes {
+
     /**
      * Origin hexadecimal text.
      */
@@ -27,7 +28,7 @@ public final class HexOf implements Bytes {
     /**
      * Ctor.
      *
-     * @param origin Hexadecimal text.
+     * @param origin Hexadecimal text
      */
     public HexOf(final Text origin) {
         this.origin = origin;
@@ -58,12 +59,12 @@ public final class HexOf implements Bytes {
         int index = 0;
         while (index < hex.length()) {
             try {
-                final int most = iter.next();
-                final int less = iter.next();
-                result[index >>> 1] = (byte) ((most << 4) + less);
+                result[index >>> 1] = (byte) ((iter.next() << 4) + iter.next());
                 index += 2;
             } catch (final UncheckedIOException ex) {
-                throw ex.getCause();
+                final IOException cause = ex.getCause();
+                cause.addSuppressed(ex);
+                throw cause;
             }
         }
         return result;

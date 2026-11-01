@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -7,8 +7,8 @@ package org.cactoos.scalar;
 import org.cactoos.io.InputOf;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasProperty;
 import org.llorllale.cactoos.matchers.HasValue;
 
@@ -17,38 +17,42 @@ import org.llorllale.cactoos.matchers.HasValue;
  *
  * @since 0.7
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 final class PropertiesOfTest {
 
     @Test
     void readsStringContent() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read properties from an input string",
             new PropertiesOf(
-                "foo=Hello, world!\nbar=works fine?\n"
+                String.format("foo=Hello, world!%cbar=works fine?%c", (char) 10, (char) 10)
             ),
             new HasValue<>(
                 new HasProperty("foo", "Hello, world!")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void readsInputContent() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must read properties from an input",
             new PropertiesOf(
-                new InputOf("greet=Hello, inner world!\nask=works fine?\n")
+                new InputOf(
+                    String.format(
+                        "greet=Hello, inner world!%cask=works fine?%c",
+                        (char) 10, (char) 10
+                    )
+                )
             ),
             new HasValue<>(
                 new HasProperty("greet", "Hello, inner world!")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void convertsMapToProperties() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert map to properties",
             new PropertiesOf(
                 new MapOf<Integer, String>(
@@ -59,12 +63,12 @@ final class PropertiesOfTest {
             new HasValue<>(
                 new HasProperty("0", "hello, world")
             )
-        ).affirm();
+        );
     }
 
     @Test
     void convertsMapEntriesToProperties() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must convert map entries to properties",
             new PropertiesOf(
                 new MapEntry<>(0, "hello world"),
@@ -73,7 +77,6 @@ final class PropertiesOfTest {
             new HasValue<>(
                 new HasProperty("0", "hello world")
             )
-        ).affirm();
+        );
     }
-
 }

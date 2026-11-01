@@ -1,9 +1,10 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -12,14 +13,26 @@ import org.cactoos.Text;
  * <p>This {@link Text} decorator technically is an in-memory
  * cache.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @see org.cactoos.scalar.Sticky
  * @since 0.47
  */
 public final class Sticky extends TextEnvelope {
+
     /**
      * Ctor.
+     *
+     * @param input Input to cache
+     * @since 0.73.2
+     */
+    public Sticky(final Input input) {
+        this(new TextOf(input));
+    }
+
+    /**
+     * Ctor.
+     *
      * @param txt Text to cache
      */
     public Sticky(final Text txt) {
@@ -29,5 +42,4 @@ public final class Sticky extends TextEnvelope {
             )
         );
     }
-
 }

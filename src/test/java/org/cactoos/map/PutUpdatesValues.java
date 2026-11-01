@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.map;
@@ -11,13 +11,13 @@ import org.hamcrest.TypeSafeMatcher;
 
 /**
  * Check a put method.
+ *
  * @param <K> Type of key
  * @param <V> Type of value
  * @since 0.30
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class PutUpdatesValues<K, V> extends
-    TypeSafeMatcher<Map<K, V>>  {
+    TypeSafeMatcher<Map<K, V>> {
 
     /**
      * Sample key.
@@ -31,6 +31,7 @@ public final class PutUpdatesValues<K, V> extends
 
     /**
      * Ctor.
+     *
      * @param akey Sample key
      * @param val Sample value
      */

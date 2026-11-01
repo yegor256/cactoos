@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+# SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 ---
 # yamllint disable rule:line-length
@@ -15,16 +15,17 @@ install: |
   pdd -f /dev/null
 merge:
   script: |
-    mvn clean install -Pqulice --errors --settings ../settings.xml
+    mvn clean install -ntp -Pqulice --errors --settings ../settings.xml
     mvn clean site -Psite --errors --settings ../settings.xml
 release:
+  pre: false
   sensitive:
     - settings.xml
   script: |-
     [[ "${tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit -1
     gpg --import /home/r/pubring.gpg
     gpg --allow-secret-key-import --no-tty --batch --import /home/r/secring.gpg
-    mvn versions:set "-DnewVersion=${tag}" --settings ../settings.xml
+    mvn -ntp versions:set "-DnewVersion=${tag}" --settings ../settings.xml
     git commit -am "${tag}"
     export MAVEN_OPTS="--add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED"
-    mvn clean deploy -Pcactoos -Pqulice -Psonatype --errors --settings ../settings.xml
+    mvn clean deploy -ntp -Pcactoos -Pqulice -Psonatype --errors --settings ../settings.xml

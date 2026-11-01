@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
@@ -8,23 +8,26 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.cactoos.Bytes;
+import org.cactoos.Scalar;
 import org.cactoos.Text;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.bytes.UncheckedBytes;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Iterator that returns a set of bytes.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.34
  */
 public final class IteratorOfBytes implements Iterator<Byte> {
 
     /**
-     * The list of items to iterate.
+     * The list of items to iterate, deferred.
      */
-    private final byte[] items;
+    private final Unchecked<byte[]> items;
 
     /**
      * Current position.
@@ -33,6 +36,7 @@ public final class IteratorOfBytes implements Iterator<Byte> {
 
     /**
      * Ctor.
+     *
      * @param txt Text to iterate
      */
     public IteratorOfBytes(final Text txt) {
@@ -41,6 +45,7 @@ public final class IteratorOfBytes implements Iterator<Byte> {
 
     /**
      * Ctor.
+     *
      * @param str String to iterate
      */
     public IteratorOfBytes(final String str) {
@@ -49,25 +54,35 @@ public final class IteratorOfBytes implements Iterator<Byte> {
 
     /**
      * Ctor.
+     *
      * @param bytes Bytes to iterate
      */
     public IteratorOfBytes(final Bytes bytes) {
-        this(new UncheckedBytes(bytes).asBytes());
+        this((Scalar<byte[]>) () -> new UncheckedBytes(bytes).asBytes());
     }
 
     /**
      * Ctor.
-     * @param items Items to iterate
+     *
+     * @param data Items to iterate
      */
-    @SuppressWarnings("PMD.ArrayIsStoredDirectly")
-    public IteratorOfBytes(final byte... items) {
-        this.items = items;
+    public IteratorOfBytes(final byte... data) {
+        this((Scalar<byte[]>) () -> data);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param data Items to iterate, deferred
+     */
+    private IteratorOfBytes(final Scalar<byte[]> data) {
+        this.items = new Unchecked<>(new Sticky<>(data));
         this.position = new AtomicInteger(0);
     }
 
     @Override
     public boolean hasNext() {
-        return this.position.intValue() < this.items.length;
+        return this.position.intValue() < this.items.value().length;
     }
 
     @Override
@@ -77,6 +92,6 @@ public final class IteratorOfBytes implements Iterator<Byte> {
                 "The iterator doesn't have any more items"
             );
         }
-        return this.items[this.position.getAndIncrement()];
+        return this.items.value()[this.position.getAndIncrement()];
     }
 }

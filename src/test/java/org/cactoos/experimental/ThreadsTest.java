@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -12,9 +12,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -23,7 +23,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.0.0
  */
-@SuppressWarnings({ "PMD.AvoidDuplicateLiterals", "PMD.CloseResource" })
+@SuppressWarnings("PMD.CloseResource")
 final class ThreadsTest {
 
     /**
@@ -33,36 +33,36 @@ final class ThreadsTest {
 
     /**
      * Execute the tasks concurrently using {@link Threads} when
-     *  {@link ExecutorService} was initiated by someone else.
+     * {@link ExecutorService} was initiated by someone else.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
-    void containsResults() {
+    void containsResults() throws Exception {
         final ExecutorService extor = Executors.newFixedThreadPool(3);
         try {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must contain results from callables",
                 new Threads<>(
                     extor,
                     Duration.ofSeconds(1L),
                     () -> {
                         this.sleep();
-                        return "txt 1";
+                        return "alpha";
                     },
                     () -> {
                         this.sleep();
-                        return "txt 2";
+                        return "beta";
                     },
                     () -> {
                         this.sleep();
-                        return "txt 3";
+                        return "gamma";
                     }
                 ),
                 new HasValues<>(
-                    "txt 1",
-                    "txt 2",
-                    "txt 3"
+                    "alpha",
+                    "beta",
+                    "gamma"
                 )
-            ).affirm();
+            );
         } finally {
             extor.shutdownNow();
         }
@@ -70,13 +70,13 @@ final class ThreadsTest {
 
     /**
      * Execution takes longer than timeout when
-     *  {@link ExecutorService} was initiated by someone else.
+     * {@link ExecutorService} was initiated by someone else.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
-    void failsDueToTimeoutWithExternalExecutorService() {
+    void failsDueToTimeoutWithExternalExecutorService() throws Exception {
         final ExecutorService extor = Executors.newFixedThreadPool(2);
         try {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must fail due to timeout",
                 () -> new LengthOf(
                     new Threads<>(
@@ -84,20 +84,20 @@ final class ThreadsTest {
                         Duration.ofMillis(1L),
                         () -> {
                             this.sleep();
-                            return "txt 1";
+                            return "alpha";
                         },
                         () -> {
                             this.sleep();
-                            return "txt 2";
+                            return "beta";
                         },
                         () -> {
                             this.sleep();
-                            return "txt 3";
+                            return "gamma";
                         }
                     )
                 ).value(),
                 new Throws<>(CancellationException.class)
-            ).affirm();
+            );
         } finally {
             extor.shutdownNow();
         }
@@ -105,13 +105,13 @@ final class ThreadsTest {
 
     /**
      * Execute 1 task within executor service and ensure that we'll get the
-     *  expected exception type.
+     * expected exception type.
      */
     @Test
-    void failsDueToException() {
+    void failsDueToException() throws Exception {
         final ExecutorService extor = Executors.newSingleThreadExecutor();
         try {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must rethrow error",
                 () -> new LengthOf(
                     new Threads<>(
@@ -119,7 +119,7 @@ final class ThreadsTest {
                         Duration.ofSeconds(1L),
                         () -> {
                             this.sleep();
-                            return "txt 1";
+                            return "alpha";
                         },
                         () -> {
                             throw new IllegalStateException(
@@ -129,10 +129,13 @@ final class ThreadsTest {
                     )
                 ).value(),
                 new Throws<>(
-                    "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
+                    String.format(
+                        "java.io.IOException: java.util.concurrent.ExecutionException: %s: Something went wrong",
+                        IllegalStateException.class.getName()
+                    ),
                     UncheckedIOException.class
                 )
-            ).affirm();
+            );
         } finally {
             extor.shutdownNow();
         }
@@ -140,39 +143,39 @@ final class ThreadsTest {
 
     /**
      * Execute the tasks concurrently using {@link Threads} when
-     *  {@link ExecutorService} was initiated by {@link Threads} itself.
+     * {@link ExecutorService} was initiated by {@link Threads} itself.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void containsValuesWithInlineExecutorService() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must contain results from the callables when using inline executor service",
             new Threads<>(
                 3,
                 Duration.ofSeconds(1L),
                 () -> {
                     this.sleep();
-                    return "txt 1";
+                    return "alpha";
                 },
                 () -> {
                     this.sleep();
-                    return "txt 2";
+                    return "beta";
                 },
                 () -> {
                     this.sleep();
-                    return "txt 3";
+                    return "gamma";
                 }
             ),
-            new HasValues<>("txt 1", "txt 2", "txt 3")
-        ).affirm();
+            new HasValues<>("alpha", "beta", "gamma")
+        );
     }
 
     /**
      * Execution takes longer than timeout when
-     *  {@link ExecutorService} was initiated by {@link Threads} itself.
+     * {@link ExecutorService} was initiated by {@link Threads} itself.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void failsDueToTimeoutWithInlineExecutorService() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must fail due to timeout",
             () -> new LengthOf(
                 new Threads<>(
@@ -180,49 +183,49 @@ final class ThreadsTest {
                     Duration.ofMillis(1L),
                     () -> {
                         this.sleep();
-                        return "txt 1";
+                        return "alpha";
                     },
                     () -> {
                         this.sleep();
-                        return "txt 2";
+                        return "beta";
                     },
                     () -> {
                         this.sleep();
-                        return "txt 3";
+                        return "gamma";
                     }
                 )
             ).value(),
             new Throws<>(CancellationException.class)
-        ).affirm();
+        );
     }
 
     /**
      * Execute the tasks concurrently using {@link Threads} when
-     *  {@link ExecutorService} was initiated by someone else.
+     * {@link ExecutorService} was initiated by someone else.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
-    void containsResultsNoTimeout() {
+    void containsResultsNoTimeout() throws Exception {
         final ExecutorService extor = Executors.newFixedThreadPool(3);
         try {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must contain results from the callables without using timeout",
                 new Threads<>(
                     extor,
                     () -> {
                         this.sleep();
-                        return "txt 1";
+                        return "alpha";
                     },
                     () -> {
                         this.sleep();
-                        return "txt 2";
+                        return "beta";
                     },
                     () -> {
                         this.sleep();
-                        return "txt 3";
+                        return "gamma";
                     }
                 ),
-                new HasValues<>("txt 1", "txt 2", "txt 3")
-            ).affirm();
+                new HasValues<>("alpha", "beta", "gamma")
+            );
         } finally {
             extor.shutdownNow();
         }
@@ -230,20 +233,20 @@ final class ThreadsTest {
 
     /**
      * Execute 1 task within executor service and ensure that we'll get the
-     *  expected exception type.
+     * expected exception type.
      */
     @Test
-    void failsDueToExceptionNoTimeout() {
+    void failsDueToExceptionNoTimeout() throws Exception {
         final ExecutorService extor = Executors.newSingleThreadExecutor();
         try {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must rethrow error",
                 () -> new LengthOf(
                     new Threads<>(
                         extor,
                         () -> {
                             this.sleep();
-                            return "txt 1";
+                            return "alpha";
                         },
                         () -> {
                             throw new IllegalStateException(
@@ -253,10 +256,13 @@ final class ThreadsTest {
                     )
                 ).value(),
                 new Throws<>(
-                    "java.io.IOException: java.util.concurrent.ExecutionException: java.lang.IllegalStateException: Something went wrong",
+                    String.format(
+                        "java.io.IOException: java.util.concurrent.ExecutionException: %s: Something went wrong",
+                        IllegalStateException.class.getName()
+                    ),
                     UncheckedIOException.class
                 )
-            ).affirm();
+            );
         } finally {
             extor.shutdownNow();
         }
@@ -264,34 +270,31 @@ final class ThreadsTest {
 
     /**
      * Execute the tasks concurrently using {@link Threads} when
-     *  {@link ExecutorService} was initiated by {@link Threads} itself.
+     * {@link ExecutorService} was initiated by {@link Threads} itself.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void containsValuesWithInlineExecutorServiceNoTimeout() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must contain results from the callables when using inline executor without timeout",
             new Threads<>(
                 3,
                 () -> {
                     this.sleep();
-                    return "txt 1";
+                    return "alpha";
                 },
                 () -> {
                     this.sleep();
-                    return "txt 2";
+                    return "beta";
                 },
                 () -> {
                     this.sleep();
-                    return "txt 3";
+                    return "gamma";
                 }
             ),
-            new HasValues<>("txt 1", "txt 2", "txt 3")
-        ).affirm();
+            new HasValues<>("alpha", "beta", "gamma")
+        );
     }
 
-    /**
-     * Sleep.
-     */
     private void sleep() {
         try {
             TimeUnit.MILLISECONDS.sleep(100L);

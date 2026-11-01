@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -24,7 +24,7 @@ public final class InputWithRetry implements Input {
      * <p>The retry logic wraps around the {@link Input#stream()} method,
      * enabling conditional reattempts according to the provided retry
      * strategy. The number of attempts and the duration between attempts
-     * are configurable through the {@link Retry} instance.
+     * are configurable through the {@link Retry} instance.</p>
      */
     private final Retry<Input, InputStream> retry;
 
@@ -34,21 +34,34 @@ public final class InputWithRetry implements Input {
      * <p>This input provides the underlying data stream that the retry
      * mechanism will attempt to read from. It is passed into the
      * {@link Retry} logic to enable multiple attempts at accessing the
-     * input stream in case of failure.
+     * input stream in case of failure.</p>
      */
     private final Input input;
 
+    /**
+     * Ctor.
+     *
+     * @param main The original input to read from
+     * @param att The maximum number of attempts
+     */
     public InputWithRetry(final Input main, final int att) {
         this(main, new Retry<>(Input::stream, att));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param main The original input to read from
+     * @param att The maximum number of attempts
+     * @param dur The duration to wait between attempts
+     */
+    public InputWithRetry(final Input main, final int att, final Duration dur) {
+        this(main, new Retry<>(Input::stream, att, dur));
     }
 
     private InputWithRetry(final Input input, final Retry<Input, InputStream> retry) {
         this.input = input;
         this.retry = retry;
-    }
-
-    public InputWithRetry(final Input main, final int att, final Duration dur) {
-        this(main, new Retry<>(Input::stream, att, dur));
     }
 
     @Override

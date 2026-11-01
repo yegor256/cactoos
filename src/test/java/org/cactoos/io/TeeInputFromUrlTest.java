@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -9,18 +9,17 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link TeeInput}. Cases for ctors which use
  * {@link java.net.URL} as an input.
+ *
  * @since 1.0
- * @checkstyle JavadocMethodCheck (125 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class TeeInputFromUrlTest {
 
     @Test
@@ -36,11 +35,11 @@ final class TeeInputFromUrlTest {
         new LengthOf(
             new TeeInput(input.toURI().toURL(), output.toPath())
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from URL to path.",
             new InputOf(output),
             new HasContent(message)
-        ).affirm();
+        );
     }
 
     @Test
@@ -56,11 +55,11 @@ final class TeeInputFromUrlTest {
         new LengthOf(
             new TeeInput(input.toURI().toURL(), output)
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from URL to file.",
             new InputOf(output),
             new HasContent(message)
-        ).affirm();
+        );
     }
 
     @Test
@@ -76,10 +75,10 @@ final class TeeInputFromUrlTest {
         new LengthOf(
             new TeeInput(input.toURI().toURL(), new OutputTo(output))
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must copy from URL to output.",
             new InputOf(output),
             new HasContent(message)
-        ).affirm();
+        );
     }
 }

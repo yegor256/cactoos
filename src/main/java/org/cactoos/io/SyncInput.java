@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -14,6 +14,7 @@ import org.cactoos.Input;
  *
  * @since 0.18
  */
+@SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class SyncInput implements Input {
 
     /**
@@ -28,6 +29,7 @@ public final class SyncInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The input
      */
     public SyncInput(final Input input) {
@@ -36,6 +38,7 @@ public final class SyncInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param lck The lock object
      */

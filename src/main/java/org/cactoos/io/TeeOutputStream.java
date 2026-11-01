@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -10,10 +10,11 @@ import java.io.OutputStream;
 /**
  * Stream that copies output to output.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.16
  */
+@SuppressWarnings("PMD.UseTryWithResources")
 public final class TeeOutputStream extends OutputStream {
 
     /**
@@ -28,13 +29,14 @@ public final class TeeOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param tgt Destination of data
-     * @param cpy Copy
+     * @param mirror Copy
      */
-    public TeeOutputStream(final OutputStream tgt, final OutputStream cpy) {
+    public TeeOutputStream(final OutputStream tgt, final OutputStream mirror) {
         super();
         this.target = tgt;
-        this.copy = cpy;
+        this.copy = mirror;
     }
 
     @Override
@@ -82,5 +84,4 @@ public final class TeeOutputStream extends OutputStream {
             this.copy.close();
         }
     }
-
 }

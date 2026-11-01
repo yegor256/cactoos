@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
- * SPDX-License-Identifier: MIT
+* SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
+* SPDX-License-Identifier: MIT
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>parent</artifactId>
-    <version>0.69.1</version>
+    <version>0.73.4</version>
   </parent>
   <groupId>org.cactoos</groupId>
   <artifactId>cactoos</artifactId>
@@ -62,11 +62,14 @@
       <url>https://github.com/yegor256/cactoos</url>
     </site>
   </distributionManagement>
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.takes</groupId>
       <artifactId>takes</artifactId>
-      <version>1.24.6</version>
+      <version>1.26.0</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -106,16 +109,171 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>5.12.2</version>
+      <version>6.1.3</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
   <build>
     <plugins>
       <plugin>
+        <groupId>org.eolang</groupId>
+        <artifactId>hone-maven-plugin</artifactId>
+        <version>0.32.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>pull</goal>
+              <goal>optimize</goal>
+              <goal>rmi</goal>
+            </goals>
+            <configuration>
+              <rules>streams/*</rules>
+              <skipOnWindows>true</skipOnWindows>
+              <skipWithoutDocker>true</skipWithoutDocker>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.revapi</groupId>
+        <artifactId>revapi-maven-plugin</artifactId>
+        <version>0.15.1</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.revapi</groupId>
+            <artifactId>revapi-java</artifactId>
+            <version>0.28.4</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <analysisConfiguration>
+            <revapi.differences id="intentional-api-changes">
+              <ignore>true</ignore>
+              <differences>
+                <item>
+                  <code>java.method.varargOverloadsOnlyDifferInVarargParameter</code>
+                  <justification>Vararg overloads are intentional for API convenience</justification>
+                </item>
+                <item>
+                  <code>java.class.removed</code>
+                  <old>class org.cactoos.text.Abbreviated</old>
+                  <justification>Class removed as part of 1.0 release cleanup</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Diff&lt;T&gt;::&lt;init&gt;(===org.cactoos.set.SetOf&lt;T&gt;===, org.cactoos.set.SetOf&lt;T&gt;)</old>
+                  <new>parameter void org.cactoos.set.Diff&lt;T&gt;::&lt;init&gt;(===java.util.Set&lt;T&gt;===, java.util.Set&lt;T&gt;)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Diff&lt;T&gt;::&lt;init&gt;(org.cactoos.set.SetOf&lt;T&gt;, ===org.cactoos.set.SetOf&lt;T&gt;===)</old>
+                  <new>parameter void org.cactoos.set.Diff&lt;T&gt;::&lt;init&gt;(java.util.Set&lt;T&gt;, ===java.util.Set&lt;T&gt;===)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Intersection&lt;T&gt;::&lt;init&gt;(===org.cactoos.set.SetOf&lt;T&gt;===, org.cactoos.set.SetOf&lt;T&gt;)</old>
+                  <new>parameter void org.cactoos.set.Intersection&lt;T&gt;::&lt;init&gt;(===java.util.Set&lt;T&gt;===, java.util.Set&lt;T&gt;)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Intersection&lt;T&gt;::&lt;init&gt;(org.cactoos.set.SetOf&lt;T&gt;, ===org.cactoos.set.SetOf&lt;T&gt;===)</old>
+                  <new>parameter void org.cactoos.set.Intersection&lt;T&gt;::&lt;init&gt;(java.util.Set&lt;T&gt;, ===java.util.Set&lt;T&gt;===)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Union&lt;T&gt;::&lt;init&gt;(===org.cactoos.set.SetOf&lt;T&gt;===, org.cactoos.set.SetOf&lt;T&gt;)</old>
+                  <new>parameter void org.cactoos.set.Union&lt;T&gt;::&lt;init&gt;(===java.util.Set&lt;T&gt;===, java.util.Set&lt;T&gt;)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter void org.cactoos.set.Union&lt;T&gt;::&lt;init&gt;(org.cactoos.set.SetOf&lt;T&gt;, ===org.cactoos.set.SetOf&lt;T&gt;===)</old>
+                  <new>parameter void org.cactoos.set.Union&lt;T&gt;::&lt;init&gt;(java.util.Set&lt;T&gt;, ===java.util.Set&lt;T&gt;===)</new>
+                  <justification>Using Set interface instead of SetOf implementation for better API design</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter int org.cactoos.number.ComparableNumber::compareTo(===java.lang.Number===)</old>
+                  <new>parameter int org.cactoos.number.ComparableNumber::compareTo(===org.cactoos.number.ComparableNumber===)</new>
+                  <justification>Self-typed Comparable parameter follows Comparable contract recommendations</justification>
+                </item>
+                <item>
+                  <code>java.class.noLongerImplementsInterface</code>
+                  <old>class org.cactoos.number.ComparableNumber</old>
+                  <new>class org.cactoos.number.ComparableNumber</new>
+                  <justification>Self-typed Comparable parameter follows Comparable contract recommendations</justification>
+                </item>
+                <item>
+                  <code>java.class.superTypeTypeParametersChanged</code>
+                  <old>class org.cactoos.number.ComparableNumber</old>
+                  <new>class org.cactoos.number.ComparableNumber</new>
+                  <justification>Self-typed Comparable parameter follows Comparable contract recommendations</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeChanged</code>
+                  <old>parameter int org.cactoos.text.ComparableText::compareTo(===org.cactoos.Text===)</old>
+                  <new>parameter int org.cactoos.text.ComparableText::compareTo(===org.cactoos.text.ComparableText===)</new>
+                  <justification>Self-typed Comparable parameter follows Comparable contract recommendations</justification>
+                </item>
+                <item>
+                  <code>java.class.noLongerImplementsInterface</code>
+                  <old>class org.cactoos.text.ComparableText</old>
+                  <new>class org.cactoos.text.ComparableText</new>
+                  <justification>Self-typed Comparable parameter follows Comparable contract recommendations</justification>
+                </item>
+                <item>
+                  <code>java.class.superTypeTypeParametersChanged</code>
+                  <old>class org.cactoos.text.ComparableText</old>
+                  <new>class org.cactoos.text.ComparableText</new>
+                  <justification>Self-typed Comparable parameter follows Comparable contract recommendations</justification>
+                </item>
+                <item>
+                  <code>java.class.noLongerInheritsFromClass</code>
+                  <old>class org.cactoos.number.ComparableNumber</old>
+                  <new>class org.cactoos.number.ComparableNumber</new>
+                  <justification>Switched to composition to satisfy linter rules and keep equals/hashCode local to the Comparable</justification>
+                </item>
+                <item>
+                  <code>java.class.noLongerInheritsFromClass</code>
+                  <old>class org.cactoos.text.ComparableText</old>
+                  <new>class org.cactoos.text.ComparableText</new>
+                  <justification>Switched to composition to satisfy linter rules and keep equals/hashCode local to the Comparable</justification>
+                </item>
+              </differences>
+            </revapi.differences>
+          </analysisConfiguration>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.16.0</version>
+        <configuration>
+          <release>17</release>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <source>17</source>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
-        <version>1.19.1</version>
+        <version>1.30.1</version>
         <executions>
           <execution>
             <goals>
@@ -132,7 +290,7 @@
           <dependency>
             <groupId>org.pitest</groupId>
             <artifactId>pitest-junit5-plugin</artifactId>
-            <version>1.2.2</version>
+            <version>1.2.3</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -214,6 +372,17 @@
       </plugin>
     </plugins>
   </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <source>17</source>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
   <profiles>
     <profile>
       <id>qulice</id>
@@ -222,30 +391,25 @@
           <plugin>
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
-            <version>0.24.0</version>
-            <configuration>
-              <excludes combine.children="append">
-                <exclude>checkstyle:/src/site/resources/.*</exclude>
-              </excludes>
-            </configuration>
+            <version>0.36.0</version>
           </plugin>
           <plugin>
             <groupId>de.thetaphi</groupId>
             <artifactId>forbiddenapis</artifactId>
-            <version>3.9</version>
+            <version>3.11</version>
             <configuration>
               <signaturesFiles>
                 <signaturesFile>./src/test/resources/forbidden-apis.txt</signaturesFile>
               </signaturesFiles>
               <!--
-               @todo #1434:30min In the continuation of #588, all the calls
-                to Matchers should be replaced with their OO counterparts.
-                This todo should be updated with a new one until everything is
-                done. The newly covered classes should be added to the include
-                configuration property below. At the end, the configuration
-                property below should be completely removed so that calls
-                to forbidden APIs always fail the build for every classes.
-               -->
+              @todo #1434:30min In the continuation of #588, all the calls
+              to Matchers should be replaced with their OO counterparts.
+              This todo should be updated with a new one until everything is
+              done. The newly covered classes should be added to the include
+              configuration property below. At the end, the configuration
+              property below should be completely removed so that calls
+              to forbidden APIs always fail the build for every classes.
+              -->
               <includes>
                 <include>org/cactoos/bytes/*.class</include>
                 <include>org/cactoos/collection/*.class</include>
@@ -281,7 +445,7 @@
           <plugin>
             <groupId>org.sonarsource.scanner.maven</groupId>
             <artifactId>sonar-maven-plugin</artifactId>
-            <version>5.1.0.4751</version>
+            <version>5.8.0.7211</version>
             <executions>
               <execution>
                 <phase>package</phase>

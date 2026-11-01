@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -9,7 +9,7 @@ import java.util.Iterator;
 /**
  * Iterable envelope.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of item
  * @since 0.24
@@ -23,6 +23,7 @@ public abstract class IterableEnvelope<X> implements Iterable<X> {
 
     /**
      * Ctor.
+     *
      * @param iterable The wrapped iterable
      */
     public IterableEnvelope(final Iterable<X> iterable) {
@@ -35,6 +36,7 @@ public abstract class IterableEnvelope<X> implements Iterable<X> {
     }
 
     @Override
+    @SuppressWarnings("UndefinedEquals")
     public final boolean equals(final Object other) {
         return this.wrapped.equals(other);
     }

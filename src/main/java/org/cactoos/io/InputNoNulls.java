@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -15,6 +15,7 @@ import org.cactoos.Input;
  * @since 0.10
  */
 public final class InputNoNulls implements Input {
+
     /**
      * The input.
      */
@@ -22,6 +23,7 @@ public final class InputNoNulls implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The input
      */
     public InputNoNulls(final Input input) {

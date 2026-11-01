@@ -1,17 +1,21 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * A few Iterators joined together.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of item
  * @since 0.1
@@ -19,17 +23,18 @@ import org.cactoos.iterable.IterableOf;
 public final class Joined<T> implements Iterator<T> {
 
     /**
-     * Iterators.
+     * Iterators, deferred.
      */
-    private final Iterator<Iterator<? extends T>> iters;
+    private final Unchecked<Iterator<Iterator<? extends T>>> iters;
 
     /**
      * Current traversal iterator.
      */
-    private Iterator<? extends T> current;
+    private final AtomicReference<Iterator<? extends T>> current;
 
     /**
      * Ctor.
+     *
      * @param items Items to concatenate
      */
     @SafeVarargs
@@ -39,6 +44,7 @@ public final class Joined<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param item First item
      * @param items Iterable
      * @since 0.49
@@ -50,6 +56,7 @@ public final class Joined<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param items Iterable
      * @param item End item
      * @since 0.49
@@ -61,24 +68,30 @@ public final class Joined<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param items Items to concatenate
      */
     public Joined(final Iterable<Iterator<? extends T>> items) {
-        this.iters = items.iterator();
-        this.current = Collections.emptyIterator();
+        this.iters = new Unchecked<>(new Sticky<>(items::iterator));
+        this.current = new AtomicReference<>();
     }
 
     @Override
     public boolean hasNext() {
-        while (!this.current.hasNext() && this.iters.hasNext()) {
-            this.current = this.iters.next();
+        this.current.compareAndSet(null, Collections.emptyIterator());
+        while (!this.current.get().hasNext() && this.iters.value().hasNext()) {
+            this.current.set(this.iters.value().next());
         }
-        return this.current.hasNext();
+        return this.current.get().hasNext();
     }
 
     @Override
     public T next() {
-        this.hasNext();
-        return this.current.next();
+        if (!this.hasNext()) {
+            throw new NoSuchElementException(
+                "The iterator doesn't have any more items"
+            );
+        }
+        return this.current.get().next();
     }
 }

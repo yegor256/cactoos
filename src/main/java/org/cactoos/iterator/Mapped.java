@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
@@ -12,8 +12,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Mapped iterator.
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <Y> Type of target item
  * @since 0.1
@@ -22,6 +21,7 @@ public final class Mapped<Y> extends IteratorEnvelope<Y> {
 
     /**
      * Ctor.
+     *
      * @param func Func
      * @param iterator Source iterator
      * @param <X> Type of item
@@ -32,7 +32,7 @@ public final class Mapped<Y> extends IteratorEnvelope<Y> {
         final Iterator<? extends X> iterator
     ) {
         super(
-            new Iterator<Y>() {
+            new Iterator<>() {
 
                 @Override
                 public boolean hasNext() {
@@ -55,9 +55,7 @@ public final class Mapped<Y> extends IteratorEnvelope<Y> {
                 public void remove() {
                     iterator.remove();
                 }
-
             }
         );
     }
-
 }

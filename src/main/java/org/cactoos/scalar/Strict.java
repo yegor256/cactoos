@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -12,8 +12,7 @@ import org.cactoos.func.FuncOf;
  * Validates the given {@code origin} against the specified {@code rule}.
  * If the validation fails, the {@code exception} is thrown.
  *
- * @param <T> Element type.
- *
+ * @param <T> Element type
  * @since 0.56
  */
 public final class Strict<T> extends ScalarEnvelope<T> {
@@ -21,9 +20,9 @@ public final class Strict<T> extends ScalarEnvelope<T> {
     /**
      * Ctor.
      *
-     * @param origin The value to test against the {@code rule}.
-     * @param rule The rule, that validates {@code origin}.
-     * @param exception The exception, that is thrown if validation fails.
+     * @param origin The value to test against the {@code rule}
+     * @param rule The rule, that validates {@code origin}
+     * @param exception The exception, that is thrown if validation fails
      */
     public Strict(
         final Scalar<T> origin,

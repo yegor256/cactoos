@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.scalar;
@@ -30,7 +30,7 @@ import org.cactoos.iterable.Mapped;
  * use the {@link Unchecked} decorator. Or you may use
  * {@link IoChecked} to wrap it in an IOException.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Scalar type
  * @see Unchecked
@@ -38,8 +38,10 @@ import org.cactoos.iterable.Mapped;
  * @since 0.29
  */
 public final class LowestOf<T extends Comparable<? super T>> extends ScalarEnvelope<T> {
+
     /**
      * Ctor.
+     *
      * @param items The comparable items
      */
     @SafeVarargs
@@ -54,6 +56,7 @@ public final class LowestOf<T extends Comparable<? super T>> extends ScalarEnvel
 
     /**
      * Ctor.
+     *
      * @param scalars The scalars
      */
     @SafeVarargs
@@ -63,6 +66,7 @@ public final class LowestOf<T extends Comparable<? super T>> extends ScalarEnvel
 
     /**
      * Ctor.
+     *
      * @param iterable The items
      */
     public LowestOf(final Iterable<? extends Scalar<? extends T>> iterable) {

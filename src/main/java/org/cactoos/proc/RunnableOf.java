@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.proc;
@@ -12,7 +12,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Func as {@link Runnable}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.12
  */
@@ -20,6 +20,7 @@ public final class RunnableOf extends RunnableEnvelope {
 
     /**
      * Ctor.
+     *
      * @param proc Encapsulated proc
      * @param ipt Input
      * @param <X> Type of input
@@ -33,6 +34,7 @@ public final class RunnableOf extends RunnableEnvelope {
 
     /**
      * Ctor.
+     *
      * @param scalar Encapsulated scalar
      * @since 0.11
      */
@@ -46,6 +48,7 @@ public final class RunnableOf extends RunnableEnvelope {
 
     /**
      * Ctor.
+     *
      * @param callable The callable
      * @since 0.53
      */
@@ -65,6 +68,7 @@ public final class RunnableOf extends RunnableEnvelope {
 
     /**
      * Ctor.
+     *
      * @param runnable Encapsulated runnable
      * @since 0.49
      */

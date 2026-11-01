@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -28,6 +28,7 @@ public final class GzipOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param output The output
      */
     public GzipOutput(final Output output) {
@@ -36,6 +37,7 @@ public final class GzipOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param output The output
      * @param max Max length of the buffer
      */

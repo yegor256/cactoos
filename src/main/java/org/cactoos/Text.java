@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos;
@@ -11,7 +11,7 @@ package org.cactoos;
  * out of your {@link Text}, you can use
  * {@link org.cactoos.text.UncheckedText} decorator.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @see org.cactoos.text.TextOf
  * @since 0.1
@@ -21,6 +21,7 @@ public interface Text {
 
     /**
      * Convert it to the string.
+     *
      * @return The string
      * @throws Exception If fails
      */

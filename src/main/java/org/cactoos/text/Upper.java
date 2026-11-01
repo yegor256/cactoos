@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -8,10 +8,16 @@ import java.util.Locale;
 import org.cactoos.Text;
 
 /**
- * Text in upper case.
+ * Text converted to upper case.
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
+ *
+ * <p>Example:</p>
+ *
+ * <pre>{@code
+ * Text text1 = new Upper(new TextOf("hello"));
+ * text1.asString(); // "HELLO
+ * }</pre>
  *
  * @since 0.1
  */
@@ -19,6 +25,10 @@ public final class Upper extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * <p>Creates an upper-case text from a character sequence
+     * using {@link Locale#ENGLISH}.</p>
+     *
      * @param text The text
      */
     public Upper(final CharSequence text) {
@@ -27,6 +37,10 @@ public final class Upper extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * <p>Creates an upper-case text from a {@link Text}
+     * using {@link Locale#ENGLISH}.</p>
+     *
      * @param text The text
      */
     public Upper(final Text text) {
@@ -35,6 +49,10 @@ public final class Upper extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * <p>Creates an upper-case text from a {@link Text}
+     * using the given {@link Locale}.</p>
+     *
      * @param text The text
      * @param locale Locale
      */

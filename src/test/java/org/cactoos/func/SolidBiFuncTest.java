@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.func;
@@ -7,23 +7,35 @@ package org.cactoos.func;
 import java.security.SecureRandom;
 import org.cactoos.BiFunc;
 import org.cactoos.Func;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test case for {@link SolidBiFunc}.
  *
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class SolidBiFuncTest {
+
     @Test
-    void testThatFuncIsSynchronized() {
-        final int threads = 100;
+    void funcIsSynchronized() {
+        MatcherAssert.assertThat(
+            "SolidBiFunc can't work properly in concurrent threads",
+            func -> func.apply(true),
+            new RunsInThreads<Func<Boolean, Boolean>>(
+                input -> new SolidBiFunc<Integer, Integer, Boolean>(
+                    (first, second) -> true
+                ).apply(1, 1),
+                100
+            )
+        );
+    }
+
+    @Test
+    void sharedResourceModifiedOnce() throws Exception {
         final int[] shared = {0};
         final BiFunc<Integer, Integer, Boolean> testable =
             new SolidBiFunc<>(
@@ -32,29 +44,24 @@ final class SolidBiFuncTest {
                     return true;
                 }
             );
-        new Assertion<>(
-            "SolidBiFunc can't work properly in concurrent threads.",
-            func -> func.apply(true),
-            new RunsInThreads<Func<Boolean, Boolean>>(
-                input -> testable.apply(1, 1),
-                threads
-            )
-        ).affirm();
-        new Assertion<>(
-            "Shared resource has been modified by multiple threads.",
+        for (int idx = 0; idx < 100; ++idx) {
+            testable.apply(1, 1);
+        }
+        MatcherAssert.assertThat(
+            "Shared resource has been modified by multiple threads",
             shared[0],
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 
     @Test
-    void testThatFuncResultCacheIsLimited() throws Exception {
+    void cachesFuncResultUpToLimit() throws Exception {
         final BiFunc<Integer, Integer, Integer> func =
             new SolidBiFunc<>(
                 (first, second) -> new SecureRandom().nextInt(),
                 1
             );
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Result of (0, 0) call wasn't invalidated.",
             func.apply(0, 0) + func.apply(1, 1),
             new IsNot<>(
@@ -62,6 +69,6 @@ final class SolidBiFuncTest {
                     func.apply(1, 1) + func.apply(0, 0)
                 )
             )
-        ).affirm();
+        );
     }
 }

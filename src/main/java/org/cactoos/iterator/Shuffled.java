@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
@@ -30,6 +30,7 @@ public final class Shuffled<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param iterator The original iterator
      */
     public Shuffled(final Iterator<? extends T> iterator) {
@@ -38,7 +39,8 @@ public final class Shuffled<T> implements Iterator<T> {
 
     /**
      * Ctor.
-     * @param random Randomizer.
+     *
+     * @param random Randomizer
      * @param iterator The original iterator
      */
     public Shuffled(final Random random, final Iterator<? extends T> iterator) {

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -26,11 +26,11 @@ import org.cactoos.iterable.Mapped;
 /**
  * TextOf
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.12
- * @checkstyle ClassFanOutComplexityCheck (1000 lines)
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 public final class TextOf extends TextEnvelope {
 
     /**
@@ -44,6 +44,7 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param url The URL
      * @since 0.16
      */
@@ -53,6 +54,7 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param uri The URI
      * @since 0.16
      */
@@ -62,6 +64,7 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param path The Input
      * @since 0.13
      */
@@ -71,6 +74,7 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param file The Input
      * @since 0.13
      */
@@ -130,6 +134,7 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param rdr Reader
      * @param cset Charset
      */
@@ -139,6 +144,7 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param rdr Reader
      * @param max Buffer size
      * @param cset Charset
@@ -187,6 +193,7 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param error The exception to serialize
      */
     public TextOf(final Throwable error) {
@@ -195,6 +202,7 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param error The exception to serialize
      * @param charset Charset
      * @since 0.29
@@ -205,6 +213,7 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param error The exception to serialize
      * @param charset Charset
      * @since 0.29
@@ -215,6 +224,7 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param strace The stacktrace to serialize
      * @since 0.29
      */
@@ -224,6 +234,7 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param strace The stacktrace to serialize
      * @param charset Charset
      * @since 0.29
@@ -234,6 +245,7 @@ public final class TextOf extends TextEnvelope {
 
     /**
      * Ctor.
+     *
      * @param strace The stacktrace to serialize
      * @param charset Charset
      * @since 0.29
@@ -281,7 +293,9 @@ public final class TextOf extends TextEnvelope {
      */
     public TextOf(final Bytes bytes, final String cset) {
         this(
-            new TextOfScalar(() -> new String(bytes.asBytes(), cset))
+            new TextOfScalar(
+                () -> new String(bytes.asBytes(), Charset.forName(cset))
+            )
         );
     }
 
@@ -309,7 +323,7 @@ public final class TextOf extends TextEnvelope {
      * @param iterable The iterable to convert to string
      */
     public TextOf(final Iterable<Character> iterable) {
-        super(
+        this(
             new Concatenated(
                 new Mapped<>(
                     TextOf::new,

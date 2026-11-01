@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.collection;
@@ -11,10 +11,10 @@ import org.cactoos.iterable.IterableEnvelope;
  * Base collection.
  *
  * <p>There is no thread-safety guarantee.</p>
+ *
  * @param <X> Element type
  * @since 0.23
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public abstract class CollectionEnvelope<X>
     extends IterableEnvelope<X> implements Collection<X> {
 
@@ -25,6 +25,7 @@ public abstract class CollectionEnvelope<X>
 
     /**
      * Ctor.
+     *
      * @param col The wrapped collection
      */
     public CollectionEnvelope(final Collection<X> col) {

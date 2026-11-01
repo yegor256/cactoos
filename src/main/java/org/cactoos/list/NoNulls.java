@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.list;
@@ -19,7 +19,6 @@ import org.cactoos.text.UncheckedText;
  * @param <T> Element type
  * @since 0.27
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public final class NoNulls<T> implements List<T> {
 
     /**
@@ -29,6 +28,7 @@ public final class NoNulls<T> implements List<T> {
 
     /**
      * Ctor.
+     *
      * @param src Source
      */
     NoNulls(final List<T> src) {
@@ -61,7 +61,6 @@ public final class NoNulls<T> implements List<T> {
     }
 
     @Override
-    @SuppressWarnings("PMD.UseVarargs")
     public <X> X[] toArray(final X[] array) {
         return new org.cactoos.collection.NoNulls<>(this.list).toArray(array);
     }
@@ -220,6 +219,16 @@ public final class NoNulls<T> implements List<T> {
 
     @Override
     public List<T> subList(final int start, final int end) {
-        return new NoNulls<>(this.list.subList(start, end));
+        return new org.cactoos.list.NoNulls<>(this.list.subList(start, end));
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this.list.equals(other);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.list.hashCode();
     }
 }

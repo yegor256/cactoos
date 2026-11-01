@@ -1,21 +1,21 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
 
 import java.io.InputStream;
 import org.cactoos.text.TextOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link CloseShieldInput}.
+ *
  * @since 1.0.0
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class CloseShieldInputTest {
 
     @Test
@@ -28,25 +28,24 @@ final class CloseShieldInputTest {
                     new CloseShieldInput(new InputOf(origin)).stream()
             ) {
             }
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must not close origin stream",
                 origin.isClosed(),
                 new IsEqual<>(false)
-            ).affirm();
+            );
         }
     }
 
     @Test
     void readsContent() throws Exception {
-        final String content = "Text content";
         try (
-            InputStream in = new InputStreamOf(content)
+            InputStream in = new InputStreamOf("Text content")
         ) {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Must read text",
                 new TextOf(new CloseShieldInput(new InputOf(in))),
-                new IsText(content)
-            ).affirm();
+                new IsText("Text content")
+            );
         }
     }
 }

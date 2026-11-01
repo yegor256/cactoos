@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -15,6 +15,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.cactoos.Input;
 import org.cactoos.bytes.BytesOf;
+import org.cactoos.iterable.Mapped;
+import org.cactoos.scalar.Ternary;
+import org.cactoos.text.Joined;
 
 /**
  * Zip files and directory.
@@ -23,7 +26,7 @@ import org.cactoos.bytes.BytesOf;
  *
  * @since 0.29
  */
-@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
+@SuppressWarnings("PMD.AvoidFileStream")
 public final class Zip implements Input {
 
     /**
@@ -48,16 +51,21 @@ public final class Zip implements Input {
     }
 
     @Override
-    @SuppressWarnings("PMD.AvoidFileStream")
     public InputStream stream() throws Exception {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         try (ZipOutputStream zip = new ZipOutputStream(out)) {
             for (final Path path : this.origin) {
                 final File file = path.toFile();
-                final ZipEntry entry = new ZipEntry(
-                    file.getPath()
+                zip.putNextEntry(
+                    new ZipEntry(
+                        new Joined(
+                            "/",
+                            new Mapped<>(Object::toString, path)
+                        ).asString().concat(
+                            new Ternary<>(file.isDirectory(), "/", "").value()
+                        )
+                    )
                 );
-                zip.putNextEntry(entry);
                 if (file.isFile()) {
                     try (
                         FileInputStream input = new FileInputStream(file)

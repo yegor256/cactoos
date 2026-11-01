@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -16,8 +16,9 @@ public final class Partitioned<T> extends IterableEnvelope<List<T>> {
 
     /**
      * Ctor.
-     * @param size The partitions size.
-     * @param items The source items.
+     *
+     * @param size The partitions size
+     * @param items The source items
      */
     @SafeVarargs
     public Partitioned(final int size, final T... items) {
@@ -26,8 +27,9 @@ public final class Partitioned<T> extends IterableEnvelope<List<T>> {
 
     /**
      * Ctor.
-     * @param size The partitions size.
-     * @param iterable The source {@link Iterable}.
+     *
+     * @param size The partitions size
+     * @param iterable The source {@link Iterable}
      */
     public Partitioned(final int size, final Iterable<? extends T> iterable) {
         super(
@@ -39,5 +41,4 @@ public final class Partitioned<T> extends IterableEnvelope<List<T>> {
             )
         );
     }
-
 }

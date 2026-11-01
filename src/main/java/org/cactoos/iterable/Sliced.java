@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -12,10 +12,11 @@ package org.cactoos.iterable;
  * @param <T> Element type
  * @since 1.0.0
  */
-public final class Sliced<T> extends IterableEnvelope<T>  {
+public final class Sliced<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param start Starting index
      * @param count Maximum number of elements for resulted iterator
      * @param items Varargs items
@@ -27,6 +28,7 @@ public final class Sliced<T> extends IterableEnvelope<T>  {
 
     /**
      * Ctor.
+     *
      * @param start Starting index
      * @param count Maximum number of elements for resulted iterator
      * @param iterable Decorated iterable

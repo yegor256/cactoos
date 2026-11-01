@@ -1,10 +1,11 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
 
 import java.util.Comparator;
+import org.cactoos.Scalar;
 
 /**
  * Sorted iterable.
@@ -18,6 +19,7 @@ public final class Sorted<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param src The underlying iterable
      */
     @SafeVarargs
@@ -36,11 +38,16 @@ public final class Sorted<T> extends IterableEnvelope<T> {
      */
     @SuppressWarnings("unchecked")
     public Sorted(final Iterable<? extends T> src) {
-        this((Comparator<? super T>) Comparator.naturalOrder(), src);
+        this(
+            (Scalar<Comparator<? super T>>) () ->
+                (Comparator<? super T>) Comparator.naturalOrder(),
+            src
+        );
     }
 
     /**
      * Ctor.
+     *
      * @param cmp The comparator
      * @param src The underlying iterable
      */
@@ -51,13 +58,27 @@ public final class Sorted<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param cmp The comparator
      * @param src The underlying iterable
      */
     public Sorted(final Comparator<? super T> cmp, final Iterable<? extends T> src) {
+        this((Scalar<Comparator<? super T>>) () -> cmp, src);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param cmp The comparator, deferred
+     * @param src The underlying iterable
+     */
+    private Sorted(
+        final Scalar<Comparator<? super T>> cmp,
+        final Iterable<? extends T> src
+    ) {
         super(
             new IterableOf<>(
-                () -> new org.cactoos.iterator.Sorted<>(cmp, src.iterator())
+                () -> new org.cactoos.iterator.Sorted<>(cmp.value(), src.iterator())
             )
         );
     }

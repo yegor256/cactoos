@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.proc;
@@ -7,7 +7,7 @@ package org.cactoos.proc;
 /**
  * Envelope for Runnable.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.50
  */
@@ -20,6 +20,7 @@ public abstract class RunnableEnvelope implements Runnable {
 
     /**
      * Ctor.
+     *
      * @param runnable The Runnable
      */
     public RunnableEnvelope(final Runnable runnable) {

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.number;
@@ -11,9 +11,7 @@ import org.cactoos.scalar.Reduced;
 /**
  * Find the smaller among items.
  *
- * <p>
- * Here is how you can use it to find the min of a set of numbers:
- * </p>
+ * <p>Here is how you can use it to find the min of a set of numbers:</p>
  *
  * <pre>
  * int min = new MinOf(1, 2, 3, 4).intValue();
@@ -21,7 +19,7 @@ import org.cactoos.scalar.Reduced;
  * int min = new MinOf(numbers).intValue();
  * </pre>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
  */
@@ -34,6 +32,7 @@ public final class MinOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     *
      * @param src Numbers
      */
     public MinOf(final Number... src) {
@@ -42,6 +41,7 @@ public final class MinOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     *
      * @param src The iterable
      */
     public MinOf(final Iterable<? extends Number> src) {

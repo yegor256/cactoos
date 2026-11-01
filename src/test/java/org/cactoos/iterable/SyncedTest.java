@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterable;
@@ -11,8 +11,8 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test Case for {@link Synced}.
+ *
  * @since 0.24
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class SyncedTest {
 
@@ -31,5 +31,4 @@ final class SyncedTest {
             new RunsInThreads<>(new Synced<>(1, 0, -1, -1, 2))
         );
     }
-
 }

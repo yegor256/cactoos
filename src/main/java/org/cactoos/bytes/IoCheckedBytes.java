@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.bytes;
@@ -13,10 +13,11 @@ import org.cactoos.scalar.IoChecked;
  * Bytes that doesn't throw checked {@link Exception},
  * but only throws {@link IOException}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.52
  */
+@SuppressWarnings("PMD.AvoidCatchingGenericException")
 public final class IoCheckedBytes implements Bytes {
 
     /**
@@ -26,6 +27,7 @@ public final class IoCheckedBytes implements Bytes {
 
     /**
      * Ctor.
+     *
      * @param bts Encapsulated bytes
      */
     public IoCheckedBytes(final Bytes bts) {
@@ -34,11 +36,12 @@ public final class IoCheckedBytes implements Bytes {
 
     /**
      * Ctor.
+     *
      * @param bts Encapsulated bytes
      * @param fbk Fallback
      * @since 0.5
      */
-    @SuppressWarnings({"unchecked", "PMD.AvoidRethrowingException", "PMD.AvoidCatchingThrowable"})
+    @SuppressWarnings("unchecked")
     public IoCheckedBytes(final Bytes bts, final Fallback<byte[]> fbk) {
         this.scalar = new IoChecked<>(
             () -> {
@@ -60,5 +63,4 @@ public final class IoCheckedBytes implements Bytes {
     public byte[] asBytes() throws IOException {
         return this.scalar.value();
     }
-
 }

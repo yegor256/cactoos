@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.proc;
@@ -12,7 +12,7 @@ import org.cactoos.Proc;
 /**
  * Represents many possible inputs as {@link BiProc}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of input
@@ -22,6 +22,7 @@ public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param func The function
      */
     public BiProcOf(final Func<? super X, ?> func) {
@@ -32,6 +33,7 @@ public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param prc The procedure
      */
     public BiProcOf(final Proc<? super X> prc) {
@@ -44,8 +46,9 @@ public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
 
     /**
      * Ctor.
-     * @param first The procedure on first arg.
-     * @param second The procedure on second arg.
+     *
+     * @param first The procedure on first arg
+     * @param second The procedure on second arg
      */
     public BiProcOf(
         final Proc<? super X> first,
@@ -61,6 +64,7 @@ public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param func The bi function
      */
     public BiProcOf(final BiFunc<? super X, ? super Y, ?> func) {
@@ -71,6 +75,7 @@ public final class BiProcOf<X, Y> extends BiProcEnvelope<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param biprc The bi procedure
      */
     public BiProcOf(final BiProc<? super X, ? super Y> biprc) {

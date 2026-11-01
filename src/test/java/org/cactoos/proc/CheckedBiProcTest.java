@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.proc;
@@ -7,24 +7,22 @@ package org.cactoos.proc;
 import java.io.EOFException;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link CheckedBiProc}.
  *
  * @since 0.32
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 final class CheckedBiProcTest {
 
     @Test
     void runtimeExceptionIsNotWrapped() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Runtime exception is warped",
             () -> {
                 new CheckedBiProc<>(
@@ -36,12 +34,12 @@ final class CheckedBiProcTest {
                 return 1;
             },
             new Throws<>(IllegalStateException.class)
-        ).affirm();
+        );
     }
 
     @Test
     void checkedExceptionIsWrapped() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "",
             () -> {
                 new CheckedBiProc<>(
@@ -66,11 +64,11 @@ final class CheckedBiProcTest {
                 IOException::new
             ).exec(true, true);
         } catch (final IOException exp) {
-            new Assertion<>(
+            MatcherAssert.assertThat(
                 "Extra wrapping of IOException has been added",
                 exp.getCause(),
                 new IsNull<>()
-            ).affirm();
+            );
         }
     }
 
@@ -81,10 +79,10 @@ final class CheckedBiProcTest {
             (first, second) -> counter.incrementAndGet(),
             exp -> exp
         ).exec(true, true);
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must not throw an exception",
             counter.get(),
             new IsEqual<>(1)
-        ).affirm();
+        );
     }
 }

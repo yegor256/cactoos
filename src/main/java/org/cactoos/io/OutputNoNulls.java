@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 
@@ -15,6 +15,7 @@ import org.cactoos.Output;
  * @since 0.10
  */
 public final class OutputNoNulls implements Output {
+
     /**
      * The output.
      */
@@ -22,6 +23,7 @@ public final class OutputNoNulls implements Output {
 
     /**
      * Ctor.
+     *
      * @param output The output
      */
     public OutputNoNulls(final Output output) {

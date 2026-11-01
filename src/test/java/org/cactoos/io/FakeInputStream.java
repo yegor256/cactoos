@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Fake {@link InputStream} with ability to check if
  * it is closed.
+ *
  * @since 1.0.0
  */
 final class FakeInputStream extends InputStream {
@@ -38,9 +39,10 @@ final class FakeInputStream extends InputStream {
 
     /**
      * If stream is closed.
+     *
      * @return Closed or not
      */
-    public boolean isClosed() {
+    boolean isClosed() {
         return this.closed.get();
     }
 }

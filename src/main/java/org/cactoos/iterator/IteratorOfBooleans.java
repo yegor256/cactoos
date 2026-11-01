@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.iterator;
@@ -16,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 0.32
  */
 public final class IteratorOfBooleans implements Iterator<Boolean> {
+
     /**
      * The list of items to iterate.
      */
@@ -28,6 +29,7 @@ public final class IteratorOfBooleans implements Iterator<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param items Items to iterate
      */
     @SuppressWarnings("PMD.ArrayIsStoredDirectly")

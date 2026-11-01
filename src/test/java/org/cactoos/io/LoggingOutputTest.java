@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -11,22 +11,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.cactoos.bytes.BytesOf;
 import org.cactoos.scalar.LengthOf;
+import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.StringContains;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test case for {@link LoggingOutput}.
  *
  * @since 0.29
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.MoreThanOneLogger",
-    "PMD.AvoidDuplicateLiterals",
-    "PMD.JUnitTestsShouldIncludeAssert"})
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class LoggingOutputTest {
 
     @Test
@@ -42,11 +39,11 @@ final class LoggingOutputTest {
                 )
             )
         ).value();
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must log write zero byte written to memory",
             logger.toString(),
             new StringContains("Written 0 byte(s) to memory in ")
-        ).affirm();
+        );
     }
 
     @Test
@@ -61,11 +58,11 @@ final class LoggingOutputTest {
         ) {
             out.write(new BytesOf("a").asBytes());
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must log one byte written to memory",
             logger.toString(),
             new StringContains("Written 1 byte(s) to memory in")
-        ).affirm();
+        );
     }
 
     @Test
@@ -80,11 +77,11 @@ final class LoggingOutputTest {
         ) {
             out.write(new BytesOf("Hello, товарищ!").asBytes());
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must log 22 bytes written to memory",
             logger.toString(),
             new StringContains("Written 22 byte(s) to memory in")
-        ).affirm();
+        );
     }
 
     @Test
@@ -93,11 +90,12 @@ final class LoggingOutputTest {
         final Logger logger = new FakeLogger();
         final Path temp = wdir.resolve("ccts-1");
         final Path path = temp.resolve("x/y/z/file.txt");
-        try (OutputStream output = new LoggingOutput(
-            new OutputTo(path),
-            "text file",
-            logger
-        ).stream()
+        try (
+            OutputStream output = new LoggingOutput(
+                new OutputTo(path),
+                "text file",
+                logger
+            ).stream()
         ) {
             new LengthOf(
                 new TeeInput(
@@ -106,7 +104,7 @@ final class LoggingOutputTest {
                 )
             ).value();
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must log write and close operations to text file",
             logger.toString(),
             new AllOf<>(
@@ -118,7 +116,7 @@ final class LoggingOutputTest {
                 new StringContains("Written 74536 byte(s) to text file"),
                 new StringContains("Closed output stream from text file")
             )
-        ).affirm();
+        );
     }
 
     @Test
@@ -127,11 +125,12 @@ final class LoggingOutputTest {
         final Logger logger = new FakeLogger(Level.WARNING);
         final Path temp = wdir.resolve("ccts-2");
         final Path path = temp.resolve("a/b/c/file.txt");
-        try (OutputStream output = new LoggingOutput(
-            new OutputTo(path),
-            "text file",
-            logger
-        ).stream()
+        try (
+            OutputStream output = new LoggingOutput(
+                new OutputTo(path),
+                "text file",
+                logger
+            ).stream()
         ) {
             new LengthOf(
                 new TeeInput(
@@ -140,7 +139,7 @@ final class LoggingOutputTest {
                 )
             ).value();
         }
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Must log all write and close operations to text file",
             logger.toString(),
             new AllOf<>(
@@ -151,7 +150,6 @@ final class LoggingOutputTest {
                 new StringContains("Written 74536 byte(s) to text file"),
                 new StringContains("Closed output stream from text file")
             )
-        ).affirm();
+        );
     }
-
 }

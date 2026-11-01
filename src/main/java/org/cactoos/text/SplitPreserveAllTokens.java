@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -18,6 +18,7 @@ import org.cactoos.iterator.IteratorOf;
  * @since 0.0
  */
 public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
+
     /**
      * Ctor.
      *
@@ -146,12 +147,11 @@ public final class SplitPreserveAllTokens extends IterableEnvelope<Text> {
                 TextOf::new,
                 new IterableOf<>(
                     () -> new IteratorOf<>(
-                        new TriFuncSplitPreserve()
-                            .apply(
-                                text.toString(),
-                                rgx.toString(),
-                                lmt
-                            ).toArray(new String[0])
+                        new TriFuncSplitPreserve().apply(
+                            text.toString(),
+                            rgx.toString(),
+                            lmt
+                        ).toArray(new String[0])
                     )
                 )
             )

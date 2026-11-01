@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -14,6 +14,7 @@ import org.cactoos.Output;
  *
  * @since 0.18
  */
+@SuppressWarnings("PMD.AvoidSynchronizedStatement")
 public final class SyncOutput implements Output {
 
     /**
@@ -28,6 +29,7 @@ public final class SyncOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param output The output
      */
     public SyncOutput(final Output output) {
@@ -36,6 +38,7 @@ public final class SyncOutput implements Output {
 
     /**
      * Ctor.
+     *
      * @param output The output
      * @param lck The lock object
      */

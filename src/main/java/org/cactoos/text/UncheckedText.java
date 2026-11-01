@@ -1,21 +1,23 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.io.File;
+import java.nio.file.Path;
 import org.cactoos.Func;
+import org.cactoos.Input;
 import org.cactoos.Text;
 import org.cactoos.func.UncheckedFunc;
 import org.cactoos.scalar.And;
-import org.cactoos.scalar.Or;
 import org.cactoos.scalar.Unchecked;
 
 /**
  * Text that doesn't throw checked {@link Exception}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.3
  */
@@ -33,6 +35,7 @@ public final class UncheckedText implements Text {
 
     /**
      * Ctor.
+     *
      * @param txt Encapsulated text
      * @since 0.9
      */
@@ -42,6 +45,37 @@ public final class UncheckedText implements Text {
 
     /**
      * Ctor.
+     *
+     * @param input Encapsulated input
+     * @since 0.73.2
+     */
+    public UncheckedText(final Input input) {
+        this(new TextOf(input));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param path Encapsulated path
+     * @since 0.73.2
+     */
+    public UncheckedText(final Path path) {
+        this(new TextOf(path));
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param file Encapsulated file
+     * @since 0.73.2
+     */
+    public UncheckedText(final File file) {
+        this(new TextOf(file));
+    }
+
+    /**
+     * Ctor.
+     *
      * @param txt Encapsulated text
      */
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
@@ -56,6 +90,7 @@ public final class UncheckedText implements Text {
 
     /**
      * Ctor.
+     *
      * @param txt Encapsulated text
      * @param fbk Fallback func if {@link Exception} happens
      * @since 0.5
@@ -86,14 +121,11 @@ public final class UncheckedText implements Text {
     @Override
     @SuppressFBWarnings("EQ_UNUSUAL")
     public boolean equals(final Object obj) {
-        return new Unchecked<>(
-            new Or(
-                () -> this == obj,
-                new And(
-                    () -> obj instanceof Text,
-                    () -> this.asString().equals(
-                        Text.class.cast(obj).asString()
-                    )
+        return this == obj || new Unchecked<>(
+            new And(
+                () -> obj instanceof Text,
+                () -> this.asString().equals(
+                    Text.class.cast(obj).asString()
                 )
             )
         ).value();
@@ -103,5 +135,4 @@ public final class UncheckedText implements Text {
     public int hashCode() {
         return this.asString().hashCode();
     }
-
 }

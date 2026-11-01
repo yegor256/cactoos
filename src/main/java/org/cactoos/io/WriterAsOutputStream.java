@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -14,6 +14,9 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.Sticky;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Writer as {@link OutputStream}.
@@ -21,21 +24,21 @@ import java.nio.charset.StandardCharsets;
  * <p>This class is for internal use only. Use {@link OutputStreamTo}
  * instead.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.13
  */
 final class WriterAsOutputStream extends OutputStream {
 
     /**
-     * Incoming data.
+     * Incoming data, deferred.
      */
-    private final ByteBuffer input;
+    private final Unchecked<ByteBuffer> input;
 
     /**
-     * Output ready to be flushed.
+     * Output ready to be flushed, deferred.
      */
-    private final CharBuffer output;
+    private final Unchecked<CharBuffer> output;
 
     /**
      * The writer.
@@ -43,12 +46,13 @@ final class WriterAsOutputStream extends OutputStream {
     private final Writer writer;
 
     /**
-     * The charset.
+     * The charset decoder, deferred.
      */
-    private final CharsetDecoder decoder;
+    private final Unchecked<CharsetDecoder> decoder;
 
     /**
      * Ctor.
+     *
      * @param wtr Writer
      */
     WriterAsOutputStream(final Writer wtr) {
@@ -57,6 +61,7 @@ final class WriterAsOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param wtr Writer
      * @param charset Charset
      */
@@ -66,26 +71,36 @@ final class WriterAsOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param wtr Writer
      * @param charset Charset
      */
     WriterAsOutputStream(final Writer wtr, final Charset charset) {
-        this(wtr, charset.name());
+        this(wtr, charset, 16 << 10);
     }
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param charset Charset
      * @param size Buffer size
      */
     WriterAsOutputStream(final Writer wtr, final CharSequence charset,
         final int size) {
-        this(wtr, Charset.forName(charset.toString()), size);
+        this(
+            wtr,
+            (Scalar<CharsetDecoder>) () -> Charset.forName(charset.toString())
+                .newDecoder()
+                .onMalformedInput(CodingErrorAction.REPORT)
+                .onUnmappableCharacter(CodingErrorAction.REPORT),
+            size
+        );
     }
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param size Buffer size
      * @since 0.13.3
@@ -96,6 +111,7 @@ final class WriterAsOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param charset Charset
      * @param size Buffer size
@@ -104,7 +120,7 @@ final class WriterAsOutputStream extends OutputStream {
         final int size) {
         this(
             wtr,
-            charset.newDecoder()
+            (Scalar<CharsetDecoder>) () -> charset.newDecoder()
                 .onMalformedInput(CodingErrorAction.REPORT)
                 .onUnmappableCharacter(CodingErrorAction.REPORT),
             size
@@ -113,17 +129,30 @@ final class WriterAsOutputStream extends OutputStream {
 
     /**
      * Ctor.
+     *
      * @param wtr Reader
      * @param ddr Charset decoder
      * @param size Buffer size
      */
     WriterAsOutputStream(final Writer wtr, final CharsetDecoder ddr,
         final int size) {
+        this(wtr, (Scalar<CharsetDecoder>) () -> ddr, size);
+    }
+
+    /**
+     * Ctor.
+     *
+     * @param wtr Reader
+     * @param ddr Charset decoder, deferred
+     * @param size Buffer size
+     */
+    private WriterAsOutputStream(final Writer wtr,
+        final Scalar<CharsetDecoder> ddr, final int size) {
         super();
         this.writer = wtr;
-        this.decoder = ddr;
-        this.input = ByteBuffer.allocate(size);
-        this.output = CharBuffer.allocate(size);
+        this.decoder = new Unchecked<>(new Sticky<>(ddr));
+        this.input = new Unchecked<>(new Sticky<>(() -> ByteBuffer.allocate(size)));
+        this.output = new Unchecked<>(new Sticky<>(() -> CharBuffer.allocate(size)));
     }
 
     @Override
@@ -153,36 +182,30 @@ final class WriterAsOutputStream extends OutputStream {
         this.writer.close();
     }
 
-    /**
-     * Write a portion from the buffer.
-     * @param buffer The buffer
-     * @param offset Offset in the buffer
-     * @param length Maximum possible amount to take
-     * @return How much was taken
-     * @throws IOException If fails
-     */
     private int next(final byte[] buffer, final int offset,
         final int length) throws IOException {
-        final int max = Math.min(length, this.input.remaining());
-        this.input.put(buffer, offset, max);
-        this.input.flip();
+        final ByteBuffer ibuf = this.input.value();
+        final CharBuffer obuf = this.output.value();
+        final int max = Math.min(length, ibuf.remaining());
+        ibuf.put(buffer, offset, max);
+        ibuf.flip();
         while (true) {
-            final CoderResult result = this.decoder.decode(
-                this.input, this.output, false
+            final CoderResult result = this.decoder.value().decode(
+                ibuf, obuf, false
             );
             if (result.isError()) {
                 result.throwException();
             }
             this.writer.write(
-                this.output.array(), 0, this.output.position()
+                obuf.array(), 0, obuf.position()
             );
             this.writer.flush();
-            this.output.rewind();
+            obuf.rewind();
             if (result.isUnderflow()) {
                 break;
             }
         }
-        this.input.compact();
+        ibuf.compact();
         return max;
     }
 }

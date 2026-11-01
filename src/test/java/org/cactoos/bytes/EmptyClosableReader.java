@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.bytes;
@@ -20,6 +20,7 @@ import org.cactoos.io.ReaderOf;
  * @since 0.29
  */
 final class EmptyClosableReader extends Reader {
+
     /**
      * Closed reader.
      */
@@ -37,9 +38,10 @@ final class EmptyClosableReader extends Reader {
 
     /**
      * Ask if the {@link Reader} is closed.
+     *
      * @return True if closed, false otherwise
      */
-    public boolean isClosed() {
+    boolean isClosed() {
         return this.closed;
     }
 }

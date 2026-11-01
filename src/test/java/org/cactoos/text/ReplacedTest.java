@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.text;
@@ -7,8 +7,9 @@ package org.cactoos.text;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import org.cactoos.io.InputOf;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
-import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasString;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -16,39 +17,62 @@ import org.llorllale.cactoos.matchers.Throws;
  * Test case for {@link Replaced}.
  *
  * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.TooManyMethods", "PMD.AvoidDuplicateLiterals"})
 final class ReplacedTest {
 
     @Test
+    void replacesInputWithConstant() {
+        MatcherAssert.assertThat(
+            "Can't replace an input",
+            new Replaced(
+                new InputOf("Hello!"),
+                "ello", "i"
+            ),
+            new HasString("Hi!")
+        );
+    }
+
+    @Test
+    void replacesInputWithRegex() {
+        MatcherAssert.assertThat(
+            "Can't replace an input with regex",
+            new Replaced(
+                new InputOf("one cow two cows in the yard"),
+                () -> Pattern.compile("cow"),
+                matcher -> "pig"
+            ),
+            new HasString("one pig two pigs in the yard")
+        );
+    }
+
+    @Test
     void replaceText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't replace a text",
             new Replaced(
                 new TextOf("Hello!"),
                 "ello", "i"
             ),
             new HasString("Hi!")
-        ).affirm();
+        );
     }
 
     @Test
     void notReplaceTextWhenSubstringNotFound() {
         final String text = "HelloAgain!";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Replace a text abnormally",
             new Replaced(
                 new TextOf(text),
                 "xyz", "i"
             ),
             new HasString(text)
-        ).affirm();
+        );
     }
 
     @Test
     void replacesAllOccurrences() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Can't replace a text with multiple needle occurrences",
             new Replaced(
                 new TextOf("one cat, two cats, three cats"),
@@ -56,12 +80,12 @@ final class ReplacedTest {
                 "dog"
             ),
             new HasString("one dog, two dogs, three dogs")
-        ).affirm();
+        );
     }
 
     @Test
     void regexConstantReplace() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Cannot do simple replacement with regex",
             new Replaced(
                 new TextOf("one cow two cows in the yard"),
@@ -69,12 +93,12 @@ final class ReplacedTest {
                 matcher -> "pig"
             ),
             new HasString("one pig two pigs in the yard")
-        ).affirm();
+        );
     }
 
     @Test
     void regexDynamicReplace() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Cannot do dynamic string replacement",
             new Replaced(
                 new TextOf("one two THREE four FIVE six"),
@@ -82,12 +106,12 @@ final class ReplacedTest {
                 matcher -> String.valueOf(matcher.group().length())
             ),
             new HasString("3 3 THREE 4 FIVE 3")
-        ).affirm();
+        );
     }
 
     @Test
     void emptyText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Substitution in empty text with non-empty regex.",
             new Replaced(
                 new TextOf(""),
@@ -95,12 +119,12 @@ final class ReplacedTest {
                 "WOW"
             ),
             new HasString("")
-        ).affirm();
+        );
     }
 
     @Test
     void emptyRegex() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Substitution in text with empty regex.",
             new Replaced(
                 new TextOf("abc"),
@@ -108,12 +132,12 @@ final class ReplacedTest {
                 "1"
             ),
             new HasString("1a1b1c1")
-        ).affirm();
+        );
     }
 
     @Test
     void emptyTextAndEmptyRegex() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Substitution in empty text with empty regex.",
             new Replaced(
                 new TextOf(""),
@@ -121,13 +145,13 @@ final class ReplacedTest {
                 "1"
             ),
             new HasString("1")
-        ).affirm();
+        );
     }
 
     @Test
     void invalidRegex() {
         final String regex = "invalid_regex{0,";
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Doesn't throw proper exception",
             new Replaced(
                 new TextOf("text"),
@@ -142,12 +166,12 @@ final class ReplacedTest {
                 ).getMessage(),
                 PatternSyntaxException.class
             )
-        ).affirm();
+        );
     }
 
     @Test
     void nonDefaultCharsetText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Cannot do dynamic string replacement with non-default charset",
             new Replaced(
                 new TextOf("abc def GHI JKL", StandardCharsets.UTF_16LE),
@@ -155,19 +179,19 @@ final class ReplacedTest {
                 matcher -> String.valueOf(matcher.group().length())
             ),
             new HasString("abc def 3 3")
-        ).affirm();
+        );
     }
 
     @Test
     void unicodeText() {
-        new Assertion<>(
+        MatcherAssert.assertThat(
             "Cannot do dynamic string replacement with unicode characters",
             new Replaced(
-                new TextOf("abc def GHI\u2300JKL"),
-                () -> Pattern.compile("[a-z]+|\u2300"),
+                new TextOf("abc def GHI⌀JKL"),
+                () -> Pattern.compile("[a-z]+|⌀"),
                 matcher -> String.valueOf(matcher.group().length())
             ),
             new HasString("3 3 GHI1JKL")
-        ).affirm();
+        );
     }
 }

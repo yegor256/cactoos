@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.func;
@@ -15,6 +15,7 @@ import org.cactoos.Func;
  * @since 0.10
  */
 public final class FuncNoNulls<X, Y> implements Func<X, Y> {
+
     /**
      * The function.
      */
@@ -22,6 +23,7 @@ public final class FuncNoNulls<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc The function
      */
     public FuncNoNulls(final Func<X, Y> fnc) {

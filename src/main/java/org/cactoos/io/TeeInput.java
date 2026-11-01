@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.io;
@@ -20,10 +20,11 @@ import org.cactoos.Text;
 /**
  * Input to Output copying pipe.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1
  */
+@SuppressWarnings("PMD.ExcessivePublicCount")
 public final class TeeInput implements Input {
 
     /**
@@ -38,6 +39,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param url The source
      * @param path The output file
      * @since 0.13.3
@@ -48,6 +50,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param url The source
      * @param file The output file
      * @since 0.13.3
@@ -58,6 +61,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param url The source
      * @param output The output file
      * @since 0.13.3
@@ -68,6 +72,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param uri The source
      * @param path The output file
      * @since 0.13.3
@@ -78,6 +83,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param uri The source
      * @param file The output file
      * @since 0.13.3
@@ -88,6 +94,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param uri The source
      * @param output The output file
      * @since 0.13.3
@@ -98,6 +105,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param path The output file
      * @since 0.5
@@ -108,6 +116,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @since 0.5
@@ -118,6 +127,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The output
      * @since 0.13.3
@@ -128,6 +138,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @since 0.5
@@ -138,6 +149,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param path The output file
      * @since 0.5
@@ -148,6 +160,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The output
      * @since 0.13.3
@@ -158,6 +171,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @since 0.5
@@ -168,6 +182,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset The charset
@@ -180,6 +195,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset The charset
@@ -192,6 +208,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @since 0.5
@@ -202,6 +219,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset The charset
@@ -214,6 +232,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset The charset
@@ -226,6 +245,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The target
      * @since 0.5
@@ -236,6 +256,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The target
      * @param charset The charset
@@ -248,6 +269,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The target
      * @param charset The charset
@@ -260,6 +282,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @since 0.13.3
@@ -270,6 +293,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param size Reading buffer size
@@ -281,6 +305,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset The charset
@@ -293,6 +318,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset The charset
@@ -307,6 +333,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset The charset
@@ -319,6 +346,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset The charset
@@ -333,6 +361,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @since 0.13.3
@@ -343,6 +372,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param size Reading buffer size
@@ -354,6 +384,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset The charset
@@ -366,6 +397,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset The charset
@@ -380,6 +412,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset The charset
@@ -392,6 +425,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset The charset
@@ -406,6 +440,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The target
      * @since 0.13.3
@@ -416,6 +451,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The target
      * @param size Reading buffer size
@@ -427,6 +463,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The target
      * @param charset The charset
@@ -439,6 +476,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The target
      * @param charset The charset
@@ -453,6 +491,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The target
      * @param charset The charset
@@ -465,6 +504,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The target
      * @param charset The charset
@@ -479,6 +519,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param path The output path
      * @since 0.5
@@ -489,6 +530,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @since 0.5
@@ -499,6 +541,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The output file
      * @since 0.5
@@ -509,6 +552,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param path The output path
      * @since 0.5
@@ -519,6 +563,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param path The output path
      * @param charset Charset
@@ -531,6 +576,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param path The output path
      * @param charset Charset
@@ -543,6 +589,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @since 0.5
@@ -553,6 +600,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset Charset
@@ -565,6 +613,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @param charset Charset
@@ -577,6 +626,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The output file
      * @since 0.5
@@ -587,6 +637,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The output file
      * @param charset Charset
@@ -599,6 +650,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The output file
      * @param charset Charset
@@ -611,6 +663,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param text The source
      * @param path The output path
      * @since 0.13.3
@@ -621,6 +674,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param text The source
      * @param path The output path
      * @param charset Charset
@@ -632,6 +686,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param text The source
      * @param path The output path
      * @param charset Charset
@@ -644,6 +699,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param text The source
      * @param file The output file
      * @since 0.13.3
@@ -654,6 +710,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param text The source
      * @param file The output file
      * @param charset Charset
@@ -665,6 +722,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param text The source
      * @param file The output file
      * @param charset Charset
@@ -677,6 +735,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param text The source
      * @param output The output
      * @since 0.13.3
@@ -687,6 +746,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param text The source
      * @param output The output
      * @param charset Charset
@@ -699,6 +759,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param text The source
      * @param output The output
      * @param charset Charset
@@ -711,6 +772,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param bytes The source
      * @param path The output path
      * @since 0.13.3
@@ -721,6 +783,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param bytes The source
      * @param file The output file
      * @since 0.13.3
@@ -731,6 +794,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param bytes The source
      * @param output The output
      * @since 0.13.3
@@ -741,6 +805,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param path The output path
      * @since 0.13.3
@@ -751,6 +816,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param file The output file
      * @since 0.13.3
@@ -761,6 +827,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param writer The output
      * @since 0.13.3
@@ -771,6 +838,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param writer The output
      * @param size Writing buffer size
@@ -782,6 +850,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param writer The output
      * @param charset The charset
@@ -794,6 +863,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param writer The output
      * @param charset The charset
@@ -808,6 +878,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param writer The output
      * @param charset The charset
@@ -820,6 +891,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param writer The output
      * @param charset The charset
@@ -834,6 +906,7 @@ public final class TeeInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The source
      * @param output The target
      */
@@ -848,5 +921,4 @@ public final class TeeInput implements Input {
             this.source.stream(), this.target.stream()
         );
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2017-2025 Yegor Bugayenko
+ * SPDX-FileCopyrightText: Copyright (c) 2017-2026 Yegor Bugayenko
  * SPDX-License-Identifier: MIT
  */
 package org.cactoos.map;
@@ -13,13 +13,12 @@ import org.cactoos.text.UncheckedText;
 /**
  * A decorator of {@link Map} that tolerates no NULLs.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <K> Type of key
  * @param <V> Type of value
  * @since 0.27
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public class NoNulls<K, V> implements Map<K, V> {
 
     /**
@@ -29,6 +28,7 @@ public class NoNulls<K, V> implements Map<K, V> {
 
     /**
      * Ctor.
+     *
      * @param origin The scalar
      */
     public NoNulls(final Map<K, V> origin) {
@@ -145,7 +145,7 @@ public class NoNulls<K, V> implements Map<K, V> {
     @Override
     @SuppressWarnings("unchecked")
     public final void putAll(final Map<? extends K, ? extends V> items) {
-        this.map.putAll(new NoNulls<>((Map<K, V>) items));
+        this.map.putAll(new org.cactoos.map.NoNulls<>((Map<K, V>) items));
     }
 
     @Override
