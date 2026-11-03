@@ -402,7 +402,7 @@
                 <signaturesFile>./src/test/resources/forbidden-apis.txt</signaturesFile>
               </signaturesFiles>
               <!--
-              @todo #1434:30min In the continuation of #588, all the calls
+              @todo #1910:30min In the continuation of #588, all the calls
               to Matchers should be replaced with their OO counterparts.
               This todo should be updated with a new one until everything is
               done. The newly covered classes should be added to the include
@@ -411,11 +411,15 @@
               to forbidden APIs always fail the build for every classes.
               -->
               <includes>
+                <include>org/cactoos/*.class</include>
                 <include>org/cactoos/bytes/*.class</include>
                 <include>org/cactoos/collection/*.class</include>
+                <include>org/cactoos/exception/*.class</include>
                 <include>org/cactoos/experimental/*.class</include>
                 <include>org/cactoos/func/*.class</include>
                 <include>org/cactoos/io/*.class</include>
+                <include>org/cactoos/map/*.class</include>
+                <include>org/cactoos/number/*.class</include>
                 <include>org/cactoos/proc/*.class</include>
                 <include>org/cactoos/set/*.class</include>
                 <include>org/cactoos/test/*.class</include>
