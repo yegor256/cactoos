@@ -6,8 +6,8 @@ package org.cactoos.number;
 
 import java.util.Collections;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.core.AllOf;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.IsNumber;
 import org.llorllale.cactoos.matchers.Throws;
@@ -24,7 +24,7 @@ final class AvgOfTest {
         MatcherAssert.assertThat(
             "Average of elements in empty collection must be zero",
             new AvgOf(Collections.emptyList()).longValue(),
-            Matchers.equalTo(0L)
+            new IsEqual<>(0L)
         );
     }
 
@@ -35,7 +35,7 @@ final class AvgOfTest {
             new AvgOf(
                 1, 2, 3, 4
             ).intValue(),
-            Matchers.equalTo(2)
+            new IsEqual<>(2)
         );
     }
 
@@ -46,7 +46,7 @@ final class AvgOfTest {
             new AvgOf(
                 Integer.MAX_VALUE, Integer.MAX_VALUE
             ).intValue(),
-            Matchers.equalTo(Integer.MAX_VALUE)
+            new IsEqual<>(Integer.MAX_VALUE)
         );
     }
 
@@ -57,7 +57,7 @@ final class AvgOfTest {
             new AvgOf(
                 1, 2, 3, 4
             ).longValue(),
-            Matchers.equalTo(2L)
+            new IsEqual<>(2L)
         );
     }
 
@@ -68,7 +68,7 @@ final class AvgOfTest {
             new AvgOf(
                 1, 2, 3, 4
             ).doubleValue(),
-            Matchers.equalTo(2.5d)
+            new IsEqual<>(2.5d)
         );
     }
 
@@ -79,7 +79,7 @@ final class AvgOfTest {
             new AvgOf(
                 1, 2, 3, 4
             ).floatValue(),
-            Matchers.equalTo(2.5f)
+            new IsEqual<>(2.5f)
         );
     }
 
@@ -90,7 +90,7 @@ final class AvgOfTest {
             new AvgOf(
                 1L, 2L, 3L, 4L
             ).intValue(),
-            Matchers.equalTo(2)
+            new IsEqual<>(2)
         );
     }
 
@@ -101,7 +101,7 @@ final class AvgOfTest {
             new AvgOf(
                 1L, 2L, 3L, 4L
             ).longValue(),
-            Matchers.equalTo(2L)
+            new IsEqual<>(2L)
         );
     }
 
@@ -112,7 +112,7 @@ final class AvgOfTest {
             new AvgOf(
                 Long.MAX_VALUE, Long.MAX_VALUE
             ).longValue(),
-            Matchers.equalTo(Long.MAX_VALUE)
+            new IsEqual<>(Long.MAX_VALUE)
         );
     }
 
@@ -123,7 +123,7 @@ final class AvgOfTest {
             new AvgOf(
                 1L, 2L, 3L, 4L
             ).doubleValue(),
-            Matchers.equalTo(2.5d)
+            new IsEqual<>(2.5d)
         );
     }
 
@@ -134,7 +134,7 @@ final class AvgOfTest {
             new AvgOf(
                 1L, 2L, 3L, 4L
             ).floatValue(),
-            Matchers.equalTo(2.5f)
+            new IsEqual<>(2.5f)
         );
     }
 
@@ -145,7 +145,7 @@ final class AvgOfTest {
             new AvgOf(
                 1.0d, 2.0d, 3.0d, 4.0d
             ).intValue(),
-            Matchers.equalTo(2)
+            new IsEqual<>(2)
         );
     }
 
@@ -156,7 +156,7 @@ final class AvgOfTest {
             new AvgOf(
                 1.0d, 2.0d, 3.0d, 4.0d
             ).longValue(),
-            Matchers.equalTo(2L)
+            new IsEqual<>(2L)
         );
     }
 
@@ -167,7 +167,7 @@ final class AvgOfTest {
             new AvgOf(
                 1.0d, 2.0d, 3.0d, 4.0d
             ).doubleValue(),
-            Matchers.equalTo(2.5d)
+            new IsEqual<>(2.5d)
         );
     }
 
@@ -178,7 +178,7 @@ final class AvgOfTest {
             new AvgOf(
                 Double.MAX_VALUE, Double.MAX_VALUE
             ).doubleValue(),
-            Matchers.equalTo(Double.MAX_VALUE)
+            new IsEqual<>(Double.MAX_VALUE)
         );
     }
 
@@ -189,7 +189,7 @@ final class AvgOfTest {
             new AvgOf(
                 Double.MIN_VALUE, Double.MIN_VALUE
             ).doubleValue(),
-            Matchers.equalTo(Double.MIN_VALUE)
+            new IsEqual<>(Double.MIN_VALUE)
         );
     }
 
@@ -233,7 +233,7 @@ final class AvgOfTest {
             new AvgOf(
                 -1.0d, -2.0d, -3.0d, -4.0d
             ).doubleValue(),
-            Matchers.equalTo(-2.5d)
+            new IsEqual<>(-2.5d)
         );
     }
 
@@ -244,7 +244,7 @@ final class AvgOfTest {
             new AvgOf(
                 100.0, 100.666, 100.0
             ).floatValue(),
-            Matchers.equalTo(100.222f)
+            new IsEqual<>(100.222f)
         );
     }
 
@@ -255,7 +255,7 @@ final class AvgOfTest {
             new AvgOf(
                 100.266, 100.267
             ).floatValue(),
-            Matchers.equalTo(100.2665f)
+            new IsEqual<>(100.2665f)
         );
     }
 
@@ -266,7 +266,7 @@ final class AvgOfTest {
             new AvgOf(
                 1.0f, 2.0f, 3.0f, 4.0f
             ).intValue(),
-            Matchers.equalTo(2)
+            new IsEqual<>(2)
         );
     }
 
@@ -277,7 +277,7 @@ final class AvgOfTest {
             new AvgOf(
                 1.0f, 2.0f, 3.0f, 4.0f
             ).longValue(),
-            Matchers.equalTo(2L)
+            new IsEqual<>(2L)
         );
     }
 
@@ -288,7 +288,7 @@ final class AvgOfTest {
             new AvgOf(
                 1.0f, 2.0f, 3.0f, 4.0f
             ).doubleValue(),
-            Matchers.equalTo(2.5d)
+            new IsEqual<>(2.5d)
         );
     }
 
@@ -299,7 +299,7 @@ final class AvgOfTest {
             new AvgOf(
                 1.0f, 2.0f, 3.0f, 4.0f
             ).floatValue(),
-            Matchers.equalTo(2.5f)
+            new IsEqual<>(2.5f)
         );
     }
 
@@ -310,7 +310,7 @@ final class AvgOfTest {
             new AvgOf(
                 Float.MAX_VALUE, Float.MAX_VALUE
             ).floatValue(),
-            Matchers.equalTo(Float.MAX_VALUE)
+            new IsEqual<>(Float.MAX_VALUE)
         );
     }
 
@@ -321,7 +321,7 @@ final class AvgOfTest {
             new AvgOf(
                 Float.MIN_VALUE, Float.MIN_VALUE
             ).floatValue(),
-            Matchers.equalTo(Float.MIN_VALUE)
+            new IsEqual<>(Float.MIN_VALUE)
         );
     }
 
