@@ -4,6 +4,9 @@
  */
 package org.cactoos.list;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
@@ -219,6 +222,125 @@ final class JoinedListIteratorTest {
             "Must return index of the previous element after two next",
             joined.previousIndex(),
             new IsEqual<>(1)
+        );
+    }
+
+    @Test
+    void removesLastReturnedItemFromSecondList() {
+        final List<Integer> first = new ArrayList<>(Arrays.asList(1, 2));
+        final List<Integer> second = new ArrayList<>(Arrays.asList(3, 4));
+        final ListIterator<Integer> joined = new JoinedListIterator<Integer>(
+            first.listIterator(), second.listIterator()
+        );
+        joined.next();
+        joined.next();
+        joined.next();
+        joined.remove();
+        MatcherAssert.assertThat(
+            "Must remove the item from the list that returned it",
+            second,
+            new IsEqual<>(Arrays.asList(4))
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void removesFromFirstListAfterPrevious() {
+        final List<Integer> first = new ArrayList<>(Arrays.asList(1, 2));
+        final List<Integer> second = new ArrayList<>(Arrays.asList(3));
+        final ListIterator<Integer> joined = new JoinedListIterator<Integer>(
+            first.listIterator(), second.listIterator()
+        );
+        joined.next();
+        joined.next();
+        joined.next();
+        joined.previous();
+        joined.previous();
+        joined.remove();
+        MatcherAssert.assertThat(
+            "Must remove the item returned by previous",
+            first,
+            new IsEqual<>(Arrays.asList(1))
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void rejectsRemoveBeforeNext() {
+        MatcherAssert.assertThat(
+            "Must refuse to remove before any item was returned",
+            () -> {
+                new JoinedListIterator<Integer>(
+                    new ArrayList<>(Arrays.asList(1)).listIterator()
+                ).remove();
+                return true;
+            },
+            new Throws<>(IllegalStateException.class)
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void setsLastReturnedItem() {
+        final List<Integer> first = new ArrayList<>(Arrays.asList(1));
+        final List<Integer> second = new ArrayList<>(Arrays.asList(2, 3));
+        final ListIterator<Integer> joined = new JoinedListIterator<Integer>(
+            first.listIterator(), second.listIterator()
+        );
+        joined.next();
+        joined.next();
+        joined.set(7);
+        MatcherAssert.assertThat(
+            "Must replace the item in the list that returned it",
+            second,
+            new IsEqual<>(Arrays.asList(7, 3))
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void addsItemToIteratorWhereCursorIs() {
+        final List<Integer> first = new ArrayList<>(Arrays.asList(1));
+        final List<Integer> second = new ArrayList<>(Arrays.asList(2));
+        final ListIterator<Integer> joined = new JoinedListIterator<Integer>(
+            first.listIterator(), second.listIterator()
+        );
+        joined.next();
+        joined.add(5);
+        MatcherAssert.assertThat(
+            "Must add the item right after the item returned last",
+            first,
+            new IsEqual<>(Arrays.asList(1, 5))
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void addsItemBeforeAnythingWasReturned() {
+        final List<Integer> first = new ArrayList<>(Arrays.asList(1));
+        new JoinedListIterator<Integer>(
+            first.listIterator(), new ArrayList<Integer>().listIterator()
+        ).add(0);
+        MatcherAssert.assertThat(
+            "Must add the item at the very beginning",
+            first,
+            new IsEqual<>(Arrays.asList(0, 1))
+        );
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    void movesCursorAfterAdd() {
+        final ListIterator<Integer> joined = new JoinedListIterator<Integer>(
+            new ArrayList<>(Arrays.asList(1)).listIterator(),
+            new ArrayList<>(Arrays.asList(2)).listIterator()
+        );
+        joined.next();
+        joined.add(5);
+        MatcherAssert.assertThat(
+            "Must return the next item after the added one",
+            joined.next(),
+            new IsEqual<>(2)
         );
     }
 }
