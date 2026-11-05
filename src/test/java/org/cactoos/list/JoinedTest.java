@@ -4,7 +4,9 @@
  */
 package org.cactoos.list;
 
-import java.util.List;
+import java.util.AbstractList;
+import java.util.Iterator;
+import java.util.ListIterator;
 import org.hamcrest.Matcher;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsIterableContainingInOrder;
@@ -91,6 +93,24 @@ final class JoinedTest {
     }
 
     @Test
+    void isEmptyForEmptyJoined() {
+        MatcherAssert.assertThat(
+            "Must be empty",
+            new Joined<String>().isEmpty(),
+            new IsTrue()
+        );
+    }
+
+    @Test
+    void emptyJoinedIsEqualToEmptyListOf() {
+        MatcherAssert.assertThat(
+            "Empty joined list must be equal to an empty ListOf",
+            new Joined<String>(),
+            new IsEqual<>(new ListOf<String>())
+        );
+    }
+
+    @Test
     void contains() {
         MatcherAssert.assertThat(
             "Must contain element specified",
@@ -125,39 +145,31 @@ final class JoinedTest {
     }
 
     @Test
-    void add() {
-        final List<String> joined = new Joined<String>(
-            new ListOf<>(JoinedTest.LITERAL_ONE),
-            new ListOf<>(JoinedTest.LITERAL_TWO)
-        );
-        joined.add(JoinedTest.LITERAL_THREE);
+    void addIsNotSupported() {
         MatcherAssert.assertThat(
-            "Must be able to add element specified",
-            joined,
-            new IsEqual<>(
-                new ListOf<>(
-                    JoinedTest.LITERAL_ONE,
-                    JoinedTest.LITERAL_TWO,
-                    JoinedTest.LITERAL_THREE
-                )
+            "add() must throw exception",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).add(JoinedTest.LITERAL_THREE),
+            new Throws<>(
+                "#add(T): the list is read-only",
+                UnsupportedOperationException.class
             )
         );
     }
 
     @Test
-    void remove() {
-        final List<String> joined = new Joined<String>(
-            new ListOf<>(JoinedTest.LITERAL_ONE),
-            new ListOf<>(JoinedTest.LITERAL_TWO)
-        );
-        joined.remove(JoinedTest.LITERAL_TWO);
+    void removeIsNotSupported() {
         MatcherAssert.assertThat(
-            "Must be able to remove element specified",
-            joined,
-            new IsEqual<>(
-                new ListOf<>(
-                    JoinedTest.LITERAL_ONE
-                )
+            "remove(Object) must throw exception",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).remove(JoinedTest.LITERAL_TWO),
+            new Throws<>(
+                "#remove(Object): the list is read-only",
+                UnsupportedOperationException.class
             )
         );
     }
@@ -180,127 +192,111 @@ final class JoinedTest {
     }
 
     @Test
-    void addAll() {
-        final List<String> joined = new Joined<String>(
-            new ListOf<>(JoinedTest.LITERAL_ONE),
-            new ListOf<>(JoinedTest.LITERAL_TWO)
-        );
-        joined.addAll(
-            new ListOf<>(
-                JoinedTest.LITERAL_THREE,
-                JoinedTest.LITERAL_FOUR
-            )
-        );
+    void containsAllFailsWhenMissing() {
         MatcherAssert.assertThat(
-            "Must be able to addAll elements specified",
-            joined,
-            new IsEqual<>(
+            "Must not contain all elements",
+            new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO)
+            ).containsAll(
                 new ListOf<>(
                     JoinedTest.LITERAL_ONE,
-                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_THREE
+                )
+            ),
+            new IsNot<>(new IsTrue())
+        );
+    }
+
+    @Test
+    void addAllIsNotSupported() {
+        MatcherAssert.assertThat(
+            "addAll(Collection) must throw exception",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).addAll(
+                new ListOf<>(
                     JoinedTest.LITERAL_THREE,
                     JoinedTest.LITERAL_FOUR
                 )
+            ),
+            new Throws<>(
+                "#addAll(Collection): the list is read-only",
+                UnsupportedOperationException.class
             )
         );
     }
 
     @Test
-    void addAllInFront() {
-        final List<String> joined = new Joined<String>(
-            new ListOf<>(JoinedTest.LITERAL_ONE),
-            new ListOf<>(JoinedTest.LITERAL_TWO)
-        );
-        joined.addAll(
-            0,
-            new ListOf<>(
-                JoinedTest.LITERAL_THREE,
-                JoinedTest.LITERAL_FOUR
-            )
-        );
+    void addAllByIndexIsNotSupported() {
         MatcherAssert.assertThat(
-            "Must be able to addAll elements in front",
-            joined,
-            new IsEqual<>(
+            "addAll(int, Collection) must throw exception",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).addAll(
+                0,
                 new ListOf<>(
                     JoinedTest.LITERAL_THREE,
-                    JoinedTest.LITERAL_FOUR,
-                    JoinedTest.LITERAL_ONE,
-                    JoinedTest.LITERAL_TWO
+                    JoinedTest.LITERAL_FOUR
                 )
-            )
-        );
-    }
-
-    @Test
-    void removeAll() {
-        final List<String> joined = new Joined<String>(
-            new ListOf<>(
-                JoinedTest.LITERAL_ONE,
-                JoinedTest.LITERAL_TWO
             ),
-            new ListOf<>(JoinedTest.LITERAL_THREE)
-        );
-        joined.removeAll(
-            new ListOf<>(
-                JoinedTest.LITERAL_TWO,
-                JoinedTest.LITERAL_THREE
-            )
-        );
-        MatcherAssert.assertThat(
-            "Must be able to removeAll elements specified",
-            joined,
-            new IsEqual<>(
-                new ListOf<>(
-                    JoinedTest.LITERAL_ONE
-                )
+            new Throws<>(
+                "#addAll(int, Collection): the list is read-only",
+                UnsupportedOperationException.class
             )
         );
     }
 
     @Test
-    void retainAll() {
-        final List<String> joined = new Joined<String>(
-            new ListOf<>(JoinedTest.LITERAL_ONE),
-            new ListOf<>(
-                JoinedTest.LITERAL_TWO,
-                JoinedTest.LITERAL_THREE
-            )
-        );
-        joined.retainAll(
-            new ListOf<>(
-                JoinedTest.LITERAL_TWO,
-                JoinedTest.LITERAL_THREE
-            )
-        );
+    void removeAllIsNotSupported() {
         MatcherAssert.assertThat(
-            "Must be able to retain all",
-            joined,
-            new IsEqual<>(
-                new ListOf<>(
-                    JoinedTest.LITERAL_TWO,
-                    JoinedTest.LITERAL_THREE
-                )
-            )
-        );
-    }
-
-    @Test
-    void clear() {
-        final List<String> joined = new Joined<String>(
-            new ListOf<>(
-                JoinedTest.LITERAL_TWO,
-                JoinedTest.LITERAL_THREE
+            "removeAll(Collection) must throw exception",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).removeAll(
+                new ListOf<>(JoinedTest.LITERAL_TWO)
             ),
-            new ListOf<>(
-                JoinedTest.LITERAL_ONE
+            new Throws<>(
+                "#removeAll(Collection): the list is read-only",
+                UnsupportedOperationException.class
             )
         );
-        joined.clear();
+    }
+
+    @Test
+    void retainAllIsNotSupported() {
         MatcherAssert.assertThat(
-            "Must be able to clear",
-            joined.size(),
-            new IsEqual<>(0)
+            "retainAll(Collection) must throw exception",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).retainAll(
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ),
+            new Throws<>(
+                "#retainAll(Collection): the list is read-only",
+                UnsupportedOperationException.class
+            )
+        );
+    }
+
+    @Test
+    void clearIsNotSupported() {
+        MatcherAssert.assertThat(
+            "clear() must throw exception",
+            () -> {
+                new Joined<String>(
+                    new ListOf<>(JoinedTest.LITERAL_ONE),
+                    new ListOf<>(JoinedTest.LITERAL_TWO)
+                ).clear();
+                return true;
+            },
+            new Throws<>(
+                "#clear(): the list is read-only",
+                UnsupportedOperationException.class
+            )
         );
     }
 
@@ -322,57 +318,158 @@ final class JoinedTest {
     }
 
     @Test
-    void set() {
-        final List<String> joined = new Joined<String>(
-            new ListOf<>(JoinedTest.LITERAL_ONE),
-            new ListOf<>(JoinedTest.LITERAL_TWO)
-        );
-        joined.set(0, JoinedTest.LITERAL_THREE);
+    void indexOutOfBoundsOnGet() {
         MatcherAssert.assertThat(
-            "Must be able to set element by specified index",
-            joined.get(0),
-            new IsEqual<>(JoinedTest.LITERAL_THREE)
+            "Exception is expected for index greater than size",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).get(2),
+            new Throws<>(IndexOutOfBoundsException.class)
         );
     }
 
     @Test
-    void addByIndex() {
-        final List<String> joined = new Joined<String>(
-            new ListOf<>(JoinedTest.LITERAL_ONE),
-            new ListOf<>(JoinedTest.LITERAL_TWO)
-        );
-        joined.add(0, JoinedTest.LITERAL_THREE);
+    void negativeIndexOnGet() {
         MatcherAssert.assertThat(
-            "Must be able to add element by specified index",
-            joined.get(0),
-            new IsEqual<>(JoinedTest.LITERAL_THREE)
+            "Exception is expected for negative index",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).get(-1),
+            new Throws<>(IndexOutOfBoundsException.class)
         );
     }
 
     @Test
-    void removeByIndex() {
-        final List<String> joined = new Joined<String>(
-            new ListOf<>(JoinedTest.LITERAL_ONE),
-            new ListOf<>(JoinedTest.LITERAL_TWO)
-        );
-        joined.remove(0);
+    void setIsNotSupported() {
         MatcherAssert.assertThat(
-            "Must be able to remove element by specified index",
-            joined.get(0),
-            new IsEqual<>(JoinedTest.LITERAL_TWO)
+            "set(int, T) must throw exception",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).set(0, JoinedTest.LITERAL_THREE),
+            new Throws<>(
+                "#set(int, T): the list is read-only",
+                UnsupportedOperationException.class
+            )
         );
     }
 
     @Test
-    void removeByElement() {
-        final List<String> joined = new Joined<String>(
-            new ListOf<>(JoinedTest.LITERAL_ONE),
-            new ListOf<>(JoinedTest.LITERAL_TWO)
-        );
-        joined.remove(JoinedTest.LITERAL_ONE);
+    void addByIndexIsNotSupported() {
         MatcherAssert.assertThat(
-            "Must be able to remove element by specified element",
-            joined.get(0),
+            "add(int, T) must throw exception",
+            () -> {
+                new Joined<String>(
+                    new ListOf<>(JoinedTest.LITERAL_ONE),
+                    new ListOf<>(JoinedTest.LITERAL_TWO)
+                ).add(0, JoinedTest.LITERAL_THREE);
+                return true;
+            },
+            new Throws<>(
+                "#add(int, T): the list is read-only",
+                UnsupportedOperationException.class
+            )
+        );
+    }
+
+    @Test
+    void removeByIndexIsNotSupported() {
+        MatcherAssert.assertThat(
+            "remove(int) must throw exception",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).remove(0),
+            new Throws<>(
+                "#remove(int): the list is read-only",
+                UnsupportedOperationException.class
+            )
+        );
+    }
+
+    @Test
+    void iteratorRemoveIsNotSupported() {
+        MatcherAssert.assertThat(
+            "iterator().remove() must throw exception",
+            () -> {
+                final Iterator<String> iter = new Joined<String>(
+                    new ListOf<>(JoinedTest.LITERAL_ONE),
+                    new ListOf<>(JoinedTest.LITERAL_TWO)
+                ).iterator();
+                iter.next();
+                iter.remove();
+                return true;
+            },
+            new Throws<>(UnsupportedOperationException.class)
+        );
+    }
+
+    @Test
+    void indexOf() {
+        MatcherAssert.assertThat(
+            "Must return the index of the element",
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(JoinedTest.LITERAL_THREE)
+            ).indexOf(JoinedTest.LITERAL_THREE),
+            new IsEqual<>(2)
+        );
+    }
+
+    @Test
+    void indexOfMissing() {
+        MatcherAssert.assertThat(
+            "Must return -1 for a missing element",
+            new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).indexOf(JoinedTest.LITERAL_FOUR),
+            new IsEqual<>(-1)
+        );
+    }
+
+    @Test
+    void lastIndexOf() {
+        MatcherAssert.assertThat(
+            "Must return the index of the last occurrence of the element",
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_THREE
+                )
+            ).lastIndexOf(JoinedTest.LITERAL_ONE),
+            new IsEqual<>(2)
+        );
+    }
+
+    @Test
+    void lastIndexOfMissing() {
+        MatcherAssert.assertThat(
+            "Must return -1 for a missing element",
+            new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).lastIndexOf(JoinedTest.LITERAL_FOUR),
+            new IsEqual<>(-1)
+        );
+    }
+
+    @Test
+    void listIteratorPositionsCorrectly() {
+        MatcherAssert.assertThat(
+            "Must return the element at the requested position",
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(JoinedTest.LITERAL_THREE)
+            ).listIterator(1).next(),
             new IsEqual<>(JoinedTest.LITERAL_TWO)
         );
     }
@@ -382,6 +479,17 @@ final class JoinedTest {
         MatcherAssert.assertThat(
             "Exception is expected for greater then size index",
             () -> new Joined<Integer>().listIterator(66),
+            new Throws<>(IndexOutOfBoundsException.class)
+        );
+    }
+
+    @Test
+    void listIteratorNegativeIndex() {
+        MatcherAssert.assertThat(
+            "Exception is expected for negative index",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE)
+            ).listIterator(-1),
             new Throws<>(IndexOutOfBoundsException.class)
         );
     }
@@ -400,6 +508,130 @@ final class JoinedTest {
                     JoinedTest.LITERAL_THREE
                 )
             )
+        );
+    }
+
+    @Test
+    void subListOutOfBoundsEnd() {
+        MatcherAssert.assertThat(
+            "Exception is expected when end is greater than size",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).subList(0, 3),
+            new Throws<>(IndexOutOfBoundsException.class)
+        );
+    }
+
+    @Test
+    void subListNegativeStart() {
+        MatcherAssert.assertThat(
+            "Exception is expected when start is negative",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).subList(-1, 1),
+            new Throws<>(IndexOutOfBoundsException.class)
+        );
+    }
+
+    @Test
+    void subListThrowsIllegalArgument() {
+        MatcherAssert.assertThat(
+            "Exception is expected when start is greater than end",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).subList(2, 1),
+            new Throws<>(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void equalsListOf() {
+        MatcherAssert.assertThat(
+            "Joined must be equal to ListOf with the same elements",
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(JoinedTest.LITERAL_THREE)
+            ),
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE,
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
+        );
+    }
+
+    @Test
+    void listOfEqualsJoined() {
+        MatcherAssert.assertThat(
+            "ListOf must be equal to Joined with the same elements",
+            new ListOf<>(
+                JoinedTest.LITERAL_ONE,
+                JoinedTest.LITERAL_TWO,
+                JoinedTest.LITERAL_THREE
+            ),
+            new IsEqual<>(
+                new Joined<String>(
+                    new ListOf<>(
+                        JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                    ),
+                    new ListOf<>(JoinedTest.LITERAL_THREE)
+                )
+            )
+        );
+    }
+
+    @Test
+    void doesNotEqualDifferentListOf() {
+        MatcherAssert.assertThat(
+            "Joined must not be equal to a ListOf with different elements",
+            new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ),
+            new IsNot<>(
+                new IsEqual<>(
+                    new ListOf<>(
+                        JoinedTest.LITERAL_TWO,
+                        JoinedTest.LITERAL_ONE
+                    )
+                )
+            )
+        );
+    }
+
+    @Test
+    void hashCodeMatchesListOf() {
+        MatcherAssert.assertThat(
+            "Joined must have the same hashCode as ListOf of the same elements",
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(JoinedTest.LITERAL_THREE)
+            ).hashCode(),
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE,
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_THREE
+                ).hashCode()
+            )
+        );
+    }
+
+    @Test
+    void evaluatesSourcesLazily() {
+        MatcherAssert.assertThat(
+            "Sources must not be evaluated until an operation is called",
+            () -> new Joined<String>(new JoinedTest.BrokenSourceList()).size(),
+            new Throws<>(IllegalStateException.class)
         );
     }
 
@@ -440,5 +672,34 @@ final class JoinedTest {
                 )
             )
         );
+    }
+
+    /**
+     * A source list that fails when its list iterator is requested.
+     *
+     * @since 1.0.0
+     */
+    private static final class BrokenSourceList extends AbstractList<String> {
+
+        @Override
+        public String get(final int index) {
+            final String item;
+            if (index == 0) {
+                item = JoinedTest.LITERAL_ONE;
+            } else {
+                item = JoinedTest.LITERAL_TWO;
+            }
+            return item;
+        }
+
+        @Override
+        public int size() {
+            return 2;
+        }
+
+        @Override
+        public ListIterator<String> listIterator() {
+            throw new IllegalStateException("sources must stay untouched");
+        }
     }
 }
