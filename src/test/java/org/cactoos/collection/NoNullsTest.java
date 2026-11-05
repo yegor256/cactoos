@@ -12,6 +12,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
 import org.hamcrest.object.HasToString;
 import org.hamcrest.text.StringContainsInOrder;
 import org.junit.jupiter.api.Test;
@@ -53,6 +54,18 @@ final class NoNullsTest {
                 "Item #1 of #toArray(array) is NULL",
                 IllegalStateException.class
             )
+        );
+    }
+
+    @Test
+    void keepsTrailingNullInLargerArray() {
+        final Object[] array = new Object[3];
+        array[1] = "x";
+        new NoNulls<>(new ListOf<>(1)).toArray(array);
+        MatcherAssert.assertThat(
+            "Must set the element after the end to null per the contract",
+            array[1],
+            new IsNull<>()
         );
     }
 

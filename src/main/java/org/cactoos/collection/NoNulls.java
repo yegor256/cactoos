@@ -84,7 +84,8 @@ public final class NoNulls<X> implements Collection<X> {
     @Override
     public <T> T[] toArray(final T[] array) {
         final T[] result = this.col.toArray(array);
-        for (int idx = 0; idx < result.length; ++idx) {
+        final int size = this.col.size();
+        for (int idx = 0; idx < size && idx < result.length; ++idx) {
             if (result[idx] == null) {
                 throw new IllegalStateException(
                     new UncheckedText(
