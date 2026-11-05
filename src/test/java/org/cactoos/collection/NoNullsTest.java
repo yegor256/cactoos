@@ -57,6 +57,18 @@ final class NoNullsTest {
     }
 
     @Test
+    void keepsTrailingNullInLargerArray() {
+        final Object[] array = new Object[3];
+        array[1] = "x";
+        new NoNulls<>(new ListOf<Object>(1)).toArray(array);
+        MatcherAssert.assertThat(
+            "Must set the element after the end to null per the contract",
+            array[1],
+            new org.hamcrest.core.IsNull<>()
+        );
+    }
+
+    @Test
     void throwsErrorIfNullInContainsArg() {
         MatcherAssert.assertThat(
             "Must throw exception for #contains(null)",
