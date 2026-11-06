@@ -6,6 +6,7 @@ package org.cactoos.list;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
@@ -229,7 +230,7 @@ final class JoinedListIteratorTest {
     void removesLastReturnedItemFromSecondList() {
         final List<Integer> first = new ArrayList<>(Arrays.asList(1, 2));
         final List<Integer> second = new ArrayList<>(Arrays.asList(3, 4));
-        final ListIterator<Integer> joined = new JoinedListIterator<Integer>(
+        final ListIterator<Integer> joined = new JoinedListIterator<>(
             first.listIterator(), second.listIterator()
         );
         joined.next();
@@ -239,7 +240,7 @@ final class JoinedListIteratorTest {
         MatcherAssert.assertThat(
             "Must remove the item from the list that returned it",
             second,
-            new IsEqual<>(Arrays.asList(4))
+            new IsEqual<>(Collections.singletonList(4))
         );
     }
 
@@ -247,9 +248,9 @@ final class JoinedListIteratorTest {
     @SuppressWarnings("unchecked")
     void removesFromFirstListAfterPrevious() {
         final List<Integer> first = new ArrayList<>(Arrays.asList(1, 2));
-        final List<Integer> second = new ArrayList<>(Arrays.asList(3));
-        final ListIterator<Integer> joined = new JoinedListIterator<Integer>(
-            first.listIterator(), second.listIterator()
+        final ListIterator<Integer> joined = new JoinedListIterator<>(
+            first.listIterator(),
+            new ArrayList<>(Collections.singletonList(3)).listIterator()
         );
         joined.next();
         joined.next();
@@ -260,7 +261,7 @@ final class JoinedListIteratorTest {
         MatcherAssert.assertThat(
             "Must remove the item returned by previous",
             first,
-            new IsEqual<>(Arrays.asList(1))
+            new IsEqual<>(Collections.singletonList(1))
         );
     }
 
@@ -271,7 +272,7 @@ final class JoinedListIteratorTest {
             "Must refuse to remove before any item was returned",
             () -> {
                 new JoinedListIterator<Integer>(
-                    new ArrayList<>(Arrays.asList(1)).listIterator()
+                    new ArrayList<>(Collections.singletonList(1)).listIterator()
                 ).remove();
                 return true;
             },
@@ -282,9 +283,9 @@ final class JoinedListIteratorTest {
     @Test
     @SuppressWarnings("unchecked")
     void setsLastReturnedItem() {
-        final List<Integer> first = new ArrayList<>(Arrays.asList(1));
+        final List<Integer> first = new ArrayList<>(Collections.singletonList(1));
         final List<Integer> second = new ArrayList<>(Arrays.asList(2, 3));
-        final ListIterator<Integer> joined = new JoinedListIterator<Integer>(
+        final ListIterator<Integer> joined = new JoinedListIterator<>(
             first.listIterator(), second.listIterator()
         );
         joined.next();
@@ -300,10 +301,10 @@ final class JoinedListIteratorTest {
     @Test
     @SuppressWarnings("unchecked")
     void addsItemToIteratorWhereCursorIs() {
-        final List<Integer> first = new ArrayList<>(Arrays.asList(1));
-        final List<Integer> second = new ArrayList<>(Arrays.asList(2));
-        final ListIterator<Integer> joined = new JoinedListIterator<Integer>(
-            first.listIterator(), second.listIterator()
+        final List<Integer> first = new ArrayList<>(Collections.singletonList(1));
+        final ListIterator<Integer> joined = new JoinedListIterator<>(
+            first.listIterator(),
+            new ArrayList<>(Collections.singletonList(2)).listIterator()
         );
         joined.next();
         joined.add(5);
@@ -317,9 +318,9 @@ final class JoinedListIteratorTest {
     @Test
     @SuppressWarnings("unchecked")
     void addsItemBeforeAnythingWasReturned() {
-        final List<Integer> first = new ArrayList<>(Arrays.asList(1));
+        final List<Integer> first = new ArrayList<>(Collections.singletonList(1));
         new JoinedListIterator<Integer>(
-            first.listIterator(), new ArrayList<Integer>().listIterator()
+            first.listIterator(), new ArrayList<Integer>(0).listIterator()
         ).add(0);
         MatcherAssert.assertThat(
             "Must add the item at the very beginning",
@@ -331,9 +332,9 @@ final class JoinedListIteratorTest {
     @Test
     @SuppressWarnings("unchecked")
     void movesCursorAfterAdd() {
-        final ListIterator<Integer> joined = new JoinedListIterator<Integer>(
-            new ArrayList<>(Arrays.asList(1)).listIterator(),
-            new ArrayList<>(Arrays.asList(2)).listIterator()
+        final ListIterator<Integer> joined = new JoinedListIterator<>(
+            new ArrayList<>(Collections.singletonList(1)).listIterator(),
+            new ArrayList<>(Collections.singletonList(2)).listIterator()
         );
         joined.next();
         joined.add(5);
@@ -341,6 +342,57 @@ final class JoinedListIteratorTest {
             "Must return the next item after the added one",
             joined.next(),
             new IsEqual<>(2)
+        );
+    }
+
+    @Test
+    void rejectsRepeatedRemove() {
+        final ListIterator<Integer> joined = new JoinedListIterator<>(
+            new ArrayList<>(Collections.singletonList(1)).listIterator()
+        );
+        joined.next();
+        joined.remove();
+        MatcherAssert.assertThat(
+            "Must reject a second removal of the same item",
+            () -> {
+                joined.remove();
+                return true;
+            },
+            new Throws<>(IllegalStateException.class)
+        );
+    }
+
+    @Test
+    void rejectsSetAfterAdd() {
+        final ListIterator<Integer> joined = new JoinedListIterator<>(
+            new ArrayList<>(Collections.singletonList(1)).listIterator()
+        );
+        joined.next();
+        joined.add(2);
+        MatcherAssert.assertThat(
+            "Must require navigation before setting after add",
+            () -> {
+                joined.set(3);
+                return true;
+            },
+            new Throws<>(IllegalStateException.class)
+        );
+    }
+
+    @Test
+    void rejectsRemoveAfterAdd() {
+        final ListIterator<Integer> joined = new JoinedListIterator<>(
+            new ArrayList<>(Collections.singletonList(1)).listIterator()
+        );
+        joined.next();
+        joined.add(2);
+        MatcherAssert.assertThat(
+            "Must require navigation before removing after add",
+            () -> {
+                joined.remove();
+                return true;
+            },
+            new Throws<>(IllegalStateException.class)
         );
     }
 }

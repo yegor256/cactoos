@@ -19,9 +19,6 @@ import org.cactoos.scalar.Unchecked;
  *
  * <p>There is no thread-safety guarantee.</p>
  *
- * @param <T> Items type
- * @since 1.0.0
-
  * <p>Mutations are delegated to the underlying iterators.
  * {@link #set(Object)} and {@link #remove()} act on the iterator that returned
  * the item last. {@link #add(Object)} inserts the item into the iterator
@@ -29,6 +26,9 @@ import org.cactoos.scalar.Unchecked;
  * the item goes to the end of the earlier one, unless {@link #hasNext()}
  * has already moved the cursor to the later one, and then it goes to
  * its beginning. Before any navigation the item goes to the first iterator.</p>
+ *
+ * @param <T> Items type
+ * @since 1.0.0
  */
 public final class JoinedListIterator<T> implements ListIterator<T> {
 
