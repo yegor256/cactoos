@@ -92,17 +92,9 @@ public final class TailOf implements Input {
 
     private int copyPartial(final byte[] buffer, final byte[] response,
         final int num, final int read) {
-        final int result;
-        if (num > 0) {
-            System.arraycopy(
-                response, read, response, 0, this.count - read
-            );
-            System.arraycopy(buffer, 0, response, this.count - read, read);
-            result = this.count;
-        } else {
-            System.arraycopy(buffer, 0, response, 0, read);
-            result = read;
-        }
-        return result;
+        final int kept = Math.min(num, this.count - read);
+        System.arraycopy(response, num - kept, response, 0, kept);
+        System.arraycopy(buffer, 0, response, kept, read);
+        return kept + read;
     }
 }
