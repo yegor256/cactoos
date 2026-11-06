@@ -15,13 +15,35 @@ import org.junit.jupiter.api.Test;
  * Test case for {@link SumOf}.
  *
  * @since 0.9
- * @todo #1335:30min Following the rewrite of the Number implementations
- *  in cactoos, the three methods below prefixed by overflow where adapted
- *  because they started to give different results. The task is to investigate
- *  thoroughly what is a "correct" behaviour concerning overflow in the case
- *  of SumOf and adapt the tests and the code to make this obvious and clear.
  */
 final class SumOfTest {
+
+    @Test
+    void narrowsIntOnlyAfterSumming() {
+        MatcherAssert.assertThat(
+            "Must retain the low integer bits when the final sum overflows",
+            new SumOf(Integer.MAX_VALUE, 1).intValue(),
+            new IsEqual<>(Integer.MIN_VALUE)
+        );
+    }
+
+    @Test
+    void narrowsLongOnlyAfterSumming() {
+        MatcherAssert.assertThat(
+            "Must retain the low long bits when the final sum overflows",
+            new SumOf(Long.MAX_VALUE, 1L).longValue(),
+            new IsEqual<>(Long.MIN_VALUE)
+        );
+    }
+
+    @Test
+    void preservesFractionalPartsUntilFinalConversion() {
+        MatcherAssert.assertThat(
+            "Must add fractional parts before truncating the final sum",
+            new SumOf(0.75d, 0.75d).intValue(),
+            new IsEqual<>(1)
+        );
+    }
 
     @Test
     void withListOfNumbersInt() {
