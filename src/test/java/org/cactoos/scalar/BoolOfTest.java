@@ -10,8 +10,8 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link BoolOf}.
+ *
  * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class BoolOfTest {
 

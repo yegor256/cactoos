@@ -19,8 +19,8 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ResourceOf}.
+ *
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ResourceOfTest {
 
@@ -119,10 +119,6 @@ final class ResourceOfTest {
         );
     }
 
-    /**
-     * Large text resource.
-     * @return The content of the large resource
-     */
     private static Text large() {
         return new TextOf(
             new ResourceOf(

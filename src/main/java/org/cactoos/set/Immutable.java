@@ -16,7 +16,6 @@ import java.util.Set;
  * @param <T> Element type
  * @since 0.58.0
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public final class Immutable<T> implements Set<T> {
 
     /**
@@ -26,6 +25,7 @@ public final class Immutable<T> implements Set<T> {
 
     /**
      * Ctor.
+     *
      * @param src Source set
      */
     public Immutable(final Set<? extends T> src) {

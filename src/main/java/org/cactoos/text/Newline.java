@@ -7,7 +7,7 @@ package org.cactoos.text;
 /**
  * Returns a text that is the default system line separator.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
  */

@@ -4,16 +4,28 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link SwappedCase}.
+ *
  * @since 0.13.3
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class SwappedCaseTest {
+
+    @Test
+    void swapInput() {
+        MatcherAssert.assertThat(
+            "Can't swap an input",
+            new SwappedCase(
+                new InputOf("HellO!")
+            ),
+            new HasString("hELLo!")
+        );
+    }
 
     @Test
     void swapText() {

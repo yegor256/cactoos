@@ -16,9 +16,9 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link NumberOfScalars}.
+ *
  * @since 1.0.0
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
@@ -93,7 +93,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @MethodSource("arguments")
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({"unlikely-arg-type", "EqualsIncompatibleType"})
     void equalsNumber(final Number nbr) {
         MatcherAssert.assertThat(
             "Must implement equals doubleValue",
@@ -114,7 +114,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @MethodSource("arguments")
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({"unlikely-arg-type", "EqualsIncompatibleType"})
     void notEqualsObject(final Number nbr) {
         MatcherAssert.assertThat(
             "Must implement not equals incorrect value",
@@ -125,7 +125,7 @@ final class NumberOfScalarsTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @MethodSource("arguments")
-    void toString(final Number nbr) {
+    void printsItself(final Number nbr) {
         MatcherAssert.assertThat(
             "Must implement toString via doubleValue",
             new NumberOfScalars(() -> nbr).toString(),

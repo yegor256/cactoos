@@ -31,9 +31,10 @@ import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link BytesOf}.
+ *
  * @since 0.12
- * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class BytesOfTest {
 
     @Test
@@ -122,6 +123,12 @@ final class BytesOfTest {
                     }
 
                     @Override
+                    public int read(final byte[] buf, final int off, final int len)
+                        throws IOException {
+                        return input.read(buf, off, len);
+                    }
+
+                    @Override
                     public void close() throws IOException {
                         input.close();
                         closed.set(true);
@@ -138,7 +145,7 @@ final class BytesOfTest {
     }
 
     @Test
-    void asBytes() throws Exception {
+    void convertsTextIntoBytes() throws Exception {
         MatcherAssert.assertThat(
             "Can't convert text into bytes",
             new BytesOf(
@@ -151,7 +158,7 @@ final class BytesOfTest {
     }
 
     @Test
-    void asBytesFromIterator() throws Exception {
+    void convertsIteratorIntoBytes() throws Exception {
         MatcherAssert.assertThat(
             "Can't convert iterator into bytes",
             new BytesOf(
@@ -164,7 +171,7 @@ final class BytesOfTest {
     }
 
     @Test
-    void asBytesFromIterable() throws Exception {
+    void convertsIterableIntoBytes() throws Exception {
         MatcherAssert.assertThat(
             "Must convert iterable into bytes",
             new BytesOf(

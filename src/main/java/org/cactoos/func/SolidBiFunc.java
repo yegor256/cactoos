@@ -20,6 +20,7 @@ public final class SolidBiFunc<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      */
     public SolidBiFunc(final BiFunc<X, Y, Z> fnc) {
@@ -28,6 +29,7 @@ public final class SolidBiFunc<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      * @param max Max buffer length
      * @since 0.26

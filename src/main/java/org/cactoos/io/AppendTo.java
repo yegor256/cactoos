@@ -16,7 +16,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Output that appends content to a given file.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0
  */
@@ -29,6 +29,7 @@ public final class AppendTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param path Path as a source of a File
      */
     public AppendTo(final Path path) {
@@ -37,6 +38,7 @@ public final class AppendTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param src File to which content will be appended
      */
     public AppendTo(final File src) {
@@ -45,6 +47,7 @@ public final class AppendTo implements Output {
 
     /**
      * Ctor.
+     *
      * @param src Source of the output, deferred
      */
     private AppendTo(final Scalar<Path> src) {

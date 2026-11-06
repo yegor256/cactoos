@@ -18,6 +18,7 @@ public final class HeadOf<T> extends IteratorEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param num Num of head elements
      * @param iterator Decorated iterator
      */

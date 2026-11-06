@@ -5,6 +5,7 @@
 package org.cactoos.text;
 
 import org.cactoos.Text;
+import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
 import org.hamcrest.core.IsEqual;
@@ -15,9 +16,19 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Sticky}.
+ *
  * @since 0.47
  */
 final class StickyTest {
+
+    @Test
+    void cachesInput() {
+        MatcherAssert.assertThat(
+            "must cache an input",
+            new Sticky(new InputOf("Hello")),
+            new IsText("Hello")
+        );
+    }
 
     @Test
     void cachesResult() {

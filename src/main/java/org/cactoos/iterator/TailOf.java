@@ -9,9 +9,7 @@ import java.util.Iterator;
 /**
  * Tail portion of the iterator.
  *
- * <p>
- * There is no thread-safety guarantee.
- * </p>
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Element type
  * @since 0.31
@@ -20,6 +18,7 @@ public final class TailOf<T> extends IteratorEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param num Number of tail elements
      * @param iterator Decorated iterator
      */

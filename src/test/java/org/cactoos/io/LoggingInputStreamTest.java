@@ -15,10 +15,10 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link LoggingInputStream}.
+ *
  * @since 0.39
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class LoggingInputStreamTest {
 
     @Test
@@ -29,6 +29,12 @@ final class LoggingInputStreamTest {
                 new InputStream() {
                     @Override
                     public int read() throws IOException {
+                        throw new IOException(message);
+                    }
+
+                    @Override
+                    public int read(final byte[] buf, final int off, final int len)
+                        throws IOException {
                         throw new IOException(message);
                     }
                 },

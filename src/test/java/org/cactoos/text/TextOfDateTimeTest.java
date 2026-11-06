@@ -23,10 +23,10 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link TextOfDateTime}.
+ *
  * @since 1.0.0
  * @checkstyle StringLiteralsConcatenationCheck (1000 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class TextOfDateTimeTest {
 
     @Test
@@ -66,6 +66,7 @@ final class TextOfDateTimeTest {
     }
 
     @Test
+    @SuppressWarnings("JavaTimeDefaultTimeZone")
     void readsCurrentLocalDateAsText() throws Exception {
         MatcherAssert.assertThat(
             "Must format a LocalDate with ISO format.",
@@ -117,6 +118,7 @@ final class TextOfDateTimeTest {
     }
 
     @Test
+    @SuppressWarnings("JavaTimeDefaultTimeZone")
     void currentLocalDateTimeAsText() throws Exception {
         MatcherAssert.assertThat(
             "Must format a LocalDateTime with ISO format.",
@@ -207,6 +209,7 @@ final class TextOfDateTimeTest {
     }
 
     @Test
+    @SuppressWarnings("JavaTimeDefaultTimeZone")
     void currentOffsetDateTimeAsText() throws Exception {
         MatcherAssert.assertThat(
             "Must format a OffsetDateTime with ISO format.",
@@ -252,6 +255,7 @@ final class TextOfDateTimeTest {
     }
 
     @Test
+    @SuppressWarnings("JavaTimeDefaultTimeZone")
     void currentZonedDateTimeAsText() throws Exception {
         MatcherAssert.assertThat(
             "Must format a ZonedDateTime with ISO format.",

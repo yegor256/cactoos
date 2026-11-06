@@ -10,8 +10,8 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link IterableOfShorts}.
+ *
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class IterableOfShortsTest {
 

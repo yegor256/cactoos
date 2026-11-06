@@ -9,6 +9,7 @@ import org.cactoos.Input;
 
 /**
  * Input that only shows the first N bytes of the original input.
+ *
  * @since 0.31
  */
 public final class HeadOf implements Input {
@@ -25,6 +26,7 @@ public final class HeadOf implements Input {
 
     /**
      * Ctor.
+     *
      * @param orig The original input
      * @param len Limit of bytes that can be read from the beginning
      */

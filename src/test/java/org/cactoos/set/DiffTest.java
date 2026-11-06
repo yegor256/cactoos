@@ -14,6 +14,7 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link Diff}.
+ *
  * @since 0.58.0
  */
 final class DiffTest {

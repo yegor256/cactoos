@@ -12,7 +12,7 @@ import org.cactoos.scalar.IoChecked;
  * Func that doesn't throw checked {@link Exception}, but throws
  * {@link IOException} instead.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of output
@@ -27,6 +27,7 @@ public final class IoCheckedFunc<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Encapsulated func
      */
     public IoCheckedFunc(final Func<? super X, ? extends Y> fnc) {

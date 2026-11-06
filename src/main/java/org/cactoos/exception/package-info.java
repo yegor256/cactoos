@@ -5,6 +5,7 @@
 
 /**
  * Exceptions.
+ *
  * @since 0.56
  */
 package org.cactoos.exception;

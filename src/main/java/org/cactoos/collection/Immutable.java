@@ -15,7 +15,6 @@ import java.util.Iterator;
  * @param <X> Type of source item
  * @since 1.16
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public final class Immutable<X> implements Collection<X> {
 
     /**
@@ -25,6 +24,7 @@ public final class Immutable<X> implements Collection<X> {
 
     /**
      * Ctor.
+     *
      * @param src Source collection
      */
     public Immutable(final Collection<? extends X> src) {
@@ -119,6 +119,7 @@ public final class Immutable<X> implements Collection<X> {
     }
 
     @Override
+    @SuppressWarnings("UndefinedEquals")
     public boolean equals(final Object obj) {
         return this == obj
             || obj instanceof Immutable

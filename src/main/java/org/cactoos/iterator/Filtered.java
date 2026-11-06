@@ -4,8 +4,8 @@
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayDeque;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 import org.cactoos.Func;
@@ -28,7 +28,7 @@ import org.cactoos.scalar.Unchecked;
  * );
  * </pre>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of item
  * @see Filtered
@@ -53,6 +53,7 @@ public final class Filtered<X> implements Iterator<X> {
 
     /**
      * Ctor.
+     *
      * @param fnc Predicate
      * @param src Source iterable
      */
@@ -65,6 +66,7 @@ public final class Filtered<X> implements Iterator<X> {
 
     /**
      * Ctor.
+     *
      * @param src Source iterable
      * @param fnc Predicate
      */
@@ -74,7 +76,7 @@ public final class Filtered<X> implements Iterator<X> {
     ) {
         this.iterator = src;
         this.func = fnc;
-        this.buffer = new LinkedList<>();
+        this.buffer = new ArrayDeque<>();
     }
 
     @Override

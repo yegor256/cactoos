@@ -12,7 +12,7 @@ package org.cactoos;
  * {@link org.cactoos.func.UncheckedBiFunc} decorator. Also
  * you may try {@link org.cactoos.func.IoCheckedBiFunc}.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of input
@@ -24,6 +24,7 @@ public interface BiFunc<X, Y, Z> {
 
     /**
      * Apply it.
+     *
      * @param first The first argument
      * @param second The second argument
      * @return The result

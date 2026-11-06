@@ -16,7 +16,6 @@ import org.cactoos.collection.CollectionEnvelope;
  *
  * @param <T> Element type
  * @since 0.23
- * @checkstyle AbstractClassNameCheck (500 lines)
  */
 public abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
     List<T> {
@@ -28,6 +27,7 @@ public abstract class ListEnvelope<T> extends CollectionEnvelope<T> implements
 
     /**
      * Ctor.
+     *
      * @param list Encapsulated list
      */
     public ListEnvelope(final List<T> list) {

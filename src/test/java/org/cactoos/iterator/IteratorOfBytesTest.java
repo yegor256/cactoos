@@ -20,7 +20,6 @@ import org.llorllale.cactoos.matchers.Throws;
  * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.34
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class IteratorOfBytesTest {
 

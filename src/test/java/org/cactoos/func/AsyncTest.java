@@ -19,10 +19,10 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Async}.
+ *
  * @since 0.10
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings({"PMD.CloseResource", "PMD.UnnecessaryLocalRule"})
+@SuppressWarnings({"PMD.CloseResource", "PMD.CloseInlineResourceRule"})
 final class AsyncTest {
 
     @Test
@@ -144,6 +144,7 @@ final class AsyncTest {
     }
 
     @Test
+    @SuppressWarnings("FutureReturnValueIgnored")
     void shutsDownInternalExecutorOnClose() throws Exception {
         final CountDownLatch latch = new CountDownLatch(1);
         final Async<Boolean, Boolean> async = new Async<>(
@@ -164,6 +165,7 @@ final class AsyncTest {
     }
 
     @Test
+    @SuppressWarnings("FutureReturnValueIgnored")
     void doesNotShutDownExternalExecutor() throws Exception {
         final ExecutorService exec = Executors.newSingleThreadExecutor();
         try {

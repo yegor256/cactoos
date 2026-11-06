@@ -7,13 +7,12 @@ package org.cactoos.text;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.cactoos.Text;
 import org.cactoos.scalar.And;
-import org.cactoos.scalar.Or;
 import org.cactoos.scalar.Unchecked;
 
 /**
  * Text of {@link String}
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
  */
@@ -26,6 +25,7 @@ public final class TextOfString implements Text {
 
     /**
      * Ctor.
+     *
      * @param input The String
      */
     public TextOfString(final String input) {
@@ -50,13 +50,10 @@ public final class TextOfString implements Text {
     @Override
     @SuppressFBWarnings("EQ_UNUSUAL")
     public boolean equals(final Object obj) {
-        return new Unchecked<>(
-            new Or(
-                () -> this == obj,
-                new And(
-                    () -> obj instanceof Text,
-                    () -> this.input.equals(new UncheckedText((Text) obj).asString())
-                )
+        return this == obj || new Unchecked<>(
+            new And(
+                () -> obj instanceof Text,
+                () -> this.input.equals(new UncheckedText((Text) obj).asString())
             )
         ).value();
     }

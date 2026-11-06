@@ -53,6 +53,7 @@ import org.cactoos.list.ListOf;
  *
  * @since 0.12
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 public final class BytesOf implements Bytes {
 
     /**
@@ -341,7 +342,7 @@ public final class BytesOf implements Bytes {
      * @param charset The {@link CharSequence} representation of the charset used for encoding
      */
     public BytesOf(final CharSequence input, final CharSequence charset) {
-        this(() -> input.toString().getBytes(charset.toString()));
+        this(() -> input.toString().getBytes(Charset.forName(charset.toString())));
     }
 
     /**
@@ -453,7 +454,7 @@ public final class BytesOf implements Bytes {
      * @param charset The charset represented as a {@link CharSequence}
      */
     public BytesOf(final Text text, final CharSequence charset) {
-        this(() -> text.asString().getBytes(charset.toString()));
+        this(() -> text.asString().getBytes(Charset.forName(charset.toString())));
     }
 
     /**
@@ -542,7 +543,7 @@ public final class BytesOf implements Bytes {
                         new ByteArrayOutputStream()
                 ) {
                     error.printStackTrace(
-                        new PrintStream(baos, true, charset.toString())
+                        new PrintStream(baos, true, Charset.forName(charset.toString()))
                     );
                     return baos.toByteArray();
                 }
@@ -634,7 +635,7 @@ public final class BytesOf implements Bytes {
                     ByteArrayOutputStream baos =
                         new ByteArrayOutputStream();
                     PrintStream stream = new PrintStream(
-                        baos, true, charset.toString()
+                        baos, true, Charset.forName(charset.toString())
                     )
                 ) {
                     for (final StackTraceElement element : strace) {

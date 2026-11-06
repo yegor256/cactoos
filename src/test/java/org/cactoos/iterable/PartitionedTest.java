@@ -11,8 +11,8 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Partitioned}.
+ *
  * @since 0.29
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class PartitionedTest {
 

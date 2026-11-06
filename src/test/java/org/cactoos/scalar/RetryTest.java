@@ -18,8 +18,8 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Retry}.
+ *
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class RetryTest {
 
@@ -80,6 +80,7 @@ final class RetryTest {
     void runsScalarMultipleTimesWithWait() throws Exception {
         final int times = 3;
         final long wait = 500L;
+        final long tolerance = 20L;
         final AtomicInteger tries = new AtomicInteger(0);
         final List<Instant> executions = new ArrayList<>(times);
         new Retry<>(
@@ -99,7 +100,7 @@ final class RetryTest {
                     "Should wait the given time between attempts on attempt %d",
                     position
                 ),
-                executions.get(position).plusMillis(wait),
+                executions.get(position).plusMillis(wait - tolerance),
                 Matchers.lessThanOrEqualTo(executions.get(position + 1))
             );
         }

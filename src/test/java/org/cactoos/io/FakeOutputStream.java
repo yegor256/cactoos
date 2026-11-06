@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Fake {@link OutptStream} with ability to check if
  * it is closed.
+ *
  * @since 1.0.0
  */
 final class FakeOutputStream extends OutputStream {
@@ -39,6 +40,7 @@ final class FakeOutputStream extends OutputStream {
 
     /**
      * If stream is closed.
+     *
      * @return Closed or not
      */
     boolean isClosed() {

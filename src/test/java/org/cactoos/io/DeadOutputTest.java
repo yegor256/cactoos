@@ -11,8 +11,8 @@ import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Test case for {@link DeadOutput}.
+ *
  * @since 0.16
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class DeadOutputTest {
 

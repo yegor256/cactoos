@@ -4,6 +4,7 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
@@ -13,10 +14,9 @@ import org.cactoos.Text;
  * {@link String#trim()}, removing whitespace characters
  * from both the beginning and the end of the text.</p>
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
- *<p>Example:</p>
+ * <p>Example:</p>
  * <pre>{@code
  * Text text = new Trimmed(new TextOf("  hello world  "));
  * text.asString(); // "hello world"
@@ -29,7 +29,17 @@ public final class Trimmed extends TextEnvelope {
     /**
      * Ctor.
      *
-     * Creates a trimmed text from the given
+     * @param input The input
+     * @since 0.73.2
+     */
+    public Trimmed(final Input input) {
+        this(new TextOf(input));
+    }
+
+    /**
+     * Ctor.
+     *
+     * <p>Creates a trimmed text from the given</p>
      *
      * @param text The text
      */

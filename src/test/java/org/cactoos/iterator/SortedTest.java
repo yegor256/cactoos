@@ -11,8 +11,8 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test Case for {@link Sorted}.
+ *
  * @since 0.19
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class SortedTest {
 

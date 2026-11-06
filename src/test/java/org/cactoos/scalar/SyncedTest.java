@@ -4,7 +4,7 @@
  */
 package org.cactoos.scalar;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
@@ -14,8 +14,8 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
  * Test case for {@link Synced}.
+ *
  * @since 0.24
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class SyncedTest {
 
@@ -32,7 +32,7 @@ final class SyncedTest {
 
     @Test
     void addsAllElementsInThreads() throws Exception {
-        final List<Integer> list = new LinkedList<>();
+        final List<Integer> list = new ArrayList<>(100);
         final int threads = 100;
         for (int idx = 0; idx < threads; ++idx) {
             new Synced<>(() -> list.add(1)).value();

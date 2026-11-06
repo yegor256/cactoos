@@ -13,10 +13,9 @@ import org.llorllale.cactoos.matchers.HasString;
 /**
  * Test for {@link Randomized}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.32
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class RandomizedTest {
 

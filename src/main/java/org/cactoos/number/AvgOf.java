@@ -13,8 +13,7 @@ import org.cactoos.scalar.Ternary;
 /**
  * Average of numbers.
  *
- * <p>Here is how you can use it to find the mathematical average of numbers:
- * </p>
+ * <p>Here is how you can use it to find the mathematical average of numbers:</p>
  *
  * <pre>
  * int avg = new AvgOf(1, 2, 3, 4).intValue();
@@ -22,7 +21,7 @@ import org.cactoos.scalar.Ternary;
  * int avg = new AvgOf(numbers).intValue();
  * </pre>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
  */
@@ -35,6 +34,7 @@ public final class AvgOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     *
      * @param src Numbers
      */
     public AvgOf(final Number... src) {
@@ -43,6 +43,7 @@ public final class AvgOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     *
      * @param src The iterable
      */
     public AvgOf(final Iterable<? extends Number> src) {

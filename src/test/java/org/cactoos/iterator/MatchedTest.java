@@ -15,6 +15,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Mapped}.
+ *
  * @since 0.47
  */
 final class MatchedTest {
@@ -63,8 +64,8 @@ final class MatchedTest {
             "must throw NoSuchElementException when both iterators are exhausted",
             () -> new Matched<Integer, Integer>(
                 Objects::equals,
-                new IteratorOf<Integer>(),
-                new IteratorOf<Integer>()
+                new IteratorOf<>(),
+                new IteratorOf<>()
             ).next(),
             new Throws<>(
                 NoSuchElementException.class

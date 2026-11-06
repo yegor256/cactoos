@@ -10,8 +10,8 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Repeated}.
+ *
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class RepeatedTest {
 

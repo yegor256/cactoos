@@ -4,16 +4,28 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Rotated}.
+ *
  * @since 0.12
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class RotatedTest {
+
+    @Test
+    void rotateRightInput() {
+        MatcherAssert.assertThat(
+            "Can't rotate an input to right",
+            new Rotated(
+                new InputOf("Hello!"), 2
+            ),
+            new HasString("o!Hell")
+        );
+    }
 
     @Test
     void rotateRightText() {

@@ -9,7 +9,7 @@ import org.cactoos.Proc;
 /**
  * Envelope for {@link Proc}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @since 0.50
@@ -23,6 +23,7 @@ public abstract class ProcEnvelope<X> implements Proc<X> {
 
     /**
      * Ctor.
+     *
      * @param origin The procedure
      */
     public ProcEnvelope(final Proc<? super X> origin) {

@@ -12,7 +12,7 @@ import org.cactoos.iterable.Filtered;
 /**
  * Find first element in a list that satisfies specified condition.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of result
  * @since 0.32
@@ -36,6 +36,7 @@ public final class FirstOf<T> implements Scalar<T> {
 
     /**
      * Constructor with default condition (always `true`) and plain fallback.
+     *
      * @param src Source iterable
      * @param fbck Fallback used if no value matches
      */
@@ -49,6 +50,7 @@ public final class FirstOf<T> implements Scalar<T> {
 
     /**
      * Constructor with default condition (always `true`).
+     *
      * @param src Source iterable
      * @param fbck Fallback used if no value matches
      */
@@ -62,6 +64,7 @@ public final class FirstOf<T> implements Scalar<T> {
 
     /**
      * Constructor.
+     *
      * @param cond Condition for getting the element
      * @param src Source iterable
      * @param fbck Fallback used if no value matches

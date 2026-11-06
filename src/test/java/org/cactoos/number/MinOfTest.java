@@ -6,14 +6,14 @@ package org.cactoos.number;
 
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link MinOf}.
+ *
  * @since 0.10
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class MinOfTest {
 
     @Test
@@ -23,7 +23,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1, 2, 3, 4).toArray(new Integer[0])
             ).intValue(),
-            Matchers.equalTo(1)
+            new IsEqual<>(1)
         );
     }
 
@@ -34,7 +34,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1, 2, 3, 4).toArray(new Integer[0])
             ).longValue(),
-            Matchers.equalTo(1L)
+            new IsEqual<>(1L)
         );
     }
 
@@ -45,7 +45,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1, 2, 3, 4).toArray(new Integer[0])
             ).doubleValue(),
-            Matchers.equalTo(1.0d)
+            new IsEqual<>(1.0d)
         );
     }
 
@@ -56,7 +56,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1, 2, 3, 4).toArray(new Integer[0])
             ).floatValue(),
-            Matchers.equalTo(1.0f)
+            new IsEqual<>(1.0f)
         );
     }
 
@@ -67,7 +67,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[0])
             ).intValue(),
-            Matchers.equalTo(1)
+            new IsEqual<>(1)
         );
     }
 
@@ -78,7 +78,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[0])
             ).longValue(),
-            Matchers.equalTo(1L)
+            new IsEqual<>(1L)
         );
     }
 
@@ -89,7 +89,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[0])
             ).doubleValue(),
-            Matchers.equalTo(1.0d)
+            new IsEqual<>(1.0d)
         );
     }
 
@@ -100,7 +100,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1L, 2L, 3L, 4L).toArray(new Long[0])
             ).floatValue(),
-            Matchers.equalTo(1.0f)
+            new IsEqual<>(1.0f)
         );
     }
 
@@ -111,7 +111,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[0])
             ).intValue(),
-            Matchers.equalTo(1)
+            new IsEqual<>(1)
         );
     }
 
@@ -122,7 +122,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[0])
             ).longValue(),
-            Matchers.equalTo(1L)
+            new IsEqual<>(1L)
         );
     }
 
@@ -133,7 +133,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[0])
             ).doubleValue(),
-            Matchers.equalTo(1.0d)
+            new IsEqual<>(1.0d)
         );
     }
 
@@ -144,7 +144,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1.0d, 2.0d, 3.0d, 4.0d).toArray(new Double[0])
             ).floatValue(),
-            Matchers.equalTo(1.0f)
+            new IsEqual<>(1.0f)
         );
     }
 
@@ -155,7 +155,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[0])
             ).intValue(),
-            Matchers.equalTo(1)
+            new IsEqual<>(1)
         );
     }
 
@@ -166,7 +166,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[0])
             ).longValue(),
-            Matchers.equalTo(1L)
+            new IsEqual<>(1L)
         );
     }
 
@@ -177,7 +177,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[0])
             ).doubleValue(),
-            Matchers.equalTo(1.0d)
+            new IsEqual<>(1.0d)
         );
     }
 
@@ -188,7 +188,7 @@ final class MinOfTest {
             new MinOf(
                 new ListOf<>(1.0f, 2.0f, 3.0f, 4.0f).toArray(new Float[0])
             ).floatValue(),
-            Matchers.equalTo(1.0f)
+            new IsEqual<>(1.0f)
         );
     }
 }

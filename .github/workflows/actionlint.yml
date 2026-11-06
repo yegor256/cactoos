@@ -7,19 +7,17 @@ name: actionlint
   push:
     branches:
       - master
+    paths:
+      - '.github/**'
   pull_request:
     branches:
       - master
+    paths:
+      - '.github/**'
 jobs:
   actionlint:
     timeout-minutes: 15
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v6
-      - name: Download actionlint
-        id: get_actionlint
-        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
-        shell: bash
-      - name: Check workflow files
-        run: ${{ steps.get_actionlint.outputs.executable }} -color
-        shell: bash
+      - uses: actions/checkout@v7
+      - uses: reviewdog/action-actionlint@v1.81.1

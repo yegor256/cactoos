@@ -11,10 +11,10 @@ import org.hamcrest.TypeSafeMatcher;
 
 /**
  * Check a put method.
+ *
  * @param <K> Type of key
  * @param <V> Type of value
  * @since 0.30
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 public final class PutUpdatesValues<K, V> extends
     TypeSafeMatcher<Map<K, V>> {
@@ -31,6 +31,7 @@ public final class PutUpdatesValues<K, V> extends
 
     /**
      * Ctor.
+     *
      * @param akey Sample key
      * @param val Sample value
      */

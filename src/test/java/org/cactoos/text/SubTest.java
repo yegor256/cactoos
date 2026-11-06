@@ -12,8 +12,8 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Sub}.
+ *
  * @since 0.11
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class SubTest {
 
@@ -71,6 +71,15 @@ final class SubTest {
             "Can't cut text with negative start and negative end",
             new Sub("hello world", -5, -2),
             new HasString("wor")
+        );
+    }
+
+    @Test
+    void cutsNothingWhenStartIsBeyondLength() {
+        MatcherAssert.assertThat(
+            "Must not fail when start is beyond the length of the text",
+            new Sub("hi", 10, -1),
+            new HasString("")
         );
     }
 }

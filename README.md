@@ -37,7 +37,7 @@ Maven:
 <dependency>
   <groupId>org.cactoos</groupId>
   <artifactId>cactoos</artifactId>
-  <version>0.61.0</version>
+  <version>0.62.0</version>
 </dependency>
 ```
 
@@ -45,7 +45,7 @@ Gradle:
 
 ```groovy
 dependencies {
-  compile 'org.cactoos:cactoos::0.61.0
+  compile 'org.cactoos:cactoos::0.62.0
 }
 ```
 
@@ -53,6 +53,12 @@ Java version required: 17+.
 
 StackOverflow tag is
 [cactoos](https://stackoverflow.com/questions/tagged/cactoos).
+
+**Note:** please, don't forget to update `cactoos` version in your
+libraries, cause newer versions may break backwards compatibility and
+projects with newer version of `cactoos` may fail to even compile with
+your library then (due to Maven uses the newest version only for the
+whole compile context).
 
 ## Input/Output
 
@@ -395,7 +401,7 @@ An `IterableOf<>` wrapping a transformation does no work until iterated.
 This contrasts with [Guava's `ImmutableList.copyOf()`][guava-imm] and
   [Apache Commons Collections][commons-col], which materialize elements at
   construction time.
-Explicit caching requires opting in with `Sticky` or `StickyList`.
+Explicit caching requires opting in with `Sticky`.
 
 **Checked exceptions as first-class interface contracts.**
 All core interfaces declare `throws Exception`; the library never silently

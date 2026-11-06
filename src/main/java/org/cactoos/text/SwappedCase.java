@@ -4,17 +4,30 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
  * Swaps the case of a Text changing upper and title case to lower case,
  * and lower case to upper case.
+ *
  * @since 0.13.3
  */
 public final class SwappedCase extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * @param input The input
+     * @since 0.73.2
+     */
+    public SwappedCase(final Input input) {
+        this(new TextOf(input));
+    }
+
+    /**
+     * Ctor.
+     *
      * @param text The text
      */
     public SwappedCase(final Text text) {

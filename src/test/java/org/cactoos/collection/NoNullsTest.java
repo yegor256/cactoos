@@ -12,6 +12,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
 import org.hamcrest.object.HasToString;
 import org.hamcrest.text.StringContainsInOrder;
 import org.junit.jupiter.api.Test;
@@ -22,13 +23,10 @@ import org.llorllale.cactoos.matchers.Throws;
 /**
  * Test cases for {@link NoNulls}.
  *
- * <p>
- * There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.35
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class NoNullsTest {
 
     @Test
@@ -56,6 +54,18 @@ final class NoNullsTest {
                 "Item #1 of #toArray(array) is NULL",
                 IllegalStateException.class
             )
+        );
+    }
+
+    @Test
+    void keepsTrailingNullInLargerArray() {
+        final Object[] array = new Object[3];
+        array[1] = "x";
+        new NoNulls<>(new ListOf<>(1)).toArray(array);
+        MatcherAssert.assertThat(
+            "Must set the element after the end to null per the contract",
+            array[1],
+            new IsNull<>()
         );
     }
 
@@ -101,7 +111,7 @@ final class NoNullsTest {
     void throwsErrorIfNullInAddAll() {
         MatcherAssert.assertThat(
             "Must throw exception for nullable #addAll() parameter collection",
-            () -> new NoNulls<>(new ArrayList<Integer>(0)).addAll(new ListOf<>(1, 2, null)),
+            () -> new NoNulls<>(new ArrayList<>(0)).addAll(new ListOf<>(1, 2, null)),
             new Throws<>(
                 "Item #2 of #toArray() is NULL",
                 IllegalStateException.class

@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Concatenated}.
+ *
  * @since 0.47
  */
 final class ConctatenatedTest {

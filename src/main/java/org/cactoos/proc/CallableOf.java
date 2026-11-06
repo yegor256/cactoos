@@ -12,7 +12,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * Func as {@link Callable}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of return
  * @since 0.53
@@ -26,6 +26,7 @@ public final class CallableOf<T> implements Callable<T> {
 
     /**
      * Ctor.
+     *
      * @param proc Encapsulated proc
      * @param ipt Input
      * @param <X> Type of input
@@ -39,6 +40,7 @@ public final class CallableOf<T> implements Callable<T> {
 
     /**
      * Ctor.
+     *
      * @param scalar Encapsulated scalar
      * @since 0.11
      */
@@ -52,6 +54,7 @@ public final class CallableOf<T> implements Callable<T> {
 
     /**
      * Ctor.
+     *
      * @param runnable The callable
      * @since 0.53
      */
@@ -66,6 +69,7 @@ public final class CallableOf<T> implements Callable<T> {
 
     /**
      * Ctor.
+     *
      * @param clbl The callable original
      * @since 0.53
      */

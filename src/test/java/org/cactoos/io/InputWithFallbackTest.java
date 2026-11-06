@@ -13,8 +13,8 @@ import org.llorllale.cactoos.matchers.EndsWith;
 
 /**
  * Test case for {@link InputWithFallback}.
+ *
  * @since 0.9
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class InputWithFallbackTest {
 

@@ -4,8 +4,8 @@
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,8 +19,8 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test for {@link Sliced}.
+ *
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class SlicedTest {
 
@@ -110,7 +110,7 @@ final class SlicedTest {
      */
     @Test
     void hasNextCallsOriginOnce() {
-        final List<String> list = new LinkedList<>();
+        final List<String> list = new ArrayList<>(1);
         list.add("1");
         final AtomicInteger counter = new AtomicInteger(0);
         MatcherAssert.assertThat(
@@ -128,6 +128,7 @@ final class SlicedTest {
 
     /**
      * Iterator that counts calls to hasNext and next.
+     *
      * @param <T> Type of items
      * @since 1.0
      */
@@ -145,6 +146,7 @@ final class SlicedTest {
 
         /**
          * Ctor.
+         *
          * @param hook Hook to run
          * @param origin Original iterator
          */

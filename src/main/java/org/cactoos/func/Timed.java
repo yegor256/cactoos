@@ -12,10 +12,12 @@ import org.cactoos.Func;
 
 /**
  * Function that gets interrupted after a certain time has passed.
+ *
  * @param <X> Type of input
  * @param <Y> Type of output
  * @since 0.29.3
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 public final class Timed<X, Y> implements Func<X, Y> {
 
     /**
@@ -30,6 +32,7 @@ public final class Timed<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param function Origin function
      * @param milliseconds Milliseconds
      */
@@ -39,6 +42,7 @@ public final class Timed<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param milliseconds Milliseconds
      * @param async Async function
      */

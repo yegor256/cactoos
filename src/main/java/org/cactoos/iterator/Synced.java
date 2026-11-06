@@ -37,6 +37,7 @@ public final class Synced<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param iterator The iterator to synchronize access to
      */
     public Synced(final Iterator<? extends T> iterator) {
@@ -45,6 +46,7 @@ public final class Synced<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param lock The lock to use for synchronization
      * @param iterator The iterator to synchronize access to
      */

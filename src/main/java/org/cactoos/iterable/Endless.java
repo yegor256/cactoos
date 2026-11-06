@@ -17,6 +17,7 @@ public final class Endless<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param item The item to repeat
      */
     public Endless(final T item) {

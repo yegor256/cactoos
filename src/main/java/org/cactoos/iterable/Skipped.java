@@ -16,6 +16,7 @@ public final class Skipped<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param skip How many to skip
      * @param src The underlying iterable
      */
@@ -26,6 +27,7 @@ public final class Skipped<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param skip Count skip elements
      * @param iterable Decorated iterable
      */

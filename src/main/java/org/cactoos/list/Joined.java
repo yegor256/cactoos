@@ -10,7 +10,7 @@ import org.cactoos.iterable.IterableOf;
 /**
  * Joined list.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of source item
  * @since 0.20
@@ -22,6 +22,7 @@ public final class Joined<X> extends ListEnvelope<X> {
 
     /**
      * Ctor.
+     *
      * @param src Source lists
      */
     @SafeVarargs
@@ -31,6 +32,7 @@ public final class Joined<X> extends ListEnvelope<X> {
 
     /**
      * Ctor.
+     *
      * @param item First item
      * @param items List
      * @since 0.32
@@ -42,9 +44,10 @@ public final class Joined<X> extends ListEnvelope<X> {
 
     /**
      * Ctor.
+     *
      * @param src Source lists
      */
     public Joined(final Iterable<? extends List<? extends X>> src) {
-        super(new ListOf<X>(new org.cactoos.iterable.Joined<X>(src)));
+        super(new ListOf<>(new org.cactoos.iterable.Joined<>(src)));
     }
 }

@@ -14,7 +14,7 @@ import org.cactoos.Text;
  * using a specified {@link Locale}. If no locale is provided,
  * {@link Locale#ENGLISH} is used by default.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * <p>Example:</p>
  *
@@ -29,7 +29,9 @@ public final class Lowered extends TextEnvelope {
 
     /**
      * Ctor.
-     * <p>Creates a lower-case text from a character sequence
+     *
+     * <p>Creates a lower-case text from a character sequence</p>
+     *
      * @param text The text
      */
     public Lowered(final CharSequence text) {
@@ -38,7 +40,9 @@ public final class Lowered extends TextEnvelope {
 
     /**
      * Ctor.
-     * <p>Creates a lower-case text from a {@link Text}
+     *
+     * <p>Creates a lower-case text from a {@link Text}</p>
+     *
      * @param text The text
      */
     public Lowered(final Text text) {
@@ -47,7 +51,9 @@ public final class Lowered extends TextEnvelope {
 
     /**
      * Ctor.
-     * <p>Creates a lower-case text from a {@link Text}
+     *
+     * <p>Creates a lower-case text from a {@link Text}</p>
+     *
      * @param text The text
      * @param locale The locale
      */

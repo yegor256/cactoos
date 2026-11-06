@@ -10,8 +10,8 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Constant}.
+ *
  * @since 0.30
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ConstantTest {
 

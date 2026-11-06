@@ -19,10 +19,9 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Sorted}.
+ *
  * @since 1.0.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class SortedTest {
 
     @Test
@@ -184,7 +183,7 @@ final class SortedTest {
         MatcherAssert.assertThat(
             "Must keep unique integer numbers sorted",
             new Sorted<Number>(
-                Comparator.comparing(Number::intValue),
+                Comparator.comparingInt(Number::intValue),
                 2, 1, 3, 2, 1
             ),
             new IsIterableContainingInOrder<>(

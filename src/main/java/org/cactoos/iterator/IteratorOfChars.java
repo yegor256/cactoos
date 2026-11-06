@@ -33,6 +33,7 @@ public final class IteratorOfChars implements Iterator<Character> {
 
     /**
      * Ctor.
+     *
      * @param str String to iterate
      */
     public IteratorOfChars(final String str) {
@@ -41,6 +42,7 @@ public final class IteratorOfChars implements Iterator<Character> {
 
     /**
      * Ctor.
+     *
      * @param txt Text to iterate
      */
     public IteratorOfChars(final Text txt) {
@@ -49,6 +51,7 @@ public final class IteratorOfChars implements Iterator<Character> {
 
     /**
      * Ctor.
+     *
      * @param items Items to iterate
      */
     public IteratorOfChars(final char... items) {
@@ -57,6 +60,7 @@ public final class IteratorOfChars implements Iterator<Character> {
 
     /**
      * Ctor.
+     *
      * @param items Items to iterate, deferred
      */
     private IteratorOfChars(final Scalar<char[]> items) {

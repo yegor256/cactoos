@@ -10,7 +10,7 @@ import java.io.InputStream;
 /**
  * Input stream that only shows the first N bytes of the original stream.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.31
  */
@@ -33,6 +33,7 @@ public final class HeadInputStream extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param orig The original input stream
      * @param len A number of bytes that can be read from the beginning
      */
@@ -50,6 +51,23 @@ public final class HeadInputStream extends InputStream {
         } else {
             this.processed += 1L;
             adjusted = this.origin.read();
+        }
+        return adjusted;
+    }
+
+    @Override
+    public int read(final byte[] buf, final int off, final int len) throws IOException {
+        final int adjusted;
+        if (this.processed >= this.length) {
+            adjusted = -1;
+        } else {
+            final int done = this.origin.read(
+                buf, off, (int) Math.min((long) len, this.length - this.processed)
+            );
+            if (done > 0) {
+                this.processed += done;
+            }
+            adjusted = done;
         }
         return adjusted;
     }

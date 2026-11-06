@@ -4,16 +4,29 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
  * Reverse the Text.
+ *
  * @since 0.2
  */
 public final class Reversed extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * @param input The input
+     * @since 0.73.2
+     */
+    public Reversed(final Input input) {
+        this(new TextOf(input));
+    }
+
+    /**
+     * Ctor.
+     *
      * @param text The text
      */
     public Reversed(final Text text) {

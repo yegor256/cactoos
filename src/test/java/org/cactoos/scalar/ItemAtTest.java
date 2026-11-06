@@ -13,8 +13,8 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link ItemAt}.
+ *
  * @since 0.7
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ItemAtTest {
 

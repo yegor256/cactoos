@@ -12,10 +12,9 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link CheckedBytes}.
+ *
  * @since 0.31
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.ExceptionAsFlowControl")
 final class CheckedBytesTest {
 
     @Test

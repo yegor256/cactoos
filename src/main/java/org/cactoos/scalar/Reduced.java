@@ -42,7 +42,7 @@ import org.cactoos.iterable.Mapped;
  * ).value();
  * }</pre>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
@@ -67,6 +67,7 @@ public final class Reduced<T> implements Scalar<T> {
 
     /**
      * Ctor.
+     *
      * @param reduce Reducing function
      * @param values Values to be wrapped as scalars
      */
@@ -80,6 +81,7 @@ public final class Reduced<T> implements Scalar<T> {
 
     /**
      * Ctor.
+     *
      * @param values Values to be wrapped as scalars
      * @param reduce Reducing function
      * @since 0.55.0
@@ -93,6 +95,7 @@ public final class Reduced<T> implements Scalar<T> {
 
     /**
      * Ctor.
+     *
      * @param reduce Reducing function
      * @param scalars The scalars
      */

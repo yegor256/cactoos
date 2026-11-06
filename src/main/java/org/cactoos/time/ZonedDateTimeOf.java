@@ -12,6 +12,7 @@ import org.cactoos.scalar.Unchecked;
 
 /**
  * Parser for {@link ZonedDateTime} instances.
+ *
  * @since 0.27
  */
 public final class ZonedDateTimeOf implements Scalar<ZonedDateTime> {
@@ -23,6 +24,7 @@ public final class ZonedDateTimeOf implements Scalar<ZonedDateTime> {
 
     /**
      * Parses date to create {@link ZonedDateTime} instances.
+     *
      * @param date The date to parse
      */
     public ZonedDateTimeOf(final CharSequence date) {
@@ -31,7 +33,8 @@ public final class ZonedDateTimeOf implements Scalar<ZonedDateTime> {
 
     /**
      * Parses date using the provided format to create
-     *  {@link ZonedDateTime} instances.
+     * {@link ZonedDateTime} instances.
+     *
      * @param date The date to parse
      * @param format The format to use
      * @param zone The zone to use
@@ -43,7 +46,8 @@ public final class ZonedDateTimeOf implements Scalar<ZonedDateTime> {
 
     /**
      * Parses the date using the formatter to create
-     *  {@link ZonedDateTime} instances.
+     * {@link ZonedDateTime} instances.
+     *
      * @param date The date to parse
      * @param formatter The formatter to use
      */
@@ -54,6 +58,7 @@ public final class ZonedDateTimeOf implements Scalar<ZonedDateTime> {
 
     /**
      * Parses the date using the deferred formatter.
+     *
      * @param date The date to parse
      * @param fmt The formatter to use, deferred
      */

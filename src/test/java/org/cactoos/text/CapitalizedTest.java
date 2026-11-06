@@ -10,6 +10,7 @@ import org.llorllale.cactoos.matchers.IsText;
 
 /**
  * Test case for {@link Capitalized}.
+ *
  * @since 0.46
  */
 final class CapitalizedTest {
@@ -65,6 +66,19 @@ final class CapitalizedTest {
             "Must capitalize unicode character ǆ",
             new Capitalized("ǆ"),
             new IsText("ǅ")
+        );
+    }
+
+    @Test
+    void capitalizeTextStartingWithSupplementaryCharacter() {
+        MatcherAssert.assertThat(
+            "Must preserve text after a supplementary first character",
+            new Capitalized(
+                new StringBuilder().appendCodePoint(0x10428).append("bc").toString()
+            ),
+            new IsText(
+                new StringBuilder().appendCodePoint(0x10400).append("bc").toString()
+            )
         );
     }
 
