@@ -17,7 +17,6 @@ import org.cactoos.text.UncheckedText;
  * @param <X> Element type
  * @since 0.27
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public final class NoNulls<X> implements Collection<X> {
 
     /**
@@ -27,12 +26,13 @@ public final class NoNulls<X> implements Collection<X> {
 
     /**
      * Ctor without '? extends X' wildcard because of the issue:
-     *  <ol>
-     *      <li>The client gets Collection of X</li>
-     *      <li>The client adds item of X to it</li>
-     *      <li>The client queries items of original Collection of ? extends X</li>
-     *      <li>Runtime exception occurs</li>
-     *  </ol>
+     * <ol>
+     * <li>The client gets Collection of X</li>
+     * <li>The client adds item of X to it</li>
+     * <li>The client queries items of original Collection of ? extends X</li>
+     * <li>Runtime exception occurs</li>
+     * </ol>
+     *
      * @param items Original one
      */
     public NoNulls(final Collection<X> items) {
@@ -84,7 +84,8 @@ public final class NoNulls<X> implements Collection<X> {
     @Override
     public <T> T[] toArray(final T[] array) {
         final T[] result = this.col.toArray(array);
-        for (int idx = 0; idx < result.length; ++idx) {
+        final int size = this.col.size();
+        for (int idx = 0; idx < size && idx < result.length; ++idx) {
             if (result[idx] == null) {
                 throw new IllegalStateException(
                     new UncheckedText(
@@ -149,6 +150,7 @@ public final class NoNulls<X> implements Collection<X> {
     }
 
     @Override
+    @SuppressWarnings("UndefinedEquals")
     public boolean equals(final Object obj) {
         return this.col.equals(obj);
     }

@@ -19,6 +19,7 @@ public final class Shuffled<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param src The underlying iterable
      * @since 0.23
      */
@@ -29,6 +30,7 @@ public final class Shuffled<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param src The underlying iterable
      */
     public Shuffled(final Iterable<? extends T> src) {
@@ -37,6 +39,7 @@ public final class Shuffled<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param rnd Randomizer
      * @param src The underlying iterable
      */

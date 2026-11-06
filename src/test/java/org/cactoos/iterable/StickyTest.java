@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Sticky}.
+ *
  * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class StickyTest {
 

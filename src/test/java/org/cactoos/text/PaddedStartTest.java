@@ -4,16 +4,30 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link PaddedStart}.
+ *
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class PaddedStartTest {
+
+    @Test
+    void padsInput() {
+        MatcherAssert.assertThat(
+            "Should pad an input at start",
+            new PaddedStart(
+                new InputOf("x"),
+                2,
+                '-'
+            ),
+            new HasString("-x")
+        );
+    }
 
     @Test
     void noPaddingIfOrigTextIsAsLongAsRequestedLength() {

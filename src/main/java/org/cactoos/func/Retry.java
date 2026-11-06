@@ -10,7 +10,7 @@ import org.cactoos.Func;
 /**
  * Func that will try a few times before throwing an exception.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of output
@@ -35,6 +35,7 @@ public final class Retry<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      */
     public Retry(final Func<X, Y> fnc) {
@@ -43,6 +44,7 @@ public final class Retry<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      * @param attempts Maximum number of attempts
      */
@@ -52,6 +54,7 @@ public final class Retry<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      * @param attempts Maximum number of attempts
      * @param wait The executions of the function
@@ -63,6 +66,7 @@ public final class Retry<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      * @param ext Exit condition, returns TRUE if there is no more reason to try
      */
@@ -72,6 +76,7 @@ public final class Retry<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      * @param ext Exit condition, returns TRUE if there is no more reason to try
      * @param wait The executions of the function

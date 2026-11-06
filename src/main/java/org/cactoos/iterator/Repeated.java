@@ -31,6 +31,7 @@ public final class Repeated<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param max How many times to repeat
      * @param element Element to repeat
      */
@@ -40,6 +41,7 @@ public final class Repeated<T> implements Iterator<T> {
 
     /**
      * Ctor.
+     *
      * @param max How many times to repeat
      * @param scalar Scalar to repeat
      */

@@ -20,7 +20,7 @@ import org.cactoos.text.TextOf;
 /**
  * Map as {@link Properties}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.12
  */
@@ -33,6 +33,7 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param content String
      */
     public PropertiesOf(final String content) {
@@ -41,6 +42,7 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param text Text
      */
     public PropertiesOf(final Text text) {
@@ -49,6 +51,7 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param input Input
      */
     public PropertiesOf(final Input input) {
@@ -66,6 +69,7 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param entries The map with properties
      */
     public PropertiesOf(final Map.Entry<?, ?>... entries) {
@@ -74,6 +78,7 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param entries The map with properties
      * @since 0.23
      */
@@ -90,6 +95,7 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param map The map with properties
      */
     public PropertiesOf(final Map<?, ?> map) {
@@ -109,6 +115,7 @@ public final class PropertiesOf implements Scalar<Properties> {
 
     /**
      * Ctor.
+     *
      * @param sclr The underlying properties
      */
     private PropertiesOf(final Scalar<? extends Properties> sclr) {

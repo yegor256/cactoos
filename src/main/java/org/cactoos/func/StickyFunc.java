@@ -18,7 +18,7 @@ import org.cactoos.scalar.Sticky;
  * <p>Pay attention that this class is not thread-safe. It is highly
  * recommended to always decorate it with {@link SyncFunc}.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of output
@@ -34,6 +34,7 @@ public final class StickyFunc<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      */
     public StickyFunc(final Func<X, Y> fnc) {
@@ -42,6 +43,7 @@ public final class StickyFunc<X, Y> implements Func<X, Y> {
 
     /**
      * Ctor.
+     *
      * @param fnc Func original
      * @param max Maximum cache size
      * @since 0.26

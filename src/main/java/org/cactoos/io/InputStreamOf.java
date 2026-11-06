@@ -23,7 +23,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * An {@link InputStream} that encapsulates other sources of data.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.13
  */
@@ -36,6 +36,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param path The path
      */
     public InputStreamOf(final Path path) {
@@ -44,6 +45,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param file The file
      */
     public InputStreamOf(final File file) {
@@ -52,6 +54,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param url The URL
      */
     public InputStreamOf(final URL url) {
@@ -60,6 +63,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param uri The URI
      */
     public InputStreamOf(final URI uri) {
@@ -68,6 +72,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param bytes The text
      */
     public InputStreamOf(final Bytes bytes) {
@@ -76,6 +81,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param bytes The text
      */
     public InputStreamOf(final byte[] bytes) {
@@ -84,6 +90,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param text The text
      */
     public InputStreamOf(final Text text) {
@@ -92,6 +99,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param charset Charset
      */
@@ -101,6 +109,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param charset Charset
      */
@@ -110,6 +119,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param text The text
      */
     public InputStreamOf(final CharSequence text) {
@@ -118,6 +128,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param charset Charset
      */
@@ -127,6 +138,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param text The text
      * @param charset Charset
      */
@@ -136,6 +148,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param rdr The reader
      * @since 0.13.2
      */
@@ -145,6 +158,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param rdr Reader
      * @param charset Charset
      * @since 0.13.2
@@ -155,6 +169,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param rdr Reader
      * @param charset Charset
      * @since 0.13.2
@@ -165,6 +180,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param rdr Reader
      * @param cset Charset
      * @param max Buffer size
@@ -176,6 +192,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param rdr Reader
      * @param max Buffer size
      * @since 0.13.2
@@ -186,6 +203,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param rdr Reader
      * @param charset Charset
      * @param max Buffer size
@@ -198,6 +216,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param input The input
      */
     public InputStreamOf(final Input input) {
@@ -206,6 +225,7 @@ public final class InputStreamOf extends InputStream {
 
     /**
      * Ctor.
+     *
      * @param src Source
      */
     private InputStreamOf(final Scalar<InputStream> src) {

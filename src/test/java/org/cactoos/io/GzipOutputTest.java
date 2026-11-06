@@ -24,10 +24,9 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link GzipOutput}.
+ *
  * @since 0.29
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class GzipOutputTest {
 
     @Test

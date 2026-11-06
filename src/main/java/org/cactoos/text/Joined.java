@@ -14,7 +14,8 @@ import org.cactoos.iterable.Mapped;
  *
  * <p>This class joins multiple {@link Text} instances into a single
  * text using a specified delimiter between elements.</p>
- * <p>There is no thread-safety guarantee.
+ *
+ * <p>There is no thread-safety guarantee.</p>
  *
  * <p>Example:</p>
  *
@@ -34,7 +35,9 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
-     * <p>Creates a joined text from character sequences
+     *
+     * <p>Creates a joined text from character sequences</p>
+     *
      * @param delimit Delimit among strings
      * @param strs Strings to be joined
      */
@@ -44,7 +47,9 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
-     * <p>Creates a joined text from an iterable of character
+     *
+     * <p>Creates a joined text from an iterable of character</p>
+     *
      * @param delimit Delimit among strings
      * @param strs Strings to be joined
      */
@@ -57,7 +62,9 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
-     * <p>Creates a joined text from {@link Text} instances
+     *
+     * <p>Creates a joined text from {@link Text} instances</p>
+     *
      * @param delimit Delimit among texts
      * @param txts Texts to be joined
      */
@@ -67,7 +74,9 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
-     * <p>Creates a joined text from {@link Text} instances
+     *
+     * <p>Creates a joined text from {@link Text} instances</p>
+     *
      * @param delimit Delimit among texts
      * @param txts Texts to be joined
      */
@@ -77,7 +86,9 @@ public final class Joined extends TextEnvelope {
 
     /**
      * Ctor.
-     * <p>Creates a joined text from an iterable of {@link Text}
+     *
+     * <p>Creates a joined text from an iterable of {@link Text}</p>
+     *
      * @param delimit Delimit among texts
      * @param txts Texts to be joined
      */

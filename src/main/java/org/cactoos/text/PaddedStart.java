@@ -4,12 +4,13 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.Input;
 import org.cactoos.Text;
 
 /**
  * Text padded at start to reach the given length.
  *
- * <p>There is thread safe.
+ * <p>There is thread safe.</p>
  *
  * @since 0.32
  */
@@ -17,6 +18,19 @@ public final class PaddedStart extends TextEnvelope {
 
     /**
      * Ctor.
+     *
+     * @param input The input
+     * @param length The minimum length of the resulting string
+     * @param symbol The padding symbol
+     * @since 0.73.2
+     */
+    public PaddedStart(final Input input, final int length, final char symbol) {
+        this(new TextOf(input), length, symbol);
+    }
+
+    /**
+     * Ctor.
+     *
      * @param text The text
      * @param length The minimum length of the resulting string
      * @param symbol The padding symbol

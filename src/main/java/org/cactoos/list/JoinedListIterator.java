@@ -16,7 +16,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * A few {@link ListIterator} joined together.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Items type
  * @since 1.0.0
@@ -25,7 +25,6 @@ import org.cactoos.scalar.Unchecked;
  *  when the cursor is in between two listerators should be well documented in this
  *  class (because there are multiple options in that case).
  */
-@SuppressWarnings("PMD.TooManyMethods")
 public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
@@ -45,6 +44,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param items Items to concatenate
      */
     @SafeVarargs
@@ -54,6 +54,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param item First item
      * @param items ListIterator
      */
@@ -67,6 +68,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param items ListIterators
      * @param item End item
      */
@@ -80,6 +82,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param items Items to concatenate
      */
     public JoinedListIterator(final List<? extends ListIterator<? extends T>> items) {
@@ -88,6 +91,7 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
 
     /**
      * Ctor.
+     *
      * @param items Items to concatenate, deferred
      */
     private JoinedListIterator(
@@ -167,26 +171,14 @@ public final class JoinedListIterator<T> implements ListIterator<T> {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * If {@link List} of {@link ListIterator} has next element.
-     * @return Has or no
-     */
     private boolean listHasNextElt() {
         return this.cursorlit.get() + 1 <= this.listiters.value().size() - 1;
     }
 
-    /**
-     * If {@link List} of {@link ListIterator} has previous element.
-     * @return Has or no
-     */
     private boolean listHasPreviousElt() {
         return this.cursorlit.get() - 1 >= 0;
     }
 
-    /**
-     * Get current {@link ListIterator}.
-     * @return Current element
-     */
     private ListIterator<? extends T> currentListIterator() {
         final ListIterator<? extends T> current;
         if (this.cursorlit.get() == -1) {

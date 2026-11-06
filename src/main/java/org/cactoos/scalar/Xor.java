@@ -10,24 +10,24 @@ import org.cactoos.iterable.Joined;
 
 /**
  * Logical exclusive or.
-
- * Returns {@link True} when an odd number of elements have value true,
- * otherwise return {@link False}.
+ *
+ * <p>Returns {@link True} when an odd number of elements have value true,
+ * otherwise return {@link False}.</p>
  *
  * <p>This class could be also used for matching multiple boolean
  * expressions:</p>
  *
  * {@code
  * new Xor(
- *    new True(),
- *    new True(),
- *    new True()
+ * new True(),
+ * new True(),
+ * new True()
  * ).value(); // the result is true
  *
  * new Xor(
- *    new True(),
- *    new False(),
- *    new True()
+ * new True(),
+ * new False(),
+ * new True()
  * ).value(); // the result is false
  * }
  *
@@ -37,7 +37,7 @@ import org.cactoos.iterable.Joined;
  * use the {@link Unchecked} decorator. Or you may use
  * {@link IoChecked} to wrap it in an IOException.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @see Unchecked
  * @see IoChecked
@@ -47,6 +47,7 @@ public final class Xor extends ScalarEnvelope<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param scalar The Scalar
      */
     @SafeVarargs
@@ -56,6 +57,7 @@ public final class Xor extends ScalarEnvelope<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param iterable The iterable
      */
     public Xor(final Iterable<? extends Scalar<Boolean>> iterable) {

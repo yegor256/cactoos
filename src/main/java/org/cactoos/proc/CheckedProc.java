@@ -10,6 +10,7 @@ import org.cactoos.scalar.Checked;
 
 /**
  * Proc that throws exception of specified type.
+ *
  * @param <X> Type of input
  * @param <E> Exception's type
  * @since 0.32
@@ -28,6 +29,7 @@ public final class CheckedProc<X, E extends Exception> implements Proc<X> {
 
     /**
      * Ctor.
+     *
      * @param original Original proc
      * @param fnc Function that wraps exceptions
      */

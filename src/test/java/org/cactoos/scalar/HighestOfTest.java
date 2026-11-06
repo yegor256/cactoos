@@ -18,10 +18,9 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link HighestOf}.
+ *
  * @since 0.29
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class HighestOfTest {
 
     @Test

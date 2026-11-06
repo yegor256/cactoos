@@ -16,7 +16,7 @@ package org.cactoos;
  * make sure it doesn't calculate anything twice, you can use
  * {@link org.cactoos.func.StickyFunc} decorator.</p>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of output
@@ -30,6 +30,7 @@ public interface Func<X, Y> {
 
     /**
      * Apply it.
+     *
      * @param input The argument
      * @return The result
      * @throws Exception If fails

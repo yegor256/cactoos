@@ -7,7 +7,7 @@ package org.cactoos;
 /**
  * Bytes.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @see org.cactoos.bytes.BytesOf
  * @since 0.1
@@ -17,6 +17,7 @@ public interface Bytes {
 
     /**
      * Convert it to the byte array.
+     *
      * @return The byte array
      * @throws Exception If fails
      */

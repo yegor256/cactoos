@@ -18,6 +18,7 @@ public final class Repeated<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param total The total number of repetitions
      * @param elm The element to repeat
      */
@@ -27,6 +28,7 @@ public final class Repeated<T> extends IterableEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param total The total number of repetitions
      * @param elm The element to repeat
      */

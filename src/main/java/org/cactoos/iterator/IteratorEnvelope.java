@@ -24,6 +24,7 @@ public abstract class IteratorEnvelope<X> implements Iterator<X> {
 
     /**
      * Ctor.
+     *
      * @param iter The {@link Iterator} to wrap
      */
     public IteratorEnvelope(final Iterator<? extends X> iter) {

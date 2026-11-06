@@ -23,6 +23,7 @@ public final class Diff<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param first First set
      * @param second Second set
      */
@@ -32,6 +33,7 @@ public final class Diff<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param first First iterator
      * @param second Second iterator
      */
@@ -44,6 +46,7 @@ public final class Diff<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param first First iterable supplier
      * @param second Second iterable supplier
      */
@@ -52,13 +55,13 @@ public final class Diff<T> extends SetEnvelope<T> {
         final Scalar<Iterable<T>> second
     ) {
         this(
-            new SetOf<T>(
-                new IterableOf<T>(
+            new SetOf<>(
+                new IterableOf<>(
                     () -> new Unchecked<>(first).value().iterator()
                 )
             ),
-            new SetOf<T>(
-                new IterableOf<T>(
+            new SetOf<>(
+                new IterableOf<>(
                     () -> new Unchecked<>(second).value().iterator()
                 )
             )
@@ -67,11 +70,12 @@ public final class Diff<T> extends SetEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param first First set
      * @param second Second set
      */
     public Diff(final Set<T> first, final Set<T> second) {
-        super(new HashSet<T>(first) {
+        super(new HashSet<>(first) {
             private static final long serialVersionUID = 1L;
             {
                 this.removeAll(second);

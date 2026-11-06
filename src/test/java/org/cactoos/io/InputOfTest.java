@@ -36,9 +36,10 @@ import org.takes.tk.TkHtml;
 
 /**
  * Test case for {@link InputOf}.
+ *
  * @since 0.1
  */
-@SuppressWarnings({"unchecked", "PMD.TooManyMethods"})
+@SuppressWarnings({"unchecked", "PMD.CloseInlineResourceRule"})
 final class InputOfTest {
 
     @Test
@@ -81,6 +82,12 @@ final class InputOfTest {
                     @Override
                     public int read() throws IOException {
                         return input.read();
+                    }
+
+                    @Override
+                    public int read(final byte[] buf, final int off, final int len)
+                        throws IOException {
+                        return input.read(buf, off, len);
                     }
 
                     @Override
@@ -188,6 +195,7 @@ final class InputOfTest {
     }
 
     @Test
+    @SuppressWarnings("UnnecessaryStringBuilder")
     void readsStringBuilder() {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
@@ -209,6 +217,7 @@ final class InputOfTest {
     }
 
     @Test
+    @SuppressWarnings("JdkObsolete")
     void readsStringBuffer() {
         final String starts = "The future ";
         final String ends = "is now!";

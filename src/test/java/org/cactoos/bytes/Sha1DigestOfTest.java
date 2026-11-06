@@ -14,8 +14,8 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Sha1DigestOf}.
+ *
  * @since 0.29
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class Sha1DigestOfTest {
 

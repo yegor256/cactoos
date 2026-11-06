@@ -9,11 +9,13 @@ import java.util.SortedSet;
 
 /**
  * SortedSet envelope.
+ *
  * <p>There is no thread-safety guarantee.</p>
+ *
  * @param <T> Element type
  * @since 0.45
- * @checkstyle AbstractClassNameCheck (500 lines)
  */
+@SuppressWarnings("JdkObsolete")
 public abstract class SortedSetEnvelope<T> extends SetEnvelope<T> implements
     SortedSet<T> {
 
@@ -24,6 +26,7 @@ public abstract class SortedSetEnvelope<T> extends SetEnvelope<T> implements
 
     /**
      * Primary ctor.
+     *
      * @param origin The original SortedSet to delegate to
      */
     protected SortedSetEnvelope(final SortedSet<T> origin) {

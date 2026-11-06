@@ -10,7 +10,7 @@ import org.cactoos.scalar.Unchecked;
 /**
  * BiFunc that doesn't throw checked {@link Exception}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of input
  * @param <Y> Type of input
@@ -26,6 +26,7 @@ public final class UncheckedBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
 
     /**
      * Ctor.
+     *
      * @param fnc Encapsulated func
      */
     public UncheckedBiFunc(final BiFunc<X, Y, Z> fnc) {

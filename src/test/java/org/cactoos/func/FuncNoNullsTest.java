@@ -13,8 +13,8 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link FuncNoNulls}.
+ *
  * @since 0.10
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class FuncNoNullsTest {
 

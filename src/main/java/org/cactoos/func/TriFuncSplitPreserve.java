@@ -15,19 +15,24 @@ import org.cactoos.TriFunc;
  * Unlike regular Split, stores empty "" tokens
  * created by adjacent regex separators.
  *
- * <p>
- *     Examples:
- *     1) text - " hello there ", regex - " "
- *     result: ["", "hello", "there", ""]
- *     2) text - "aaa", regex - "a"
- *     result: ["", "", "", ""]
- * </p>
+ * <p>Examples:
+ * 1) text - " hello there ", regex - " "
+ * result: ["", "hello", "there", ""]
+ * 2) text - "aaa", regex - "a"
+ * result: ["", "", "", ""]</p>
  *
  * @since 0.0
  */
 public final class TriFuncSplitPreserve
     implements TriFunc
         <String, String, Integer, Collection<String>> {
+
+    /**
+     * Ctor.
+     */
+    public TriFuncSplitPreserve() {
+        // nothing to init
+    }
 
     @Override
     public Collection<String> apply(

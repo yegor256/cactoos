@@ -11,6 +11,7 @@ import org.cactoos.Input;
 
 /**
  * Input that reads compressed data from the GZIP file format.
+ *
  * @since 0.29
  */
 public final class GzipInput implements Input {
@@ -27,6 +28,7 @@ public final class GzipInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The input
      */
     public GzipInput(final Input input) {
@@ -35,6 +37,7 @@ public final class GzipInput implements Input {
 
     /**
      * Ctor.
+     *
      * @param input The input
      * @param max Max length of the buffer
      */

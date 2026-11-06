@@ -8,6 +8,7 @@ import org.cactoos.Scalar;
 
 /**
  * Scalar check for no nulls.
+ *
  * @param <T> Type of result
  * @since 0.11
  */
@@ -20,6 +21,7 @@ public final class NoNulls<T> implements Scalar<T> {
 
     /**
      * Ctor.
+     *
      * @param sclr The scalar
      */
     public NoNulls(final Scalar<? extends T> sclr) {

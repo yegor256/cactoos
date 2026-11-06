@@ -4,7 +4,7 @@
  */
 package org.cactoos.scalar;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
@@ -16,8 +16,8 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Test case for {@link Or}.
+ *
  * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class OrTest {
 
@@ -79,7 +79,7 @@ final class OrTest {
 
     @Test
     void executesProcOnIterable() throws Exception {
-        final List<Integer> list = new LinkedList<>();
+        final List<Integer> list = new ArrayList<>(4);
         new Or(
             (Proc<Integer>) list::add,
             new IterableOf<>(1, 2, 3, 4)
@@ -93,7 +93,7 @@ final class OrTest {
 
     @Test
     void executesProcOnVarargs() throws Exception {
-        final List<Integer> list = new LinkedList<>();
+        final List<Integer> list = new ArrayList<>(3);
         new Or(
             (Proc<Integer>) list::add,
             2, 3, 4

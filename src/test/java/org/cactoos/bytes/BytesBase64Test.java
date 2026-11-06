@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link BytesBase64}.
+ *
  * @since 0.20.2
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class BytesBase64Test {
 

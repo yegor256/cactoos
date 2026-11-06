@@ -9,7 +9,7 @@ import org.cactoos.Scalar;
 /**
  * Logical negative.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * <p>This class implements {@link Scalar}, which throws a checked
  * {@link Exception}. This may not be convenient in many cases. To make
@@ -28,6 +28,7 @@ public final class Not implements Scalar<Boolean> {
 
     /**
      * Ctor.
+     *
      * @param scalar The scalar
      */
     public Not(final Scalar<Boolean> scalar) {

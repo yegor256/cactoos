@@ -14,6 +14,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link Mapped}.
+ *
  * @since 0.47
  */
 final class MappedTest {
@@ -36,7 +37,7 @@ final class MappedTest {
     void failsIfIteratorExhausted() {
         final Iterator<String> iterator = new Mapped<>(
             Number::toString,
-            new IteratorOf<Number>(1)
+            new IteratorOf<>(1)
         );
         iterator.next();
         MatcherAssert.assertThat(

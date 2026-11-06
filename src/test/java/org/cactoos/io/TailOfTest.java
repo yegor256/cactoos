@@ -14,8 +14,8 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Tests for {@link TailOf}.
+ *
  * @since 0.30
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TailOfTest {
 
@@ -119,11 +119,6 @@ final class TailOfTest {
         );
     }
 
-    /**
-     * Generate random byte array.
-     * @param size Size of array
-     * @return Generated array
-     */
     private byte[] generate(final int size) {
         final byte[] bytes = new byte[size];
         new Random().nextBytes(bytes);

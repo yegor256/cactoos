@@ -4,15 +4,15 @@
  */
 package org.cactoos.list;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import org.cactoos.iterable.IterableOf;
 
 /**
  * Implementation of {@link List}.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> List type
  * @since 0.1
@@ -21,6 +21,7 @@ public final class ListOf<T> extends ListEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param array An array of some elements
      */
     @SafeVarargs
@@ -30,19 +31,21 @@ public final class ListOf<T> extends ListEnvelope<T> {
 
     /**
      * Ctor.
+     *
      * @param src An {@link Iterator}
      * @since 0.21
      */
     public ListOf(final Iterator<? extends T> src) {
-        this(new IterableOf<T>(src));
+        this(new IterableOf<>(src));
     }
 
     /**
      * Ctor.
+     *
      * @param src An {@link Iterable}
      */
     public ListOf(final Iterable<? extends T> src) {
-        super(new LinkedList<T>() {
+        super(new ArrayList<>(0) {
             private static final long serialVersionUID = 1L;
             {
                 src.forEach(this::add);

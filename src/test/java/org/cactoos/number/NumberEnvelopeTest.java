@@ -16,9 +16,10 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link NumberEnvelope}.
+ *
  * @since 1.0.0
  */
-@SuppressWarnings({"serial", "PMD.TooManyMethods"})
+@SuppressWarnings("serial")
 final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
@@ -113,7 +114,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @MethodSource("arguments")
-    @SuppressWarnings("unlikely-arg-type")
+    @SuppressWarnings({"unlikely-arg-type", "EqualsIncompatibleType"})
     void notEqualsObject(final Number nbr) {
         MatcherAssert.assertThat(
             "Must forward equals and be false for incorrect Number",
@@ -124,7 +125,7 @@ final class NumberEnvelopeTest implements ArgumentsProvider {
 
     @ParameterizedTest
     @MethodSource("arguments")
-    void toString(final Number nbr) {
+    void printsItself(final Number nbr) {
         MatcherAssert.assertThat(
             "Must forward toString",
             new NumberEnvelope(nbr) { }.toString(),

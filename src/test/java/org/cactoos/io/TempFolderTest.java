@@ -18,9 +18,10 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link TempFolder}.
+ *
  * @since 1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class TempFolderTest {
 
     @Test

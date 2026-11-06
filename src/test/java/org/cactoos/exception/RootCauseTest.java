@@ -4,12 +4,13 @@
  */
 package org.cactoos.exception;
 
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 
 /**
  * Test Case for {@link RootCause}.
+ *
  * @since 0.56
  */
 final class RootCauseTest {
@@ -17,10 +18,10 @@ final class RootCauseTest {
     @Test
     void rootCauseTest() throws Exception {
         final Throwable inner = new Throwable();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Should return inner exception.",
             new RootCause(new Throwable(new Throwable(inner))).value(),
             new IsEqual<>(inner)
-        );
+        ).affirm();
     }
 }

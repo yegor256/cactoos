@@ -10,8 +10,8 @@ import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test Case for {@link HeadOf}.
+ *
  * @since 0.8
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class HeadOfTest {
 

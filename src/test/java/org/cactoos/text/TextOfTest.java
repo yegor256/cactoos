@@ -25,11 +25,10 @@ import org.llorllale.cactoos.matchers.StartsWith;
 
 /**
  * Test case for {@link TextOf}.
+ *
  * @since 0.12
- * @checkstyle JavadocMethodCheck (1000 lines)
- * @checkstyle StringLiteralsConcatenationCheck (1000 lines)
  */
-@SuppressWarnings({"unchecked", "PMD.TooManyMethods"})
+@SuppressWarnings({"unchecked", "PMD.CloseInlineResourceRule"})
 final class TextOfTest {
 
     @Test
@@ -154,6 +153,7 @@ final class TextOfTest {
     }
 
     @Test
+    @SuppressWarnings("UnnecessaryStringBuilder")
     void readsStringBuilder() {
         final String starts = "Name it, ";
         final String ends = "then it exists!";
@@ -170,6 +170,7 @@ final class TextOfTest {
     }
 
     @Test
+    @SuppressWarnings("JdkObsolete")
     void readsStringBuffer() {
         final String starts = "In our daily life, ";
         final String ends = "we can smile!";
@@ -210,7 +211,7 @@ final class TextOfTest {
             "Can't read inputStream",
             new TextOf(
                 new ByteArrayInputStream(
-                    "line1".getBytes(StandardCharsets.UTF_8.name())
+                    "line1".getBytes(StandardCharsets.UTF_8)
                 )
             ),
             new IsText(
@@ -226,7 +227,7 @@ final class TextOfTest {
             new TextOf(
                 new ByteArrayInputStream(
                     String.format("line1-%cline2", (char) 10)
-                        .getBytes(StandardCharsets.UTF_8.name())
+                        .getBytes(StandardCharsets.UTF_8)
                 )
             ),
             new IsText(String.format("line1-%cline2", (char) 10))
@@ -240,7 +241,7 @@ final class TextOfTest {
             new TextOf(
                 new ByteArrayInputStream(
                     String.format("line1-%cline2", (char) 13)
-                        .getBytes(StandardCharsets.UTF_8.name())
+                        .getBytes(StandardCharsets.UTF_8)
                 )
             ),
             new IsText(String.format("line1-%cline2", (char) 13))
@@ -251,7 +252,7 @@ final class TextOfTest {
     void readsClosedInputStream() throws Exception {
         final String content = "content";
         final InputStream stream = new ByteArrayInputStream(
-            content.getBytes(StandardCharsets.UTF_8.name())
+            content.getBytes(StandardCharsets.UTF_8)
         );
         stream.close();
         MatcherAssert.assertThat(
@@ -267,7 +268,7 @@ final class TextOfTest {
             "Can't read empty input stream",
             new TextOf(
                 new ByteArrayInputStream(
-                    "".getBytes(StandardCharsets.UTF_8.name())
+                    "".getBytes(StandardCharsets.UTF_8)
                 )
             ),
             new IsText("")

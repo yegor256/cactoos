@@ -22,7 +22,7 @@ import org.cactoos.scalar.Reduced;
  * double multiplication = new MultiplicationOf(2.3, 3.4, 4.0).doubleValue();
  * </pre>
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
  */
@@ -35,6 +35,7 @@ public final class MultiplicationOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     *
      * @param arg Required argument
      * @param src The numbers
      */
@@ -44,6 +45,7 @@ public final class MultiplicationOf extends NumberEnvelope {
 
     /**
      * Ctor.
+     *
      * @param src The iterable
      */
     public MultiplicationOf(final Iterable<? extends Number> src) {

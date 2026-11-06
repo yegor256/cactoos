@@ -11,8 +11,8 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link StartsWith}.
+ *
  * @since 0.44
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class StartsWithTest {
 

@@ -11,6 +11,7 @@ import org.llorllale.cactoos.matchers.HasContent;
 
 /**
  * Unit tests for {@link Joined}.
+ *
  * @since 0.36
  */
 final class JoinedTest {

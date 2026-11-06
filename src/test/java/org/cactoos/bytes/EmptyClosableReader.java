@@ -38,6 +38,7 @@ final class EmptyClosableReader extends Reader {
 
     /**
      * Ask if the {@link Reader} is closed.
+     *
      * @return True if closed, false otherwise
      */
     boolean isClosed() {

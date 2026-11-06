@@ -13,7 +13,7 @@ import org.cactoos.text.FormattedText;
 /**
  * Input showing only last N bytes of the stream.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.30
  */
@@ -36,6 +36,7 @@ public final class TailOf implements Input {
 
     /**
      * Constructor.
+     *
      * @param data Input to decorate
      * @param bytes Number of last bytes to show from input
      */
@@ -45,6 +46,7 @@ public final class TailOf implements Input {
 
     /**
      * Constructor.
+     *
      * @param data Input to decorate
      * @param bytes Number of last bytes to show from input
      * @param maximum Maximum number of bytes to read at once
@@ -80,13 +82,6 @@ public final class TailOf implements Input {
         return new ByteArrayInputStream(response, 0, num);
     }
 
-    /**
-     * Copy full buffer to response.
-     * @param buffer The buffer array
-     * @param response The response array
-     * @param read Number of bytes read in buffer
-     * @return Number of bytes in the response buffer
-     */
     private int copy(final byte[] buffer, final byte[] response,
         final int read) {
         System.arraycopy(
@@ -95,15 +90,6 @@ public final class TailOf implements Input {
         return new MinOf(this.count, read).intValue();
     }
 
-    /**
-     * Copy buffer to response for read count smaller then buffer size.
-     * @param buffer The buffer array
-     * @param response The response array
-     * @param num Number of bytes in response array from previous read
-     * @param read Number of bytes read in the buffer
-     * @return New count of bytes in the response array
-     * @checkstyle ParameterNumberCheck (3 lines)
-     */
     private int copyPartial(final byte[] buffer, final byte[] response,
         final int num, final int read) {
         final int result;

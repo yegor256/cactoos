@@ -21,10 +21,10 @@ import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link WriterAsOutputStream}.
+ *
  * @since 0.13
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.UnnecessaryLocalRule")
+@SuppressWarnings("PMD.CloseInlineResourceRule")
 final class WriterAsOutputStreamTest {
 
     @Test

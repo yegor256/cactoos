@@ -13,9 +13,9 @@ name: ort
 jobs:
   ort:
     timeout-minutes: 15
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: oss-review-toolkit/ort-ci-github-action@v1
         with:
           fail-on: 'violations'

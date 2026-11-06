@@ -4,14 +4,15 @@
  */
 package org.cactoos.text;
 
+import org.cactoos.io.InputOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link TrimmedRight}.
+ *
  * @since 0.12
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TrimmedRightTest {
 
@@ -21,6 +22,17 @@ final class TrimmedRightTest {
             "Can't right trim a text",
             new TrimmedRight(new TextOf("  Hello!   \t ")),
             new HasString("  Hello!")
+        );
+    }
+
+    @Test
+    void convertsInput() {
+        MatcherAssert.assertThat(
+            "Can't right trim an input",
+            new TrimmedRight(
+                new InputOf("  Hello, input!   \t ")
+            ),
+            new HasString("  Hello, input!")
         );
     }
 

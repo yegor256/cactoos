@@ -14,8 +14,8 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link TailOf}.
+ *
  * @since 0.31
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class TailOfTest {
 

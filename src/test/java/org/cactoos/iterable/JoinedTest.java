@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link Joined}.
+ *
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class JoinedTest {
 

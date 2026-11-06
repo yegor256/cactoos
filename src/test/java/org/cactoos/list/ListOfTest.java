@@ -8,83 +8,82 @@ import java.util.Collections;
 import java.util.List;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link ListOf}.
+ *
  * @since 0.1
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.TooManyMethods")
 final class ListOfTest {
 
     @Test
     void behavesAsCollection() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't behave as a list",
             new ListOf<>(1, 2),
             new BehavesAsList<>(2)
-        );
+        ).affirm();
     }
 
     @Test
     void elementAtIndexTest() {
         final int num = 345;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't convert an iterable to a list",
             new ListOf<>(-1, num, 0, 1).get(1),
             new IsEqual<>(num)
-        );
+        ).affirm();
     }
 
     @Test
     void sizeTest() {
         final int size = 42;
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't build a list with a certain size",
             new ListOf<>(
                 Collections.nCopies(size, 0)
             ),
             new HasSize(size)
-        );
+        ).affirm();
     }
 
     @Test
     void emptyTest() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't convert an empty iterable to an empty list",
             new ListOf<>(
                 new IterableOf<>()
             ),
             new HasSize(0)
-        );
+        ).affirm();
     }
 
     @Test
     void lowBoundTest() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Exception is expected for negative index",
             () -> new ListOf<>(Collections.nCopies(10, 0)).get(-1),
             new Throws<>(IndexOutOfBoundsException.class)
-        );
+        ).affirm();
     }
 
     @Test
     void highBoundTest() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Exception is expected for index larger then size",
             () -> new ListOf<>(Collections.nCopies(10, 0)).get(11),
             new Throws<>(IndexOutOfBoundsException.class)
-        );
+        ).affirm();
     }
 
     @Test
     void makesListFromMappedIterable() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't turn a mapped iterable into a list",
             new ListOf<>(
                 new Mapped<>(
@@ -93,7 +92,7 @@ final class ListOfTest {
                 )
             ),
             new HasSize(4)
-        );
+        ).affirm();
     }
 
     @Test
@@ -105,55 +104,55 @@ final class ListOfTest {
             )
         );
         list.iterator().next();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't turn a mapped iterable into a list on second access",
             list,
             new HasSize(4)
-        );
+        ).affirm();
     }
 
     @Test
     void equalsComparesContentBothListEnvelopes() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't compare using equals.",
             new ListOf<>(1, 2),
             new IsEqual<>(new ListOf<>(1, 2))
-        );
+        ).affirm();
     }
 
     @Test
     void equalsComparesContentListEnvelopeWithNormalList() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't compare using equals.",
             new ListOf<>(1, 2),
             new IsEqual<>(new ListOf<>(1, 2))
-        );
+        ).affirm();
     }
 
     @Test
     void equalsComparesEmptyLists() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't compare using equals.",
             new ListOf<>(),
             new IsEqual<>(new ListOf<>())
-        );
+        ).affirm();
     }
 
     @Test
-    void toStringUsesListContent() {
-        MatcherAssert.assertThat(
+    void printsListContent() {
+        new Assertion<>(
             "Can't print content using toString.",
             new ListOf<>(1, 2).toString(),
             new IsEqual<>("[1, 2]")
-        );
+        ).affirm();
     }
 
     @Test
     void hashCodesListContent() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Can't create hashcode.",
             new ListOf<>(1, 2).hashCode(),
             new IsEqual<>(new ListOf<>(1, 2).hashCode())
-        );
+        ).affirm();
     }
 }

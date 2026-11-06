@@ -5,6 +5,7 @@
 
 /**
  * Sets, tests.
+ *
  * @since 0.49.2
  */
 package org.cactoos.set;

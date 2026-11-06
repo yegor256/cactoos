@@ -9,17 +9,13 @@ import java.util.Iterator;
 /**
  * Synchronized iterable.
  *
- * <p>
- * This class should be used very carefully. You must understand that it will
+ * <p>This class should be used very carefully. You must understand that it will
  * fetch the entire content of the encapsulated {@link Iterable} on each method
  * call. It doesn't cache the data anyhow. If you don't need this
  * {@link Iterable} to re-fresh its content on every call, by doing round-trips
- * to the encapsulated iterable, use {@link Sticky}.
- * </p>
+ * to the encapsulated iterable, use {@link Sticky}.</p>
  *
- * <p>
- * Objects of this class are thread-safe.
- * </p>
+ * <p>Objects of this class are thread-safe.</p>
  *
  * @param <X> Type of item
  * @since 0.24
@@ -39,6 +35,7 @@ public final class Synced<X> implements Iterable<X> {
 
     /**
      * Ctor.
+     *
      * @param src The underlying iterable
      */
     @SafeVarargs
@@ -48,6 +45,7 @@ public final class Synced<X> implements Iterable<X> {
 
     /**
      * Ctor.
+     *
      * @param iterable The iterable synchronize access to
      */
     public Synced(final Iterable<? extends X> iterable) {
@@ -56,6 +54,7 @@ public final class Synced<X> implements Iterable<X> {
 
     /**
      * Ctor.
+     *
      * @param lck The lock to synchronize with
      * @param iterable The iterable synchronize access to
      */

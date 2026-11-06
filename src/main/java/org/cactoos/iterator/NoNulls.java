@@ -12,7 +12,7 @@ import org.cactoos.text.UncheckedText;
 /**
  * A decorator of an {@link Iterator} that returns no NULL.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <X> Type of item
  * @since 0.27
@@ -31,6 +31,7 @@ public final class NoNulls<X> implements Iterator<X> {
 
     /**
      * Ctor.
+     *
      * @param src Source iterable
      */
     public NoNulls(final Iterator<? extends X> src) {

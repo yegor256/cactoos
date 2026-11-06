@@ -8,21 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test cases for {@link ListIteratorNoNulls}.
+ *
  * @since 0.35
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ListIteratorNoNullsTest {
 
     @Test
     void mustThrowsErrorIfListIteratorNextValueIsNull() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "must throw error next item is null",
             () -> {
                 new ListIteratorNoNulls<>(
@@ -34,12 +34,12 @@ final class ListIteratorNoNullsTest {
                 "Next item is NULL",
                 IllegalStateException.class
             )
-        );
+        ).affirm();
     }
 
     @Test
     void mustThrowsErrorIfListIteratorPreviousValueIsNull() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "must throw error if previous value is null",
             () -> {
                 new ListIteratorNoNulls<>(
@@ -53,12 +53,12 @@ final class ListIteratorNoNullsTest {
                 "Previous item is NULL",
                 IllegalStateException.class
             )
-        );
+        ).affirm();
     }
 
     @Test
     void mustAddToListIterator() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "must add to list iterator",
             () -> {
                 final List<Integer> list = new ArrayList<>(2);
@@ -72,12 +72,12 @@ final class ListIteratorNoNullsTest {
                 return iterator.previous();
             },
             new HasValue<>(4)
-        );
+        ).affirm();
     }
 
     @Test
     void mustRemoveFromListIterator() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "must remove element from list iterator",
             () -> {
                 final List<Integer> list = new ArrayList<>(2);
@@ -93,12 +93,12 @@ final class ListIteratorNoNullsTest {
             new Throws<>(
                 NoSuchElementException.class
             )
-        );
+        ).affirm();
     }
 
     @Test
     void mustSetValueListIterator() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "must set element into list iterator",
             () -> {
                 final List<Integer> list = new ArrayList<>(2);
@@ -112,12 +112,12 @@ final class ListIteratorNoNullsTest {
                 return iterator.previous();
             },
             new HasValue<>(4)
-        );
+        ).affirm();
     }
 
     @Test
     void mustThrowsErrorIfAddANullItem() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "must throw error if add a null item",
             () -> {
                 new ListIteratorNoNulls<>(
@@ -129,12 +129,12 @@ final class ListIteratorNoNullsTest {
                 "Item can't be NULL in #add(T)",
                 IllegalArgumentException.class
             )
-        );
+        ).affirm();
     }
 
     @Test
     void mustThrowsErrorIfSetANullItem() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "must throw error if set a null item",
             () -> {
                 new ListIteratorNoNulls<>(
@@ -146,6 +146,6 @@ final class ListIteratorNoNullsTest {
                 "Item can't be NULL in #set(T)",
                 IllegalArgumentException.class
             )
-        );
+        ).affirm();
     }
 }

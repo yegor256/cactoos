@@ -14,10 +14,9 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link CheckedFunc}.
+ *
  * @since 0.32
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.ExceptionAsFlowControl")
 final class CheckedFuncTest {
 
     @Test

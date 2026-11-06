@@ -20,9 +20,10 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Threads}.
+ *
  * @since 1.0.0
  */
-@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.CloseResource"})
+@SuppressWarnings("PMD.CloseResource")
 final class ThreadsTest {
 
     /**
@@ -32,7 +33,7 @@ final class ThreadsTest {
 
     /**
      * Execute the tasks concurrently using {@link Threads} when
-     *  {@link ExecutorService} was initiated by someone else.
+     * {@link ExecutorService} was initiated by someone else.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void containsResults() throws Exception {
@@ -69,7 +70,7 @@ final class ThreadsTest {
 
     /**
      * Execution takes longer than timeout when
-     *  {@link ExecutorService} was initiated by someone else.
+     * {@link ExecutorService} was initiated by someone else.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void failsDueToTimeoutWithExternalExecutorService() throws Exception {
@@ -104,7 +105,7 @@ final class ThreadsTest {
 
     /**
      * Execute 1 task within executor service and ensure that we'll get the
-     *  expected exception type.
+     * expected exception type.
      */
     @Test
     void failsDueToException() throws Exception {
@@ -142,7 +143,7 @@ final class ThreadsTest {
 
     /**
      * Execute the tasks concurrently using {@link Threads} when
-     *  {@link ExecutorService} was initiated by {@link Threads} itself.
+     * {@link ExecutorService} was initiated by {@link Threads} itself.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void containsValuesWithInlineExecutorService() {
@@ -170,7 +171,7 @@ final class ThreadsTest {
 
     /**
      * Execution takes longer than timeout when
-     *  {@link ExecutorService} was initiated by {@link Threads} itself.
+     * {@link ExecutorService} was initiated by {@link Threads} itself.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void failsDueToTimeoutWithInlineExecutorService() {
@@ -200,7 +201,7 @@ final class ThreadsTest {
 
     /**
      * Execute the tasks concurrently using {@link Threads} when
-     *  {@link ExecutorService} was initiated by someone else.
+     * {@link ExecutorService} was initiated by someone else.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void containsResultsNoTimeout() throws Exception {
@@ -232,7 +233,7 @@ final class ThreadsTest {
 
     /**
      * Execute 1 task within executor service and ensure that we'll get the
-     *  expected exception type.
+     * expected exception type.
      */
     @Test
     void failsDueToExceptionNoTimeout() throws Exception {
@@ -269,7 +270,7 @@ final class ThreadsTest {
 
     /**
      * Execute the tasks concurrently using {@link Threads} when
-     *  {@link ExecutorService} was initiated by {@link Threads} itself.
+     * {@link ExecutorService} was initiated by {@link Threads} itself.
      */
     @RepeatedTest(ThreadsTest.REPETITIONS)
     void containsValuesWithInlineExecutorServiceNoTimeout() {
@@ -294,9 +295,6 @@ final class ThreadsTest {
         );
     }
 
-    /**
-     * Sleep.
-     */
     private void sleep() {
         try {
             TimeUnit.MILLISECONDS.sleep(100L);

@@ -4,8 +4,8 @@
  */
 package org.cactoos.iterator;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import org.cactoos.text.Randomized;
@@ -18,14 +18,14 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test Case for {@link Immutable}.
+ *
  * @since 0.32
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class ImmutableTest {
 
     @Test
     void doesNotAllowRemovingOfElements() {
-        final List<String> list = new LinkedList<>();
+        final List<String> list = new ArrayList<>(1);
         list.add("one");
         final Iterator<String> immutable = new Immutable<>(list.iterator());
         immutable.next();
@@ -74,7 +74,7 @@ final class ImmutableTest {
     @Test
     void decoratesToString() throws Exception {
         final String string = new Randomized().asString();
-        final Iterator<Object> iterator = new Iterator<Object>() {
+        final Iterator<Object> iterator = new Iterator<>() {
             @Override
             public Object next() {
                 return new Object();

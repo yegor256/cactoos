@@ -20,8 +20,8 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link Paged}.
+ *
  * @since 0.47
- * @checkstyle ClassDataAbstractionCoupling (2 lines)
  */
 final class PagedTest {
 

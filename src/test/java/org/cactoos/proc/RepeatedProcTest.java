@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link RepeatedProc}.
+ *
  * @since 0.49.2
  */
 final class RepeatedProcTest {

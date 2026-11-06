@@ -15,6 +15,7 @@ import org.llorllale.cactoos.matchers.Throws;
 
 /**
  * Test case for {@link LengthOf}.
+ *
  * @since 0.1.0
  */
 final class LengthOfTest {

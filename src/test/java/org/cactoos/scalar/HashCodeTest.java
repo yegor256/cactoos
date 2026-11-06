@@ -12,6 +12,7 @@ import org.llorllale.cactoos.matchers.HasValue;
 
 /**
  * Tests for {@link HashCode}.
+ *
  * @since 1.0
  */
 final class HashCodeTest {
@@ -51,14 +52,6 @@ final class HashCodeTest {
         );
     }
 
-    /**
-     * Joshua Bloch's implementation of hashCode() as per Effective Java,
-     * 2nd Edition, Item 9: "Always override hashCode when you override equals".
-     * @param initial Initial value
-     * @param multiplier Step multiplier
-     * @param attributes The object's attributes
-     * @return Hashcode value
-     */
     private static int joshBloch(
         final int initial, final int multiplier, final Object... attributes
     ) {

@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.Map;
 import org.cactoos.Fallback;
 import org.cactoos.Scalar;
+import org.cactoos.func.Flattened;
 import org.cactoos.func.FuncWithFallback;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterator.Filtered;
@@ -18,7 +19,7 @@ import org.cactoos.map.MapOf;
 /**
  * Scalar with fallbacks that enable it to recover from errors.
  *
- * <p>There is no thread-safety guarantee.
+ * <p>There is no thread-safety guarantee.</p>
  *
  * @param <T> Type of result
  * @see FuncWithFallback
@@ -39,6 +40,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
 
     /**
      * Ctor.
+     *
      * @param origin Original scalar
      * @param fbks The fallbacks
      */
@@ -52,6 +54,7 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
 
     /**
      * Ctor.
+     *
      * @param origin Original scalar
      * @param fbks Fallbacks
      */
@@ -76,20 +79,13 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
         return result;
     }
 
-    /**
-     * Finds the best fallback for the given exception type and apply it to
-     * the exception or throw the original error if no fallback found.
-     * @param exp The original exception
-     * @return Result of the most suitable fallback
-     * @throws Exception The original exception if no fallback found
-     */
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     private T fallback(final Throwable exp) throws Exception {
         final Iterator<? extends Map.Entry<Fallback<? extends T>, Integer>> candidates =
             new Sorted<>(
                 Comparator.comparing(Map.Entry::getValue),
                 new Filtered<>(
-                    new org.cactoos.func.Flattened<>(
+                    new Flattened<>(
                         entry -> new Not(
                             new Equals<Integer, Integer>(
                                 entry::getValue,
@@ -104,13 +100,18 @@ public final class ScalarWithFallback<T> implements Scalar<T> {
                     ).entrySet().iterator()
                 )
             );
-        if (candidates.hasNext()) {
-            return candidates.next().getKey().apply(exp);
-        } else {
-            throw new Exception(
-                "No fallback found - throw the original exception",
-                exp
-            );
+        if (!candidates.hasNext()) {
+            if (exp instanceof RuntimeException runtime) {
+                throw runtime;
+            }
+            if (exp instanceof Error error) {
+                throw error;
+            }
+            if (exp instanceof Exception exception) {
+                throw exception;
+            }
+            throw new Exception(exp);
         }
+        return candidates.next().getKey().apply(exp);
     }
 }

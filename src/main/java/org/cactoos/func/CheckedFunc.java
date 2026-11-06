@@ -9,6 +9,7 @@ import org.cactoos.scalar.Checked;
 
 /**
  * Func that throws exception of specified type.
+ *
  * @param <X> Type of input
  * @param <Y> Type of output
  * @param <E> Exception's type
@@ -29,6 +30,7 @@ public final class CheckedFunc<X, Y, E extends Exception> implements
 
     /**
      * Ctor.
+     *
      * @param original Original func
      * @param fnc Function that wraps exceptions
      */

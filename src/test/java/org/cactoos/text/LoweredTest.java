@@ -10,8 +10,8 @@ import org.llorllale.cactoos.matchers.HasString;
 
 /**
  * Test case for {@link Lowered}.
+ *
  * @since 0.11
- * @checkstyle JavadocMethodCheck (500 lines)
  */
 final class LoweredTest {
 
