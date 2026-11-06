@@ -231,17 +231,17 @@ final class JoinedListIteratorTest {
         final List<Integer> first = new ArrayList<>(Arrays.asList(1, 2));
         final List<Integer> second = new ArrayList<>(Arrays.asList(3, 4));
         final ListIterator<Integer> joined = new JoinedListIterator<>(
-            first.listIterator(), second.listIterator()
+            new ListOf<>(first.listIterator(), second.listIterator())
         );
         joined.next();
         joined.next();
         joined.next();
         joined.remove();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must remove the item from the list that returned it",
             second,
             new IsEqual<>(Collections.singletonList(4))
-        );
+        ).affirm();
     }
 
     @Test
@@ -249,8 +249,10 @@ final class JoinedListIteratorTest {
     void removesFromFirstListAfterPrevious() {
         final List<Integer> first = new ArrayList<>(Arrays.asList(1, 2));
         final ListIterator<Integer> joined = new JoinedListIterator<>(
-            first.listIterator(),
-            new ArrayList<>(Collections.singletonList(3)).listIterator()
+            new ListOf<>(
+                first.listIterator(),
+                new ArrayList<>(Collections.singletonList(3)).listIterator()
+            )
         );
         joined.next();
         joined.next();
@@ -258,17 +260,17 @@ final class JoinedListIteratorTest {
         joined.previous();
         joined.previous();
         joined.remove();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must remove the item returned by previous",
             first,
             new IsEqual<>(Collections.singletonList(1))
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void rejectsRemoveBeforeNext() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must refuse to remove before any item was returned",
             () -> {
                 new JoinedListIterator<Integer>(
@@ -277,7 +279,7 @@ final class JoinedListIteratorTest {
                 return true;
             },
             new Throws<>(IllegalStateException.class)
-        );
+        ).affirm();
     }
 
     @Test
@@ -286,16 +288,16 @@ final class JoinedListIteratorTest {
         final List<Integer> first = new ArrayList<>(Collections.singletonList(1));
         final List<Integer> second = new ArrayList<>(Arrays.asList(2, 3));
         final ListIterator<Integer> joined = new JoinedListIterator<>(
-            first.listIterator(), second.listIterator()
+            new ListOf<>(first.listIterator(), second.listIterator())
         );
         joined.next();
         joined.next();
         joined.set(7);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must replace the item in the list that returned it",
             second,
             new IsEqual<>(Arrays.asList(7, 3))
-        );
+        ).affirm();
     }
 
     @Test
@@ -303,16 +305,18 @@ final class JoinedListIteratorTest {
     void addsItemToIteratorWhereCursorIs() {
         final List<Integer> first = new ArrayList<>(Collections.singletonList(1));
         final ListIterator<Integer> joined = new JoinedListIterator<>(
-            first.listIterator(),
-            new ArrayList<>(Collections.singletonList(2)).listIterator()
+            new ListOf<>(
+                first.listIterator(),
+                new ArrayList<>(Collections.singletonList(2)).listIterator()
+            )
         );
         joined.next();
         joined.add(5);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must add the item right after the item returned last",
             first,
             new IsEqual<>(Arrays.asList(1, 5))
-        );
+        ).affirm();
     }
 
     @Test
@@ -322,27 +326,29 @@ final class JoinedListIteratorTest {
         new JoinedListIterator<Integer>(
             first.listIterator(), new ArrayList<Integer>(0).listIterator()
         ).add(0);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must add the item at the very beginning",
             first,
             new IsEqual<>(Arrays.asList(0, 1))
-        );
+        ).affirm();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     void movesCursorAfterAdd() {
         final ListIterator<Integer> joined = new JoinedListIterator<>(
-            new ArrayList<>(Collections.singletonList(1)).listIterator(),
-            new ArrayList<>(Collections.singletonList(2)).listIterator()
+            new ListOf<>(
+                new ArrayList<>(Collections.singletonList(1)).listIterator(),
+                new ArrayList<>(Collections.singletonList(2)).listIterator()
+            )
         );
         joined.next();
         joined.add(5);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must return the next item after the added one",
             joined.next(),
             new IsEqual<>(2)
-        );
+        ).affirm();
     }
 
     @Test
@@ -352,14 +358,14 @@ final class JoinedListIteratorTest {
         );
         joined.next();
         joined.remove();
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must reject a second removal of the same item",
             () -> {
                 joined.remove();
                 return true;
             },
             new Throws<>(IllegalStateException.class)
-        );
+        ).affirm();
     }
 
     @Test
@@ -369,14 +375,14 @@ final class JoinedListIteratorTest {
         );
         joined.next();
         joined.add(2);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must require navigation before setting after add",
             () -> {
                 joined.set(3);
                 return true;
             },
             new Throws<>(IllegalStateException.class)
-        );
+        ).affirm();
     }
 
     @Test
@@ -386,13 +392,13 @@ final class JoinedListIteratorTest {
         );
         joined.next();
         joined.add(2);
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must require navigation before removing after add",
             () -> {
                 joined.remove();
                 return true;
             },
             new Throws<>(IllegalStateException.class)
-        );
+        ).affirm();
     }
 }
