@@ -12,7 +12,6 @@ import java.util.ListIterator;
 import java.util.Objects;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.iterable.Sliced;
 import org.cactoos.scalar.Sticky;
 import org.cactoos.scalar.Unchecked;
 
@@ -23,9 +22,15 @@ import org.cactoos.scalar.Unchecked;
  * {@link JoinedListIterator}, which traverses the source lists lazily,
  * as if they were one list.</p>
  *
- * <p>The list is read-only: all mutating operations throw
- * {@link UnsupportedOperationException}, because there is no
- * unambiguous way to modify the sources of a joined list.</p>
+ * <p>Mutating operations write through to the source lists: an element
+ * added at a position is inserted into the source list owning that position
+ * (an element appended at the end goes into the source holding the last
+ * element), while a replaced or removed element is modified in the source
+ * owning it. A joined list with no sources has nowhere to write an element
+ * to, so it rejects additions with {@link UnsupportedOperationException}.
+ * The {@link #subList(int, int)} view is backed by this list: it reflects
+ * the later changes of the sources and propagates its own mutations to
+ * them.</p>
  *
  * <p>There is no thread-safety guarantee.</p>
  *
@@ -118,16 +123,21 @@ public final class Joined<X> implements List<X> {
 
     @Override
     public boolean add(final X item) {
-        throw new UnsupportedOperationException(
-            "#add(T): the list is read-only"
-        );
+        this.listIterator(this.size()).add(item);
+        return true;
     }
 
     @Override
     public boolean remove(final Object item) {
-        throw new UnsupportedOperationException(
-            "#remove(Object): the list is read-only"
-        );
+        final int index = this.indexOf(item);
+        final boolean removed;
+        if (index >= 0) {
+            this.remove(index);
+            removed = true;
+        } else {
+            removed = false;
+        }
+        return removed;
     }
 
     @Override
@@ -144,38 +154,52 @@ public final class Joined<X> implements List<X> {
 
     @Override
     public boolean addAll(final Collection<? extends X> items) {
-        throw new UnsupportedOperationException(
-            "#addAll(Collection): the list is read-only"
-        );
+        return this.addAll(this.size(), items);
     }
 
     @Override
     public boolean addAll(final int index,
         final Collection<? extends X> items) {
-        throw new UnsupportedOperationException(
-            "#addAll(int, Collection): the list is read-only"
-        );
+        final ListIterator<X> iter = this.listIterator(index);
+        boolean changed = false;
+        for (final X item : items) {
+            iter.add(item);
+            changed = true;
+        }
+        return changed;
     }
 
     @Override
     public boolean removeAll(final Collection<?> items) {
-        throw new UnsupportedOperationException(
-            "#removeAll(Collection): the list is read-only"
-        );
+        boolean changed = false;
+        for (final Object item : items) {
+            if (this.remove(item)) {
+                changed = true;
+            }
+        }
+        return changed;
     }
 
     @Override
     public boolean retainAll(final Collection<?> items) {
-        throw new UnsupportedOperationException(
-            "#retainAll(Collection): the list is read-only"
-        );
+        boolean changed = false;
+        final Iterator<X> iter = this.iterator();
+        while (iter.hasNext()) {
+            if (!items.contains(iter.next())) {
+                iter.remove();
+                changed = true;
+            }
+        }
+        return changed;
     }
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException(
-            "#clear(): the list is read-only"
-        );
+        final Iterator<X> iter = this.iterator();
+        while (iter.hasNext()) {
+            iter.next();
+            iter.remove();
+        }
     }
 
     @Override
@@ -195,23 +219,41 @@ public final class Joined<X> implements List<X> {
 
     @Override
     public X set(final int index, final X element) {
-        throw new UnsupportedOperationException(
-            "#set(int, T): the list is read-only"
-        );
+        final ListIterator<X> iter = this.listIterator(index);
+        if (!iter.hasNext()) {
+            throw new IndexOutOfBoundsException(
+                String.format(
+                    "index %d is out of the list bounds (size %d)",
+                    index,
+                    this.size()
+                )
+            );
+        }
+        final X previous = iter.next();
+        iter.set(element);
+        return previous;
     }
 
     @Override
     public void add(final int index, final X element) {
-        throw new UnsupportedOperationException(
-            "#add(int, T): the list is read-only"
-        );
+        this.listIterator(index).add(element);
     }
 
     @Override
     public X remove(final int index) {
-        throw new UnsupportedOperationException(
-            "#remove(int): the list is read-only"
-        );
+        final ListIterator<X> iter = this.listIterator(index);
+        if (!iter.hasNext()) {
+            throw new IndexOutOfBoundsException(
+                String.format(
+                    "index %d is out of the list bounds (size %d)",
+                    index,
+                    this.size()
+                )
+            );
+        }
+        final X previous = iter.next();
+        iter.remove();
+        return previous;
     }
 
     @Override
@@ -292,9 +334,7 @@ public final class Joined<X> implements List<X> {
                 )
             );
         }
-        return new ListOf<>(
-            new Sliced<>(start, end - start, this)
-        );
+        return new Slice<>(this, start, end - start);
     }
 
     @Override

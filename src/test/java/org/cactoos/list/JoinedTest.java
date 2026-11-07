@@ -4,7 +4,13 @@
  */
 package org.cactoos.list;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
+import org.cactoos.iterable.IterableOf;
 import org.hamcrest.Matcher;
 import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.hamcrest.core.IsEqual;
@@ -91,6 +97,24 @@ final class JoinedTest {
     }
 
     @Test
+    void isEmptyForEmptyJoined() {
+        new Assertion<>(
+            "Must be empty",
+            new Joined<String>().isEmpty(),
+            new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    void emptyJoinedIsEqualToEmptyListOf() {
+        new Assertion<>(
+            "Empty joined list must be equal to an empty ListOf",
+            new Joined<String>(),
+            new IsEqual<>(new ListOf<String>())
+        ).affirm();
+    }
+
+    @Test
     void contains() {
         new Assertion<>(
             "Must contain element specified",
@@ -145,6 +169,44 @@ final class JoinedTest {
     }
 
     @Test
+    void addWritesThroughToSource() {
+        final List<String> first = new ArrayList<>(
+            Collections.singletonList(JoinedTest.LITERAL_ONE)
+        );
+        final List<String> second = new ArrayList<>(
+            Collections.singletonList(JoinedTest.LITERAL_TWO)
+        );
+        final List<String> joined = JoinedTest.joined(first, second);
+        joined.add(JoinedTest.LITERAL_THREE);
+        new Assertion<>(
+            "The appended element must be written to the last source list",
+            second,
+            new IsEqual<>(
+                Arrays.asList(
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
+        ).affirm();
+        new Assertion<>(
+            "The other source lists must stay untouched",
+            first,
+            new IsEqual<>(Collections.singletonList(JoinedTest.LITERAL_ONE))
+        ).affirm();
+        new Assertion<>(
+            "The joined list must see the element added to the source",
+            joined,
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE,
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
     void remove() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(JoinedTest.LITERAL_ONE),
@@ -176,6 +238,22 @@ final class JoinedTest {
                 )
             ),
             new IsTrue()
+        ).affirm();
+    }
+
+    @Test
+    void containsAllFailsWhenMissing() {
+        new Assertion<>(
+            "Must not contain all elements",
+            new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO)
+            ).containsAll(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE,
+                    JoinedTest.LITERAL_THREE
+                )
+            ),
+            new IsNot<>(new IsTrue())
         ).affirm();
     }
 
@@ -322,6 +400,30 @@ final class JoinedTest {
     }
 
     @Test
+    void indexOutOfBoundsOnGet() {
+        new Assertion<>(
+            "Exception is expected for index greater than size",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).get(2),
+            new Throws<>(IndexOutOfBoundsException.class)
+        ).affirm();
+    }
+
+    @Test
+    void negativeIndexOnGet() {
+        new Assertion<>(
+            "Exception is expected for negative index",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).get(-1),
+            new Throws<>(IndexOutOfBoundsException.class)
+        ).affirm();
+    }
+
+    @Test
     void set() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(JoinedTest.LITERAL_ONE),
@@ -332,6 +434,38 @@ final class JoinedTest {
             "Must be able to set element by specified index",
             joined.get(0),
             new IsEqual<>(JoinedTest.LITERAL_THREE)
+        ).affirm();
+    }
+
+    @Test
+    void setWritesThroughToSource() {
+        final List<String> first = new ArrayList<>(
+            Collections.singletonList(JoinedTest.LITERAL_ONE)
+        );
+        final List<String> second = new ArrayList<>(
+            Arrays.asList(JoinedTest.LITERAL_TWO, JoinedTest.LITERAL_THREE)
+        );
+        final List<String> joined = JoinedTest.joined(first, second);
+        joined.set(1, JoinedTest.LITERAL_FOUR);
+        new Assertion<>(
+            "set() must replace the element in the source list owning it",
+            second,
+            new IsEqual<>(
+                Arrays.asList(
+                    JoinedTest.LITERAL_FOUR,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
+        ).affirm();
+        new Assertion<>(
+            "The other source lists must stay untouched",
+            first,
+            new IsEqual<>(Collections.singletonList(JoinedTest.LITERAL_ONE))
+        ).affirm();
+        new Assertion<>(
+            "The joined list must see the element set in the source",
+            joined.get(1),
+            new IsEqual<>(JoinedTest.LITERAL_FOUR)
         ).affirm();
     }
 
@@ -378,10 +512,89 @@ final class JoinedTest {
     }
 
     @Test
+    void indexOf() {
+        new Assertion<>(
+            "Must return the index of the element",
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(JoinedTest.LITERAL_THREE)
+            ).indexOf(JoinedTest.LITERAL_THREE),
+            new IsEqual<>(2)
+        ).affirm();
+    }
+
+    @Test
+    void indexOfMissing() {
+        new Assertion<>(
+            "Must return -1 for a missing element",
+            new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).indexOf(JoinedTest.LITERAL_FOUR),
+            new IsEqual<>(-1)
+        ).affirm();
+    }
+
+    @Test
+    void lastIndexOf() {
+        new Assertion<>(
+            "Must return the index of the last occurrence of the element",
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_THREE
+                )
+            ).lastIndexOf(JoinedTest.LITERAL_ONE),
+            new IsEqual<>(2)
+        ).affirm();
+    }
+
+    @Test
+    void lastIndexOfMissing() {
+        new Assertion<>(
+            "Must return -1 for a missing element",
+            new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).lastIndexOf(JoinedTest.LITERAL_FOUR),
+            new IsEqual<>(-1)
+        ).affirm();
+    }
+
+    @Test
+    void listIteratorPositionsCorrectly() {
+        new Assertion<>(
+            "Must return the element at the requested position",
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(JoinedTest.LITERAL_THREE)
+            ).listIterator(1).next(),
+            new IsEqual<>(JoinedTest.LITERAL_TWO)
+        ).affirm();
+    }
+
+    @Test
     void listIteratorSecond() {
         new Assertion<>(
             "Exception is expected for greater then size index",
             () -> new Joined<Integer>().listIterator(66),
+            new Throws<>(IndexOutOfBoundsException.class)
+        ).affirm();
+    }
+
+    @Test
+    void listIteratorNegativeIndex() {
+        new Assertion<>(
+            "Exception is expected for negative index",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE)
+            ).listIterator(-1),
             new Throws<>(IndexOutOfBoundsException.class)
         ).affirm();
     }
@@ -400,6 +613,271 @@ final class JoinedTest {
                     JoinedTest.LITERAL_THREE
                 )
             )
+        ).affirm();
+    }
+
+    @Test
+    void subListReflectsSourceChanges() {
+        final List<String> first = new ArrayList<>(
+            Arrays.asList(JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO)
+        );
+        final List<String> sub = JoinedTest.joined(
+            first,
+            Collections.singletonList(JoinedTest.LITERAL_THREE)
+        ).subList(1, 3);
+        first.set(1, JoinedTest.LITERAL_FOUR);
+        new Assertion<>(
+            "The backed sublist must reflect the change of the source list",
+            sub,
+            new IsEqual<>(
+                Arrays.asList(
+                    JoinedTest.LITERAL_FOUR,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    void subListSetWritesThrough() {
+        final List<String> first = new ArrayList<>(
+            Arrays.asList(JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO)
+        );
+        final List<String> joined = JoinedTest.joined(
+            first,
+            Collections.singletonList(JoinedTest.LITERAL_THREE)
+        );
+        final List<String> sub = joined.subList(1, 3);
+        sub.set(0, JoinedTest.LITERAL_FOUR);
+        new Assertion<>(
+            "The element set through the sublist must land in the source list",
+            first,
+            new IsEqual<>(
+                Arrays.asList(JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_FOUR)
+            )
+        ).affirm();
+        new Assertion<>(
+            "The joined list must see the element set through the sublist",
+            joined.get(1),
+            new IsEqual<>(JoinedTest.LITERAL_FOUR)
+        ).affirm();
+    }
+
+    @Test
+    void subListAddWritesThrough() {
+        final List<String> first = new ArrayList<>(
+            Collections.singletonList(JoinedTest.LITERAL_ONE)
+        );
+        final List<String> second = new ArrayList<>(
+            Arrays.asList(JoinedTest.LITERAL_TWO, JoinedTest.LITERAL_THREE)
+        );
+        final List<String> joined = JoinedTest.joined(first, second);
+        final List<String> sub = joined.subList(1, 3);
+        sub.add(1, JoinedTest.LITERAL_FOUR);
+        new Assertion<>(
+            "The element added through the sublist must land in the source",
+            second,
+            new IsEqual<>(
+                Arrays.asList(
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_FOUR,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
+        ).affirm();
+        new Assertion<>(
+            "The sublist must see the element it added",
+            sub,
+            new IsEqual<>(
+                Arrays.asList(
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_FOUR,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
+        ).affirm();
+        new Assertion<>(
+            "The other source lists must stay untouched",
+            first,
+            new IsEqual<>(Collections.singletonList(JoinedTest.LITERAL_ONE))
+        ).affirm();
+        new Assertion<>(
+            "The joined list must see the element added through the sublist",
+            joined,
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE,
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_FOUR,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    void subListRemoveWritesThrough() {
+        final List<String> first = new ArrayList<>(
+            Collections.singletonList(JoinedTest.LITERAL_ONE)
+        );
+        final List<String> second = new ArrayList<>(
+            Arrays.asList(JoinedTest.LITERAL_TWO, JoinedTest.LITERAL_THREE)
+        );
+        final List<String> joined = JoinedTest.joined(first, second);
+        final List<String> sub = joined.subList(1, 3);
+        new Assertion<>(
+            "Sublist must return the removed element",
+            sub.remove(0),
+            new IsEqual<>(JoinedTest.LITERAL_TWO)
+        ).affirm();
+        new Assertion<>(
+            "The sublist must see the element it removed",
+            sub,
+            new IsEqual<>(Collections.singletonList(JoinedTest.LITERAL_THREE))
+        ).affirm();
+        new Assertion<>(
+            "The element removed through the sublist must leave the source",
+            second,
+            new IsEqual<>(Collections.singletonList(JoinedTest.LITERAL_THREE))
+        ).affirm();
+        new Assertion<>(
+            "The other source lists must stay untouched",
+            first,
+            new IsEqual<>(Collections.singletonList(JoinedTest.LITERAL_ONE))
+        ).affirm();
+        new Assertion<>(
+            "The joined list must see the element removed through the sublist",
+            joined,
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    void subListOutOfBoundsEnd() {
+        new Assertion<>(
+            "Exception is expected when end is greater than size",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).subList(0, 3),
+            new Throws<>(IndexOutOfBoundsException.class)
+        ).affirm();
+    }
+
+    @Test
+    void subListNegativeStart() {
+        new Assertion<>(
+            "Exception is expected when start is negative",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).subList(-1, 1),
+            new Throws<>(IndexOutOfBoundsException.class)
+        ).affirm();
+    }
+
+    @Test
+    void subListThrowsIllegalArgument() {
+        new Assertion<>(
+            "Exception is expected when start is greater than end",
+            () -> new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ).subList(2, 1),
+            new Throws<>(IllegalArgumentException.class)
+        ).affirm();
+    }
+
+    @Test
+    void equalsListOf() {
+        new Assertion<>(
+            "Joined must be equal to ListOf with the same elements",
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(JoinedTest.LITERAL_THREE)
+            ),
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE,
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_THREE
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    void listOfEqualsJoined() {
+        new Assertion<>(
+            "ListOf must be equal to Joined with the same elements",
+            new ListOf<>(
+                JoinedTest.LITERAL_ONE,
+                JoinedTest.LITERAL_TWO,
+                JoinedTest.LITERAL_THREE
+            ),
+            new IsEqual<>(
+                new Joined<String>(
+                    new ListOf<>(
+                        JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                    ),
+                    new ListOf<>(JoinedTest.LITERAL_THREE)
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    void doesNotEqualDifferentListOf() {
+        new Assertion<>(
+            "Joined must not be equal to a ListOf with different elements",
+            new Joined<String>(
+                new ListOf<>(JoinedTest.LITERAL_ONE),
+                new ListOf<>(JoinedTest.LITERAL_TWO)
+            ),
+            new IsNot<>(
+                new IsEqual<>(
+                    new ListOf<>(
+                        JoinedTest.LITERAL_TWO,
+                        JoinedTest.LITERAL_ONE
+                    )
+                )
+            )
+        ).affirm();
+    }
+
+    @Test
+    void hashCodeMatchesListOf() {
+        new Assertion<>(
+            "Joined must have the same hashCode as ListOf of the same elements",
+            new Joined<String>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE, JoinedTest.LITERAL_TWO
+                ),
+                new ListOf<>(JoinedTest.LITERAL_THREE)
+            ).hashCode(),
+            new IsEqual<>(
+                new ListOf<>(
+                    JoinedTest.LITERAL_ONE,
+                    JoinedTest.LITERAL_TWO,
+                    JoinedTest.LITERAL_THREE
+                ).hashCode()
+            )
+        ).affirm();
+    }
+
+    @Test
+    void evaluatesSourcesLazily() {
+        new Assertion<>(
+            "Sources must not be evaluated until an operation is called",
+            () -> new Joined<String>(new JoinedTest.BrokenSourceList()).size(),
+            new Throws<>(IllegalStateException.class)
         ).affirm();
     }
 
@@ -440,5 +918,39 @@ final class JoinedTest {
                 )
             )
         ).affirm();
+    }
+
+    private static List<String> joined(final List<String> first,
+        final List<String> second) {
+        return new Joined<>(new IterableOf<>(first, second));
+    }
+
+    /**
+     * A source list that fails when its list iterator is requested.
+     *
+     * @since 1.0.0
+     */
+    private static final class BrokenSourceList extends AbstractList<String> {
+
+        @Override
+        public String get(final int index) {
+            final String item;
+            if (index == 0) {
+                item = JoinedTest.LITERAL_ONE;
+            } else {
+                item = JoinedTest.LITERAL_TWO;
+            }
+            return item;
+        }
+
+        @Override
+        public int size() {
+            return 2;
+        }
+
+        @Override
+        public ListIterator<String> listIterator() {
+            throw new IllegalStateException("sources must stay untouched");
+        }
     }
 }
