@@ -4,9 +4,9 @@
  */
 package org.cactoos.list;
 
-import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -18,51 +18,51 @@ final class ImmutableListIteratorTest {
 
     @Test
     void mustReturnPreviousIndex() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must return next previous index",
             new ImmutableListIterator<>(
                 new ListOf<>(1).listIterator()
             ).previousIndex(),
             new IsEqual<>(-1)
-        );
+        ).affirm();
     }
 
     @Test
     void mustReturnPreviousElement() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must return previous element",
             new ImmutableListIterator<>(
                 new ListOf<>(3, 7).listIterator(1)
             ).previous(),
             new IsEqual<>(3)
-        );
+        ).affirm();
     }
 
     @Test
     void mustReturnNextIndex() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must return next index",
             new ImmutableListIterator<>(
                 new ListOf<>(1).listIterator()
             ).nextIndex(),
             new IsEqual<>(0)
-        );
+        ).affirm();
     }
 
     @Test
     void mustReturnNextElement() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must return next element",
             new ImmutableListIterator<>(
                 new ListOf<>(5, 11, 13).listIterator(1)
             ).next(),
             new IsEqual<>(11)
-        );
+        ).affirm();
     }
 
     @Test
     void mustRaiseErrorOnListIteratorRemove() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must throw error if modified with remove operation",
             () -> {
                 new ImmutableListIterator<>(
@@ -74,12 +74,12 @@ final class ImmutableListIteratorTest {
                 "List Iterator is read-only and doesn't allow removing items",
                 UnsupportedOperationException.class
             )
-        );
+        ).affirm();
     }
 
     @Test
     void mustRaiseErrorOnListIteratorAdd() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must throw error if modified with add operation",
             () -> {
                 new ImmutableListIterator<>(
@@ -91,12 +91,12 @@ final class ImmutableListIteratorTest {
                 "List Iterator is read-only and doesn't allow adding items",
                 UnsupportedOperationException.class
             )
-        );
+        ).affirm();
     }
 
     @Test
     void mustRaiseErrorOnListIteratorSet() {
-        MatcherAssert.assertThat(
+        new Assertion<>(
             "Must throw error if modified with set operation",
             () -> {
                 new ImmutableListIterator<>(
@@ -108,6 +108,6 @@ final class ImmutableListIteratorTest {
                 "List Iterator is read-only and doesn't allow rewriting items",
                 UnsupportedOperationException.class
             )
-        );
+        ).affirm();
     }
 }

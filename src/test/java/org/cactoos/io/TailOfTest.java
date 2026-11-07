@@ -4,12 +4,16 @@
  */
 package org.cactoos.io;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Random;
 import org.cactoos.bytes.BytesOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -116,6 +120,31 @@ final class TailOfTest {
                 )
             ).asBytes(),
             new Throws<>(IllegalArgumentException.class)
+        );
+    }
+
+    @ParameterizedTest
+    @CsvSource({"ab,ab", "abcd,abcd", "abcdef,cdef"})
+    void tailsConsecutiveShortReads(final String input, final String expected)
+        throws Exception {
+        MatcherAssert.assertThat(
+            "Must retain only actual bytes when bulk reads are short",
+            new BytesOf(
+                new TailOf(
+                    () -> new ByteArrayInputStream(
+                        input.getBytes(StandardCharsets.UTF_8)
+                    ) {
+                        @Override
+                        public int read(final byte[] buffer, final int offset,
+                            final int length) {
+                            return super.read(buffer, offset, Math.min(length, 1));
+                        }
+                    },
+                    4,
+                    8
+                )
+            ).asBytes(),
+            new IsEqual<>(expected.getBytes(StandardCharsets.UTF_8))
         );
     }
 

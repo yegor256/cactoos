@@ -279,7 +279,7 @@
       <plugin>
         <groupId>org.pitest</groupId>
         <artifactId>pitest-maven</artifactId>
-        <version>1.30.1</version>
+        <version>1.30.2</version>
         <executions>
           <execution>
             <goals>
@@ -408,7 +408,7 @@
                 <signaturesFile>./src/test/resources/forbidden-apis.txt</signaturesFile>
               </signaturesFiles>
               <!--
-              @todo #1910:30min In the continuation of #588, all the calls
+              @todo #1991:30min In the continuation of #588, all the calls
               to Matchers should be replaced with their OO counterparts.
               This todo should be updated with a new one until everything is
               done. The newly covered classes should be added to the include
@@ -424,6 +424,7 @@
                 <include>org/cactoos/experimental/*.class</include>
                 <include>org/cactoos/func/*.class</include>
                 <include>org/cactoos/io/*.class</include>
+                <include>org/cactoos/list/*.class</include>
                 <include>org/cactoos/map/*.class</include>
                 <include>org/cactoos/number/*.class</include>
                 <include>org/cactoos/proc/*.class</include>

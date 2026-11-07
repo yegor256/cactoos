@@ -24,6 +24,13 @@ import org.cactoos.scalar.Folded;
  * {@code double} values: {@code NaN} propagates, and an infinity
  * absorbs any finite number.</p>
  *
+ * <p>Finite values are accumulated as exact decimal numbers, without
+ * overflowing or narrowing intermediate sums. Conversion to a primitive
+ * happens only when its accessor is called. Integer conversions discard
+ * any fractional part and retain the low 32 or 64 bits on overflow, as
+ * specified by {@link BigDecimal#intValue()} and {@link BigDecimal#longValue()}.
+ * Floating-point conversions may round or produce infinity.</p>
+ *
  * <p>There is no thread-safety guarantee.</p>
  *
  * @since 1.0.0
