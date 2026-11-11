@@ -129,7 +129,9 @@ public final class Replaced extends TextEnvelope {
                     while (matcher.find()) {
                         matcher.appendReplacement(
                             buffer,
-                            func.apply(matcher).toString()
+                            Matcher.quoteReplacement(
+                                func.apply(matcher).toString()
+                            )
                         );
                     }
                     matcher.appendTail(buffer);

@@ -194,4 +194,13 @@ final class ReplacedTest {
             new HasString("3 3 GHI1JKL")
         );
     }
+
+    @Test
+    void keepsSpecialCharactersOfReplacementLiteral() {
+        MatcherAssert.assertThat(
+            "Cannot keep dollar and backslash in the replacement as they are",
+            new Replaced(new TextOf("price"), "price", "$5\\"),
+            new HasString("$5\\")
+        );
+    }
 }
