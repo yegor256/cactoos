@@ -13,6 +13,10 @@ import org.cactoos.text.FormattedText;
 /**
  * Input showing only last N bytes of the stream.
  *
+ * <p>Each call to {@link TailOf#stream()} fully reads the wrapped
+ * {@link Input} and closes its stream. Wrap the input in
+ * {@link CloseShieldInput} to keep its stream open after that.</p>
+ *
  * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.30

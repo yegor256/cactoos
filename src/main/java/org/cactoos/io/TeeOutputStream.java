@@ -9,6 +9,10 @@ import java.io.OutputStream;
 
 /**
  * Stream that copies output to output.
+ * <b>WARNING:</b>
+ * {@link TeeOutputStream#close()} closes both {@link TeeOutputStream#target}
+ * and {@link TeeOutputStream#copy}. Wrap a stream you plan to reuse in
+ * {@link CloseShieldOutputStream}.
  *
  * <p>There is no thread-safety guarantee.</p>
  *
