@@ -8,7 +8,6 @@ import org.cactoos.text.Joined;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -47,8 +46,7 @@ final class MappedWithIndexTest {
             "must transform an empty iterable",
             new MappedWithIndex<>(
                 (input, index) -> {
-                    Assertions.fail("must do not be executed");
-                    return input;
+                    throw new IllegalStateException("must not be executed");
                 },
                 new IterableOf<>()
             ),

@@ -8,10 +8,10 @@ import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.StartsWith;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsEmptyIterable;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.HasValues;
 
@@ -60,7 +60,7 @@ final class FilteredTest {
                 i -> i > 0,
                 new IterableOf<>(1, 2, -1, 0, 1)
             ),
-            Matchers.iterableWithSize(3)
+            new HasSize(3)
         );
     }
 
@@ -74,7 +74,7 @@ final class FilteredTest {
         MatcherAssert.assertThat(
             "Must filter the iterable on second traversal",
             list,
-            Matchers.iterableWithSize(3)
+            new HasSize(3)
         );
     }
 

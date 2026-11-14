@@ -4,8 +4,10 @@
  */
 package org.cactoos.iterable;
 
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsIterableContainingInOrder;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -23,10 +25,12 @@ final class TailOfTest {
                 3,
                 "one", "two", "three", "four"
             ),
-            Matchers.contains(
-                "two",
-                "three",
-                "four"
+            new IsIterableContainingInOrder<>(
+                new ListOf<>(
+                    new IsEqual<>("two"),
+                    new IsEqual<>("three"),
+                    new IsEqual<>("four")
+                )
             )
         );
     }

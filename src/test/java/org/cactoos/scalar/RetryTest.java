@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasValue;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test case for {@link Retry}.
@@ -100,8 +100,9 @@ final class RetryTest {
                     "Should wait the given time between attempts on attempt %d",
                     position
                 ),
-                executions.get(position).plusMillis(wait - tolerance),
-                Matchers.lessThanOrEqualTo(executions.get(position + 1))
+                executions.get(position).plusMillis(wait - tolerance)
+                    .compareTo(executions.get(position + 1)) <= 0,
+                new IsTrue()
             );
         }
     }

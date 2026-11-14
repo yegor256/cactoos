@@ -9,8 +9,10 @@ import java.util.List;
 import org.cactoos.Proc;
 import org.cactoos.Scalar;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsIterableContainingInOrder;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasValue;
 
@@ -87,7 +89,14 @@ final class OrTest {
         MatcherAssert.assertThat(
             "proc iterable should collect list",
             list,
-            Matchers.contains(1, 2, 3, 4)
+            new IsIterableContainingInOrder<>(
+                new ListOf<>(
+                    new IsEqual<>(1),
+                    new IsEqual<>(2),
+                    new IsEqual<>(3),
+                    new IsEqual<>(4)
+                )
+            )
         );
     }
 
@@ -101,7 +110,13 @@ final class OrTest {
         MatcherAssert.assertThat(
             "proc iterable should collect list from varargs",
             list,
-            Matchers.contains(2, 3, 4)
+            new IsIterableContainingInOrder<>(
+                new ListOf<>(
+                    new IsEqual<>(2),
+                    new IsEqual<>(3),
+                    new IsEqual<>(4)
+                )
+            )
         );
     }
 

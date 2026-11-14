@@ -8,8 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.channels.AcceptPendingException;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -89,7 +89,7 @@ final class CheckedTest {
             MatcherAssert.assertThat(
                 "Must not have cause when throwing io exception",
                 exp.getCause(),
-                Matchers.nullValue()
+                new IsNull<>()
             );
         }
     }
@@ -107,7 +107,7 @@ final class CheckedTest {
             MatcherAssert.assertThat(
                 "Must not have cause when throwing file not found exception",
                 exp.getCause(),
-                Matchers.nullValue()
+                new IsNull<>()
             );
         }
     }
