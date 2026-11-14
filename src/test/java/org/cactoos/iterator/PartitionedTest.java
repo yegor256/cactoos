@@ -11,7 +11,6 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.list.ListOf;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasValue;
@@ -47,7 +46,7 @@ final class PartitionedTest {
                     new Partitioned<>(1, new ListOf<>(1, 2, 3).iterator())
                 )
             ),
-            Matchers.equalTo(
+            new IsEqual<>(
                 new ListOf<>(
                     Collections.singletonList(1), Collections.singletonList(2),
                     Collections.singletonList(3)
@@ -66,7 +65,7 @@ final class PartitionedTest {
                     new Partitioned<>(2, new ListOf<>(1, 2, 3, 4).iterator())
                 )
             ),
-            Matchers.equalTo(
+            new IsEqual<>(
                 new ListOf<>(new ListOf<>(1, 2), new ListOf<>(3, 4))
             )
         );

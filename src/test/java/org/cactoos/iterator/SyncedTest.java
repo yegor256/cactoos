@@ -7,7 +7,7 @@ package org.cactoos.iterator;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.AnyOf;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
@@ -54,7 +54,7 @@ final class SyncedTest {
                     MatcherAssert.assertThat(
                         "",
                         map.next(),
-                        Matchers.anyOf(
+                        new AnyOf<>(
                             new IsEqual<>("a"),
                             new IsEqual<>("b")
                         )
@@ -79,15 +79,15 @@ final class SyncedTest {
                 map -> {
                     MatcherAssert.assertThat(
                         "", map.hasNext(),
-                        Matchers.anyOf(new IsEqual<>(true), new IsEqual<>(true))
+                        new AnyOf<>(new IsEqual<>(true), new IsEqual<>(true))
                     );
                     MatcherAssert.assertThat(
                         "", map.next(),
-                        Matchers.anyOf(new IsEqual<>("a"), new IsEqual<>("b"))
+                        new AnyOf<>(new IsEqual<>("a"), new IsEqual<>("b"))
                     );
                     MatcherAssert.assertThat(
                         "", map.hasNext(),
-                        Matchers.anyOf(new IsEqual<>(true), new IsEqual<>(false))
+                        new AnyOf<>(new IsEqual<>(true), new IsEqual<>(false))
                     );
                     return true;
                 },
