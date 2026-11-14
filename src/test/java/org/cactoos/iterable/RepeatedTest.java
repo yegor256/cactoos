@@ -6,8 +6,8 @@ package org.cactoos.iterable;
 
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.HasValue;
 
 /**
@@ -47,7 +47,7 @@ final class RepeatedTest {
         MatcherAssert.assertThat(
             "Can't repeat an integer",
             new Repeated<>(5, 1),
-            Matchers.iterableWithSize(5)
+            new HasSize(5)
         );
     }
 
@@ -58,7 +58,7 @@ final class RepeatedTest {
         MatcherAssert.assertThat(
             "Can't repeat an integer on second traversal",
             list,
-            Matchers.iterableWithSize(5)
+            new HasSize(5)
         );
     }
 }

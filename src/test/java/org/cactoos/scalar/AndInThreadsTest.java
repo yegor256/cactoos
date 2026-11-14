@@ -15,7 +15,6 @@ import org.cactoos.list.ListOf;
 import org.cactoos.list.Synced;
 import org.cactoos.proc.ProcNoNulls;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -199,7 +198,7 @@ final class AndInThreadsTest {
                 new Constant<>(false),
                 new Constant<>(false)
             ).value(),
-            Matchers.equalTo(false)
+            new IsEqual<>(false)
         );
     }
 
@@ -214,7 +213,7 @@ final class AndInThreadsTest {
                     new Constant<>(false)
                 )
             ).value(),
-            Matchers.equalTo(false)
+            new IsEqual<>(false)
         );
     }
 
@@ -225,7 +224,7 @@ final class AndInThreadsTest {
             new AndInThreads(
                 new ListOf<>()
             ).value(),
-            Matchers.equalTo(true)
+            new IsEqual<>(true)
         );
     }
 }

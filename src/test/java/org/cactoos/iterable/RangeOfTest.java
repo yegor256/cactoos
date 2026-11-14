@@ -13,7 +13,7 @@ import org.cactoos.list.ListOf;
 import org.cactoos.proc.ForEach;
 import org.cactoos.proc.RepeatedProc;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasSize;
@@ -33,7 +33,15 @@ final class RangeOfTest {
             new ListOf<>(
                 new RangeOf<>(1, 5, value -> value + 1)
             ),
-            Matchers.contains(1, 2, 3, 4, 5)
+            new IsIterableContainingInOrder<>(
+                new ListOf<>(
+                    new IsEqual<>(1),
+                    new IsEqual<>(2),
+                    new IsEqual<>(3),
+                    new IsEqual<>(4),
+                    new IsEqual<>(5)
+                )
+            )
         );
     }
 
@@ -57,7 +65,21 @@ final class RangeOfTest {
                     }
                 )
             ),
-            Matchers.contains(1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89)
+            new IsIterableContainingInOrder<>(
+                new ListOf<>(
+                    new IsEqual<>(1),
+                    new IsEqual<>(1),
+                    new IsEqual<>(2),
+                    new IsEqual<>(3),
+                    new IsEqual<>(5),
+                    new IsEqual<>(8),
+                    new IsEqual<>(13),
+                    new IsEqual<>(21),
+                    new IsEqual<>(34),
+                    new IsEqual<>(55),
+                    new IsEqual<>(89)
+                )
+            )
         );
     }
 
@@ -68,7 +90,15 @@ final class RangeOfTest {
             new ListOf<>(
                 new RangeOf<>(1L, 5L, value -> value + 1L)
             ),
-            Matchers.contains(1L, 2L, 3L, 4L, 5L)
+            new IsIterableContainingInOrder<>(
+                new ListOf<>(
+                    new IsEqual<>(1L),
+                    new IsEqual<>(2L),
+                    new IsEqual<>(3L),
+                    new IsEqual<>(4L),
+                    new IsEqual<>(5L)
+                )
+            )
         );
     }
 
@@ -79,7 +109,13 @@ final class RangeOfTest {
             new ListOf<>(
                 new RangeOf<>('a', 'c', value -> (char) (value + 1))
             ),
-            Matchers.contains('a', 'b', 'c')
+            new IsIterableContainingInOrder<>(
+                new ListOf<>(
+                    new IsEqual<>('a'),
+                    new IsEqual<>('b'),
+                    new IsEqual<>('c')
+                )
+            )
         );
     }
 
@@ -94,10 +130,12 @@ final class RangeOfTest {
                     value -> value.plus(1L, ChronoUnit.DAYS)
                 )
             ),
-            Matchers.contains(
-                LocalDate.of(2017, 1, 1),
-                LocalDate.of(2017, 1, 2),
-                LocalDate.of(2017, 1, 3)
+            new IsIterableContainingInOrder<>(
+                new ListOf<>(
+                    new IsEqual<>(LocalDate.of(2017, 1, 1)),
+                    new IsEqual<>(LocalDate.of(2017, 1, 2)),
+                    new IsEqual<>(LocalDate.of(2017, 1, 3))
+                )
             )
         );
     }

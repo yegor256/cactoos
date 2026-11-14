@@ -11,7 +11,7 @@ import org.cactoos.number.ComparableNumber;
 import org.cactoos.number.SumOf;
 import org.cactoos.time.DateOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
@@ -37,7 +37,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest among one by scalars",
             new LowestOf<Integer>(() -> 10).value(),
-            Matchers.equalTo(10)
+            new IsEqual<>(10)
         );
     }
 
@@ -46,7 +46,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest among one",
             new LowestOf<>(10).value(),
-            Matchers.equalTo(10)
+            new IsEqual<>(10)
         );
     }
 
@@ -60,7 +60,7 @@ final class LowestOfTest {
                 () -> -1,
                 () -> 2
             ).value(),
-            Matchers.equalTo(-1)
+            new IsEqual<>(-1)
         );
     }
 
@@ -69,7 +69,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest integer among many",
             new LowestOf<>(10, 0, -1, 2).value(),
-            Matchers.equalTo(-1)
+            new IsEqual<>(-1)
         );
     }
 
@@ -78,7 +78,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest positive integer among many",
             new LowestOf<>(272, 10, 134, 101).value(),
-            Matchers.equalTo(10)
+            new IsEqual<>(10)
         );
     }
 
@@ -87,7 +87,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest negative integer among many",
             new LowestOf<>(-272, -10, -134, -101).value(),
-            Matchers.equalTo(-272)
+            new IsEqual<>(-272)
         );
     }
 
@@ -96,7 +96,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest min integer among many",
             new LowestOf<>(Integer.MIN_VALUE, Integer.MAX_VALUE).value(),
-            Matchers.equalTo(Integer.MIN_VALUE)
+            new IsEqual<>(Integer.MIN_VALUE)
         );
     }
 
@@ -110,7 +110,7 @@ final class LowestOfTest {
                 () -> -1L,
                 () -> 2L
             ).value(),
-            Matchers.equalTo(-1L)
+            new IsEqual<>(-1L)
         );
     }
 
@@ -119,7 +119,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest long among many",
             new LowestOf<>(10L, 0L, -1L, 2L).value(),
-            Matchers.equalTo(-1L)
+            new IsEqual<>(-1L)
         );
     }
 
@@ -128,7 +128,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest positive long among many",
             new LowestOf<>(272L, 10L, 134L, 101L).value(),
-            Matchers.equalTo(10L)
+            new IsEqual<>(10L)
         );
     }
 
@@ -137,7 +137,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest negative long among many",
             new LowestOf<>(-272L, -10L, -134L, -101L).value(),
-            Matchers.equalTo(-272L)
+            new IsEqual<>(-272L)
         );
     }
 
@@ -146,7 +146,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest mix integer long many",
             new LowestOf<>(Long.MIN_VALUE, Long.MAX_VALUE).value(),
-            Matchers.equalTo(Long.MIN_VALUE)
+            new IsEqual<>(Long.MIN_VALUE)
         );
     }
 
@@ -160,7 +160,7 @@ final class LowestOfTest {
                 () -> -1.5,
                 () -> 10.8
             ).value(),
-            Matchers.equalTo(-1.5)
+            new IsEqual<>(-1.5)
         );
     }
 
@@ -169,7 +169,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest double among many",
             new LowestOf<>(10., 0., -1., 2.).value(),
-            Matchers.equalTo(-1.)
+            new IsEqual<>(-1.)
         );
     }
 
@@ -178,7 +178,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest positive double among many",
             new LowestOf<>(272., 10., 134., 101.).value(),
-            Matchers.equalTo(10.)
+            new IsEqual<>(10.)
         );
     }
 
@@ -187,7 +187,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest negative double among many",
             new LowestOf<>(-272., -10., -134., -101.).value(),
-            Matchers.equalTo(-272.)
+            new IsEqual<>(-272.)
         );
     }
 
@@ -196,7 +196,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest mix double among many",
             new LowestOf<>(Double.MIN_VALUE, Double.MAX_VALUE).value(),
-            Matchers.equalTo(Double.MIN_VALUE)
+            new IsEqual<>(Double.MIN_VALUE)
         );
     }
 
@@ -205,7 +205,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest min double among many",
             new LowestOf<>(Double.MIN_VALUE, 10.).value(),
-            Matchers.equalTo(Double.MIN_VALUE)
+            new IsEqual<>(Double.MIN_VALUE)
         );
     }
 
@@ -214,7 +214,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest NaN (with min) double among many",
             new LowestOf<>(Double.NaN, Double.MIN_VALUE).value(),
-            Matchers.equalTo(Double.MIN_VALUE)
+            new IsEqual<>(Double.MIN_VALUE)
         );
     }
 
@@ -223,7 +223,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest NaN (with max) double among many",
             new LowestOf<>(Double.NaN, Double.MAX_VALUE).value(),
-            Matchers.equalTo(Double.MAX_VALUE)
+            new IsEqual<>(Double.MAX_VALUE)
         );
     }
 
@@ -232,7 +232,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest positive infinity among many",
             new LowestOf<>(Double.POSITIVE_INFINITY, Double.MAX_VALUE).value(),
-            Matchers.equalTo(Double.MAX_VALUE)
+            new IsEqual<>(Double.MAX_VALUE)
         );
     }
 
@@ -241,7 +241,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest negative infinity among many",
             new LowestOf<>(Double.NEGATIVE_INFINITY, Double.MAX_VALUE).value(),
-            Matchers.equalTo(Double.NEGATIVE_INFINITY)
+            new IsEqual<>(Double.NEGATIVE_INFINITY)
         );
     }
 
@@ -254,7 +254,7 @@ final class LowestOfTest {
                 () -> "Apple",
                 () -> "Orange"
             ).value(),
-            Matchers.equalTo("Apple")
+            new IsEqual<>("Apple")
         );
     }
 
@@ -263,7 +263,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest string among many",
             new LowestOf<>("Banana", "Apple", "Orange").value(),
-            Matchers.equalTo("Apple")
+            new IsEqual<>("Apple")
         );
     }
 
@@ -272,7 +272,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest char among many by scalars",
             new LowestOf<Character>(() -> 'B', () -> 'U', () -> 'G').value(),
-            Matchers.equalTo('B')
+            new IsEqual<>('B')
         );
     }
 
@@ -281,7 +281,7 @@ final class LowestOfTest {
         MatcherAssert.assertThat(
             "Can't find the lowest char among many",
             new LowestOf<>('H', 'A', 'N', 'D').value(),
-            Matchers.equalTo('A')
+            new IsEqual<>('A')
         );
     }
 
@@ -307,7 +307,7 @@ final class LowestOfTest {
                 new DateOf("2007-12-26T14:20:16.000000017Z"),
                 new DateOf("2011-10-01T14:15:16.000000017Z")
             ).value(),
-            Matchers.equalTo(
+            new IsEqual<>(
                 new DateOf("2007-12-26T14:20:16.000000016Z").value()
             )
         );
@@ -321,7 +321,7 @@ final class LowestOfTest {
                 new BoolOf("false"),
                 new BoolOf("true")
             ).value(),
-            Matchers.equalTo(new BoolOf("false").value())
+            new IsEqual<>(new BoolOf("false").value())
         );
     }
 }

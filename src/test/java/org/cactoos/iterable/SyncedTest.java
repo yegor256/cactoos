@@ -5,7 +5,7 @@
 package org.cactoos.iterable;
 
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
@@ -24,7 +24,7 @@ final class SyncedTest {
                 MatcherAssert.assertThat(
                     "Should be the same iterator",
                     list.iterator().next(),
-                    Matchers.equalTo(list.iterator().next())
+                    new IsEqual<>(list.iterator().next())
                 );
                 return true;
             },

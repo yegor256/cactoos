@@ -8,9 +8,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsIterableContainingInOrder;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.HasSize;
 
 /**
  * Test case for {@link Sorted}.
@@ -28,7 +29,16 @@ final class SortedTest {
                     3, 2, 10, 44, -6, 0
                 )
             ),
-            Matchers.contains(-6, 0, 2, 3, 10, 44)
+            new IsIterableContainingInOrder<>(
+                new ListOf<>(
+                    new IsEqual<>(-6),
+                    new IsEqual<>(0),
+                    new IsEqual<>(2),
+                    new IsEqual<>(3),
+                    new IsEqual<>(10),
+                    new IsEqual<>(44)
+                )
+            )
         );
     }
 
@@ -41,7 +51,15 @@ final class SortedTest {
                     "a", "c", "hello", "dude", "Friend"
                 )
             ),
-            Matchers.contains("hello", "dude", "c", "a", "Friend")
+            new IsIterableContainingInOrder<>(
+                new ListOf<>(
+                    new IsEqual<>("hello"),
+                    new IsEqual<>("dude"),
+                    new IsEqual<>("c"),
+                    new IsEqual<>("a"),
+                    new IsEqual<>("Friend")
+                )
+            )
         );
     }
 
@@ -52,7 +70,7 @@ final class SortedTest {
             new Sorted<Integer>(
                 Collections.emptyList()
             ),
-            Matchers.iterableWithSize(0)
+            new HasSize(0)
         );
     }
 
@@ -88,7 +106,15 @@ final class SortedTest {
         MatcherAssert.assertThat(
             "Must sort varargs",
             new Sorted<>(10, 18, -10, 20, -2),
-            Matchers.contains(-10, -2, 10, 18, 20)
+            new IsIterableContainingInOrder<>(
+                new ListOf<>(
+                    new IsEqual<>(-10),
+                    new IsEqual<>(-2),
+                    new IsEqual<>(10),
+                    new IsEqual<>(18),
+                    new IsEqual<>(20)
+                )
+            )
         );
     }
 
@@ -100,7 +126,15 @@ final class SortedTest {
                 Comparator.reverseOrder(),
                 -7, 0, 12, 1, -4
             ),
-            Matchers.contains(12, 1, 0, -4, -7)
+            new IsIterableContainingInOrder<>(
+                new ListOf<>(
+                    new IsEqual<>(12),
+                    new IsEqual<>(1),
+                    new IsEqual<>(0),
+                    new IsEqual<>(-4),
+                    new IsEqual<>(-7)
+                )
+            )
         );
     }
 }

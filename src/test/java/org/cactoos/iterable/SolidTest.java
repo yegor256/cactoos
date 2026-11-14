@@ -6,9 +6,10 @@ package org.cactoos.iterable;
 
 import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.HasSize;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 
 /**
@@ -28,7 +29,7 @@ final class SolidTest {
                     new IterableOf<>(1, -1, 0, 1)
                 )
             ),
-            Matchers.iterableWithSize(4)
+            new HasSize(4)
         );
     }
 
@@ -44,7 +45,7 @@ final class SolidTest {
         MatcherAssert.assertThat(
             "Can't turn a mapped iterable into a list, again",
             list,
-            Matchers.iterableWithSize(4)
+            new HasSize(4)
         );
     }
 
@@ -58,7 +59,7 @@ final class SolidTest {
         );
         MatcherAssert.assertThat(
             "Can't map only once",
-            list.iterator().next(), Matchers.equalTo(list.iterator().next())
+            list.iterator().next(), new IsEqual<>(list.iterator().next())
         );
     }
 
@@ -70,7 +71,7 @@ final class SolidTest {
                 MatcherAssert.assertThat(
                     "Iterator should be the same",
                     list.iterator().next(),
-                    Matchers.equalTo(list.iterator().next())
+                    new IsEqual<>(list.iterator().next())
                 );
                 return true;
             },

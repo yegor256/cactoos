@@ -5,7 +5,8 @@
 package org.cactoos.iterable;
 
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsIterableContaining;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -21,7 +22,7 @@ final class IterableOfStackTraceTest {
         MatcherAssert.assertThat(
             "Must get the expected exception.",
             new IterableOfStackTrace(new Throwable(expected)),
-            Matchers.hasItem(expected)
+            new IsIterableContaining<>(new IsEqual<>(expected))
         );
     }
 }
