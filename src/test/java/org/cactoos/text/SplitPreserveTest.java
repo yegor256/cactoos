@@ -11,7 +11,7 @@ import java.util.List;
 import org.cactoos.Text;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +39,7 @@ final class SplitPreserveTest {
                 ).iterator()
             ),
             IsNot.not(
-                Matchers.equalTo(
+                new IsEqual<>(
                     this.getLength(
                         new IterableOf<Text>(
                             array.iterator()
@@ -65,7 +65,7 @@ final class SplitPreserveTest {
                 ).iterator()
             ),
             IsNot.not(
-                Matchers.equalTo(
+                new IsEqual<>(
                     this.getLength(
                         new IterableOf<Text>(
                             array.iterator()
@@ -100,7 +100,7 @@ final class SplitPreserveTest {
                     new TextOf("a")
                 ).iterator()
             ),
-            Matchers.equalTo(
+            new IsEqual<>(
                 this.getLength(
                     new IterableOf<Text>(
                         array.iterator()
@@ -125,7 +125,7 @@ final class SplitPreserveTest {
                     new TextOf(" ")
                 ).iterator()
             ),
-            Matchers.equalTo(
+            new IsEqual<>(
                 this.getLength(
                     new IterableOf<Text>(
                         array.iterator()
@@ -149,7 +149,7 @@ final class SplitPreserveTest {
                     new TextOf(" ")
                 ).iterator()
             ),
-            Matchers.equalTo(
+            new IsEqual<>(
                 this.getLength(
                     new IterableOf<Text>(
                         array.iterator()

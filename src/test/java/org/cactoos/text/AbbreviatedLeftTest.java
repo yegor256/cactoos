@@ -5,7 +5,7 @@
 package org.cactoos.text;
 
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -23,7 +23,7 @@ final class AbbreviatedLeftTest {
                 "The quick brown fox jumps over the lazy dog",
                 20
             ).asString(),
-            Matchers.equalTo("...over the lazy dog")
+            new IsEqual<>("...over the lazy dog")
         );
     }
 
@@ -33,7 +33,7 @@ final class AbbreviatedLeftTest {
         MatcherAssert.assertThat(
             "Can't abbreviate a text from the left with default width",
             new AbbreviatedLeft(text).asString(),
-            Matchers.equalTo(text)
+            new IsEqual<>(text)
         );
     }
 
@@ -43,7 +43,7 @@ final class AbbreviatedLeftTest {
         MatcherAssert.assertThat(
             "Can't preserve a short text",
             new AbbreviatedLeft(text, 20).asString(),
-            Matchers.equalTo(text)
+            new IsEqual<>(text)
         );
     }
 
@@ -53,7 +53,7 @@ final class AbbreviatedLeftTest {
         MatcherAssert.assertThat(
             "Can't handle text with exact max width",
             new AbbreviatedLeft(text, 20).asString(),
-            Matchers.equalTo(text)
+            new IsEqual<>(text)
         );
     }
 
@@ -62,7 +62,7 @@ final class AbbreviatedLeftTest {
         MatcherAssert.assertThat(
             "Can't handle empty text",
             new AbbreviatedLeft("", 20).asString(),
-            Matchers.equalTo("")
+            new IsEqual<>("")
         );
     }
 }

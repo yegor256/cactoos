@@ -11,7 +11,7 @@ import org.cactoos.number.ComparableNumber;
 import org.cactoos.number.SumOf;
 import org.cactoos.time.DateOf;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasValue;
 import org.llorllale.cactoos.matchers.Throws;
@@ -37,7 +37,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest among one by scalars",
             new HighestOf<Integer>(() -> 10).value(),
-            Matchers.equalTo(10)
+            new IsEqual<>(10)
         );
     }
 
@@ -46,7 +46,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest among one",
             new HighestOf<>(10).value(),
-            Matchers.equalTo(10)
+            new IsEqual<>(10)
         );
     }
 
@@ -60,7 +60,7 @@ final class HighestOfTest {
                 () -> -1,
                 () -> 2
             ).value(),
-            Matchers.equalTo(10)
+            new IsEqual<>(10)
         );
     }
 
@@ -69,7 +69,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest integer among many",
             new HighestOf<>(10, 0, -1, 2).value(),
-            Matchers.equalTo(10)
+            new IsEqual<>(10)
         );
     }
 
@@ -78,7 +78,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest negative integer among many",
             new HighestOf<>(-272, -10, -134, -101).value(),
-            Matchers.equalTo(-10)
+            new IsEqual<>(-10)
         );
     }
 
@@ -87,7 +87,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest max integer among many",
             new HighestOf<>(Integer.MIN_VALUE, Integer.MAX_VALUE).value(),
-            Matchers.equalTo(Integer.MAX_VALUE)
+            new IsEqual<>(Integer.MAX_VALUE)
         );
     }
 
@@ -101,7 +101,7 @@ final class HighestOfTest {
                 () -> -1L,
                 () -> 2L
             ).value(),
-            Matchers.equalTo(10L)
+            new IsEqual<>(10L)
         );
     }
 
@@ -110,7 +110,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest long among many",
             new HighestOf<>(10L, 0L, -1L, 2L).value(),
-            Matchers.equalTo(10L)
+            new IsEqual<>(10L)
         );
     }
 
@@ -119,7 +119,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest negative long among many",
             new HighestOf<>(-272L, -10L, -134L, -101L).value(),
-            Matchers.equalTo(-10L)
+            new IsEqual<>(-10L)
         );
     }
 
@@ -128,7 +128,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest max integer long many",
             new HighestOf<>(Long.MIN_VALUE, Long.MAX_VALUE).value(),
-            Matchers.equalTo(Long.MAX_VALUE)
+            new IsEqual<>(Long.MAX_VALUE)
         );
     }
 
@@ -142,7 +142,7 @@ final class HighestOfTest {
                 () -> -1.5,
                 () -> 10.8
             ).value(),
-            Matchers.equalTo(10.9)
+            new IsEqual<>(10.9)
         );
     }
 
@@ -151,7 +151,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest double among many",
             new HighestOf<>(10., 0., -1., 2.).value(),
-            Matchers.equalTo(10.)
+            new IsEqual<>(10.)
         );
     }
 
@@ -160,7 +160,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest negative double among many",
             new HighestOf<>(-272., -10., -134., -101.).value(),
-            Matchers.equalTo(-10.)
+            new IsEqual<>(-10.)
         );
     }
 
@@ -169,7 +169,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest max double among many",
             new HighestOf<>(Double.MIN_VALUE, Double.MAX_VALUE).value(),
-            Matchers.equalTo(Double.MAX_VALUE)
+            new IsEqual<>(Double.MAX_VALUE)
         );
     }
 
@@ -178,7 +178,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest min double among many",
             new HighestOf<>(Double.MIN_VALUE, -10.).value(),
-            Matchers.equalTo(Double.MIN_VALUE)
+            new IsEqual<>(Double.MIN_VALUE)
         );
     }
 
@@ -187,7 +187,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest NaN double among many",
             new HighestOf<>(Double.NaN, Double.MAX_VALUE).value(),
-            Matchers.equalTo(Double.NaN)
+            new IsEqual<>(Double.NaN)
         );
     }
 
@@ -196,7 +196,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest positive infinity among many",
             new HighestOf<>(Double.POSITIVE_INFINITY, Double.MAX_VALUE).value(),
-            Matchers.equalTo(Double.POSITIVE_INFINITY)
+            new IsEqual<>(Double.POSITIVE_INFINITY)
         );
     }
 
@@ -205,7 +205,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest negative infinity among many",
             new HighestOf<>(Double.NEGATIVE_INFINITY, Double.MAX_VALUE).value(),
-            Matchers.equalTo(Double.MAX_VALUE)
+            new IsEqual<>(Double.MAX_VALUE)
         );
     }
 
@@ -214,7 +214,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest string among many by scalars",
             new HighestOf<String>(() -> "Apple", () -> "Orange").value(),
-            Matchers.equalTo("Orange")
+            new IsEqual<>("Orange")
         );
     }
 
@@ -223,7 +223,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest string among many",
             new HighestOf<>("Apple", "Orange").value(),
-            Matchers.equalTo("Orange")
+            new IsEqual<>("Orange")
         );
     }
 
@@ -232,7 +232,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest char among many by scalars",
             new HighestOf<Character>(() -> 'A', () -> 'B').value(),
-            Matchers.equalTo('B')
+            new IsEqual<>('B')
         );
     }
 
@@ -241,7 +241,7 @@ final class HighestOfTest {
         MatcherAssert.assertThat(
             "Can't find the highest char among many",
             new HighestOf<>('A', 'B').value(),
-            Matchers.equalTo('B')
+            new IsEqual<>('B')
         );
     }
 
@@ -267,7 +267,7 @@ final class HighestOfTest {
                 new DateOf("2017-12-13T14:15:16.000000017Z"),
                 new DateOf("2017-12-13T14:15:16.000000018Z")
             ).value(),
-            Matchers.equalTo(
+            new IsEqual<>(
                 new DateOf("2017-12-13T14:15:16.000000018Z").value()
             )
         );
@@ -281,7 +281,7 @@ final class HighestOfTest {
                 new BoolOf("false"),
                 new BoolOf("true")
             ).value(),
-            Matchers.equalTo(new BoolOf("true").value())
+            new IsEqual<>(new BoolOf("true").value())
         );
     }
 }

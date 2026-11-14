@@ -5,10 +5,11 @@
 package org.cactoos.text;
 
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasString;
+import org.llorllale.cactoos.matchers.IsTrue;
 
 /**
  * Test for {@link Randomized}.
@@ -23,8 +24,8 @@ final class RandomizedTest {
     void generatesRandomTextOfRandomLength() throws Exception {
         MatcherAssert.assertThat(
             "Generated text is empty",
-            new Randomized().asString().length(),
-            Matchers.greaterThan(0)
+            new Randomized().asString().isEmpty(),
+            new IsNot<>(new IsTrue())
         );
     }
 
