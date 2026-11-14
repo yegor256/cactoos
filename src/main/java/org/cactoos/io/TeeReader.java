@@ -11,6 +11,9 @@ import java.io.Writer;
 /**
  * Input to Output copying reader.
  *
+ * <p>{@link TeeReader#close()} closes both the source {@link Reader} and
+ * the destination {@link Writer}.</p>
+ *
  * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.13

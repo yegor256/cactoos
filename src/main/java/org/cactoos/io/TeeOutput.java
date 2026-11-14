@@ -14,6 +14,11 @@ import org.cactoos.Output;
 /**
  * Output to Output copying pipe.
  *
+ * <p>Closing the stream returned by {@link #stream()} closes the streams
+ * of both the target {@link Output} and the mirror {@link Output}. Wrap
+ * either side in {@link CloseShieldOutput} to keep its stream open after
+ * the copy.</p>
+ *
  * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.16

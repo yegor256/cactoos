@@ -20,6 +20,13 @@ import org.cactoos.Text;
 /**
  * Input to Output copying pipe.
  *
+ * <p>Closing the stream returned by {@link #stream()} closes the streams
+ * of both the source {@link Input} and the target {@link Output}, which
+ * also happens when a full-reading performer like
+ * {@link org.cactoos.scalar.LengthOf} drains this input. Wrap either side
+ * in {@link CloseShieldInput} or {@link CloseShieldOutput} to keep its
+ * stream open after the copy.</p>
+ *
  * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1

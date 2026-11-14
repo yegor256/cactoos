@@ -11,8 +11,9 @@ import java.io.OutputStream;
 /**
  * Stream that copies input to output.
  * <b>WARNING:</b>
- * This class closes {@link TeeInputStream#output}
- * after {@link TeeInputStream#close()}.
+ * {@link TeeInputStream#close()} closes both {@link TeeInputStream#input}
+ * and {@link TeeInputStream#output}. Wrap a stream you plan to reuse in
+ * {@link CloseShieldInputStream} or {@link CloseShieldOutputStream}.
  *
  * <p>There is no thread-safety guarantee.</p>
  *
