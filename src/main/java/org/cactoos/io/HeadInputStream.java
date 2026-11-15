@@ -32,6 +32,11 @@ public final class HeadInputStream extends InputStream {
     private long processed;
 
     /**
+     * Number of read bytes when the stream was last marked.
+     */
+    private long marked;
+
+    /**
      * Ctor.
      *
      * @param orig The original input stream
@@ -87,8 +92,8 @@ public final class HeadInputStream extends InputStream {
 
     @Override
     public void reset() throws IOException {
-        this.processed = 0L;
         this.origin.reset();
+        this.processed = this.marked;
     }
 
     @Override
@@ -116,5 +121,6 @@ public final class HeadInputStream extends InputStream {
     @Override
     public void mark(final int readlimit) {
         this.origin.mark(readlimit);
+        this.marked = this.processed;
     }
 }
