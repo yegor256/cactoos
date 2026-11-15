@@ -158,19 +158,9 @@ final class HeadInputStreamTest {
             stream.read();
             stream.reset();
             MatcherAssert.assertThat(
-                "read after reset must replay the byte at the mark",
-                stream.read(),
-                new IsEqual<>((int) 'b')
-            );
-            MatcherAssert.assertThat(
-                "second read after reset must replay the last head byte",
-                stream.read(),
-                new IsEqual<>((int) 'c')
-            );
-            MatcherAssert.assertThat(
-                "reads past the head must return EOF",
-                stream.read(),
-                new IsEqual<>(-1)
+                "reads after reset must replay the marked head and stop at its end",
+                new InputOf(stream),
+                new HasContent("bc")
             );
         }
     }
