@@ -49,6 +49,15 @@ import org.cactoos.list.ListOf;
  * byte[] errorBytes = new BytesOf(error).asBytes();
  * }</pre>
  *
+ * <p>When created from an {@link Input} or an {@link InputStream}, calling
+ * {@link #asBytes()} fully consumes the source and closes the stream it
+ * provides, so the input cannot be read from afterwards. Wrap it in
+ * {@link org.cactoos.io.CloseShieldInput} to keep that stream open:</p>
+ *
+ * <pre>{@code
+ * byte[] bytes = new BytesOf(new CloseShieldInput(input)).asBytes();
+ * }</pre>
+ *
  * <p>Thread safety is not guaranteed.</p>
  *
  * @since 0.12

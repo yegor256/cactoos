@@ -14,6 +14,15 @@ import org.cactoos.Text;
 /**
  * Length.
  *
+ * <p>When created over an {@link Input}, getting the length via
+ * {@link #value()} fully consumes the input and closes the stream it
+ * provides, so the input cannot be read from afterwards. Wrap it in
+ * {@link org.cactoos.io.CloseShieldInput} to keep that stream open:</p>
+ *
+ * <pre>{@code
+ * long length = new LengthOf(new CloseShieldInput(input)).value();
+ * }</pre>
+ *
  * <p>There is no thread-safety guarantee.</p>
  *
  * @since 0.1
