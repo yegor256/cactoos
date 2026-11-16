@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.HashMap;
 import java.util.Map;
+import org.cactoos.BiProc;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasValues;
@@ -18,12 +19,14 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.0
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class UncheckedBiProcTest {
 
     @Test
     void worksWithGenerics() {
         final Map<Object, Object> map = new HashMap<>();
-        new UncheckedBiProc<Number, String>(map::put).exec(1, "one");
+        final BiProc<Object, Object> callback = map::put;
+        new UncheckedBiProc<Number, String>(callback).exec(1, "one");
         MatcherAssert.assertThat(
             "Must accept a proc consuming supertypes of the inputs",
             map.values(),

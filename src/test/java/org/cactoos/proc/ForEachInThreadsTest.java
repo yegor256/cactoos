@@ -13,12 +13,14 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link ForEachInThreads}.
  *
  * @since 1.0
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class ForEachInThreadsTest {
 
     @Test
@@ -50,25 +52,15 @@ final class ForEachInThreadsTest {
 
     @Test
     void worksWithGenerics() throws Exception {
-        final Collection<Iterable<Integer>> list = new Synced<>(
-            new ListOf<>()
-        );
-        new ForEachInThreads<Collection<Integer>>(
-            (Proc<? super Iterable<Integer>>) list::add
-        ).exec(
-            new ListOf<>(
-                new ListOf<>(1), new ListOf<>(2)
-            )
-        );
+        final Collection<Object> list = new Synced<>(new ListOf<>());
+        final Proc<Object> callback = list::add;
+        final Proc<Iterable<Number>> proc =
+            new ForEachInThreads<>(callback);
+        proc.exec(new ListOf<>(1, 2));
         MatcherAssert.assertThat(
-            "List does not contain elements from sub-type iterables",
+            "Must accept a proc consuming supertypes of the elements",
             list,
-            new IsIterableContainingInAnyOrder<>(
-                new ListOf<>(
-                    new IsEqual<>(new ListOf<>(1)),
-                    new IsEqual<>(new ListOf<>(2))
-                )
-            )
+            new HasValues<>(1)
         );
     }
 }

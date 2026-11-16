@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.BiProc;
 import org.cactoos.func.IoCheckedBiFunc;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
@@ -20,6 +21,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 1.0
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class IoCheckedBiProcTest {
 
     @Test
@@ -97,7 +99,8 @@ final class IoCheckedBiProcTest {
     @Test
     void worksWithGenerics() throws IOException {
         final Map<Object, Object> map = new HashMap<>();
-        new IoCheckedBiProc<Number, String>(map::put).exec(1, "one");
+        final BiProc<Object, Object> callback = map::put;
+        new IoCheckedBiProc<Number, String>(callback).exec(1, "one");
         MatcherAssert.assertThat(
             "Must accept a proc consuming supertypes of the inputs",
             map.values(),

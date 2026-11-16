@@ -18,6 +18,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.4
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class IoCheckedProcTest {
 
     @Test
@@ -72,7 +73,8 @@ final class IoCheckedProcTest {
     @Test
     void worksWithGenerics() throws IOException {
         final Collection<Object> list = new ListOf<>();
-        new IoCheckedProc<Number>(list::add).exec(1);
+        final Proc<Object> callback = list::add;
+        new IoCheckedProc<Number>(callback).exec(1);
         MatcherAssert.assertThat(
             "Must accept a proc consuming supertypes of the input",
             list,

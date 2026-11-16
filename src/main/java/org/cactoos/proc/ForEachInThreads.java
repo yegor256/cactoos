@@ -30,7 +30,7 @@ import org.cactoos.scalar.AndInThreads;
  * @param <X> The type to iterate over
  * @since 1.0
  */
-public final class ForEachInThreads<X> implements Proc<Iterable<? extends X>> {
+public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
 
     /**
      * The proc.
@@ -47,7 +47,7 @@ public final class ForEachInThreads<X> implements Proc<Iterable<? extends X>> {
     }
 
     @Override
-    public void exec(final Iterable<? extends X> input) throws Exception {
+    public void exec(final Iterable<X> input) throws Exception {
         new AndInThreads(
             new FuncOf<>(this.proc, true), input
         ).value();

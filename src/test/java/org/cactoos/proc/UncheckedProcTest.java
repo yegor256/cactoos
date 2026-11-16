@@ -7,6 +7,7 @@ package org.cactoos.proc;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Collection;
+import org.cactoos.Proc;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.2
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class UncheckedProcTest {
 
     @Test
@@ -55,7 +57,8 @@ final class UncheckedProcTest {
     @Test
     void worksWithGenerics() {
         final Collection<Object> list = new ListOf<>();
-        new UncheckedProc<Number>(list::add).exec(1);
+        final Proc<Object> callback = list::add;
+        new UncheckedProc<Number>(callback).exec(1);
         MatcherAssert.assertThat(
             "Must accept a proc consuming supertypes of the input",
             list,

@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.BiProc;
+import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
@@ -21,6 +23,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.32
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class CheckedBiProcTest {
 
     @Test
@@ -92,13 +95,35 @@ final class CheckedBiProcTest {
     @Test
     void worksWithGenerics() throws IOException {
         final Map<Object, Object> map = new HashMap<>();
+        final BiProc<Object, Object> callback = map::put;
+        final Func<Throwable, EOFException> mapper =
+            throwable -> new EOFException(throwable.getMessage());
         new CheckedBiProc<Number, String, IOException>(
-            map::put, IOException::new
+            callback, mapper
         ).exec(1, "one");
         MatcherAssert.assertThat(
             "Must accept a proc consuming supertypes of the inputs",
             map.values(),
             new HasValues<>("one")
+        );
+    }
+
+    @Test
+    void mapsExceptionsOfSubtype() throws IOException {
+        final Func<Throwable, EOFException> mapper =
+            throwable -> new EOFException(throwable.getMessage());
+        MatcherAssert.assertThat(
+            "Must map an exception to the subtype of the declared one",
+            () -> {
+                new CheckedBiProc<Number, String, IOException>(
+                    (first, second) -> {
+                        throw new IOException("intended");
+                    },
+                    mapper
+                ).exec(1, "one");
+                return true;
+            },
+            new Throws<>(EOFException.class)
         );
     }
 }

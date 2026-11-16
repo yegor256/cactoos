@@ -14,15 +14,15 @@ import org.junit.jupiter.api.Test;
  *
  * @since 1.0
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class CallableOfTest {
 
     @Test
     void worksWithGenerics() throws Exception {
+        final Callable<String> callable = () -> "done";
         MatcherAssert.assertThat(
             "Must accept a callable providing subtypes of the result",
-            new CallableOf<Object>(
-                (Callable<String>) () -> "done"
-            ).call(),
+            new CallableOf<Object>(callable).call(),
             new IsEqual<>("done")
         );
     }
