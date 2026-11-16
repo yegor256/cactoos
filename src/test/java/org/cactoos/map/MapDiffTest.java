@@ -149,4 +149,22 @@ final class MapDiffTest {
             new HasEntry<>(18, "eighteen")
         );
     }
+
+    /**
+     * Tests that map difference accepts entries of key and value subtypes,
+     * thanks to the generic variance of its constructors.
+     *
+     * @since 0.73.4
+     */
+    @Test
+    void computesMapDifferenceWithSubtypeEntries() {
+        MatcherAssert.assertThat(
+            "Can't compute the difference of entries of subtypes",
+            new MapDiff<Number, CharSequence>(
+                Collections.singletonList(new MapEntry<>(1, "one")),
+                Collections.singletonList(new MapEntry<>(2, "two"))
+            ),
+            new HasEntry<>(1, "one")
+        );
+    }
 }

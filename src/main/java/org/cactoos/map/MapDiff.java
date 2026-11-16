@@ -28,13 +28,16 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      * @param first First map
      * @param second Second map
      */
-    public MapDiff(final Iterable<Map.Entry<K, V>> first,
-        final Iterable<Map.Entry<K, V>> second) {
+    public MapDiff(
+        final Iterable<? extends Map.Entry<? extends K, ? extends V>> first,
+        final Iterable<? extends Map.Entry<? extends K, ? extends V>> second
+    ) {
         this(
             new HashMap<>() {
                 private static final long serialVersionUID = 1L;
                 {
-                    for (final Map.Entry<K, V> entry : first) {
+                    for (final Map.Entry<? extends K, ? extends V> entry
+                        : first) {
                         this.put(entry.getKey(), entry.getValue());
                     }
                 }
@@ -42,7 +45,8 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
             new HashMap<>() {
                 private static final long serialVersionUID = 1L;
                 {
-                    for (final Map.Entry<K, V> entry : second) {
+                    for (final Map.Entry<? extends K, ? extends V> entry
+                        : second) {
                         this.put(entry.getKey(), entry.getValue());
                     }
                 }
@@ -56,8 +60,10 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      * @param first First iterator
      * @param second Second iterator
      */
-    public MapDiff(final Iterator<Map.Entry<K, V>> first,
-        final Iterator<Map.Entry<K, V>> second) {
+    public MapDiff(
+        final Iterator<? extends Map.Entry<? extends K, ? extends V>> first,
+        final Iterator<? extends Map.Entry<? extends K, ? extends V>> second
+    ) {
         this(
             new IterableOf<>(first),
             new IterableOf<>(second)
@@ -71,8 +77,8 @@ public final class MapDiff<K, V> extends MapEnvelope<K, V> {
      * @param second Second iterable supplier
      */
     public MapDiff(
-        final Scalar<Iterable<Map.Entry<K, V>>> first,
-        final Scalar<Iterable<Map.Entry<K, V>>> second
+        final Scalar<? extends Iterable<? extends Map.Entry<? extends K, ? extends V>>> first,
+        final Scalar<? extends Iterable<? extends Map.Entry<? extends K, ? extends V>>> second
     ) {
         this(
             new IterableOf<>(

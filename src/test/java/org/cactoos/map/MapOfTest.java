@@ -5,6 +5,7 @@
 package org.cactoos.map;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
@@ -222,6 +223,17 @@ final class MapOfTest {
                 new HasEntry<>(0, 0),
                 new HasEntry<>(1, 1)
             )
+        );
+    }
+
+    @Test
+    void createsMapFromEntriesOfSubtypes() {
+        MatcherAssert.assertThat(
+            "Must create a map from entries of key and value subtypes",
+            new MapOf<Number, CharSequence>(
+                Collections.singletonList(new MapEntry<>(1, "one"))
+            ),
+            new HasEntry<>(1, "one")
         );
     }
 }

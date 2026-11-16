@@ -4,6 +4,7 @@
  */
 package org.cactoos.map;
 
+import java.util.Collections;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
@@ -178,6 +179,17 @@ final class SyncedTest {
                 new HasEntry<>(1, 5),
                 new HasEntry<>(2, 7)
             )
+        );
+    }
+
+    @Test
+    void acceptsEntriesOfSubtypes() {
+        MatcherAssert.assertThat(
+            "Must accept entries of key and value subtypes",
+            new Synced<Number, CharSequence>(
+                Collections.singletonList(new MapEntry<>(1, "one"))
+            ),
+            new HasEntry<>(1, "one")
         );
     }
 }

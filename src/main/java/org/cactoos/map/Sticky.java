@@ -135,7 +135,9 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      *
      * @param entries List of entries
      */
-    public Sticky(final Iterable<Map.Entry<? extends X, ? extends Y>> entries) {
+    public Sticky(
+        final Iterable<? extends Map.Entry<? extends X, ? extends Y>> entries
+    ) {
         this(new MapOf<>(entries));
     }
 
@@ -147,7 +149,7 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      */
     public Sticky(
         final Map<? extends X, ? extends Y> src,
-        final Iterable<Map.Entry<? extends X, ? extends Y>> entries
+        final Iterable<? extends Map.Entry<? extends X, ? extends Y>> entries
     ) {
         this(new MapOf<>(src, entries));
     }
