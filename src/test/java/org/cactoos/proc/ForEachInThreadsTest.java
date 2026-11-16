@@ -4,7 +4,9 @@
  */
 package org.cactoos.proc;
 
+import java.util.Collection;
 import java.util.List;
+import org.cactoos.Proc;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Synced;
 import org.hamcrest.MatcherAssert;
@@ -41,6 +43,30 @@ final class ForEachInThreadsTest {
                 new ListOf<>(
                     new IsEqual<>(1),
                     new IsEqual<>(2)
+                )
+            )
+        );
+    }
+
+    @Test
+    void worksWithGenerics() throws Exception {
+        final Collection<Iterable<Integer>> list = new Synced<>(
+            new ListOf<>()
+        );
+        new ForEachInThreads<Collection<Integer>>(
+            (Proc<? super Iterable<Integer>>) list::add
+        ).exec(
+            new ListOf<>(
+                new ListOf<>(1), new ListOf<>(2)
+            )
+        );
+        MatcherAssert.assertThat(
+            "List does not contain elements from sub-type iterables",
+            list,
+            new IsIterableContainingInAnyOrder<>(
+                new ListOf<>(
+                    new IsEqual<>(new ListOf<>(1)),
+                    new IsEqual<>(new ListOf<>(2))
                 )
             )
         );

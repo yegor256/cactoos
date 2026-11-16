@@ -22,7 +22,7 @@ public final class CallableOf<T> implements Callable<T> {
     /**
      * The callable.
      */
-    private final Callable<T> callable;
+    private final Callable<? extends T> callable;
 
     /**
      * Ctor.
@@ -73,7 +73,7 @@ public final class CallableOf<T> implements Callable<T> {
      * @param clbl The callable original
      * @since 0.53
      */
-    public CallableOf(final Callable<T> clbl) {
+    public CallableOf(final Callable<? extends T> clbl) {
         this.callable = clbl;
     }
 

@@ -243,6 +243,108 @@
                   <new>class org.cactoos.text.ComparableText</new>
                   <justification>Switched to composition to satisfy linter rules and keep equals/hashCode local to the Comparable</justification>
                 </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.proc.CallableOf&lt;T&gt;::&lt;init&gt;(===java.util.concurrent.Callable&lt;T&gt;===)</old>
+                  <new>parameter void org.cactoos.proc.CallableOf&lt;T&gt;::&lt;init&gt;(===java.util.concurrent.Callable&lt;? extends T&gt;===)</new>
+                  <justification>Exploit generic variance for proc package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.proc.CheckedBiProc&lt;X, Y, E extends java.lang.Exception&gt;::&lt;init&gt;(===org.cactoos.BiProc&lt;X, Y&gt;===, org.cactoos.Func&lt;java.lang.Exception, E&gt;)</old>
+                  <new>parameter void org.cactoos.proc.CheckedBiProc&lt;X, Y, E extends java.lang.Exception&gt;::&lt;init&gt;(===org.cactoos.BiProc&lt;? super X, ? super Y&gt;===, org.cactoos.Func&lt;? super java.lang.Exception, ? extends E&gt;)</new>
+                  <justification>Exploit generic variance for proc package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.proc.CheckedBiProc&lt;X, Y, E extends java.lang.Exception&gt;::&lt;init&gt;(org.cactoos.BiProc&lt;X, Y&gt;, ===org.cactoos.Func&lt;java.lang.Exception, E&gt;===)</old>
+                  <new>parameter void org.cactoos.proc.CheckedBiProc&lt;X, Y, E extends java.lang.Exception&gt;::&lt;init&gt;(org.cactoos.BiProc&lt;? super X, ? super Y&gt;, ===org.cactoos.Func&lt;? super java.lang.Exception, ? extends E&gt;===)</new>
+                  <justification>Exploit generic variance for proc package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.proc.CheckedProc&lt;X, E extends java.lang.Exception&gt;::&lt;init&gt;(===org.cactoos.Proc&lt;X&gt;===, org.cactoos.Func&lt;java.lang.Exception, E&gt;)</old>
+                  <new>parameter void org.cactoos.proc.CheckedProc&lt;X, E extends java.lang.Exception&gt;::&lt;init&gt;(===org.cactoos.Proc&lt;? super X&gt;===, org.cactoos.Func&lt;? super java.lang.Exception, ? extends E&gt;)</new>
+                  <justification>Exploit generic variance for proc package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.proc.CheckedProc&lt;X, E extends java.lang.Exception&gt;::&lt;init&gt;(org.cactoos.Proc&lt;X&gt;, ===org.cactoos.Func&lt;java.lang.Exception, E&gt;===)</old>
+                  <new>parameter void org.cactoos.proc.CheckedProc&lt;X, E extends java.lang.Exception&gt;::&lt;init&gt;(org.cactoos.Proc&lt;? super X&gt;, ===org.cactoos.Func&lt;? super java.lang.Exception, ? extends E&gt;===)</new>
+                  <justification>Exploit generic variance for proc package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.proc.ForEachInThreads&lt;X&gt;::&lt;init&gt;(===org.cactoos.Proc&lt;X&gt;===)</old>
+                  <new>parameter void org.cactoos.proc.ForEachInThreads&lt;X&gt;::&lt;init&gt;(===org.cactoos.Proc&lt;? super X&gt;===)</new>
+                  <justification>Exploit generic variance for proc package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.proc.ForEachInThreads&lt;X&gt;::exec(===java.lang.Iterable&lt;X&gt;===) throws java.lang.Exception</old>
+                  <new>parameter void org.cactoos.proc.ForEachInThreads&lt;X&gt;::exec(===java.lang.Iterable&lt;? extends X&gt;===) throws java.lang.Exception</new>
+                  <justification>Exploit generic variance for proc package methods per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.class.noLongerImplementsInterface</code>
+                  <old>class org.cactoos.proc.ForEachInThreads&lt;X&gt;</old>
+                  <new>class org.cactoos.proc.ForEachInThreads&lt;X&gt;</new>
+                  <justification>Super-interface parameterized covariantly per #1533; Proc now accepts subtypes of the iterable element type</justification>
+                </item>
+                <item>
+                  <code>java.class.superTypeTypeParametersChanged</code>
+                  <old>class org.cactoos.proc.ForEachInThreads&lt;X&gt;</old>
+                  <new>class org.cactoos.proc.ForEachInThreads&lt;X&gt;</new>
+                  <justification>Super-interface parameterized covariantly per #1533; Proc now accepts subtypes of the iterable element type</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.proc.ForEachWithIndex&lt;X&gt;::&lt;init&gt;(===org.cactoos.BiProc&lt;X, java.lang.Integer&gt;===)</old>
+                  <new>parameter void org.cactoos.proc.ForEachWithIndex&lt;X&gt;::&lt;init&gt;(===org.cactoos.BiProc&lt;? super X, java.lang.Integer&gt;===)</new>
+                  <justification>Exploit generic variance for proc package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.proc.ForEachWithIndex&lt;X&gt;::exec(===java.lang.Iterable&lt;X&gt;===) throws java.lang.Exception</old>
+                  <new>parameter void org.cactoos.proc.ForEachWithIndex&lt;X&gt;::exec(===java.lang.Iterable&lt;? extends X&gt;===) throws java.lang.Exception</new>
+                  <justification>Exploit generic variance for proc package methods per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.class.noLongerImplementsInterface</code>
+                  <old>class org.cactoos.proc.ForEachWithIndex&lt;X&gt;</old>
+                  <new>class org.cactoos.proc.ForEachWithIndex&lt;X&gt;</new>
+                  <justification>Super-interface parameterized covariantly per #1533; Proc now accepts subtypes of the iterable element type</justification>
+                </item>
+                <item>
+                  <code>java.class.superTypeTypeParametersChanged</code>
+                  <old>class org.cactoos.proc.ForEachWithIndex&lt;X&gt;</old>
+                  <new>class org.cactoos.proc.ForEachWithIndex&lt;X&gt;</new>
+                  <justification>Super-interface parameterized covariantly per #1533; Proc now accepts subtypes of the iterable element type</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.proc.IoCheckedBiProc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.BiProc&lt;X, Y&gt;===)</old>
+                  <new>parameter void org.cactoos.proc.IoCheckedBiProc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.BiProc&lt;? super X, ? super Y&gt;===)</new>
+                  <justification>Exploit generic variance for proc package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.proc.IoCheckedProc&lt;X&gt;::&lt;init&gt;(===org.cactoos.Proc&lt;X&gt;===)</old>
+                  <new>parameter void org.cactoos.proc.IoCheckedProc&lt;X&gt;::&lt;init&gt;(===org.cactoos.Proc&lt;? super X&gt;===)</new>
+                  <justification>Exploit generic variance for proc package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.proc.UncheckedBiProc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.BiProc&lt;X, Y&gt;===)</old>
+                  <new>parameter void org.cactoos.proc.UncheckedBiProc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.BiProc&lt;? super X, ? super Y&gt;===)</new>
+                  <justification>Exploit generic variance for proc package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.proc.UncheckedProc&lt;X&gt;::&lt;init&gt;(===org.cactoos.Proc&lt;X&gt;===)</old>
+                  <new>parameter void org.cactoos.proc.UncheckedProc&lt;X&gt;::&lt;init&gt;(===org.cactoos.Proc&lt;? super X&gt;===)</new>
+                  <justification>Exploit generic variance for proc package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
               </differences>
             </revapi.differences>
           </analysisConfiguration>

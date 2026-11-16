@@ -4,6 +4,7 @@
  */
 package org.cactoos.proc;
 
+import org.cactoos.BiProc;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
@@ -32,6 +33,23 @@ final class ForEachWithIndexTest {
             new IsEqual<>(
                 "1: 'Mary' 2: 'John' 3: 'William' 4: 'Napkin' "
             )
+        );
+    }
+
+    @Test
+    void worksWithGenerics() throws Exception {
+        final StringBuilder builder = new StringBuilder();
+        new ForEachWithIndex<Number>(
+            (BiProc<Object, Integer>) (input, index) -> builder.append(
+                String.format("%d: '%s' ", index + 1, input)
+            )
+        ).exec(
+            new IterableOf<>(1, 2)
+        );
+        MatcherAssert.assertThat(
+            "String must contain sub-type elements with indexes",
+            builder.toString(),
+            new IsEqual<>("1: '1' 2: '2' ")
         );
     }
 }

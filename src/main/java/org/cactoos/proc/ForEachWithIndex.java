@@ -29,24 +29,24 @@ import org.cactoos.scalar.AndWithIndex;
  * @param <X> The type to iterate over
  * @since 1.0
  */
-public final class ForEachWithIndex<X> implements Proc<Iterable<X>> {
+public final class ForEachWithIndex<X> implements Proc<Iterable<? extends X>> {
 
     /**
      * The proc.
      */
-    private final BiProc<X, Integer> proc;
+    private final BiProc<? super X, Integer> proc;
 
     /**
      * Ctor.
      *
      * @param proc The proc to execute
      */
-    public ForEachWithIndex(final BiProc<X, Integer> proc) {
+    public ForEachWithIndex(final BiProc<? super X, Integer> proc) {
         this.proc = proc;
     }
 
     @Override
-    public void exec(final Iterable<X> input) throws Exception {
+    public void exec(final Iterable<? extends X> input) throws Exception {
         new AndWithIndex(
             this.proc, input
         ).value();

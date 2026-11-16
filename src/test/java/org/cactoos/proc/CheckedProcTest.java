@@ -6,11 +6,14 @@ package org.cactoos.proc;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -83,6 +86,19 @@ final class CheckedProcTest {
             "Must not throw an exception",
             counter.get(),
             new IsEqual<>(1)
+        );
+    }
+
+    @Test
+    void worksWithGenerics() throws IOException {
+        final Collection<Object> list = new ListOf<>();
+        new CheckedProc<Number, IOException>(
+            list::add, IOException::new
+        ).exec(1);
+        MatcherAssert.assertThat(
+            "Must accept a proc consuming supertypes of the input",
+            list,
+            new HasValues<>(1)
         );
     }
 }

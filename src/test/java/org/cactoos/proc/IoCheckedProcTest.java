@@ -5,9 +5,12 @@
 package org.cactoos.proc;
 
 import java.io.IOException;
+import java.util.Collection;
 import org.cactoos.Proc;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.HasValues;
 import org.llorllale.cactoos.matchers.Throws;
 
 /**
@@ -63,6 +66,17 @@ final class IoCheckedProcTest {
                 return null;
             },
             new Throws<>(IllegalStateException.class)
+        );
+    }
+
+    @Test
+    void worksWithGenerics() throws IOException {
+        final Collection<Object> list = new ListOf<>();
+        new IoCheckedProc<Number>(list::add).exec(1);
+        MatcherAssert.assertThat(
+            "Must accept a proc consuming supertypes of the input",
+            list,
+            new HasValues<>(1)
         );
     }
 }
