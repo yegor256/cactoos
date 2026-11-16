@@ -10,6 +10,7 @@ import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
 import org.cactoos.scalar.LengthOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasValue;
 
@@ -61,6 +62,21 @@ final class ChainedTest {
                 )
             ),
             new HasValue<>(2L)
+        );
+    }
+
+    @Test
+    void acceptsFuncsOfCompatibleSubtypes() throws Exception {
+        MatcherAssert.assertThat(
+            "Must accept funcs of compatible subtypes",
+            new Chained<CharSequence, StringBuilder, CharSequence>(
+                (Object input) -> new StringBuilder(input.toString()),
+                new IterableOf<Func<StringBuilder, StringBuilder>>(
+                    StringBuilder::reverse
+                ),
+                StringBuilder::toString
+            ).apply("abc"),
+            new IsEqual<>("cba")
         );
     }
 }

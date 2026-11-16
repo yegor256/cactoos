@@ -19,14 +19,14 @@ public final class BiFuncNoNulls<X, Y, Z> implements BiFunc<X, Y, Z> {
     /**
      * The function.
      */
-    private final BiFunc<X, Y, Z> origin;
+    private final BiFunc<? super X, ? super Y, ? extends Z> origin;
 
     /**
      * Ctor.
      *
      * @param func The function
      */
-    public BiFuncNoNulls(final BiFunc<X, Y, Z> func) {
+    public BiFuncNoNulls(final BiFunc<? super X, ? super Y, ? extends Z> func) {
         this.origin = func;
     }
 

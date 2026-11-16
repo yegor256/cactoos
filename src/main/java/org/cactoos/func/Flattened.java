@@ -23,7 +23,7 @@ public final class Flattened<X, Y> extends FuncEnvelope<X, Y> {
      *
      * @param sclr The func
      */
-    public Flattened(final Func<X, Scalar<Y>> sclr) {
+    public Flattened(final Func<? super X, ? extends Scalar<? extends Y>> sclr) {
         super(x -> sclr.apply(x).value());
     }
 }

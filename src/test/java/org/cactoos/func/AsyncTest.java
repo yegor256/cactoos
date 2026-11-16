@@ -189,4 +189,19 @@ final class AsyncTest {
             exec.shutdownNow();
         }
     }
+
+    @Test
+    void acceptsFuncOfSupertypeInput() throws Exception {
+        try (
+            Async<CharSequence, CharSequence> async = new Async<>(
+                (Object input) -> input.toString()
+            )
+        ) {
+            MatcherAssert.assertThat(
+                "Must accept func of supertype input",
+                async.apply("abc").get(),
+                new IsEqual<>("abc")
+            );
+        }
+    }
 }

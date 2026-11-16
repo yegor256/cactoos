@@ -6,6 +6,7 @@ package org.cactoos.func;
 
 import java.io.EOFException;
 import java.io.IOException;
+import org.cactoos.BiFunc;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
@@ -74,6 +75,20 @@ final class CheckedBiFuncTest {
                 exp -> exp
             ).apply(false, false),
             new IsEqual<>(true)
+        );
+    }
+
+    @Test
+    void acceptsBiFuncOfSupertypeInputs() throws Exception {
+        final BiFunc<Object, Object, String> origin =
+            (first, second) -> first.toString();
+        MatcherAssert.assertThat(
+            "Must accept bi-func of supertype inputs",
+            new CheckedBiFunc<String, String, String, RuntimeException>(
+                origin,
+                exception -> new RuntimeException(exception)
+            ).apply("a", "b"),
+            new IsEqual<>(origin.apply("a", "b"))
         );
     }
 }

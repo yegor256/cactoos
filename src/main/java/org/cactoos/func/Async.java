@@ -47,7 +47,7 @@ public final class Async<X, Y> implements
     /**
      * The func.
      */
-    private final Func<X, Y> func;
+    private final Func<? super X, ? extends Y> func;
 
     /**
      * The executor service, deferred.
@@ -64,7 +64,7 @@ public final class Async<X, Y> implements
      *
      * @param fnc The func
      */
-    public Async(final Func<X, Y> fnc) {
+    public Async(final Func<? super X, ? extends Y> fnc) {
         this(
             fnc,
             (Scalar<ExecutorService>) () -> Executors.newSingleThreadExecutor(
@@ -80,7 +80,7 @@ public final class Async<X, Y> implements
      * @param fnc The func
      * @param fct Factory
      */
-    public Async(final Func<X, Y> fnc, final ThreadFactory fct) {
+    public Async(final Func<? super X, ? extends Y> fnc, final ThreadFactory fct) {
         this(
             fnc,
             (Scalar<ExecutorService>) () -> Executors.newSingleThreadExecutor(fct),
@@ -94,7 +94,7 @@ public final class Async<X, Y> implements
      * @param fnc The func
      * @param exec Executor Service
      */
-    public Async(final Func<X, Y> fnc, final ExecutorService exec) {
+    public Async(final Func<? super X, ? extends Y> fnc, final ExecutorService exec) {
         this(fnc, (Scalar<ExecutorService>) () -> exec, false);
     }
 
@@ -106,7 +106,7 @@ public final class Async<X, Y> implements
      * @param sht Shut it down on close
      */
     private Async(
-        final Func<X, Y> fnc,
+        final Func<? super X, ? extends Y> fnc,
         final Scalar<ExecutorService> exec,
         final boolean sht
     ) {

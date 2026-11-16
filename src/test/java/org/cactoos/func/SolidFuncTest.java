@@ -48,4 +48,15 @@ final class SolidFuncTest {
             )
         );
     }
+
+    @Test
+    void acceptsFuncOfSupertypeInput() throws Exception {
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input",
+            new SolidFunc<CharSequence, CharSequence>(
+                (Object input) -> input.toString()
+            ).apply("abc"),
+            new IsEqual<>("abc")
+        );
+    }
 }

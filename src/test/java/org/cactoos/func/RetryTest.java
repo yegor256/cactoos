@@ -77,4 +77,15 @@ final class RetryTest {
             new Throws<>("sleep interrupted", InterruptedException.class)
         );
     }
+
+    @Test
+    void acceptsFuncOfSupertypeInput() {
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input",
+            new Retry<CharSequence, CharSequence>(
+                (Object input) -> input.toString()
+            ),
+            new IsApplicable<>("abc", "abc")
+        );
+    }
 }

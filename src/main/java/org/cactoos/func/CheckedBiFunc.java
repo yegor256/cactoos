@@ -23,12 +23,12 @@ public final class CheckedBiFunc<X, Y, Z, E extends Exception> implements
     /**
      * Original BiFunc.
      */
-    private final BiFunc<X, Y, Z> origin;
+    private final BiFunc<? super X, ? super Y, ? extends Z> origin;
 
     /**
      * Function that wraps exception of {@link #origin} to the required type.
      */
-    private final Func<Exception, E> func;
+    private final Func<? super Exception, ? extends E> func;
 
     /**
      * Ctor.
@@ -36,8 +36,8 @@ public final class CheckedBiFunc<X, Y, Z, E extends Exception> implements
      * @param original Original BiFunc
      * @param fnc Function that wraps exceptions
      */
-    public CheckedBiFunc(final BiFunc<X, Y, Z> original,
-        final Func<Exception, E> fnc) {
+    public CheckedBiFunc(final BiFunc<? super X, ? super Y, ? extends Z> original,
+        final Func<? super Exception, ? extends E> fnc) {
         this.origin = original;
         this.func = fnc;
     }

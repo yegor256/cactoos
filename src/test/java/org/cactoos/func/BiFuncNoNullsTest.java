@@ -5,6 +5,7 @@
 package org.cactoos.func;
 
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
@@ -67,6 +68,17 @@ final class BiFuncNoNullsTest {
                 (first, second) -> first
             ).apply(new Object(), new Object()),
             new IsNot<>(new IsNull<>())
+        );
+    }
+
+    @Test
+    void acceptsBiFuncOfSupertypeInputs() throws Exception {
+        MatcherAssert.assertThat(
+            "Must accept bi-func of supertype inputs",
+            new BiFuncNoNulls<CharSequence, CharSequence, CharSequence>(
+                (Object first, Object second) -> first.toString()
+            ).apply("a", "b"),
+            new IsEqual<>("a")
         );
     }
 }

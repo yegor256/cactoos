@@ -45,4 +45,15 @@ final class SyncFuncTest {
             new IsEqual<>(threads)
         );
     }
+
+    @Test
+    void acceptsFuncOfSupertypeInput() throws Exception {
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input",
+            new SyncFunc<CharSequence, CharSequence>(
+                (Object input) -> input.toString()
+            ).apply("abc"),
+            new IsEqual<>("abc")
+        );
+    }
 }

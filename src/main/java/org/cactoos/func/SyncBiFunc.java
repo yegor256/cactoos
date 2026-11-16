@@ -22,7 +22,7 @@ public final class SyncBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
     /**
      * Original func.
      */
-    private final BiFunc<X, Y, Z> func;
+    private final BiFunc<? super X, ? super Y, ? extends Z> func;
 
     /**
      * Sync lock.
@@ -34,7 +34,7 @@ public final class SyncBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
      *
      * @param fnc Func original
      */
-    public SyncBiFunc(final BiFunc<X, Y, Z> fnc) {
+    public SyncBiFunc(final BiFunc<? super X, ? super Y, ? extends Z> fnc) {
         this(fnc, fnc);
     }
 
@@ -44,7 +44,7 @@ public final class SyncBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
      * @param fnc Func original
      * @param lck Sync lock
      */
-    public SyncBiFunc(final BiFunc<X, Y, Z> fnc, final Object lck) {
+    public SyncBiFunc(final BiFunc<? super X, ? super Y, ? extends Z> fnc, final Object lck) {
         this.func = fnc;
         this.lock = lck;
     }

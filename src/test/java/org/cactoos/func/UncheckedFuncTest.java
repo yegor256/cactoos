@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -41,6 +42,17 @@ final class UncheckedFuncTest {
                 }
             ).apply(1),
             new Throws<>(IllegalStateException.class)
+        );
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInput() {
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input",
+            new UncheckedFunc<CharSequence, CharSequence>(
+                (Object input) -> input.toString()
+            ).apply("abc"),
+            new IsEqual<>("abc")
         );
     }
 }

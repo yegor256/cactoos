@@ -77,4 +77,15 @@ final class StickyFuncTest {
             )
         );
     }
+
+    @Test
+    void acceptsFuncOfSupertypeInput() throws Exception {
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input",
+            new StickyFunc<CharSequence, CharSequence>(
+                (Object input) -> input.toString()
+            ).apply("abc"),
+            new IsEqual<>("abc")
+        );
+    }
 }

@@ -23,7 +23,7 @@ public final class Timed<X, Y> implements Func<X, Y> {
     /**
      * Origin function.
      */
-    private final Func<X, Future<Y>> func;
+    private final Func<? super X, ? extends Future<? extends Y>> func;
 
     /**
      * Milliseconds.
@@ -36,8 +36,8 @@ public final class Timed<X, Y> implements Func<X, Y> {
      * @param function Origin function
      * @param milliseconds Milliseconds
      */
-    public Timed(final Func<X, Y> function, final long milliseconds) {
-        this(milliseconds, new Async<>(function));
+    public Timed(final Func<? super X, ? extends Y> function, final long milliseconds) {
+        this(milliseconds, new Async<X, Y>(function));
     }
 
     /**
@@ -46,14 +46,17 @@ public final class Timed<X, Y> implements Func<X, Y> {
      * @param milliseconds Milliseconds
      * @param async Async function
      */
-    public Timed(final long milliseconds, final Func<X, Future<Y>> async) {
+    public Timed(
+        final long milliseconds,
+        final Func<? super X, ? extends Future<? extends Y>> async
+    ) {
         this.func = async;
         this.time = milliseconds;
     }
 
     @Override
     public Y apply(final X input) throws Exception {
-        final Future<Y> future = this.func.apply(input);
+        final Future<? extends Y> future = this.func.apply(input);
         try {
             return future.get(this.time, TimeUnit.MILLISECONDS);
         } catch (final InterruptedException | ExecutionException

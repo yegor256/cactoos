@@ -19,14 +19,14 @@ public abstract class BiFuncEnvelope<X, Y, Z> implements BiFunc<X, Y, Z> {
     /**
      * BiFunc to decorate.
      */
-    private final BiFunc<X, Y, Z> origin;
+    private final BiFunc<? super X, ? super Y, ? extends Z> origin;
 
     /**
      * Ctor.
      *
      * @param func The function
      */
-    public BiFuncEnvelope(final BiFunc<X, Y, Z> func) {
+    public BiFuncEnvelope(final BiFunc<? super X, ? super Y, ? extends Z> func) {
         this.origin = func;
     }
 

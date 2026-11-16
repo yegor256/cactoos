@@ -27,7 +27,7 @@ public final class SolidFunc<X, Y> implements Func<X, Y> {
      *
      * @param fnc Original function
      */
-    public SolidFunc(final Func<X, Y> fnc) {
+    public SolidFunc(final Func<? super X, ? extends Y> fnc) {
         this(fnc, Integer.MAX_VALUE);
     }
 
@@ -38,7 +38,7 @@ public final class SolidFunc<X, Y> implements Func<X, Y> {
      * @param max Max caching buffer length
      * @since 0.26
      */
-    public SolidFunc(final Func<X, Y> fnc, final int max) {
+    public SolidFunc(final Func<? super X, ? extends Y> fnc, final int max) {
         this.func = new SyncFunc<>(new StickyFunc<>(fnc, max));
     }
 

@@ -4,12 +4,14 @@
  */
 package org.cactoos.func;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeoutException;
 import org.cactoos.iterable.Endless;
 import org.cactoos.scalar.And;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.IsTrue;
 import org.llorllale.cactoos.matchers.Throws;
@@ -70,6 +72,20 @@ final class TimedFuncTest {
                 3000L
             ).apply(true),
             new IsTrue()
+        );
+    }
+
+    @Test
+    void acceptsFuncOfFutureOfSubtype() throws Exception {
+        MatcherAssert.assertThat(
+            "Must accept func returning a future of a subtype",
+            new Timed<CharSequence, CharSequence>(
+                10_000L,
+                (Object input) -> CompletableFuture.completedFuture(
+                    input.toString()
+                )
+            ).apply("abc"),
+            new IsEqual<>("abc")
         );
     }
 }

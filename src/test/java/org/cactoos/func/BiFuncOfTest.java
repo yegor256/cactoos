@@ -6,9 +6,11 @@ package org.cactoos.func;
 
 import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.BiFunc;
+import org.cactoos.Scalar;
 import org.cactoos.proc.ProcOf;
 import org.cactoos.scalar.Constant;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsSame;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Satisfies;
@@ -82,6 +84,18 @@ final class BiFuncOfTest {
                     return res.length == 2 && res[0].equals(first) && res[1].equals(second);
                 }
             )
+        );
+    }
+
+    @Test
+    void acceptsScalarOfSubtype() throws Exception {
+        final Scalar<String> scalar = () -> "abc";
+        MatcherAssert.assertThat(
+            "Must accept scalar of a subtype",
+            new BiFuncOf<CharSequence, CharSequence, CharSequence>(
+                scalar
+            ).apply("in", "put"),
+            new IsEqual<>(scalar.value())
         );
     }
 }

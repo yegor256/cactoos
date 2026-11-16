@@ -6,6 +6,7 @@ package org.cactoos.func;
 
 import java.io.IOException;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
@@ -51,6 +52,17 @@ final class FuncNoNullsTest {
             "Doesn't fail for null result",
             () -> new FuncNoNulls<>(input -> null).apply(new Object()),
             new Throws<>(IOException.class)
+        );
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInput() throws Exception {
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input",
+            new FuncNoNulls<CharSequence, CharSequence>(
+                (Object input) -> input.toString()
+            ).apply("abc"),
+            new IsEqual<>("abc")
         );
     }
 }

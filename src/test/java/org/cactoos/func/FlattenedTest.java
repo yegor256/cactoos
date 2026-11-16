@@ -6,6 +6,7 @@ package org.cactoos.func;
 
 import org.cactoos.scalar.BoolOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.IsApplicable;
 
@@ -24,6 +25,17 @@ final class FlattenedTest {
                 new FuncOf<>(BoolOf::new)
             ),
             new IsApplicable<>("true", true)
+        );
+    }
+
+    @Test
+    void acceptsFuncOfScalarOfSubtype() throws Exception {
+        MatcherAssert.assertThat(
+            "Must accept func of scalar of a subtype",
+            new Flattened<CharSequence, CharSequence>(
+                (Object input) -> () -> input.toString()
+            ).apply("abc"),
+            new IsEqual<>("abc")
         );
     }
 }

@@ -28,4 +28,15 @@ final class StickyBiFuncTest {
             new IsEqual<>(func.apply(true, true) + func.apply(true, true))
         );
     }
+
+    @Test
+    void acceptsBiFuncOfSupertypeInputs() throws Exception {
+        MatcherAssert.assertThat(
+            "Must accept bi-func of supertype inputs",
+            new StickyBiFunc<CharSequence, CharSequence, CharSequence>(
+                (Object first, Object second) -> first.toString()
+            ).apply("a", "b"),
+            new IsEqual<>("a")
+        );
+    }
 }

@@ -21,14 +21,14 @@ public final class UncheckedFunc<X, Y> implements Func<X, Y> {
     /**
      * Original func.
      */
-    private final Func<X, Y> func;
+    private final Func<? super X, ? extends Y> func;
 
     /**
      * Ctor.
      *
      * @param fnc Encapsulated func
      */
-    public UncheckedFunc(final Func<X, Y> fnc) {
+    public UncheckedFunc(final Func<? super X, ? extends Y> fnc) {
         this.func = fnc;
     }
 
