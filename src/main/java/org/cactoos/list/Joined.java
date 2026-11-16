@@ -172,8 +172,10 @@ public final class Joined<X> implements List<X> {
     @Override
     public boolean removeAll(final Collection<?> items) {
         boolean changed = false;
-        for (final Object item : items) {
-            if (this.remove(item)) {
+        final Iterator<X> iter = this.iterator();
+        while (iter.hasNext()) {
+            if (items.contains(iter.next())) {
+                iter.remove();
                 changed = true;
             }
         }

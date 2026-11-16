@@ -337,6 +337,62 @@ final class JoinedTest {
     }
 
     @Test
+    void removeAllDropsAllOccurrences() {
+        final List<String> joined = new Joined<String>(
+            new ListOf<>(
+                JoinedTest.LITERAL_ONE,
+                JoinedTest.LITERAL_ONE
+            ),
+            new ListOf<>(JoinedTest.LITERAL_TWO)
+        );
+        joined.removeAll(Collections.singleton(JoinedTest.LITERAL_ONE));
+        new Assertion<>(
+            "removeAll must drop every occurrence of the element",
+            joined,
+            new IsEqual<>(new ListOf<>(JoinedTest.LITERAL_TWO))
+        ).affirm();
+    }
+
+    @Test
+    void removeAllDropsOccurrencesInEverySource() {
+        final List<String> joined = new Joined<String>(
+            new ListOf<>(
+                JoinedTest.LITERAL_ONE,
+                JoinedTest.LITERAL_TWO
+            ),
+            new ListOf<>(JoinedTest.LITERAL_ONE)
+        );
+        joined.removeAll(Collections.singleton(JoinedTest.LITERAL_ONE));
+        new Assertion<>(
+            "removeAll must drop the occurrences from every source list",
+            joined,
+            new IsEqual<>(new ListOf<>(JoinedTest.LITERAL_TWO))
+        ).affirm();
+    }
+
+    @Test
+    void removeAllWritesThroughToSource() {
+        final List<String> first = new ArrayList<>(
+            Arrays.asList(
+                JoinedTest.LITERAL_ONE,
+                JoinedTest.LITERAL_TWO
+            )
+        );
+        final List<String> second = new ArrayList<>(
+            Collections.singletonList(JoinedTest.LITERAL_ONE)
+        );
+        final List<String> joined = JoinedTest.joined(first, second);
+        joined.removeAll(Collections.singleton(JoinedTest.LITERAL_ONE));
+        new Assertion<>(
+            "removeAll must remove the occurrences from the source lists",
+            first,
+            new IsEqual<>(
+                Arrays.asList(JoinedTest.LITERAL_TWO)
+            )
+        ).affirm();
+    }
+
+    @Test
     void retainAll() {
         final List<String> joined = new Joined<String>(
             new ListOf<>(JoinedTest.LITERAL_ONE),
