@@ -5,6 +5,9 @@
 package org.cactoos.map;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import org.cactoos.Func;
 import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
@@ -17,6 +20,7 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  *
  * @since 0.24
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class SyncedTest {
 
     @Test
@@ -184,11 +188,50 @@ final class SyncedTest {
 
     @Test
     void acceptsEntriesOfSubtypes() {
+        final List<Map.Entry<Integer, String>> entries =
+            Collections.singletonList(new MapEntry<>(1, "one"));
         MatcherAssert.assertThat(
             "Must accept entries of key and value subtypes",
+            new Synced<Number, CharSequence>(entries),
+            new HasEntry<>(1, "one")
+        );
+    }
+
+    @Test
+    void extendsMapWithEntriesOfSubtypes() {
+        final List<Map.Entry<Integer, String>> entries =
+            Collections.singletonList(new MapEntry<>(2, "two"));
+        MatcherAssert.assertThat(
+            "Must extend a map with entries of key and value subtypes",
             new Synced<Number, CharSequence>(
-                Collections.singletonList(new MapEntry<>(1, "one"))
+                new MapOf<>(new MapEntry<>(1, "one")),
+                entries
             ),
+            new HasEntry<>(2, "two")
+        );
+    }
+
+    @Test
+    void createsMapFromFunctionOfSubtypeEntries() {
+        final Func<Integer, MapEntry<Integer, String>> entry =
+            number -> new MapEntry<>(number, "one");
+        MatcherAssert.assertThat(
+            "Must create a synced map from a function of subtype entries",
+            new Synced<Number, CharSequence>(
+                entry,
+                Collections.singletonList(1)
+            ),
+            new HasEntry<>(1, "one")
+        );
+    }
+
+    @Test
+    void createsMapFromFunctionOfSubtypeEntriesVarargs() {
+        final Func<Integer, MapEntry<Integer, String>> entry =
+            number -> new MapEntry<>(number, "one");
+        MatcherAssert.assertThat(
+            "Must create a synced map from a function of subtype entries",
+            new Synced<Number, CharSequence>(entry, 1, 2),
             new HasEntry<>(1, "one")
         );
     }

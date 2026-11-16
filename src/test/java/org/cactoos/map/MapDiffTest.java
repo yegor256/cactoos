@@ -6,7 +6,10 @@ package org.cactoos.map;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import org.cactoos.Scalar;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -17,6 +20,7 @@ import org.llorllale.cactoos.matchers.HasEntry;
  *
  * @since 0.58.0
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class MapDiffTest {
 
     /**
@@ -158,12 +162,45 @@ final class MapDiffTest {
      */
     @Test
     void computesMapDifferenceWithSubtypeEntries() {
+        final List<Map.Entry<Integer, String>> first =
+            Collections.singletonList(new MapEntry<>(1, "one"));
+        final List<Map.Entry<Integer, String>> second =
+            Collections.singletonList(new MapEntry<>(2, "two"));
         MatcherAssert.assertThat(
             "Can't compute the difference of entries of subtypes",
-            new MapDiff<Number, CharSequence>(
-                Collections.singletonList(new MapEntry<>(1, "one")),
-                Collections.singletonList(new MapEntry<>(2, "two"))
-            ),
+            new MapDiff<Number, CharSequence>(first, second),
+            new HasEntry<>(1, "one")
+        );
+    }
+
+    @Test
+    void computesMapDifferenceOfSubtypeIterators() {
+        final Iterator<Map.Entry<Integer, String>> first = Collections
+            .<Map.Entry<Integer, String>>singletonList(new MapEntry<>(1, "one"))
+            .iterator();
+        final Iterator<Map.Entry<Integer, String>> second = Collections
+            .<Map.Entry<Integer, String>>singletonList(new MapEntry<>(2, "two"))
+            .iterator();
+        MatcherAssert.assertThat(
+            "Can't compute the difference of iterators of subtypes",
+            new MapDiff<Number, CharSequence>(first, second),
+            new HasEntry<>(1, "one")
+        );
+    }
+
+    @Test
+    void computesMapDifferenceOfSubtypeScalars() {
+        final List<Map.Entry<Integer, String>> left =
+            Collections.singletonList(new MapEntry<>(1, "one"));
+        final List<Map.Entry<Integer, String>> right =
+            Collections.singletonList(new MapEntry<>(2, "two"));
+        final Scalar<List<Map.Entry<Integer, String>>> first =
+            () -> left;
+        final Scalar<List<Map.Entry<Integer, String>>> second =
+            () -> right;
+        MatcherAssert.assertThat(
+            "Can't compute the difference of scalars of subtypes",
+            new MapDiff<Number, CharSequence>(first, second),
             new HasEntry<>(1, "one")
         );
     }

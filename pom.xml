@@ -324,13 +324,43 @@
                 <item>
                   <code>java.method.parameterTypeParameterChanged</code>
                   <old>parameter &lt;Z&gt; void org.cactoos.map.Synced&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;Z, java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;===, java.lang.Iterable&lt;Z&gt;)</old>
-                  <new>parameter &lt;Z&gt; void org.cactoos.map.Synced&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super Z, java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;===, java.lang.Iterable&lt;? extends Z&gt;)</new>
+                  <new>parameter &lt;Z&gt; void org.cactoos.map.Synced&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super Z, ? extends java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;===, java.lang.Iterable&lt;? extends Z&gt;)</new>
                   <justification>Exploit generic variance for map package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
                 </item>
                 <item>
                   <code>java.method.parameterTypeParameterChanged</code>
                   <old>parameter &lt;Z&gt; void org.cactoos.map.Synced&lt;X, Y&gt;::&lt;init&gt;(org.cactoos.Func&lt;Z, java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;, ===java.lang.Iterable&lt;Z&gt;===)</old>
-                  <new>parameter &lt;Z&gt; void org.cactoos.map.Synced&lt;X, Y&gt;::&lt;init&gt;(org.cactoos.Func&lt;? super Z, java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;, ===java.lang.Iterable&lt;? extends Z&gt;===)</new>
+                  <new>parameter &lt;Z&gt; void org.cactoos.map.Synced&lt;X, Y&gt;::&lt;init&gt;(org.cactoos.Func&lt;? super Z, ? extends java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;, ===java.lang.Iterable&lt;? extends Z&gt;===)</new>
+                  <justification>Exploit generic variance for map package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter &lt;Z&gt; void org.cactoos.map.Synced&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super Z, java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;===, Z[])</old>
+                  <new>parameter &lt;Z&gt; void org.cactoos.map.Synced&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super Z, ? extends java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;===, Z[])</new>
+                  <justification>Exploit generic variance for map package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter &lt;Z&gt; void org.cactoos.map.MapOf&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super Z, java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;===, java.lang.Iterable&lt;? extends Z&gt;)</old>
+                  <new>parameter &lt;Z&gt; void org.cactoos.map.MapOf&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super Z, ? extends java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;===, java.lang.Iterable&lt;? extends Z&gt;)</new>
+                  <justification>Exploit generic variance for map package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter &lt;Z&gt; void org.cactoos.map.MapOf&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super Z, java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;===, java.util.Map&lt;? extends X, ? extends Y&gt;, java.lang.Iterable&lt;? extends Z&gt;)</old>
+                  <new>parameter &lt;Z&gt; void org.cactoos.map.MapOf&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super Z, ? extends java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;===, java.util.Map&lt;? extends X, ? extends Y&gt;, java.lang.Iterable&lt;? extends Z&gt;)</new>
+                  <justification>Exploit generic variance for map package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter &lt;Z&gt; void org.cactoos.map.Sticky&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super Z, java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;===, java.lang.Iterable&lt;? extends Z&gt;)</old>
+                  <new>parameter &lt;Z&gt; void org.cactoos.map.Sticky&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super Z, ? extends java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;===, java.lang.Iterable&lt;? extends Z&gt;)</new>
+                  <justification>Exploit generic variance for map package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter &lt;Z&gt; void org.cactoos.map.Sticky&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super Z, java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;===, java.util.Map&lt;? extends X, ? extends Y&gt;, java.lang.Iterable&lt;? extends Z&gt;)</old>
+                  <new>parameter &lt;Z&gt; void org.cactoos.map.Sticky&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super Z, ? extends java.util.Map.Entry&lt;? extends X, ? extends Y&gt;&gt;===, java.util.Map&lt;? extends X, ? extends Y&gt;, java.lang.Iterable&lt;? extends Z&gt;)</new>
                   <justification>Exploit generic variance for map package constructors per #1533; accepts subtypes while staying source and binary compatible</justification>
                 </item>
               </differences>
