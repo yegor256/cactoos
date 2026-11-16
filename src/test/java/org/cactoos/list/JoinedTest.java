@@ -339,55 +339,41 @@ final class JoinedTest {
     @Test
     void removeAllDropsAllOccurrences() {
         final List<String> joined = new Joined<String>(
-            new ListOf<>(
-                JoinedTest.LITERAL_ONE,
-                JoinedTest.LITERAL_ONE
-            ),
-            new ListOf<>(JoinedTest.LITERAL_TWO)
+            new ListOf<>("a", "a"),
+            new ListOf<>("b")
         );
-        joined.removeAll(Collections.singleton(JoinedTest.LITERAL_ONE));
+        joined.removeAll(Collections.singleton("a"));
         new Assertion<>(
             "removeAll must drop every occurrence of the element",
             joined,
-            new IsEqual<>(new ListOf<>(JoinedTest.LITERAL_TWO))
+            new IsEqual<>(new ListOf<>("b"))
         ).affirm();
     }
 
     @Test
     void removeAllDropsOccurrencesInEverySource() {
         final List<String> joined = new Joined<String>(
-            new ListOf<>(
-                JoinedTest.LITERAL_ONE,
-                JoinedTest.LITERAL_TWO
-            ),
-            new ListOf<>(JoinedTest.LITERAL_ONE)
+            new ListOf<>("a", "b"),
+            new ListOf<>("a")
         );
-        joined.removeAll(Collections.singleton(JoinedTest.LITERAL_ONE));
+        joined.removeAll(Collections.singleton("a"));
         new Assertion<>(
             "removeAll must drop the occurrences from every source list",
             joined,
-            new IsEqual<>(new ListOf<>(JoinedTest.LITERAL_TWO))
+            new IsEqual<>(new ListOf<>("b"))
         ).affirm();
     }
 
     @Test
     void removeAllWritesThroughToSource() {
-        final List<String> first = new ArrayList<>(
-            Arrays.asList(
-                JoinedTest.LITERAL_ONE,
-                JoinedTest.LITERAL_TWO
-            )
-        );
-        final List<String> second = new ArrayList<>(
-            Collections.singletonList(JoinedTest.LITERAL_ONE)
-        );
-        final List<String> joined = JoinedTest.joined(first, second);
-        joined.removeAll(Collections.singleton(JoinedTest.LITERAL_ONE));
+        final List<String> first = new ListOf<>("a", "b");
+        final List<String> second = new ListOf<>("a");
+        JoinedTest.joined(first, second).removeAll(Collections.singleton("a"));
         new Assertion<>(
             "removeAll must remove the occurrences from the source lists",
-            first,
+            new ListOf<>(first, second),
             new IsEqual<>(
-                Arrays.asList(JoinedTest.LITERAL_TWO)
+                new ListOf<>(new ListOf<>("b"), new ListOf<String>())
             )
         ).affirm();
     }
