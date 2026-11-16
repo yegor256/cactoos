@@ -5,6 +5,7 @@
 package org.cactoos.func;
 
 import java.io.IOException;
+import org.cactoos.BiFunc;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.13
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class IoCheckedBiFuncTest {
 
     @Test
@@ -62,10 +64,12 @@ final class IoCheckedBiFuncTest {
 
     @Test
     void acceptsBiFuncOfSupertypeInputs() throws Exception {
+        final BiFunc<Object, Object, String> origin =
+            (first, second) -> first.toString();
         MatcherAssert.assertThat(
             "Must accept bi-func of supertype inputs",
             new IoCheckedBiFunc<CharSequence, CharSequence, CharSequence>(
-                (Object first, Object second) -> first.toString()
+                origin
             ).apply("a", "b"),
             new IsEqual<>("a")
         );

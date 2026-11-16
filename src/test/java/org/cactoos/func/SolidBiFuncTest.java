@@ -18,6 +18,7 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  *
  * @since 1.0
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class SolidBiFuncTest {
 
     @Test
@@ -74,10 +75,25 @@ final class SolidBiFuncTest {
 
     @Test
     void acceptsBiFuncOfSupertypeInputs() throws Exception {
+        final BiFunc<Object, Object, String> origin =
+            (first, second) -> first.toString();
         MatcherAssert.assertThat(
             "Must accept bi-func of supertype inputs",
             new SolidBiFunc<CharSequence, CharSequence, CharSequence>(
-                (Object first, Object second) -> first.toString()
+                origin
+            ).apply("a", "b"),
+            new IsEqual<>("a")
+        );
+    }
+
+    @Test
+    void acceptsBiFuncOfSupertypeInputsWithLimit() throws Exception {
+        final BiFunc<Object, Object, String> origin =
+            (first, second) -> first.toString();
+        MatcherAssert.assertThat(
+            "Must accept bi-func of supertype inputs with a limit",
+            new SolidBiFunc<CharSequence, CharSequence, CharSequence>(
+                origin, 2
             ).apply("a", "b"),
             new IsEqual<>("a")
         );

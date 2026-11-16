@@ -6,6 +6,7 @@ package org.cactoos.func;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  *
  * @since 0.24
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class SyncFuncTest {
 
     @Test
@@ -48,10 +50,21 @@ final class SyncFuncTest {
 
     @Test
     void acceptsFuncOfSupertypeInput() throws Exception {
+        final Func<Object, String> fnc = Object::toString;
         MatcherAssert.assertThat(
             "Must accept func of supertype input",
+            new SyncFunc<CharSequence, CharSequence>(fnc).apply("abc"),
+            new IsEqual<>("abc")
+        );
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInputWithLock() throws Exception {
+        final Func<Object, String> fnc = Object::toString;
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input with a lock",
             new SyncFunc<CharSequence, CharSequence>(
-                (Object input) -> input.toString()
+                fnc, new Object()
             ).apply("abc"),
             new IsEqual<>("abc")
         );

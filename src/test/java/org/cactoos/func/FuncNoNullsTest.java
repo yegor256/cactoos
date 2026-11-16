@@ -5,6 +5,7 @@
 package org.cactoos.func;
 
 import java.io.IOException;
+import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
@@ -17,6 +18,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.10
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class FuncNoNullsTest {
 
     @Test
@@ -57,11 +59,10 @@ final class FuncNoNullsTest {
 
     @Test
     void acceptsFuncOfSupertypeInput() throws Exception {
+        final Func<Object, String> fnc = Object::toString;
         MatcherAssert.assertThat(
             "Must accept func of supertype input",
-            new FuncNoNulls<CharSequence, CharSequence>(
-                (Object input) -> input.toString()
-            ).apply("abc"),
+            new FuncNoNulls<CharSequence, CharSequence>(fnc).apply("abc"),
             new IsEqual<>("abc")
         );
     }

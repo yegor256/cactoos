@@ -17,6 +17,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.2
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class UncheckedFuncTest {
 
     @Test
@@ -47,11 +48,10 @@ final class UncheckedFuncTest {
 
     @Test
     void acceptsFuncOfSupertypeInput() {
+        final Func<Object, String> fnc = Object::toString;
         MatcherAssert.assertThat(
             "Must accept func of supertype input",
-            new UncheckedFunc<CharSequence, CharSequence>(
-                (Object input) -> input.toString()
-            ).apply("abc"),
+            new UncheckedFunc<CharSequence, CharSequence>(fnc).apply("abc"),
             new IsEqual<>("abc")
         );
     }

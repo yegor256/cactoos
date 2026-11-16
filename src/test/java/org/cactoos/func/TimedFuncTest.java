@@ -8,6 +8,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeoutException;
+import org.cactoos.Func;
 import org.cactoos.iterable.Endless;
 import org.cactoos.scalar.And;
 import org.hamcrest.MatcherAssert;
@@ -21,7 +22,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.29.3
  */
-@SuppressWarnings("PMD.AvoidCatchingGenericException")
+@SuppressWarnings({"PMD.AvoidCatchingGenericException", "PMD.UnnecessaryLocalRule"})
 final class TimedFuncTest {
 
     @Test
@@ -77,14 +78,23 @@ final class TimedFuncTest {
 
     @Test
     void acceptsFuncOfFutureOfSubtype() throws Exception {
+        final Func<Object, CompletableFuture<String>> async =
+            input -> CompletableFuture.completedFuture(input.toString());
         MatcherAssert.assertThat(
             "Must accept func returning a future of a subtype",
             new Timed<CharSequence, CharSequence>(
-                10_000L,
-                (Object input) -> CompletableFuture.completedFuture(
-                    input.toString()
-                )
+                10_000L, async
             ).apply("abc"),
+            new IsEqual<>("abc")
+        );
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInput() throws Exception {
+        final Func<Object, String> fnc = Object::toString;
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input",
+            new Timed<CharSequence, CharSequence>(fnc, 10_000L).apply("abc"),
             new IsEqual<>("abc")
         );
     }

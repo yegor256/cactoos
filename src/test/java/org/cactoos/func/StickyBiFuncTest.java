@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 0.13
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class StickyBiFuncTest {
 
     @Test
@@ -31,10 +32,25 @@ final class StickyBiFuncTest {
 
     @Test
     void acceptsBiFuncOfSupertypeInputs() throws Exception {
+        final BiFunc<Object, Object, String> origin =
+            (first, second) -> first.toString();
         MatcherAssert.assertThat(
             "Must accept bi-func of supertype inputs",
             new StickyBiFunc<CharSequence, CharSequence, CharSequence>(
-                (Object first, Object second) -> first.toString()
+                origin
+            ).apply("a", "b"),
+            new IsEqual<>("a")
+        );
+    }
+
+    @Test
+    void acceptsBiFuncOfSupertypeInputsWithLimit() throws Exception {
+        final BiFunc<Object, Object, String> origin =
+            (first, second) -> first.toString();
+        MatcherAssert.assertThat(
+            "Must accept bi-func of supertype inputs with a limit",
+            new StickyBiFunc<CharSequence, CharSequence, CharSequence>(
+                origin, 10
             ).apply("a", "b"),
             new IsEqual<>("a")
         );

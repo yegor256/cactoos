@@ -17,6 +17,7 @@ import org.llorllale.cactoos.matchers.RunsInThreads;
  *
  * @since 0.24
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class SolidFuncTest {
 
     @Test
@@ -51,11 +52,20 @@ final class SolidFuncTest {
 
     @Test
     void acceptsFuncOfSupertypeInput() throws Exception {
+        final Func<Object, String> fnc = Object::toString;
         MatcherAssert.assertThat(
             "Must accept func of supertype input",
-            new SolidFunc<CharSequence, CharSequence>(
-                (Object input) -> input.toString()
-            ).apply("abc"),
+            new SolidFunc<CharSequence, CharSequence>(fnc).apply("abc"),
+            new IsEqual<>("abc")
+        );
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInputWithLimit() throws Exception {
+        final Func<Object, String> fnc = Object::toString;
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input with a limit",
+            new SolidFunc<CharSequence, CharSequence>(fnc, 2).apply("abc"),
             new IsEqual<>("abc")
         );
     }

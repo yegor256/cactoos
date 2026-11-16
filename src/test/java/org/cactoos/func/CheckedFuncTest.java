@@ -18,6 +18,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.32
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class CheckedFuncTest {
 
     @Test
@@ -80,11 +81,14 @@ final class CheckedFuncTest {
 
     @Test
     void acceptsFallbackOfSubtypeException() throws Exception {
+        final Func<Object, String> origin = Object::toString;
+        final Func<Throwable, IllegalStateException> mapper =
+            IllegalStateException::new;
         MatcherAssert.assertThat(
             "Must accept fallback producing a subtype of exception",
             new CheckedFunc<String, String, RuntimeException>(
-                input -> input,
-                (Func<Exception, IllegalStateException>) IllegalStateException::new
+                origin,
+                mapper
             ).apply("abc"),
             new IsEqual<>("abc")
         );
