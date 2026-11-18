@@ -5,6 +5,7 @@
 package org.cactoos.number;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Iterator;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.scalar.ScalarOf;
@@ -61,7 +62,9 @@ public final class AvgOf extends NumberEnvelope {
                                 new BigDecimal(value.toString())
                             );
                         }
-                        return total.divide(BigDecimal.valueOf(qty));
+                        return total.divide(
+                            BigDecimal.valueOf(qty), MathContext.DECIMAL128
+                        );
                     },
                     it -> BigDecimal.ZERO
                 )
