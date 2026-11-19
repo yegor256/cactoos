@@ -6,6 +6,7 @@ package org.cactoos.func;
 
 import java.io.EOFException;
 import java.io.IOException;
+import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNull;
@@ -17,6 +18,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.32
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class CheckedFuncTest {
 
     @Test
@@ -74,6 +76,21 @@ final class CheckedFuncTest {
                 exp -> exp
             ).apply(false),
             new IsEqual<>(true)
+        );
+    }
+
+    @Test
+    void acceptsFallbackOfSubtypeException() throws Exception {
+        final Func<Object, String> origin = Object::toString;
+        final Func<Throwable, IllegalStateException> mapper =
+            IllegalStateException::new;
+        MatcherAssert.assertThat(
+            "Must accept fallback producing a subtype of exception",
+            new CheckedFunc<String, String, RuntimeException>(
+                origin,
+                mapper
+            ).apply("abc"),
+            new IsEqual<>("abc")
         );
     }
 }

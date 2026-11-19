@@ -33,7 +33,7 @@ public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
     /**
      * Original func.
      */
-    private final BiFunc<X, Y, Z> func;
+    private final BiFunc<? super X, ? super Y, ? extends Z> func;
 
     /**
      * Cache.
@@ -50,7 +50,7 @@ public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
      *
      * @param fnc Func original
      */
-    public StickyBiFunc(final BiFunc<X, Y, Z> fnc) {
+    public StickyBiFunc(final BiFunc<? super X, ? super Y, ? extends Z> fnc) {
         this(fnc, Integer.MAX_VALUE);
     }
 
@@ -61,7 +61,7 @@ public final class StickyBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
      * @param max Maximum buffer size
      * @since 0.26
      */
-    public StickyBiFunc(final BiFunc<X, Y, Z> fnc, final int max) {
+    public StickyBiFunc(final BiFunc<? super X, ? super Y, ? extends Z> fnc, final int max) {
         this.func = fnc;
         this.cache = new LinkedHashMap<>(0);
         this.size = max;

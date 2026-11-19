@@ -4,7 +4,9 @@
  */
 package org.cactoos.func;
 
+import org.cactoos.BiFunc;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.11
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class BiFuncNoNullsTest {
 
     @Test
@@ -67,6 +70,19 @@ final class BiFuncNoNullsTest {
                 (first, second) -> first
             ).apply(new Object(), new Object()),
             new IsNot<>(new IsNull<>())
+        );
+    }
+
+    @Test
+    void acceptsBiFuncOfSupertypeInputs() throws Exception {
+        final BiFunc<Object, Object, String> origin =
+            (first, second) -> first.toString();
+        MatcherAssert.assertThat(
+            "Must accept bi-func of supertype inputs",
+            new BiFuncNoNulls<CharSequence, CharSequence, CharSequence>(
+                origin
+            ).apply("a", "b"),
+            new IsEqual<>("a")
         );
     }
 }

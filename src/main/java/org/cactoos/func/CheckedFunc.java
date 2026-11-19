@@ -21,12 +21,12 @@ public final class CheckedFunc<X, Y, E extends Exception> implements
     /**
      * Original func.
      */
-    private final Func<X, Y> origin;
+    private final Func<? super X, ? extends Y> origin;
 
     /**
      * Function that wraps exception of {@link #origin} to the required type.
      */
-    private final Func<Exception, E> func;
+    private final Func<? super Exception, ? extends E> func;
 
     /**
      * Ctor.
@@ -34,8 +34,8 @@ public final class CheckedFunc<X, Y, E extends Exception> implements
      * @param original Original func
      * @param fnc Function that wraps exceptions
      */
-    public CheckedFunc(final Func<X, Y> original,
-        final Func<Exception, E> fnc) {
+    public CheckedFunc(final Func<? super X, ? extends Y> original,
+        final Func<? super Exception, ? extends E> fnc) {
         this.origin = original;
         this.func = fnc;
     }

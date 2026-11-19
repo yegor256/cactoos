@@ -6,9 +6,12 @@ package org.cactoos.func;
 
 import java.util.concurrent.atomic.AtomicReference;
 import org.cactoos.BiFunc;
+import org.cactoos.Func;
+import org.cactoos.Scalar;
 import org.cactoos.proc.ProcOf;
 import org.cactoos.scalar.Constant;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsSame;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Satisfies;
@@ -18,6 +21,7 @@ import org.llorllale.cactoos.matchers.Satisfies;
  *
  * @since 0.20
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class BiFuncOfTest {
 
     @Test
@@ -82,6 +86,43 @@ final class BiFuncOfTest {
                     return res.length == 2 && res[0].equals(first) && res[1].equals(second);
                 }
             )
+        );
+    }
+
+    @Test
+    void acceptsScalarOfSubtype() throws Exception {
+        final Scalar<String> scalar = () -> "abc";
+        MatcherAssert.assertThat(
+            "Must accept scalar of a subtype",
+            new BiFuncOf<CharSequence, CharSequence, CharSequence>(
+                scalar
+            ).apply("in", "put"),
+            new IsEqual<>(scalar.value())
+        );
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInput() throws Exception {
+        final Func<Object, String> fnc = Object::toString;
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input",
+            new BiFuncOf<CharSequence, CharSequence, CharSequence>(
+                fnc
+            ).apply("in", "put"),
+            new IsEqual<>("in")
+        );
+    }
+
+    @Test
+    void acceptsBiFuncOfSupertypeInputs() throws Exception {
+        final BiFunc<Object, Object, String> fnc =
+            (first, second) -> first.toString();
+        MatcherAssert.assertThat(
+            "Must accept bi-func of supertype inputs",
+            new BiFuncOf<CharSequence, CharSequence, CharSequence>(
+                fnc
+            ).apply("in", "put"),
+            new IsEqual<>("in")
         );
     }
 }

@@ -151,6 +151,258 @@
               <ignore>true</ignore>
               <differences>
                 <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Async&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===)</old>
+                  <new>parameter void org.cactoos.func.Async&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Async&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===, java.util.concurrent.ExecutorService)</old>
+                  <new>parameter void org.cactoos.func.Async&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===, java.util.concurrent.ExecutorService)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Async&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===, java.util.concurrent.ThreadFactory)</old>
+                  <new>parameter void org.cactoos.func.Async&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===, java.util.concurrent.ThreadFactory)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.BiFuncEnvelope&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;X, Y, Z&gt;===)</old>
+                  <new>parameter void org.cactoos.func.BiFuncEnvelope&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;? super X, ? super Y, ? extends Z&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.BiFuncNoNulls&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;X, Y, Z&gt;===)</old>
+                  <new>parameter void org.cactoos.func.BiFuncNoNulls&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;? super X, ? super Y, ? extends Z&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.BiFuncOf&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;X, Y, Z&gt;===)</old>
+                  <new>parameter void org.cactoos.func.BiFuncOf&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;? super X, ? super Y, ? extends Z&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.BiFuncOf&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Z&gt;===)</old>
+                  <new>parameter void org.cactoos.func.BiFuncOf&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Z&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.BiFuncOf&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.Scalar&lt;Z&gt;===)</old>
+                  <new>parameter void org.cactoos.func.BiFuncOf&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.Scalar&lt;? extends Z&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Chained&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===, org.cactoos.Func&lt;Y, Z&gt;)</old>
+                  <new>parameter void org.cactoos.func.Chained&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===, org.cactoos.Func&lt;? super Y, ? extends Z&gt;)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Chained&lt;X, Y, Z&gt;::&lt;init&gt;(org.cactoos.Func&lt;X, Y&gt;, ===org.cactoos.Func&lt;Y, Z&gt;===)</old>
+                  <new>parameter void org.cactoos.func.Chained&lt;X, Y, Z&gt;::&lt;init&gt;(org.cactoos.Func&lt;? super X, ? extends Y&gt;, ===org.cactoos.Func&lt;? super Y, ? extends Z&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Chained&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===, java.lang.Iterable&lt;org.cactoos.Func&lt;Y, Y&gt;&gt;, org.cactoos.Func&lt;Y, Z&gt;)</old>
+                  <new>parameter void org.cactoos.func.Chained&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===, java.lang.Iterable&lt;? extends org.cactoos.Func&lt;? super Y, ? extends Y&gt;&gt;, org.cactoos.Func&lt;? super Y, ? extends Z&gt;)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Chained&lt;X, Y, Z&gt;::&lt;init&gt;(org.cactoos.Func&lt;X, Y&gt;, ===java.lang.Iterable&lt;org.cactoos.Func&lt;Y, Y&gt;&gt;===, org.cactoos.Func&lt;Y, Z&gt;)</old>
+                  <new>parameter void org.cactoos.func.Chained&lt;X, Y, Z&gt;::&lt;init&gt;(org.cactoos.Func&lt;? super X, ? extends Y&gt;, ===java.lang.Iterable&lt;? extends org.cactoos.Func&lt;? super Y, ? extends Y&gt;&gt;===, org.cactoos.Func&lt;? super Y, ? extends Z&gt;)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Chained&lt;X, Y, Z&gt;::&lt;init&gt;(org.cactoos.Func&lt;X, Y&gt;, java.lang.Iterable&lt;org.cactoos.Func&lt;Y, Y&gt;&gt;, ===org.cactoos.Func&lt;Y, Z&gt;===)</old>
+                  <new>parameter void org.cactoos.func.Chained&lt;X, Y, Z&gt;::&lt;init&gt;(org.cactoos.Func&lt;? super X, ? extends Y&gt;, java.lang.Iterable&lt;? extends org.cactoos.Func&lt;? super Y, ? extends Y&gt;&gt;, ===org.cactoos.Func&lt;? super Y, ? extends Z&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.CheckedBiFunc&lt;X, Y, Z, E extends java.lang.Exception&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;X, Y, Z&gt;===, org.cactoos.Func&lt;java.lang.Exception, E&gt;)</old>
+                  <new>parameter void org.cactoos.func.CheckedBiFunc&lt;X, Y, Z, E extends java.lang.Exception&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;? super X, ? super Y, ? extends Z&gt;===, org.cactoos.Func&lt;? super java.lang.Exception, ? extends E&gt;)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.CheckedBiFunc&lt;X, Y, Z, E extends java.lang.Exception&gt;::&lt;init&gt;(org.cactoos.BiFunc&lt;X, Y, Z&gt;, ===org.cactoos.Func&lt;java.lang.Exception, E&gt;===)</old>
+                  <new>parameter void org.cactoos.func.CheckedBiFunc&lt;X, Y, Z, E extends java.lang.Exception&gt;::&lt;init&gt;(org.cactoos.BiFunc&lt;? super X, ? super Y, ? extends Z&gt;, ===org.cactoos.Func&lt;? super java.lang.Exception, ? extends E&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.CheckedFunc&lt;X, Y, E extends java.lang.Exception&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===, org.cactoos.Func&lt;java.lang.Exception, E&gt;)</old>
+                  <new>parameter void org.cactoos.func.CheckedFunc&lt;X, Y, E extends java.lang.Exception&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===, org.cactoos.Func&lt;? super java.lang.Exception, ? extends E&gt;)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.CheckedFunc&lt;X, Y, E extends java.lang.Exception&gt;::&lt;init&gt;(org.cactoos.Func&lt;X, Y&gt;, ===org.cactoos.Func&lt;java.lang.Exception, E&gt;===)</old>
+                  <new>parameter void org.cactoos.func.CheckedFunc&lt;X, Y, E extends java.lang.Exception&gt;::&lt;init&gt;(org.cactoos.Func&lt;? super X, ? extends Y&gt;, ===org.cactoos.Func&lt;? super java.lang.Exception, ? extends E&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Flattened&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, org.cactoos.Scalar&lt;Y&gt;&gt;===)</old>
+                  <new>parameter void org.cactoos.func.Flattened&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends org.cactoos.Scalar&lt;? extends Y&gt;&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.FuncEnvelope&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===)</old>
+                  <new>parameter void org.cactoos.func.FuncEnvelope&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.FuncNoNulls&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===)</old>
+                  <new>parameter void org.cactoos.func.FuncNoNulls&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.IoCheckedBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;X, Y, Z&gt;===)</old>
+                  <new>parameter void org.cactoos.func.IoCheckedBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;? super X, ? super Y, ? extends Z&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Retry&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===)</old>
+                  <new>parameter void org.cactoos.func.Retry&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Retry&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===, int)</old>
+                  <new>parameter void org.cactoos.func.Retry&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===, int)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Retry&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===, org.cactoos.Func&lt;java.lang.Integer, java.lang.Boolean&gt;)</old>
+                  <new>parameter void org.cactoos.func.Retry&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===, org.cactoos.Func&lt;java.lang.Integer, java.lang.Boolean&gt;)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Retry&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===, int, java.time.Duration)</old>
+                  <new>parameter void org.cactoos.func.Retry&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===, int, java.time.Duration)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Retry&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===, org.cactoos.Func&lt;java.lang.Integer, java.lang.Boolean&gt;, java.time.Duration)</old>
+                  <new>parameter void org.cactoos.func.Retry&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===, org.cactoos.Func&lt;java.lang.Integer, java.lang.Boolean&gt;, java.time.Duration)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.SolidBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;X, Y, Z&gt;===)</old>
+                  <new>parameter void org.cactoos.func.SolidBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;? super X, ? super Y, ? extends Z&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.SolidBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;X, Y, Z&gt;===, int)</old>
+                  <new>parameter void org.cactoos.func.SolidBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;? super X, ? super Y, ? extends Z&gt;===, int)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.SolidFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===)</old>
+                  <new>parameter void org.cactoos.func.SolidFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.SolidFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===, int)</old>
+                  <new>parameter void org.cactoos.func.SolidFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===, int)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.StickyBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;X, Y, Z&gt;===)</old>
+                  <new>parameter void org.cactoos.func.StickyBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;? super X, ? super Y, ? extends Z&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.StickyBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;X, Y, Z&gt;===, int)</old>
+                  <new>parameter void org.cactoos.func.StickyBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;? super X, ? super Y, ? extends Z&gt;===, int)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.StickyFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===)</old>
+                  <new>parameter void org.cactoos.func.StickyFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.StickyFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===, int)</old>
+                  <new>parameter void org.cactoos.func.StickyFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===, int)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.SyncBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;X, Y, Z&gt;===)</old>
+                  <new>parameter void org.cactoos.func.SyncBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;? super X, ? super Y, ? extends Z&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.SyncBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;X, Y, Z&gt;===, java.lang.Object)</old>
+                  <new>parameter void org.cactoos.func.SyncBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;? super X, ? super Y, ? extends Z&gt;===, java.lang.Object)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.SyncFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===)</old>
+                  <new>parameter void org.cactoos.func.SyncFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.SyncFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===, java.lang.Object)</old>
+                  <new>parameter void org.cactoos.func.SyncFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===, java.lang.Object)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Timed&lt;X, Y&gt;::&lt;init&gt;(long, ===org.cactoos.Func&lt;X, java.util.concurrent.Future&lt;Y&gt;&gt;===)</old>
+                  <new>parameter void org.cactoos.func.Timed&lt;X, Y&gt;::&lt;init&gt;(long, ===org.cactoos.Func&lt;? super X, ? extends java.util.concurrent.Future&lt;? extends Y&gt;&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.Timed&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===, long)</old>
+                  <new>parameter void org.cactoos.func.Timed&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===, long)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.UncheckedBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;X, Y, Z&gt;===)</old>
+                  <new>parameter void org.cactoos.func.UncheckedBiFunc&lt;X, Y, Z&gt;::&lt;init&gt;(===org.cactoos.BiFunc&lt;? super X, ? super Y, ? extends Z&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
+                  <code>java.method.parameterTypeParameterChanged</code>
+                  <old>parameter void org.cactoos.func.UncheckedFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;X, Y&gt;===)</old>
+                  <new>parameter void org.cactoos.func.UncheckedFunc&lt;X, Y&gt;::&lt;init&gt;(===org.cactoos.Func&lt;? super X, ? extends Y&gt;===)</new>
+                  <justification>Constructor parameter types relaxed per PECS rules to accept supertype inputs and subtype outputs (#1613)</justification>
+                </item>
+                <item>
                   <code>java.method.varargOverloadsOnlyDifferInVarargParameter</code>
                   <justification>Vararg overloads are intentional for API convenience</justification>
                 </item>

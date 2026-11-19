@@ -6,6 +6,7 @@ package org.cactoos.func;
 
 import java.security.SecureRandom;
 import java.time.Duration;
+import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.IsApplicable;
@@ -16,6 +17,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.8
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class RetryTest {
 
     @Test
@@ -75,6 +77,60 @@ final class RetryTest {
                 Duration.ofMillis(Long.MAX_VALUE)
             ).apply(true),
             new Throws<>("sleep interrupted", InterruptedException.class)
+        );
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInput() {
+        final Func<Object, String> fnc = Object::toString;
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input",
+            new Retry<CharSequence, CharSequence>(fnc),
+            new IsApplicable<>("abc", "abc")
+        );
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInputWithAttempts() {
+        final Func<Object, String> fnc = Object::toString;
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input with attempts",
+            new Retry<CharSequence, CharSequence>(fnc, 2),
+            new IsApplicable<>("abc", "abc")
+        );
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInputWithExit() {
+        final Func<Object, String> fnc = Object::toString;
+        final Func<Integer, Boolean> exit = attempts -> attempts >= 3;
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input with exit condition",
+            new Retry<CharSequence, CharSequence>(fnc, exit),
+            new IsApplicable<>("abc", "abc")
+        );
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInputWithDuration() {
+        final Func<Object, String> fnc = Object::toString;
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input with duration",
+            new Retry<CharSequence, CharSequence>(fnc, 2, Duration.ZERO),
+            new IsApplicable<>("abc", "abc")
+        );
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInputWithExitAndDuration() {
+        final Func<Object, String> fnc = Object::toString;
+        final Func<Integer, Boolean> exit = attempts -> attempts >= 3;
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input with exit and duration",
+            new Retry<CharSequence, CharSequence>(
+                fnc, exit, Duration.ofMillis(1L)
+            ),
+            new IsApplicable<>("abc", "abc")
         );
     }
 }

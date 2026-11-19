@@ -19,14 +19,14 @@ public final class FuncNoNulls<X, Y> implements Func<X, Y> {
     /**
      * The function.
      */
-    private final Func<X, Y> func;
+    private final Func<? super X, ? extends Y> func;
 
     /**
      * Ctor.
      *
      * @param fnc The function
      */
-    public FuncNoNulls(final Func<X, Y> fnc) {
+    public FuncNoNulls(final Func<? super X, ? extends Y> fnc) {
         this.func = fnc;
     }
 
