@@ -104,7 +104,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
         final Func<? super Z, ? extends X> key,
         final Func<? super Z, ? extends Y> value,
         final Map<? extends X, ? extends Y> src,
-        final Iterable<Z> list
+        final Iterable<? extends Z> list
     ) {
         this(
             item -> new MapEntry<>(key.apply(item), value.apply(item)),
@@ -121,7 +121,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @since 0.11
      */
     public <Z> MapOf(
-        final Func<? super Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Func<? super Z, ? extends Map.Entry<? extends X, ? extends Y>> entry,
         final Iterable<? extends Z> list
     ) {
         this(new Mapped<>(entry, list));
@@ -137,7 +137,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      * @since 0.11
      */
     public <Z> MapOf(
-        final Func<? super Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Func<? super Z, ? extends Map.Entry<? extends X, ? extends Y>> entry,
         final Map<? extends X, ? extends Y> src,
         final Iterable<? extends Z> list
     ) {
@@ -153,7 +153,7 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      */
     public MapOf(
         final Map<? extends X, ? extends Y> src,
-        final Iterable<Map.Entry<? extends X, ? extends Y>> list
+        final Iterable<? extends Map.Entry<? extends X, ? extends Y>> list
     ) {
         this(new Joined<Map.Entry<? extends X, ? extends Y>>(
             new IterableOf<>(() -> src.entrySet().iterator()),
@@ -166,7 +166,9 @@ public final class MapOf<X, Y> extends MapEnvelope<X, Y> {
      *
      * @param entries List of the entries
      */
-    public MapOf(final Iterable<Map.Entry<? extends X, ? extends Y>> entries) {
+    public MapOf(
+        final Iterable<? extends Map.Entry<? extends X, ? extends Y>> entries
+    ) {
         super(new HashMap<>(0) {
             private static final long serialVersionUID = 1L;
             {
