@@ -243,6 +243,12 @@
                   <new>class org.cactoos.text.ComparableText</new>
                   <justification>Switched to composition to satisfy linter rules and keep equals/hashCode local to the Comparable</justification>
                 </item>
+                <item>
+                  <code>java.class.noLongerInheritsFromClass</code>
+                  <old>class org.cactoos.list.Joined&lt;X&gt;</old>
+                  <new>class org.cactoos.list.Joined&lt;X&gt;</new>
+                  <justification>Joined implements List directly and delegates every operation lazily to JoinedListIterator instead of greedily copying elements into a ListEnvelope</justification>
+                </item>
               </differences>
             </revapi.differences>
           </analysisConfiguration>
