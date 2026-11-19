@@ -20,12 +20,12 @@ public final class CheckedProc<X, E extends Exception> implements Proc<X> {
     /**
      * Original proc.
      */
-    private final Proc<X> origin;
+    private final Proc<? super X> origin;
 
     /**
      * Function that wraps exception of {@link #origin} to the required type.
      */
-    private final Func<Exception, E> func;
+    private final Func<? super Exception, ? extends E> func;
 
     /**
      * Ctor.
@@ -33,7 +33,10 @@ public final class CheckedProc<X, E extends Exception> implements Proc<X> {
      * @param original Original proc
      * @param fnc Function that wraps exceptions
      */
-    public CheckedProc(final Proc<X> original, final Func<Exception, E> fnc) {
+    public CheckedProc(
+        final Proc<? super X> original,
+        final Func<? super Exception, ? extends E> fnc
+    ) {
         this.origin = original;
         this.func = fnc;
     }

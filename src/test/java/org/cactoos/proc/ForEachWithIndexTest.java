@@ -4,7 +4,10 @@
  */
 package org.cactoos.proc;
 
+import org.cactoos.BiProc;
+import org.cactoos.Proc;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.list.ListOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -14,6 +17,7 @@ import org.junit.jupiter.api.Test;
  *
  * @since 1.0
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class ForEachWithIndexTest {
 
     @Test
@@ -32,6 +36,23 @@ final class ForEachWithIndexTest {
             new IsEqual<>(
                 "1: 'Mary' 2: 'John' 3: 'William' 4: 'Napkin' "
             )
+        );
+    }
+
+    @Test
+    void worksWithGenerics() throws Exception {
+        final StringBuilder builder = new StringBuilder();
+        final BiProc<Object, Integer> callback =
+            (input, index) -> builder.append(
+                String.format("%d: '%s' ", index + 1, input)
+            );
+        final Proc<Iterable<Number>> proc =
+            new ForEachWithIndex<>(callback);
+        proc.exec(new ListOf<>(1, 2));
+        MatcherAssert.assertThat(
+            "String must contain sub-type elements with indexes",
+            builder.toString(),
+            new IsEqual<>("1: '1' 2: '2' ")
         );
     }
 }
