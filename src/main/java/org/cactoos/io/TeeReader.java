@@ -43,9 +43,9 @@ public final class TeeReader extends Reader {
     @Override
     public int read(final char[] cbuf, final int offset, final int length)
         throws IOException {
-        final int done = this.source.read(cbuf, 0, length);
-        if (done >= 0) {
-            this.destination.write(cbuf);
+        final int done = this.source.read(cbuf, offset, length);
+        if (done > 0) {
+            this.destination.write(cbuf, offset, done);
         }
         return done;
     }

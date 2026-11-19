@@ -7,7 +7,10 @@ package org.cactoos.io;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringWriter;
+import java.util.Arrays;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasContent;
 
@@ -37,5 +40,21 @@ final class TeeReaderTest {
             new InputOf(new ReaderOf(baos.toByteArray())),
             new HasContent(content)
         );
+    }
+
+    @Test
+    void copiesOnlyCharactersReadAtOffset() throws IOException {
+        final char[] buffer = "----".toCharArray();
+        final StringWriter copy = new StringWriter();
+        try (Reader reader = new TeeReader(new ReaderOf("x"), copy)) {
+            MatcherAssert.assertThat(
+                "Must preserve the buffer outside the read range and copy only the characters read",
+                Arrays.asList(
+                    Integer.toString(reader.read(buffer, 1, 2)),
+                    String.valueOf(buffer), copy.toString()
+                ),
+                new IsEqual<>(Arrays.asList("1", "-x--", "x"))
+            );
+        }
     }
 }
