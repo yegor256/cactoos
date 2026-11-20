@@ -335,4 +335,15 @@ final class AvgOfTest {
             new AllOf<Number>(new IsNumber(2.5), new IsNumber(2.5))
         );
     }
+
+    @Test
+    void withNonTerminatingDecimalAverage() {
+        MatcherAssert.assertThat(
+            "Average with non-terminating decimal expansion must be computed",
+            new AvgOf(
+                1, 2, 4
+            ).doubleValue(),
+            new IsEqual<>(2.333_333_333_333_333_5d)
+        );
+    }
 }
