@@ -20,14 +20,14 @@ public abstract class FuncEnvelope<X, Y> implements Func<X, Y> {
     /**
      * The delegate function.
      */
-    private final Func<X, Y> func;
+    private final Func<? super X, ? extends Y> func;
 
     /**
      * Ctor.
      *
      * @param func The function
      */
-    public FuncEnvelope(final Func<X, Y> func) {
+    public FuncEnvelope(final Func<? super X, ? extends Y> func) {
         this.func = func;
     }
 

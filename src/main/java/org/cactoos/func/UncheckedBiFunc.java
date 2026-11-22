@@ -22,14 +22,14 @@ public final class UncheckedBiFunc<X, Y, Z> implements BiFunc<X, Y, Z> {
     /**
      * Original func.
      */
-    private final BiFunc<X, Y, Z> func;
+    private final BiFunc<? super X, ? super Y, ? extends Z> func;
 
     /**
      * Ctor.
      *
      * @param fnc Encapsulated func
      */
-    public UncheckedBiFunc(final BiFunc<X, Y, Z> fnc) {
+    public UncheckedBiFunc(final BiFunc<? super X, ? super Y, ? extends Z> fnc) {
         this.func = fnc;
     }
 

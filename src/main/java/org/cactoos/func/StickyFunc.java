@@ -37,7 +37,7 @@ public final class StickyFunc<X, Y> implements Func<X, Y> {
      *
      * @param fnc Func original
      */
-    public StickyFunc(final Func<X, Y> fnc) {
+    public StickyFunc(final Func<? super X, ? extends Y> fnc) {
         this(fnc, Integer.MAX_VALUE);
     }
 
@@ -48,7 +48,7 @@ public final class StickyFunc<X, Y> implements Func<X, Y> {
      * @param max Maximum cache size
      * @since 0.26
      */
-    public StickyFunc(final Func<X, Y> fnc, final int max) {
+    public StickyFunc(final Func<? super X, ? extends Y> fnc, final int max) {
         this.func = new StickyBiFunc<>(
             (first, second) -> fnc.apply(first),
             max

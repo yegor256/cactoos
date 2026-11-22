@@ -23,7 +23,7 @@ public final class SolidBiFunc<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
      *
      * @param fnc Func original
      */
-    public SolidBiFunc(final BiFunc<X, Y, Z> fnc) {
+    public SolidBiFunc(final BiFunc<? super X, ? super Y, ? extends Z> fnc) {
         this(fnc, Integer.MAX_VALUE);
     }
 
@@ -34,7 +34,7 @@ public final class SolidBiFunc<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
      * @param max Max buffer length
      * @since 0.26
      */
-    public SolidBiFunc(final BiFunc<X, Y, Z> fnc, final int max) {
+    public SolidBiFunc(final BiFunc<? super X, ? super Y, ? extends Z> fnc, final int max) {
         super(new SyncBiFunc<>(new StickyBiFunc<>(fnc, max)));
     }
 }

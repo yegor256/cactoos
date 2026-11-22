@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
+import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.10
  */
-@SuppressWarnings({"PMD.CloseResource", "PMD.CloseInlineResourceRule"})
+@SuppressWarnings({"PMD.CloseResource", "PMD.CloseInlineResourceRule", "PMD.UnnecessaryLocalRule"})
 final class AsyncTest {
 
     @Test
@@ -184,6 +185,53 @@ final class AsyncTest {
                 "must not shut down external executor on close",
                 exec.submit(() -> true).get(1L, TimeUnit.SECONDS),
                 new IsEqual<>(true)
+            );
+        } finally {
+            exec.shutdownNow();
+        }
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInput() throws Exception {
+        final Func<Object, String> fnc = Object::toString;
+        try (
+            Async<CharSequence, CharSequence> async = new Async<>(fnc)
+        ) {
+            MatcherAssert.assertThat(
+                "Must accept func of supertype input",
+                async.apply("abc").get(),
+                new IsEqual<>("abc")
+            );
+        }
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInputWithThreadFactory() throws Exception {
+        final Func<Object, String> fnc = Object::toString;
+        try (
+            Async<CharSequence, CharSequence> async = new Async<>(
+                fnc, Executors.defaultThreadFactory()
+            )
+        ) {
+            MatcherAssert.assertThat(
+                "Must accept func of supertype input and a thread factory",
+                async.apply("abc").get(),
+                new IsEqual<>("abc")
+            );
+        }
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInputWithExecutor() throws Exception {
+        final Func<Object, String> fnc = Object::toString;
+        final ExecutorService exec = Executors.newSingleThreadExecutor();
+        try (
+            Async<CharSequence, CharSequence> async = new Async<>(fnc, exec)
+        ) {
+            MatcherAssert.assertThat(
+                "Must accept func of supertype input and an executor",
+                async.apply("abc").get(),
+                new IsEqual<>("abc")
             );
         } finally {
             exec.shutdownNow();

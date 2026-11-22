@@ -27,7 +27,7 @@ public final class BiFuncOf<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
      *
      * @param scalar The scalar
      */
-    public BiFuncOf(final Scalar<Z> scalar) {
+    public BiFuncOf(final Scalar<? extends Z> scalar) {
         this((first, second) -> scalar.value());
     }
 
@@ -36,7 +36,7 @@ public final class BiFuncOf<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
      *
      * @param fnc The func
      */
-    public BiFuncOf(final Func<X, Z> fnc) {
+    public BiFuncOf(final Func<? super X, ? extends Z> fnc) {
         this((first, second) -> fnc.apply(first));
     }
 
@@ -48,7 +48,7 @@ public final class BiFuncOf<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
      */
     public BiFuncOf(final Proc<X> proc, final Z result) {
         this(
-            (first, second) -> {
+            (final X first, final Y second) -> {
                 proc.exec(first);
                 return result;
             }
@@ -63,7 +63,7 @@ public final class BiFuncOf<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
      */
     public BiFuncOf(final BiProc<X, Y> proc, final Z result) {
         this(
-            (first, second) -> {
+            (final X first, final Y second) -> {
                 proc.exec(first, second);
                 return result;
             }
@@ -75,7 +75,7 @@ public final class BiFuncOf<X, Y, Z> extends BiFuncEnvelope<X, Y, Z> {
      *
      * @param fnc The func
      */
-    public BiFuncOf(final BiFunc<X, Y, Z> fnc) {
+    public BiFuncOf(final BiFunc<? super X, ? super Y, ? extends Z> fnc) {
         super(fnc);
     }
 }

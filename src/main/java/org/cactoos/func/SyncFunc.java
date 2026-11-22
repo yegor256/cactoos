@@ -21,7 +21,7 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
     /**
      * Original func.
      */
-    private final Func<X, Y> func;
+    private final Func<? super X, ? extends Y> func;
 
     /**
      * Sync lock.
@@ -33,7 +33,7 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
      *
      * @param fnc Func original
      */
-    public SyncFunc(final Func<X, Y> fnc) {
+    public SyncFunc(final Func<? super X, ? extends Y> fnc) {
         this(fnc, fnc);
     }
 
@@ -43,7 +43,7 @@ public final class SyncFunc<X, Y> implements Func<X, Y> {
      * @param fnc Func original
      * @param lck Sync lock
      */
-    public SyncFunc(final Func<X, Y> fnc, final Object lck) {
+    public SyncFunc(final Func<? super X, ? extends Y> fnc, final Object lck) {
         this.func = fnc;
         this.lock = lck;
     }

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import org.cactoos.Func;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -16,6 +17,7 @@ import org.llorllale.cactoos.matchers.Throws;
  *
  * @since 0.2
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class UncheckedFuncTest {
 
     @Test
@@ -41,6 +43,16 @@ final class UncheckedFuncTest {
                 }
             ).apply(1),
             new Throws<>(IllegalStateException.class)
+        );
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInput() {
+        final Func<Object, String> fnc = Object::toString;
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input",
+            new UncheckedFunc<CharSequence, CharSequence>(fnc).apply("abc"),
+            new IsEqual<>("abc")
         );
     }
 }

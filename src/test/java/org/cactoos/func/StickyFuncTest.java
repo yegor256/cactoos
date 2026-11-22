@@ -77,4 +77,24 @@ final class StickyFuncTest {
             )
         );
     }
+
+    @Test
+    void acceptsFuncOfSupertypeInput() throws Exception {
+        final Func<Object, String> fnc = Object::toString;
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input",
+            new StickyFunc<CharSequence, CharSequence>(fnc).apply("abc"),
+            new IsEqual<>("abc")
+        );
+    }
+
+    @Test
+    void acceptsFuncOfSupertypeInputWithLimit() throws Exception {
+        final Func<Object, String> fnc = Object::toString;
+        MatcherAssert.assertThat(
+            "Must accept func of supertype input with a limit",
+            new StickyFunc<CharSequence, CharSequence>(fnc, 10).apply("abc"),
+            new IsEqual<>("abc")
+        );
+    }
 }

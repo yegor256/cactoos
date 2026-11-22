@@ -4,8 +4,11 @@
  */
 package org.cactoos.func;
 
+import org.cactoos.Func;
+import org.cactoos.Scalar;
 import org.cactoos.scalar.BoolOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.IsApplicable;
 
@@ -14,6 +17,7 @@ import org.llorllale.cactoos.matchers.IsApplicable;
  *
  * @since 0.49
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class FlattenedTest {
 
     @Test
@@ -24,6 +28,17 @@ final class FlattenedTest {
                 new FuncOf<>(BoolOf::new)
             ),
             new IsApplicable<>("true", true)
+        );
+    }
+
+    @Test
+    void acceptsFuncOfScalarOfSubtype() throws Exception {
+        final Func<Object, Scalar<String>> fnc =
+            input -> () -> input.toString();
+        MatcherAssert.assertThat(
+            "Must accept func of scalar of a subtype",
+            new Flattened<CharSequence, CharSequence>(fnc).apply("abc"),
+            new IsEqual<>("abc")
         );
     }
 }

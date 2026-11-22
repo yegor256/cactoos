@@ -21,7 +21,7 @@ public final class Retry<X, Y> implements Func<X, Y> {
     /**
      * Original func.
      */
-    private final Func<X, Y> func;
+    private final Func<? super X, ? extends Y> func;
 
     /**
      * Exit condition.
@@ -38,7 +38,7 @@ public final class Retry<X, Y> implements Func<X, Y> {
      *
      * @param fnc Func original
      */
-    public Retry(final Func<X, Y> fnc) {
+    public Retry(final Func<? super X, ? extends Y> fnc) {
         this(fnc, 3);
     }
 
@@ -48,7 +48,7 @@ public final class Retry<X, Y> implements Func<X, Y> {
      * @param fnc Func original
      * @param attempts Maximum number of attempts
      */
-    public Retry(final Func<X, Y> fnc, final int attempts) {
+    public Retry(final Func<? super X, ? extends Y> fnc, final int attempts) {
         this(fnc, attempts, Duration.ZERO);
     }
 
@@ -59,7 +59,7 @@ public final class Retry<X, Y> implements Func<X, Y> {
      * @param attempts Maximum number of attempts
      * @param wait The executions of the function
      */
-    public Retry(final Func<X, Y> fnc, final int attempts,
+    public Retry(final Func<? super X, ? extends Y> fnc, final int attempts,
         final Duration wait) {
         this(fnc, attempt -> attempt >= attempts, wait);
     }
@@ -70,7 +70,7 @@ public final class Retry<X, Y> implements Func<X, Y> {
      * @param fnc Func original
      * @param ext Exit condition, returns TRUE if there is no more reason to try
      */
-    public Retry(final Func<X, Y> fnc, final Func<Integer, Boolean> ext) {
+    public Retry(final Func<? super X, ? extends Y> fnc, final Func<Integer, Boolean> ext) {
         this(fnc, ext, Duration.ZERO);
     }
 
@@ -81,7 +81,7 @@ public final class Retry<X, Y> implements Func<X, Y> {
      * @param ext Exit condition, returns TRUE if there is no more reason to try
      * @param wait The executions of the function
      */
-    public Retry(final Func<X, Y> fnc, final Func<Integer, Boolean> ext,
+    public Retry(final Func<? super X, ? extends Y> fnc, final Func<Integer, Boolean> ext,
         final Duration wait) {
         this.func = fnc;
         this.exit = ext;

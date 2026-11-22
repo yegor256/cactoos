@@ -20,17 +20,17 @@ public final class Chained<X, Y, Z> implements Func<X, Z> {
     /**
      * Before function.
      */
-    private final Func<X, Y> before;
+    private final Func<? super X, ? extends Y> before;
 
     /**
      * Functions.
      */
-    private final Iterable<Func<Y, Y>> funcs;
+    private final Iterable<? extends Func<? super Y, ? extends Y>> funcs;
 
     /**
      * After function.
      */
-    private final Func<Y, Z> after;
+    private final Func<? super Y, ? extends Z> after;
 
     /**
      * Ctor.
@@ -38,7 +38,7 @@ public final class Chained<X, Y, Z> implements Func<X, Z> {
      * @param bfr Before function
      * @param atr After function
      */
-    public Chained(final Func<X, Y> bfr, final Func<Y, Z> atr) {
+    public Chained(final Func<? super X, ? extends Y> bfr, final Func<? super Y, ? extends Z> atr) {
         this(bfr, new IterableOf<>(), atr);
     }
 
@@ -49,8 +49,11 @@ public final class Chained<X, Y, Z> implements Func<X, Z> {
      * @param list Functions
      * @param atr After function
      */
-    public Chained(final Func<X, Y> bfr, final Iterable<Func<Y, Y>> list,
-        final Func<Y, Z> atr) {
+    public Chained(
+        final Func<? super X, ? extends Y> bfr,
+        final Iterable<? extends Func<? super Y, ? extends Y>> list,
+        final Func<? super Y, ? extends Z> atr
+    ) {
         this.before = bfr;
         this.funcs = list;
         this.after = atr;
@@ -59,7 +62,7 @@ public final class Chained<X, Y, Z> implements Func<X, Z> {
     @Override
     public Z apply(final X input) throws Exception {
         Y temp = this.before.apply(input);
-        for (final Func<Y, Y> func : this.funcs) {
+        for (final Func<? super Y, ? extends Y> func : this.funcs) {
             temp = func.apply(temp);
         }
         return this.after.apply(temp);
