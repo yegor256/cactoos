@@ -62,9 +62,14 @@ public final class AvgOf extends NumberEnvelope {
                                 new BigDecimal(value.toString())
                             );
                         }
-                        return total.divide(
-                            BigDecimal.valueOf(qty), MathContext.DECIMAL128
-                        );
+                        final BigDecimal divisor = BigDecimal.valueOf(qty);
+                        BigDecimal avg;
+                        try {
+                            avg = total.divide(divisor);
+                        } catch (final ArithmeticException ignore) {
+                            avg = total.divide(divisor, MathContext.DECIMAL128);
+                        }
+                        return avg;
                     },
                     it -> BigDecimal.ZERO
                 )
