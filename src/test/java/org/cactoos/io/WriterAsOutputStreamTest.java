@@ -7,12 +7,14 @@ package org.cactoos.io;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.cactoos.scalar.LengthOf;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -105,6 +107,44 @@ final class WriterAsOutputStreamTest {
             "file must not exist anymore",
             Files.exists(temp),
             new IsNot<>(new IsTrue())
+        );
+    }
+
+    @Test
+    void writesTwoByteCharWithOneByteBuffer() throws Exception {
+        final StringWriter writer = new StringWriter();
+        try (
+            WriterAsOutputStream stream = new WriterAsOutputStream(
+                writer, StandardCharsets.UTF_8, 1
+            )
+        ) {
+            stream.write(new byte[] {(byte) 0xC3, (byte) 0xA9});
+        }
+        MatcherAssert.assertThat(
+            "Can't write a two-byte char with a one-byte buffer",
+            writer.toString(),
+            new IsEqual<>("é")
+        );
+    }
+
+    @Test
+    void writesFourByteCharWithOneByteBuffer() throws Exception {
+        final StringWriter writer = new StringWriter();
+        try (
+            WriterAsOutputStream stream = new WriterAsOutputStream(
+                writer, StandardCharsets.UTF_8, 1
+            )
+        ) {
+            stream.write(
+                new byte[] {
+                    (byte) 0xF0, (byte) 0x9D, (byte) 0x84, (byte) 0x9E,
+                }
+            );
+        }
+        MatcherAssert.assertThat(
+            "Can't write a four-byte char with a one-byte buffer",
+            writer.toString(),
+            new IsEqual<>("𝄞")
         );
     }
 }
