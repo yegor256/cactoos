@@ -31,14 +31,14 @@ import org.cactoos.scalar.Unchecked;
 final class WriterAsOutputStream extends OutputStream {
 
     /**
-     * Incoming data, deferred.
+     * Incoming data.
      */
-    private final Unchecked<ByteBuffer> input;
+    private ByteBuffer input;
 
     /**
-     * Output ready to be flushed, deferred.
+     * Output ready to be flushed.
      */
-    private final Unchecked<CharBuffer> output;
+    private CharBuffer output;
 
     /**
      * The writer.
@@ -151,8 +151,8 @@ final class WriterAsOutputStream extends OutputStream {
         super();
         this.writer = wtr;
         this.decoder = new Unchecked<>(new Sticky<>(ddr));
-        this.input = new Unchecked<>(new Sticky<>(() -> ByteBuffer.allocate(size)));
-        this.output = new Unchecked<>(new Sticky<>(() -> CharBuffer.allocate(size)));
+        this.input = ByteBuffer.allocate(size);
+        this.output = CharBuffer.allocate(size);
     }
 
     @Override
@@ -184,28 +184,60 @@ final class WriterAsOutputStream extends OutputStream {
 
     private int next(final byte[] buffer, final int offset,
         final int length) throws IOException {
-        final ByteBuffer ibuf = this.input.value();
-        final CharBuffer obuf = this.output.value();
+        final ByteBuffer ibuf = this.grown();
         final int max = Math.min(length, ibuf.remaining());
         ibuf.put(buffer, offset, max);
         ibuf.flip();
+        this.decode(ibuf);
+        ibuf.compact();
+        return max;
+    }
+
+    /**
+     * Decode the bytes in the input buffer, writing the chars
+     * to the writer. The output buffer grows when the decoder
+     * cannot fit a single character into it.
+     * @param ibuf Input buffer, in read mode
+     * @throws IOException If the bytes are malformed or the
+     *  writer fails
+     */
+    private void decode(final ByteBuffer ibuf) throws IOException {
         while (true) {
             final CoderResult result = this.decoder.value().decode(
-                ibuf, obuf, false
+                ibuf, this.output, false
             );
             if (result.isError()) {
                 result.throwException();
             }
-            this.writer.write(
-                obuf.array(), 0, obuf.position()
-            );
+            final int written = this.output.position();
+            this.writer.write(this.output.array(), 0, written);
             this.writer.flush();
-            obuf.rewind();
+            this.output.rewind();
             if (result.isUnderflow()) {
                 break;
             }
+            if (written == 0) {
+                this.output = CharBuffer.allocate(
+                    Math.max(1, this.output.capacity() * 2)
+                );
+            }
         }
-        ibuf.compact();
-        return max;
+    }
+
+    /**
+     * Input buffer, grown when it is full of bytes the decoder
+     * has not consumed yet, so the next byte can be appended.
+     * @return The input buffer, with room for at least one byte
+     */
+    private ByteBuffer grown() {
+        if (this.input.remaining() == 0) {
+            final ByteBuffer grown = ByteBuffer.allocate(
+                Math.max(1, this.input.capacity() * 2)
+            );
+            this.input.flip();
+            grown.put(this.input);
+            this.input = grown;
+        }
+        return this.input;
     }
 }
