@@ -4,6 +4,7 @@
  */
 package org.cactoos.io;
 
+import java.io.ByteArrayInputStream;
 import org.cactoos.text.TextOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.IsEqual;
@@ -140,6 +141,26 @@ final class HeadInputStreamTest {
                 "must count available bytes",
                 stream.available(),
                 new IsEqual<>(5)
+            );
+        }
+    }
+
+    @Test
+    void readsOnlyHeadAfterResetToNonZeroMark() throws Exception {
+        try (
+            HeadInputStream stream = new HeadInputStream(
+                new ByteArrayInputStream(new byte[] {'a', 'b', 'c', 'd', 'e'}),
+                3
+            )
+        ) {
+            stream.read();
+            stream.mark(10);
+            stream.read();
+            stream.reset();
+            MatcherAssert.assertThat(
+                "reads after reset must replay the marked head and stop at its end",
+                new InputOf(stream),
+                new HasContent("bc")
             );
         }
     }
