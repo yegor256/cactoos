@@ -6,10 +6,11 @@ package org.cactoos.io;
 
 import java.io.InputStream;
 import java.io.SequenceInputStream;
+import java.util.Collections;
 import org.cactoos.Input;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.scalar.Reduced;
+import org.cactoos.list.ListOf;
 
 /**
  * Concatenation of several inputs.
@@ -49,12 +50,15 @@ public final class Joined implements Input {
 
     @Override
     public InputStream stream() throws Exception {
-        return new Reduced<InputStream>(
-            SequenceInputStream::new,
-            new Mapped<>(
-                input -> input::stream,
-                this.inputs
+        return new SequenceInputStream(
+            Collections.enumeration(
+                new ListOf<>(
+                    new Mapped<>(
+                        Input::stream,
+                        this.inputs
+                    )
+                )
             )
-        ).value();
+        );
     }
 }

@@ -4,7 +4,10 @@
  */
 package org.cactoos.io;
 
+import java.io.ByteArrayInputStream;
+import org.cactoos.Input;
 import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterable.Repeated;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasContent;
@@ -44,6 +47,24 @@ final class JoinedTest {
                 )
             ),
             new HasContent("abcdefghi")
+        );
+    }
+
+    /**
+     * Must join many inputs without overflowing the stack on the
+     * first read, no matter how many of them are joined together.
+     */
+    @Test
+    void joinsManyInputs() {
+        MatcherAssert.assertThat(
+            "Can't join a large number of inputs",
+            new Joined(
+                new Repeated<Input>(
+                    20_000,
+                    () -> new ByteArrayInputStream(new byte[] {57})
+                )
+            ),
+            new HasContent("9".repeat(20_000))
         );
     }
 }
