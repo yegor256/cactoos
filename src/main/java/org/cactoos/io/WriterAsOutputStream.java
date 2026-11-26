@@ -51,6 +51,11 @@ final class WriterAsOutputStream extends OutputStream {
     private final Unchecked<CharsetDecoder> decoder;
 
     /**
+     * Buffer size, used when the buffers are first allocated.
+     */
+    private final int size;
+
+    /**
      * Ctor.
      *
      * @param wtr Writer
@@ -151,8 +156,7 @@ final class WriterAsOutputStream extends OutputStream {
         super();
         this.writer = wtr;
         this.decoder = new Unchecked<>(new Sticky<>(ddr));
-        this.input = ByteBuffer.allocate(size);
-        this.output = CharBuffer.allocate(size);
+        this.size = size;
     }
 
     @Override
@@ -193,15 +197,10 @@ final class WriterAsOutputStream extends OutputStream {
         return max;
     }
 
-    /**
-     * Decode the bytes in the input buffer, writing the chars
-     * to the writer. The output buffer grows when the decoder
-     * cannot fit a single character into it.
-     * @param ibuf Input buffer, in read mode
-     * @throws IOException If the bytes are malformed or the
-     *  writer fails
-     */
     private void decode(final ByteBuffer ibuf) throws IOException {
+        if (this.output == null) {
+            this.output = CharBuffer.allocate(this.size);
+        }
         while (true) {
             final CoderResult result = this.decoder.value().decode(
                 ibuf, this.output, false
@@ -224,12 +223,10 @@ final class WriterAsOutputStream extends OutputStream {
         }
     }
 
-    /**
-     * Input buffer, grown when it is full of bytes the decoder
-     * has not consumed yet, so the next byte can be appended.
-     * @return The input buffer, with room for at least one byte
-     */
     private ByteBuffer grown() {
+        if (this.input == null) {
+            this.input = ByteBuffer.allocate(this.size);
+        }
         if (this.input.remaining() == 0) {
             final ByteBuffer grown = ByteBuffer.allocate(
                 Math.max(1, this.input.capacity() * 2)
