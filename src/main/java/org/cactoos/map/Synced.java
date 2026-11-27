@@ -91,7 +91,7 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      */
     @SafeVarargs
     public <Z> Synced(
-        final Func<? super Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Func<? super Z, ? extends Map.Entry<? extends X, ? extends Y>> entry,
         final Z... list
     ) {
         this(new Mapped<>(entry, list));
@@ -105,8 +105,8 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      */
     public <Z> Synced(
-        final Func<Z, Map.Entry<? extends X, ? extends Y>> entry,
-        final Iterable<Z> list
+        final Func<? super Z, ? extends Map.Entry<? extends X, ? extends Y>> entry,
+        final Iterable<? extends Z> list
     ) {
         this(new Mapped<>(entry, list));
     }
@@ -132,7 +132,9 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      *
      * @param list Entries for the entries
      */
-    public Synced(final Iterable<Map.Entry<? extends X, ? extends Y>> list) {
+    public Synced(
+        final Iterable<? extends Map.Entry<? extends X, ? extends Y>> list
+    ) {
         this(new MapOf<>(list));
     }
 
@@ -144,7 +146,7 @@ public final class Synced<X, Y> extends MapEnvelope<X, Y> {
      */
     public Synced(
         final Map<? extends X, ? extends Y> map,
-        final Iterable<Map.Entry<? extends X, ? extends Y>> list
+        final Iterable<? extends Map.Entry<? extends X, ? extends Y>> list
     ) {
         this(new MapOf<>(map, list));
     }

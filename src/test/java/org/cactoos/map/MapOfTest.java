@@ -5,7 +5,10 @@
 package org.cactoos.map;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import org.cactoos.Func;
 import org.cactoos.Scalar;
 import org.cactoos.func.FuncOf;
 import org.cactoos.iterable.IterableOf;
@@ -24,6 +27,7 @@ import org.llorllale.cactoos.matchers.HasEntry;
  *
  * @since 0.4
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class MapOfTest {
 
     @Test
@@ -222,6 +226,60 @@ final class MapOfTest {
                 new HasEntry<>(0, 0),
                 new HasEntry<>(1, 1)
             )
+        );
+    }
+
+    @Test
+    void createsMapFromEntriesOfSubtypes() {
+        final List<Map.Entry<Integer, String>> entries =
+            Collections.singletonList(new MapEntry<>(1, "one"));
+        MatcherAssert.assertThat(
+            "Must create a map from entries of key and value subtypes",
+            new MapOf<Number, CharSequence>(entries),
+            new HasEntry<>(1, "one")
+        );
+    }
+
+    @Test
+    void extendsMapWithEntriesOfSubtypes() {
+        final List<Map.Entry<Integer, String>> entries =
+            Collections.singletonList(new MapEntry<>(2, "two"));
+        MatcherAssert.assertThat(
+            "Must extend a map with entries of key and value subtypes",
+            new MapOf<Number, CharSequence>(
+                new MapOf<>(new MapEntry<>(1, "one")),
+                entries
+            ),
+            new HasEntry<>(2, "two")
+        );
+    }
+
+    @Test
+    void createsMapFromFunctionOfSubtypeEntries() {
+        final Func<Integer, MapEntry<Integer, String>> entry =
+            number -> new MapEntry<>(number, "one");
+        MatcherAssert.assertThat(
+            "Must create a map from a function of subtype entries",
+            new MapOf<Number, CharSequence>(
+                entry,
+                Collections.singletonList(1)
+            ),
+            new HasEntry<>(1, "one")
+        );
+    }
+
+    @Test
+    void extendsMapWithFunctionOfSubtypeEntries() {
+        final Func<Integer, MapEntry<Integer, String>> entry =
+            number -> new MapEntry<>(number, "two");
+        MatcherAssert.assertThat(
+            "Must extend a map with a function of subtype entries",
+            new MapOf<Number, CharSequence>(
+                entry,
+                new MapOf<>(new MapEntry<>(1, "one")),
+                Collections.singletonList(2)
+            ),
+            new HasEntry<>(2, "two")
         );
     }
 }

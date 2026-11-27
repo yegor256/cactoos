@@ -108,7 +108,7 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      */
     public <Z> Sticky(
-        final Func<? super Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Func<? super Z, ? extends Map.Entry<? extends X, ? extends Y>> entry,
         final Iterable<? extends Z> list
     ) {
         this(new Mapped<>(entry, list));
@@ -123,7 +123,7 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      * @param <Z> Type of items in the list
      */
     public <Z> Sticky(
-        final Func<? super Z, Map.Entry<? extends X, ? extends Y>> entry,
+        final Func<? super Z, ? extends Map.Entry<? extends X, ? extends Y>> entry,
         final Map<? extends X, ? extends Y> src,
         final Iterable<? extends Z> list
     ) {
@@ -135,7 +135,9 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      *
      * @param entries List of entries
      */
-    public Sticky(final Iterable<Map.Entry<? extends X, ? extends Y>> entries) {
+    public Sticky(
+        final Iterable<? extends Map.Entry<? extends X, ? extends Y>> entries
+    ) {
         this(new MapOf<>(entries));
     }
 
@@ -147,7 +149,7 @@ public final class Sticky<X, Y> extends MapEnvelope<X, Y> {
      */
     public Sticky(
         final Map<? extends X, ? extends Y> src,
-        final Iterable<Map.Entry<? extends X, ? extends Y>> entries
+        final Iterable<? extends Map.Entry<? extends X, ? extends Y>> entries
     ) {
         this(new MapOf<>(src, entries));
     }
