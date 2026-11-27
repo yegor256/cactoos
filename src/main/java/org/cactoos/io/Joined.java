@@ -61,8 +61,19 @@ public final class Joined implements Input {
         if (streams.size() == 1) {
             stream = streams.get(0);
         } else {
-            stream = new SequenceInputStream(Collections.enumeration(streams));
+            stream = Joined.joined(streams);
         }
         return stream;
+    }
+
+    /**
+     * Sequential stream over all of the given ones.
+     * @param streams List of streams
+     * @return Stream joined in order
+     */
+    private static SequenceInputStream joined(
+        final List<? extends InputStream> streams
+    ) {
+        return new SequenceInputStream(Collections.enumeration(streams));
     }
 }
