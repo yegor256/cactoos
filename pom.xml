@@ -64,6 +64,7 @@
   </distributionManagement>
   <properties>
     <maven.compiler.release>17</maven.compiler.release>
+    <versions-maven-plugin.version>2.25.3</versions-maven-plugin.version>
   </properties>
   <dependencies>
     <dependency>
@@ -114,6 +115,15 @@
     </dependency>
   </dependencies>
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>${versions-maven-plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.eolang</groupId>
@@ -636,6 +646,18 @@
     </plugins>
   </reporting>
   <profiles>
+    <profile>
+      <id>site</id>
+      <reporting>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>versions-maven-plugin</artifactId>
+            <version>${versions-maven-plugin.version}</version>
+          </plugin>
+        </plugins>
+      </reporting>
+    </profile>
     <profile>
       <id>qulice</id>
       <build>
