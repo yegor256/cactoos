@@ -75,14 +75,13 @@ final class JoinedTest {
      */
     @Test
     void supportsMarkForSoleStream() throws Exception {
-        final InputStream stream = new Joined(
-            new IterableOf<>(
-                new InputOf(new ByteArrayInputStream(new byte[] {1, 2, 3}))
-            )
-        ).stream();
         MatcherAssert.assertThat(
             "Sole stream must support mark",
-            stream.markSupported(),
+            new Joined(
+                new IterableOf<>(
+                    new InputOf(new ByteArrayInputStream(new byte[] {1, 2, 3}))
+                )
+            ).stream().markSupported(),
             new IsEqual<>(true)
         );
     }
