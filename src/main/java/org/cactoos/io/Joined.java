@@ -50,7 +50,7 @@ public final class Joined implements Input {
 
     @Override
     public InputStream stream() throws Exception {
-        final List<InputStream> streams = new ArrayList<>();
+        final List<InputStream> streams = new ArrayList<>(0);
         for (final Input input : this.inputs) {
             streams.add(input.stream());
         }
