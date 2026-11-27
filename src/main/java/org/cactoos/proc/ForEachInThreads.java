@@ -35,14 +35,14 @@ public final class ForEachInThreads<X> implements Proc<Iterable<X>> {
     /**
      * The proc.
      */
-    private final Proc<X> proc;
+    private final Proc<? super X> proc;
 
     /**
      * Ctor.
      *
      * @param proc The proc to execute
      */
-    public ForEachInThreads(final Proc<X> proc) {
+    public ForEachInThreads(final Proc<? super X> proc) {
         this.proc = proc;
     }
 

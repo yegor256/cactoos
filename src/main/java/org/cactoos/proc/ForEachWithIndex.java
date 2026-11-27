@@ -34,14 +34,14 @@ public final class ForEachWithIndex<X> implements Proc<Iterable<X>> {
     /**
      * The proc.
      */
-    private final BiProc<X, Integer> proc;
+    private final BiProc<? super X, Integer> proc;
 
     /**
      * Ctor.
      *
      * @param proc The proc to execute
      */
-    public ForEachWithIndex(final BiProc<X, Integer> proc) {
+    public ForEachWithIndex(final BiProc<? super X, Integer> proc) {
         this.proc = proc;
     }
 

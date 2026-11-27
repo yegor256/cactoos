@@ -22,14 +22,14 @@ public final class IoCheckedBiProc<X, Y> implements BiProc<X, Y> {
     /**
      * Original proc.
      */
-    private final BiProc<X, Y> proc;
+    private final BiProc<? super X, ? super Y> proc;
 
     /**
      * Ctor.
      *
      * @param prc Encapsulated func
      */
-    public IoCheckedBiProc(final BiProc<X, Y> prc) {
+    public IoCheckedBiProc(final BiProc<? super X, ? super Y> prc) {
         this.proc = prc;
     }
 

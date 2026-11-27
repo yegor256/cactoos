@@ -4,19 +4,23 @@
  */
 package org.cactoos.proc;
 
+import java.util.Collection;
 import java.util.List;
+import org.cactoos.Proc;
 import org.cactoos.list.ListOf;
 import org.cactoos.list.Synced;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
+import org.llorllale.cactoos.matchers.HasValues;
 
 /**
  * Test case for {@link ForEachInThreads}.
  *
  * @since 1.0
  */
+@SuppressWarnings("PMD.UnnecessaryLocalRule")
 final class ForEachInThreadsTest {
 
     @Test
@@ -43,6 +47,20 @@ final class ForEachInThreadsTest {
                     new IsEqual<>(2)
                 )
             )
+        );
+    }
+
+    @Test
+    void worksWithGenerics() throws Exception {
+        final Collection<Object> list = new Synced<>(new ListOf<>());
+        final Proc<Object> callback = list::add;
+        final Proc<Iterable<Number>> proc =
+            new ForEachInThreads<>(callback);
+        proc.exec(new ListOf<>(1, 2));
+        MatcherAssert.assertThat(
+            "Must accept a proc consuming supertypes of the elements",
+            list,
+            new HasValues<>(1)
         );
     }
 }

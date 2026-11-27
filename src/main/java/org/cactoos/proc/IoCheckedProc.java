@@ -21,14 +21,14 @@ public final class IoCheckedProc<X> implements Proc<X> {
     /**
      * Original proc.
      */
-    private final Proc<X> proc;
+    private final Proc<? super X> proc;
 
     /**
      * Ctor.
      *
      * @param prc Encapsulated func
      */
-    public IoCheckedProc(final Proc<X> prc) {
+    public IoCheckedProc(final Proc<? super X> prc) {
         this.proc = prc;
     }
 

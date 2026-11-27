@@ -21,14 +21,14 @@ public final class UncheckedProc<X> implements Proc<X> {
     /**
      * Original proc.
      */
-    private final Proc<X> proc;
+    private final Proc<? super X> proc;
 
     /**
      * Ctor.
      *
      * @param prc Encapsulated func
      */
-    public UncheckedProc(final Proc<X> prc) {
+    public UncheckedProc(final Proc<? super X> prc) {
         this.proc = prc;
     }
 
