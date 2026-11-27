@@ -14,6 +14,11 @@ import org.cactoos.scalar.Reduced;
 /**
  * Concatenation of several inputs.
  *
+ * <p>The call to {@link Joined#stream()} opens the streams of all the
+ * {@link Input}s at once, and closing the stream it returns closes them
+ * all. Wrap in {@link CloseShieldInput} the inputs that must stay open
+ * after that.</p>
+ *
  * @since 0.36
  */
 public final class Joined implements Input {

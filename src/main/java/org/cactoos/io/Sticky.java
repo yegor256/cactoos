@@ -15,6 +15,10 @@ import org.cactoos.scalar.LengthOf;
 /**
  * Input that reads only once.
  *
+ * <p>The first call to {@link Sticky#stream()} fully reads the wrapped
+ * {@link Input} and closes its stream. Wrap the input in
+ * {@link CloseShieldInput} to keep its stream open after that.</p>
+ *
  * <p>Pay attention that this class is not thread-safe. It is highly
  * recommended to always decorate it with {@link SyncInput}.</p>
  *
