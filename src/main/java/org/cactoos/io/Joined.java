@@ -57,8 +57,12 @@ public final class Joined implements Input {
                 this.inputs
             )
         );
-        return streams.size() == 1
-            ? streams.get(0)
-            : new SequenceInputStream(Collections.enumeration(streams));
+        final InputStream stream;
+        if (streams.size() == 1) {
+            stream = streams.get(0);
+        } else {
+            stream = new SequenceInputStream(Collections.enumeration(streams));
+        }
+        return stream;
     }
 }
