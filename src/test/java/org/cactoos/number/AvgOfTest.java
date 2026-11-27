@@ -4,6 +4,7 @@
  */
 package org.cactoos.number;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.core.AllOf;
@@ -333,6 +334,28 @@ final class AvgOfTest {
                 1, 2, 3, 4
             ),
             new AllOf<Number>(new IsNumber(2.5), new IsNumber(2.5))
+        );
+    }
+
+    @Test
+    void withNonTerminatingDecimalAverage() {
+        MatcherAssert.assertThat(
+            "Average with non-terminating decimal expansion must be computed",
+            new AvgOf(
+                1, 2, 4
+            ).doubleValue(),
+            new IsEqual<>(2.333_333_333_333_333_5d)
+        );
+    }
+
+    @Test
+    void preservesExactTerminatingAverage() {
+        MatcherAssert.assertThat(
+            "Exact terminating average must not be rounded up",
+            new AvgOf(
+                new BigDecimal("1.9999999999999999999999999999999999")
+            ).intValue(),
+            new IsEqual<>(1)
         );
     }
 }
