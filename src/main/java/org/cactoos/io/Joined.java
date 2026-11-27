@@ -66,11 +66,6 @@ public final class Joined implements Input {
         return stream;
     }
 
-    /**
-     * Sequential stream over all of the given ones.
-     * @param streams List of streams
-     * @return Stream joined in order
-     */
     private static SequenceInputStream joined(
         final List<? extends InputStream> streams
     ) {
