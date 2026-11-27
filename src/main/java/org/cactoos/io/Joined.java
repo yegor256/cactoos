@@ -7,6 +7,7 @@ package org.cactoos.io;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
 import java.util.Collections;
+import java.util.List;
 import org.cactoos.Input;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Mapped;
@@ -50,15 +51,17 @@ public final class Joined implements Input {
 
     @Override
     public InputStream stream() throws Exception {
-        return new SequenceInputStream(
-            Collections.enumeration(
-                new ListOf<>(
-                    new Mapped<>(
-                        Input::stream,
-                        this.inputs
-                    )
-                )
+        final List<? extends InputStream> streams = new ListOf<>(
+            new Mapped<>(
+                Input::stream,
+                this.inputs
             )
+        );
+        if (streams.size() == 1) {
+            return streams.get(0);
+        }
+        return new SequenceInputStream(
+            Collections.enumeration(streams)
         );
     }
 }

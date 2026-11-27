@@ -5,10 +5,12 @@
 package org.cactoos.io;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import org.cactoos.Input;
 import org.cactoos.iterable.IterableOf;
 import org.cactoos.iterable.Repeated;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.core.IsEqual;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.HasContent;
 
@@ -65,6 +67,45 @@ final class JoinedTest {
                 )
             ),
             new HasContent("9".repeat(20_000))
+        );
+    }
+
+    /**
+     * Must return the sole stream as is, so that it supports mark.
+     */
+    @Test
+    void supportsMarkForSoleStream() throws Exception {
+        final InputStream stream = new Joined(
+            new IterableOf<>(
+                new InputOf(new ByteArrayInputStream(new byte[] {1, 2, 3}))
+            )
+        ).stream();
+        MatcherAssert.assertThat(
+            "Sole stream must support mark",
+            stream.markSupported(),
+            new IsEqual<>(true)
+        );
+    }
+
+    /**
+     * Must return the sole stream as is, so that mark() followed by
+     * reset() keeps working on it.
+     */
+    @Test
+    void keepsMarkResetForSoleStream() throws Exception {
+        final byte[] bytes = {1, 2, 3};
+        final InputStream stream = new Joined(
+            new IterableOf<>(new InputOf(new ByteArrayInputStream(bytes)))
+        ).stream();
+        stream.mark(bytes.length);
+        stream.read();
+        stream.reset();
+        final byte[] reread = new byte[bytes.length];
+        stream.read(reread);
+        MatcherAssert.assertThat(
+            "Must reread identical bytes after reset",
+            reread,
+            new IsEqual<>(bytes)
         );
     }
 }
