@@ -54,7 +54,7 @@ public final class ReaderOf extends Reader {
      * @param charset Charset
      */
     public ReaderOf(final char[] chars, final Charset charset) {
-        this(new InputOf(chars, charset));
+        this(new InputOf(chars, charset), charset);
     }
 
     /**
@@ -64,7 +64,7 @@ public final class ReaderOf extends Reader {
      * @param charset Charset
      */
     public ReaderOf(final char[] chars, final CharSequence charset) {
-        this(new InputOf(chars, charset));
+        this(new InputOf(chars, charset), charset);
     }
 
     /**
@@ -157,7 +157,7 @@ public final class ReaderOf extends Reader {
      * @param charset Charset
      */
     public ReaderOf(final Text text, final Charset charset) {
-        this(new InputOf(text, charset));
+        this(new InputOf(text, charset), charset);
     }
 
     /**
@@ -167,7 +167,7 @@ public final class ReaderOf extends Reader {
      * @param charset Charset
      */
     public ReaderOf(final Text text, final CharSequence charset) {
-        this(new InputOf(text, charset));
+        this(new InputOf(text, charset), charset);
     }
 
     /**
@@ -186,7 +186,7 @@ public final class ReaderOf extends Reader {
      * @param charset Charset
      */
     public ReaderOf(final CharSequence text, final Charset charset) {
-        this(new InputOf(text, charset));
+        this(new InputOf(text, charset), charset);
     }
 
     /**
@@ -196,7 +196,7 @@ public final class ReaderOf extends Reader {
      * @param charset Charset
      */
     public ReaderOf(final CharSequence text, final CharSequence charset) {
-        this(new InputOf(text, charset));
+        this(new InputOf(text, charset), charset);
     }
 
     /**

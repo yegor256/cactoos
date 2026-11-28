@@ -236,6 +236,90 @@ final class ReaderOfTest {
     }
 
     @Test
+    void readsCharArrayWithNonUtfCharset() {
+        MatcherAssert.assertThat(
+            "Must decode char array with the given charset",
+            new TextOf(
+                new ReaderOf(
+                    "char array on äÄ üÜ öÖ ß жш".toCharArray(),
+                    StandardCharsets.UTF_16BE
+                )
+            ),
+            new IsText("char array on äÄ üÜ öÖ ß жш")
+        );
+    }
+
+    @Test
+    void readsCharArrayWithNonUtfCharsetByName() {
+        MatcherAssert.assertThat(
+            "Must decode char array with the given charset by name",
+            new TextOf(
+                new ReaderOf(
+                    "char array by name on äÄ üÜ öÖ ß жш".toCharArray(),
+                    StandardCharsets.UTF_16BE.name()
+                )
+            ),
+            new IsText("char array by name on äÄ üÜ öÖ ß жш")
+        );
+    }
+
+    @Test
+    void readsTextWithNonUtfCharset() {
+        MatcherAssert.assertThat(
+            "Must decode text with the given charset",
+            new TextOf(
+                new ReaderOf(
+                    new TextOf("text on äÄ üÜ öÖ ß жш"),
+                    StandardCharsets.UTF_16BE
+                )
+            ),
+            new IsText("text on äÄ üÜ öÖ ß жш")
+        );
+    }
+
+    @Test
+    void readsTextWithNonUtfCharsetByName() {
+        MatcherAssert.assertThat(
+            "Must decode text with the given charset by name",
+            new TextOf(
+                new ReaderOf(
+                    new TextOf("text by name on äÄ üÜ öÖ ß жш"),
+                    StandardCharsets.UTF_16BE.name()
+                )
+            ),
+            new IsText("text by name on äÄ üÜ öÖ ß жш")
+        );
+    }
+
+    @Test
+    void readsCharSequenceWithNonUtfCharset() {
+        MatcherAssert.assertThat(
+            "Must decode char sequence with the given charset",
+            new TextOf(
+                new ReaderOf(
+                    "char sequence on äÄ üÜ öÖ ß жш",
+                    StandardCharsets.UTF_16BE
+                )
+            ),
+            new IsText("char sequence on äÄ üÜ öÖ ß жш")
+        );
+    }
+
+    @Test
+    void readsCharSequenceWithNonUtfCharsetByName() {
+        MatcherAssert.assertThat(
+            "Must decode char sequence with the given charset by name",
+            new TextOf(
+                new ReaderOf(
+                    "char sequence by name on äÄ üÜ öÖ ß жш",
+                    StandardCharsets.UTF_16BE.name()
+                )
+            ),
+            new IsText("char sequence by name on äÄ üÜ öÖ ß жш")
+        );
+    }
+
+    @Test
     void readsCharSequenceWithCharset() {
         MatcherAssert.assertThat(
             "Must read from char sequence with charset",
